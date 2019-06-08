@@ -1,0 +1,90 @@
+﻿@model GCP_CF.Models.actividades
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>actividades</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadosActividad.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadosActividad.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.registrofacescontratos.registrofacescontratos_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.registrofacescontratos.registrofacescontratos_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FaseContrato_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FaseContrato_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripción)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripción)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiasHabiles)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiasHabiles)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaFinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Observaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Observaciones)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Actividad_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

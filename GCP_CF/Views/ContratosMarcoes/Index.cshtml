@@ -1,0 +1,33 @@
+﻿@model IEnumerable<GCP_CF.Models.ContratosMarco>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-left">Contratos Marco</h2>
+
+<p class="text-left">
+    @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-default btn-large" })
+</p>
+<table class="table">
+    <tr>
+        <th  class="head-table">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th  class="head-table"></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td class="border-cell">
+            @Html.ActionLink("Editar", "Edit", new { id=item.ContratoMarco_Id }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.ContratoMarco_Id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.ContratoMarco_Id })
+        </td>
+    </tr>
+}
+
+</table>

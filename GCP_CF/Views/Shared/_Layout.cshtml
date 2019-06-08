@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/eso.ico" />
+    <title>ESO</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>
+                    <a href="@Url.Action("Index", "Home", new { area = "" }, null)">
+                        <img src="~/Content/Images/Programa.png" alt="ESO" class="img-responsive" />
+                    </a>
+                </h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    @Html.ActionLink("Inicio", "Index", "Home")
+                </li>
+                <li>
+                    <a href="#contratosSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-blackboard"></i>
+                        Contratos
+                    </a>
+                    <ul class="collapse list-unstyled" id="contratosSubmenu">
+                        <li>@Html.ActionLink("Ver Contratos", "Index", "Contratos")</li>
+                        <li>@Html.ActionLink("Crear Contratos", "Create", "Contratos")</li>
+                        <li>@Html.ActionLink("Ver Contratos Marco", "Index", "ContratosMarcoes")</li>
+                        <li>@Html.ActionLink("Ver Tipos de Contratos", "Index", "TiposContratos")</li>
+                        <li>@Html.ActionLink("Ver Estados Contratos", "Index", "TiposEstadoContratoes")</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#fasesSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-dashboard"></i>
+                        Fases Contrato
+                    </a>
+                    <ul class="collapse list-unstyled" id="fasesSubmenu">
+                        <li>@Html.ActionLink("Fases", "Index", "FasesContratoes")</li>
+                        <li>@Html.ActionLink("Creación Actividades", "Index", "actividades")</li>
+                        <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividads")</li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-certificate"></i>
+                        Personas
+                    </a>
+                    <ul class="collapse list-unstyled" id="personasSubmenu">
+                        <li>@Html.ActionLink("Crear Pesona", "Create", "Personas")</li>
+                        <li>@Html.ActionLink("Ver Pesonas", "Index", "Personas")</li>
+                        <li>@Html.ActionLink("Tipos de Persona", "Index", "TiposPersonas")</li>
+                        <li>@Html.ActionLink("Naturaleza", "Index", "TiposNaturalezas")</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#rolesSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-road"></i>
+                        Roles
+                    </a>
+                    <ul class="collapse list-unstyled" id="rolesSubmenu">
+                        <li>@Html.ActionLink("Crear Rol", "Create", "")</li>
+                        <li>@Html.ActionLink("Listado de Roles", "Index", "")</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-user"></i>
+                        Usuarios
+                    </a>
+                    <ul class="collapse list-unstyled" id="userSubmenu">
+                        <li>@Html.ActionLink("Listado de Usuarios", "Index", "")</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="list-unstyled btn-close">
+                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="glyphicon glyphicon-off"></i>Cerrar</a></li>
+            </ul>
+        </nav>
+        <!-- Page Content Holder -->
+    </div>
+    <div id="content" class="text-center">
+        <nav class="navbar navbar-default ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" class="btn btn-default navbar-btn">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            <div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+                @*@Html.Partial("_LoginPartial")*@
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="col-lg-12 box-border-gray">
+                @RenderBody()
+                <br />
+                <br />
+            </div>
+            <footer>
+                <p>Tysa &copy; @DateTime.Now.Year - GCP</p>
+            </footer>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+                //$('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>

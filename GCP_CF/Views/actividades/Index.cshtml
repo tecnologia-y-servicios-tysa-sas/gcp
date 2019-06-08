@@ -1,0 +1,148 @@
+﻿
+@{
+    @model GCP_CF.Models.ActividadesFases
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/noGeneric/Actividades.js"></script>
+
+<div class="row">
+    <h3 style="float:left;padding-left:13px">Listado de Contratos</h3>
+    <div class="col-md-12">
+        <div class="datagrid">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:147px;">Número Contratual</th>
+                        <th style="width:125px;">Fecha de Inicio</th>
+                        <th>Objeto Contractual</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int ii = 0;
+                        string cl = "";
+                    }
+                    @foreach (GCP_CF.Models.Contratos itemContrato in ViewBag.ListadoContratos)
+                    {
+                        if (ii == 1)
+                        {
+                            cl = "alt";
+                            ii = 0;
+                        }
+                        else
+                        {
+                            cl = "";
+                            ii = 1;
+                        }
+                        <tr class="@cl">
+                            <td>
+                                @itemContrato.NumeroContrato
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(@itemContrato.FechaInicio).ToShortDateString()
+                            </td>
+                            <td>
+                                @itemContrato.ObjetoContractual
+                            </td>
+                            <td style="width:83px;cursor:pointer"><span onclick="VerFases(@itemContrato.Contrato_Id)" class="label label-default">Ver Fases</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row" id="divFases" style="display:none">
+    <div id="texto1"></div>
+    <div class="col-md-12">
+        <div class="datagrid">
+            <div id="tableFases">
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+<div class="row" id="divActividadesFases" style="display:none">
+    <div id="texto2"></div>
+    <button style="float:right;margin-right: 14px;margin-top: 18px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Agregar Actividad</button>
+    <div class="col-md-12">
+        <div class="datagrid">
+            <div id="tableActividadesFases">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="float: left;color:#0058a1;">Crear Actividad</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div>@Html.LabelFor(model => model.Item, htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.EditorFor(model => model.Item, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Item, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <div>@Html.LabelFor(model => model.Descripción, htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.EditorFor(model => model.Descripción, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Descripción, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div>@Html.LabelFor(model => model.DiasHabiles, htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.EditorFor(model => model.DiasHabiles, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Item, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <div>@Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div>@Html.LabelFor(model => model.FechaFinal, htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.EditorFor(model => model.FechaFinal, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FechaFinal, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <div>@Html.LabelFor(model => model.EstadoActividad_Id, htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.EditorFor(model => model.EstadoActividad_Id, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EstadoActividad_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="GuardarActividad()" class="btn btn-default" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+    <input type="hidden" id="hfvContrato" />
+    <input type="hidden" id="hfvFase" />
+</div>
+
+
+
+
+

@@ -1,0 +1,153 @@
+﻿@model IEnumerable<GCP_CF.Models.Contratos>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-left">Contratos</h2>
+
+<p class="text-left">
+    @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-default btn-large" })
+</p>
+<table class="table">
+    <tr>
+        <th class="head-table">
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </th>
+        <th class="head-table">
+            @Html.DisplayNameFor(model => model.TipoContrato_Id)
+        </th>
+        <th class="head-table">
+            @Html.DisplayNameFor(model => model.Persona_Id)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.ObjetoContractual)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Plazo)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.FechaTerminacion)
+        </th>
+         <th class="head-table">
+           Abogado
+        </th>
+         <th class="head-table">
+            Supervisor
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Crp)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Cdp)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.FechaActaInicio)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.TipoEstadoContrato_Id)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.ValorContrato)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.ValorAdministrar)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Honorarios)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Ejecucion)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.PorcentajeFacturado)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.PorcentajeFacturadoHonorarios)
+        </th>
+         <th class="head-table">
+            Supervisor Técnico
+        </th>
+         <th class="head-table">
+           Contrato Marco
+        </th>
+         <th class="head-table"></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaInicio)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.TipoContrato_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Persona_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.ObjetoContractual)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Plazo)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaTerminacion)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PersonaAbogado_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PersonaSuperviosr_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Crp)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Cdp)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaActaInicio)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.TipoEstadoContrato_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Year)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.ValorContrato)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.ValorAdministrar)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Honorarios)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Ejecucion)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PorcentajeFacturado)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PorcentajeFacturadoHonorarios)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PersonaSupervisorTecnico_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.ContratoMarco_Id)
+        </td>
+        <td class="border-cell">
+            @Html.ActionLink("Editar", "Edit", new { id=item.Contrato_Id }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.Contrato_Id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.Contrato_Id })
+        </td>
+    </tr>
+}
+
+</table>
