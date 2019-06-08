@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GCP_CF.Models
 {
     public class Personas
     {
-
         [Key]
         public int Persona_Id { get; set; }
         public string Nombres { get; set; }

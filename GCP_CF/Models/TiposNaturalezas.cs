@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
 namespace GCP_CF.Models
 {
-    public class TiposNaturaleza
+    public class TiposNaturalezas
     {
         [Key]
         public int Naturaleza_Id { get; set; }

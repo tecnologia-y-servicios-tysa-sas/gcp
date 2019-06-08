@@ -169,8 +169,8 @@
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\TiposContratos.cs" />
     <Compile Include="Models\TiposEstadoContrato.cs" />
-    <Compile Include="Models\TiposNaturaleza.cs" />
-    <Compile Include="Models\TiposPersona.cs" />
+    <Compile Include="Models\TiposNaturalezas.cs" />
+    <Compile Include="Models\TiposPersonas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -300,6 +300,21 @@
     <Content Include="Views\actividades\Edit.cshtml" />
     <Content Include="Views\actividades\Index.cshtml" />
     <Content Include="Views\actividades\_CargaContratos.cshtml" />
+    <Content Include="Views\TiposNaturalezas\Create.cshtml" />
+    <Content Include="Views\TiposNaturalezas\Delete.cshtml" />
+    <Content Include="Views\TiposNaturalezas\Details.cshtml" />
+    <Content Include="Views\TiposNaturalezas\Edit.cshtml" />
+    <Content Include="Views\TiposNaturalezas\Index.cshtml" />
+    <Content Include="Views\TiposPersonas\Create.cshtml" />
+    <Content Include="Views\TiposPersonas\Delete.cshtml" />
+    <Content Include="Views\TiposPersonas\Details.cshtml" />
+    <Content Include="Views\TiposPersonas\Edit.cshtml" />
+    <Content Include="Views\TiposPersonas\Index.cshtml" />
+    <Content Include="Views\Personas\Create.cshtml" />
+    <Content Include="Views\Personas\Delete.cshtml" />
+    <Content Include="Views\Personas\Details.cshtml" />
+    <Content Include="Views\Personas\Edit.cshtml" />
+    <Content Include="Views\Personas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

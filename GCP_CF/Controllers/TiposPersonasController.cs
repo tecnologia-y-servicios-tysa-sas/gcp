@@ -33,7 +33,7 @@ namespace GCP_CF.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tiposPersona);
+            return View(tiposPersonas);
         }
 
         // GET: TiposPersona/Create
@@ -48,7 +48,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersona tiposPersona)
+        public ActionResult Create([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersonas tiposPersonas)
         {
             if (ModelState.IsValid)
             {
@@ -82,11 +82,11 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersona tiposPersona)
+        public ActionResult Edit([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersonas tiposPersonas)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tiposPersona).State = EntityState.Modified;
+                db.Entry(tiposPersonas).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -106,7 +106,7 @@ namespace GCP_CF.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tiposPersona);
+            return View(tiposPersonas);
         }
 
         // POST: TiposPersona/Delete/5

@@ -1,10 +1,10 @@
-﻿@model GCP_CF.Models.TiposNaturaleza
+﻿@model GCP_CF.Models.TiposNaturalezas
 
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Crear Tipo de Naturaleza</h2>
+<h2>Create</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,26 +12,27 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <h4>TiposNaturalezas</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <div>@Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label" })</div>
-            <div class="col-md-12 text-center">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group text-center">
-            <div class="col-md-12">
-                <input type="submit" value="Crear" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Volver a la Lista", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {

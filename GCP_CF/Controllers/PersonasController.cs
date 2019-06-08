@@ -14,12 +14,10 @@ namespace GCP_CF.Controllers
     {
         private GCPContext db = new GCPContext();
 
-
-
         // GET: Personas
         public ActionResult Index()
         {
-            var personas = db.Personas.Include(p => p.TiposPersona);
+            var personas = db.Personas.Include(p => p.TiposPersonas);
             return View(personas.ToList());
         }
 
@@ -50,7 +48,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Persona_Id,Nombres,Apellidos,Direccion,Telefono,Correo,TipoPersona_Id")] Personas personas)
+        public ActionResult Create([Bind(Include = "Persona_Id,Nombres,Apellidos,Direccion,Telefono,Correoo,TipoPersona_Id")] Personas personas)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +82,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Persona_Id,Nombres,Apellidos,Direccion,Telefono,Correo,TipoPersona_Id")] Personas personas)
+        public ActionResult Edit([Bind(Include = "Persona_Id,Nombres,Apellidos,Direccion,Telefono,Correoo,TipoPersona_Id")] Personas personas)
         {
             if (ModelState.IsValid)
             {
