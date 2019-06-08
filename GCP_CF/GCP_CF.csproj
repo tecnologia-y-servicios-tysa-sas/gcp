@@ -158,7 +158,6 @@
     <Compile Include="Models\EstadosActividad.cs" />
     <Compile Include="Models\FasesContrato.cs" />
     <Compile Include="Models\GCPContext.cs" />
-    <Compile Include="Models\Personas.cs" />
     <Compile Include="Models\registrofacescontratos.cs" />
     <Compile Include="Models\TiposContratos.cs" />
     <Compile Include="Models\TiposEstadoContrato.cs" />
@@ -247,11 +246,6 @@
     <Content Include="Views\TiposPersonas\Details.cshtml" />
     <Content Include="Views\TiposPersonas\Edit.cshtml" />
     <Content Include="Views\TiposPersonas\Index.cshtml" />
-    <Content Include="Views\Personas\Create.cshtml" />
-    <Content Include="Views\Personas\Delete.cshtml" />
-    <Content Include="Views\Personas\Details.cshtml" />
-    <Content Include="Views\Personas\Edit.cshtml" />
-    <Content Include="Views\Personas\Index.cshtml" />
     <Content Include="Views\TiposContratos\Create.cshtml" />
     <Content Include="Views\TiposContratos\Delete.cshtml" />
     <Content Include="Views\TiposContratos\Details.cshtml" />
