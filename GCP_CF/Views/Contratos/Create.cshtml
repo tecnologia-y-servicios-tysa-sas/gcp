@@ -19,8 +19,6 @@
                 <div> @Html.LabelFor(model => model.ContratoMarco_Id, "Contrato Marco", htmlAttributes: new { @class = "control-label" })</div>
                 @Html.DropDownList("Contrato_Id", null, "Seleccione Contrato Marco", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ContratoMarco_Id, "", new { @class = "text-danger" })
-
-
             </div>
             <div class="col-md-8">
             </div>
@@ -87,7 +85,6 @@
                 @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-4">
-                <div class="col-md-4">
                     @Html.LabelFor(model => model.FechaActaInicio, htmlAttributes: new { @class = "control-label" })
                     <div class='input-group date text-center' id='datetimeFechaActaInicio' style="width:280px">
                         @Html.EditorFor(model => model.FechaActaInicio, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @style = "text-aling:center" } })
@@ -96,7 +93,6 @@
                             </span>
                         </span>
                     </div>
-                </div>
             </div>
         </div>
 
@@ -108,16 +104,14 @@
                 @Html.ValidationMessageFor(model => model.Crp, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-4">
-                <div class="col-md-4">
-                    @Html.LabelFor(model => model.FechaActaInicio, htmlAttributes: new { @class = "control-label" })
-                    <div class='input-group date text-center' id='datetimeFechaActaInicio' style="width:280px">
-                        @Html.EditorFor(model => model.FechaActaInicio, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @style = "text-aling:center" } })
+                    @Html.LabelFor(model => model.FechaCrp, htmlAttributes: new { @class = "control-label" })
+                    <div class='input-group date text-center' id='datetimeFechaCrp' style="width:280px">
+                        @Html.EditorFor(model => model.FechaCrp, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @style = "text-aling:center" } })
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar">
                             </span>
                         </span>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
                 <div>@Html.LabelFor(model => model.Cdp, htmlAttributes: new { @class = "control-label" })</div>
@@ -128,9 +122,9 @@
 
         <div class="form-group">
             <div class="col-md-4">
-                @Html.LabelFor(model => model.FechaActaInicio, htmlAttributes: new { @class = "control-label" })
-                <div class='input-group date text-center' id='datetimeFechaActaInicio' style="width:280px">
-                    @Html.EditorFor(model => model.FechaActaInicio, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @style = "text-aling:center" } })
+                @Html.LabelFor(model => model.FechaCdp, htmlAttributes: new { @class = "control-label" })
+                <div class='input-group date text-center' id='datetimeFechaCdp' style="width:280px">
+                    @Html.EditorFor(model => model.FechaCdp, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @style = "text-aling:center" } })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar">
                         </span>
@@ -179,9 +173,12 @@
 
         <div class="form-group">
             <div class="col-md-4">
+                <div> @Html.LabelFor(model => model.Persona_Id, "Abogado", htmlAttributes: new { @class = "control-label" })</div>
+                @Html.DropDownList("PersonaAbogado_Id", null, "Seleccione Abogado", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
                 @*<div>@Html.LabelFor(model => model.PorcentajeFacturadoHonorarios, htmlAttributes: new { @class = "control-label" })</div>
-                @Html.EditorFor(model => model.PorcentajeFacturadoHonorarios, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PorcentajeFacturadoHonorarios, "", new { @class = "text-danger" })*@
+        @Html.EditorFor(model => model.PorcentajeFacturadoHonorarios, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.PorcentajeFacturadoHonorarios, "", new { @class = "text-danger" })*@
             </div>
             <div class="col-md-4">
                 <div> @Html.LabelFor(model => model.Persona_Id, "Supervisor", htmlAttributes: new { @class = "control-label" })</div>
@@ -189,9 +186,7 @@
                 @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-4">
-                <div> @Html.LabelFor(model => model.Persona_Id, "Abogado", htmlAttributes: new { @class = "control-label" })</div>
-                @Html.DropDownList("PersonaAbogado_Id", null, "Seleccione Abogado", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
+
             </div>
         </div>
 
@@ -241,6 +236,20 @@
             });
 
             $('#datetimePlazo').datetimepicker({
+                locale: 'es',
+                format: 'DD/MM/YYYY',
+                minDate: fechaActual,
+                useCurrent: false
+            });
+
+            $('#FechaCrp').datetimepicker({
+                locale: 'es',
+                format: 'DD/MM/YYYY',
+                minDate: fechaActual,
+                useCurrent: false
+            });
+
+            $('#FechaCdp').datetimepicker({
                 locale: 'es',
                 format: 'DD/MM/YYYY',
                 minDate: fechaActual,

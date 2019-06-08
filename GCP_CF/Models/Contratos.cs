@@ -35,11 +35,17 @@ namespace GCP_CF.Models
         [Display(Name = "Seleccione Supervisor")]
         public Nullable<int> PersonaSuperviosr_Id { get; set; }
 
-        [Display(Name = "Seleccione CRP")]
+        [Display(Name = "CRP")]
         public int Crp { get; set; }
 
-        [Display(Name = "Seleccione CDP")]
+        [Display(Name = "Fecha CRP")]
+        public DateTime FechaCrp { get; set; }
+
+        [Display(Name = "CDP")]
         public int Cdp { get; set; }
+
+        [Display(Name = "Fecha CDP")]
+        public DateTime FechaCdp { get; set; }
 
         [Display(Name = "Fecha Acta Inicio")]
         public DateTime FechaActaInicio { get; set; }
