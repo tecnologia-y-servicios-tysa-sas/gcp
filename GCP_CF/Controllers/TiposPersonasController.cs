@@ -10,25 +10,25 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class TiposPersonasController : Controller
+    public class TiposPersonaController : Controller
     {
         private GCPContext db = new GCPContext();
 
-        // GET: TiposPersonas
+        // GET: TiposPersona
         public ActionResult Index()
         {
-            var tiposPersonas = db.TiposPersonas.Include(t => t.TiposNaturaleza);
-            return View(tiposPersonas.ToList());
+            var TiposPersona = db.TiposPersona.Include(t => t.TiposNaturaleza);
+            return View(TiposPersona.ToList());
         }
 
-        // GET: TiposPersonas/Details/5
+        // GET: TiposPersona/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
+            TiposPersona tiposPersona = db.TiposPersona.Find(id);
             if (tiposPersona == null)
             {
                 return HttpNotFound();
@@ -36,14 +36,14 @@ namespace GCP_CF.Controllers
             return View(tiposPersona);
         }
 
-        // GET: TiposPersonas/Create
+        // GET: TiposPersona/Create
         public ActionResult Create()
         {
-            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion");
+            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturaleza, "Naturaleza_Id", "Descripcion");
             return View();
         }
 
-        // POST: TiposPersonas/Create
+        // POST: TiposPersona/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -52,32 +52,32 @@ namespace GCP_CF.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TiposPersonas.Add(tiposPersona);
+                db.TiposPersona.Add(tiposPersona);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
+            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturaleza, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
             return View(tiposPersona);
         }
 
-        // GET: TiposPersonas/Edit/5
+        // GET: TiposPersona/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
+            TiposPersona tiposPersona = db.TiposPersona.Find(id);
             if (tiposPersona == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
+            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturaleza, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
             return View(tiposPersona);
         }
 
-        // POST: TiposPersonas/Edit/5
+        // POST: TiposPersona/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -90,18 +90,18 @@ namespace GCP_CF.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
+            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturaleza, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
             return View(tiposPersona);
         }
 
-        // GET: TiposPersonas/Delete/5
+        // GET: TiposPersona/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
+            TiposPersona tiposPersona = db.TiposPersona.Find(id);
             if (tiposPersona == null)
             {
                 return HttpNotFound();
@@ -109,13 +109,13 @@ namespace GCP_CF.Controllers
             return View(tiposPersona);
         }
 
-        // POST: TiposPersonas/Delete/5
+        // POST: TiposPersona/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
-            db.TiposPersonas.Remove(tiposPersona);
+            TiposPersona tiposPersona = db.TiposPersona.Find(id);
+            db.TiposPersona.Remove(tiposPersona);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

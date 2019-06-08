@@ -12,7 +12,7 @@ namespace GCP_CF.Models
         public int fase_Id { get; set; }
         public string Descripcion { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<registrofacescontratos> registrofacescontratos { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Registrofacescontratos> Registrofacescontratos { get; set; }
     }
 }

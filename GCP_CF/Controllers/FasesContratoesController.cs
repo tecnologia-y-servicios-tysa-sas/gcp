@@ -10,24 +10,24 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class FasesContratoesController : Controller
+    public class FasesContratoController : Controller
     {
         private GCPContext db = new GCPContext();
 
-        // GET: FasesContratoes
+        // GET: FasesContrato
         public ActionResult Index()
         {
-            return View(db.FasesContratoes.ToList());
+            return View(db.FasesContrato.ToList());
         }
 
-        // GET: FasesContratoes/Details/5
+        // GET: FasesContrato/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FasesContrato fasesContrato = db.FasesContratoes.Find(id);
+            FasesContrato fasesContrato = db.FasesContrato.Find(id);
             if (fasesContrato == null)
             {
                 return HttpNotFound();
@@ -35,13 +35,13 @@ namespace GCP_CF.Controllers
             return View(fasesContrato);
         }
 
-        // GET: FasesContratoes/Create
+        // GET: FasesContrato/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: FasesContratoes/Create
+        // POST: FasesContrato/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -50,7 +50,7 @@ namespace GCP_CF.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.FasesContratoes.Add(fasesContrato);
+                db.FasesContrato.Add(fasesContrato);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -58,14 +58,14 @@ namespace GCP_CF.Controllers
             return View(fasesContrato);
         }
 
-        // GET: FasesContratoes/Edit/5
+        // GET: FasesContrato/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FasesContrato fasesContrato = db.FasesContratoes.Find(id);
+            FasesContrato fasesContrato = db.FasesContrato.Find(id);
             if (fasesContrato == null)
             {
                 return HttpNotFound();
@@ -73,7 +73,7 @@ namespace GCP_CF.Controllers
             return View(fasesContrato);
         }
 
-        // POST: FasesContratoes/Edit/5
+        // POST: FasesContrato/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,14 +89,14 @@ namespace GCP_CF.Controllers
             return View(fasesContrato);
         }
 
-        // GET: FasesContratoes/Delete/5
+        // GET: FasesContrato/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            FasesContrato fasesContrato = db.FasesContratoes.Find(id);
+            FasesContrato fasesContrato = db.FasesContrato.Find(id);
             if (fasesContrato == null)
             {
                 return HttpNotFound();
@@ -104,13 +104,13 @@ namespace GCP_CF.Controllers
             return View(fasesContrato);
         }
 
-        // POST: FasesContratoes/Delete/5
+        // POST: FasesContrato/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            FasesContrato fasesContrato = db.FasesContratoes.Find(id);
-            db.FasesContratoes.Remove(fasesContrato);
+            FasesContrato fasesContrato = db.FasesContrato.Find(id);
+            db.FasesContrato.Remove(fasesContrato);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -10,24 +10,24 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class EstadosActividadsController : Controller
+    public class EstadosActividadController : Controller
     {
         private GCPContext db = new GCPContext();
 
-        // GET: EstadosActividads
+        // GET: EstadosActividad
         public ActionResult Index()
         {
-            return View(db.EstadosActividads.ToList());
+            return View(db.EstadosActividad.ToList());
         }
 
-        // GET: EstadosActividads/Details/5
+        // GET: EstadosActividad/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadosActividad estadosActividad = db.EstadosActividads.Find(id);
+            EstadosActividad estadosActividad = db.EstadosActividad.Find(id);
             if (estadosActividad == null)
             {
                 return HttpNotFound();
@@ -35,13 +35,13 @@ namespace GCP_CF.Controllers
             return View(estadosActividad);
         }
 
-        // GET: EstadosActividads/Create
+        // GET: EstadosActividad/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: EstadosActividads/Create
+        // POST: EstadosActividad/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -50,7 +50,7 @@ namespace GCP_CF.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.EstadosActividads.Add(estadosActividad);
+                db.EstadosActividad.Add(estadosActividad);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -58,14 +58,14 @@ namespace GCP_CF.Controllers
             return View(estadosActividad);
         }
 
-        // GET: EstadosActividads/Edit/5
+        // GET: EstadosActividad/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadosActividad estadosActividad = db.EstadosActividads.Find(id);
+            EstadosActividad estadosActividad = db.EstadosActividad.Find(id);
             if (estadosActividad == null)
             {
                 return HttpNotFound();
@@ -73,7 +73,7 @@ namespace GCP_CF.Controllers
             return View(estadosActividad);
         }
 
-        // POST: EstadosActividads/Edit/5
+        // POST: EstadosActividad/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,14 +89,14 @@ namespace GCP_CF.Controllers
             return View(estadosActividad);
         }
 
-        // GET: EstadosActividads/Delete/5
+        // GET: EstadosActividad/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EstadosActividad estadosActividad = db.EstadosActividads.Find(id);
+            EstadosActividad estadosActividad = db.EstadosActividad.Find(id);
             if (estadosActividad == null)
             {
                 return HttpNotFound();
@@ -104,13 +104,13 @@ namespace GCP_CF.Controllers
             return View(estadosActividad);
         }
 
-        // POST: EstadosActividads/Delete/5
+        // POST: EstadosActividad/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EstadosActividad estadosActividad = db.EstadosActividads.Find(id);
-            db.EstadosActividads.Remove(estadosActividad);
+            EstadosActividad estadosActividad = db.EstadosActividad.Find(id);
+            db.EstadosActividad.Remove(estadosActividad);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

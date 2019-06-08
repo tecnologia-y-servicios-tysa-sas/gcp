@@ -9,7 +9,9 @@ namespace GCP_CF.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
+            SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.EntityFramework.MySqlMigrationSqlGenerator());
+
         }
 
         protected override void Seed(GCP_CF.Models.GCPContext context)

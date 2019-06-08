@@ -8,26 +8,27 @@ using System.Web;
 using System.Web.Mvc;
 using GCP_CF.Models;
 
+
 namespace GCP_CF.Controllers
 {
-    public class ContratosMarcoesController : Controller
+    public class ContratosMarcoController : Controller
     {
         private GCPContext db = new GCPContext();
 
-        // GET: ContratosMarcoes
+        // GET: ContratosMarco
         public ActionResult Index()
         {
-            return View(db.ContratosMarcoes.ToList());
+            return View(db.ContratosMarco.ToList());
         }
 
-        // GET: ContratosMarcoes/Details/5
+        // GET: ContratosMarco/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContratosMarco contratosMarco = db.ContratosMarcoes.Find(id);
+            ContratosMarco contratosMarco = db.ContratosMarco.Find(id);
             if (contratosMarco == null)
             {
                 return HttpNotFound();
@@ -35,13 +36,13 @@ namespace GCP_CF.Controllers
             return View(contratosMarco);
         }
 
-        // GET: ContratosMarcoes/Create
+        // GET: ContratosMarco/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ContratosMarcoes/Create
+        // POST: ContratosMarco/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -50,7 +51,7 @@ namespace GCP_CF.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.ContratosMarcoes.Add(contratosMarco);
+                db.ContratosMarco.Add(contratosMarco);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -58,14 +59,14 @@ namespace GCP_CF.Controllers
             return View(contratosMarco);
         }
 
-        // GET: ContratosMarcoes/Edit/5
+        // GET: ContratosMarco/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContratosMarco contratosMarco = db.ContratosMarcoes.Find(id);
+            ContratosMarco contratosMarco = db.ContratosMarco.Find(id);
             if (contratosMarco == null)
             {
                 return HttpNotFound();
@@ -73,7 +74,7 @@ namespace GCP_CF.Controllers
             return View(contratosMarco);
         }
 
-        // POST: ContratosMarcoes/Edit/5
+        // POST: ContratosMarco/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,14 +90,14 @@ namespace GCP_CF.Controllers
             return View(contratosMarco);
         }
 
-        // GET: ContratosMarcoes/Delete/5
+        // GET: ContratosMarco/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContratosMarco contratosMarco = db.ContratosMarcoes.Find(id);
+            ContratosMarco contratosMarco = db.ContratosMarco.Find(id);
             if (contratosMarco == null)
             {
                 return HttpNotFound();
@@ -104,13 +105,13 @@ namespace GCP_CF.Controllers
             return View(contratosMarco);
         }
 
-        // POST: ContratosMarcoes/Delete/5
+        // POST: ContratosMarco/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ContratosMarco contratosMarco = db.ContratosMarcoes.Find(id);
-            db.ContratosMarcoes.Remove(contratosMarco);
+            ContratosMarco contratosMarco = db.ContratosMarco.Find(id);
+            db.ContratosMarco.Remove(contratosMarco);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

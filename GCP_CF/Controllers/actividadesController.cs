@@ -11,7 +11,7 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class actividadesController : Controller
+    public class ActividadesController : Controller
     {
         private GCPContext db = new GCPContext();
 
@@ -31,8 +31,8 @@ namespace GCP_CF.Controllers
         public JsonResult ObtenerFasesContratos(int idContrato)
         {
             var response = new{ html = "",numContrato = ""};
-            List<registrofacescontratos> listadoFasesContrato;
-            listadoFasesContrato = (from e in db.registrofacescontratos.Include(a => a.FasesContrato)
+            List<Registrofacescontratos> listadoFasesContrato;
+            listadoFasesContrato = (from e in db.Registrofacescontratos.Include(a => a.FasesContrato)
                                     where e.Contrato_Id == idContrato select e).ToList();
             var table = "<table><thead><tr><th>Fase</th>";
                 table =  table + "<th>Acciones</th></tr></thead><tbody>";
@@ -42,7 +42,7 @@ namespace GCP_CF.Controllers
             if (listadoFasesContrato != null) {
                 if (listadoFasesContrato.Count > 0)
                 {
-                    foreach (registrofacescontratos item in listadoFasesContrato)
+                    foreach (Registrofacescontratos item in listadoFasesContrato)
                     {
                         //ViewBag.ContratoNo = item.Contratos.NumeroContrato;
                         numContrato = item.Contratos.NumeroContrato;
@@ -58,7 +58,7 @@ namespace GCP_CF.Controllers
                         }
 
                         table = table + "<tr class='" + classname + "'><td>" + item.FasesContrato.Descripcion + "</td>" +
-                            "<td style='width: 83px;cursor:pointer'><span onclick='VerActividadesFaseContrato(" + item.Contrato_Id +","+ item.fase_Id + ")' class='label label-default'>" +
+                            "<td style='width: 83px;cursor:pointer'><span onclick='VerActividadesFaseContrato(" + item.Contrato_Id +","+ item.Fase_Id + ")' class='label label-default'>" +
                             "Ver Actividades</span></td></tr>";
                     }
                     table = table + "</tbody></table>";
@@ -174,7 +174,7 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            actividades actividades = db.actividades.Find(id);
+            Actividades actividades = db.Actividades.Find(id);
             if (actividades == null)
             {
                 return HttpNotFound();
@@ -185,8 +185,8 @@ namespace GCP_CF.Controllers
         // GET: actividades/Create
         public ActionResult Create()
         {
-            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividads, "EstadoActividad_Id", "Descripcion");
-            ViewBag.registrofacescontratos_id = new SelectList(db.registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id");
+            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividad, "EstadoActividad_Id", "Descripcion");
+            ViewBag.registrofacescontratos_id = new SelectList(db.Registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id");
             return View();
         }
 
@@ -195,17 +195,17 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Actividad_Id,registrofacescontratos_id,FaseContrato_Id,Item,Descripción,DiasHabiles,FechaInicio,FechaFinal,EstadoActividad_Id,Observaciones")] actividades actividades)
+        public ActionResult Create([Bind(Include = "Actividad_Id,registrofacescontratos_id,FaseContrato_Id,Item,Descripción,DiasHabiles,FechaInicio,FechaFinal,EstadoActividad_Id,Observaciones")] Actividades actividades)
         {
             if (ModelState.IsValid)
             {
-                db.actividades.Add(actividades);
+                db.Actividades.Add(actividades);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividads, "EstadoActividad_Id", "Descripcion", actividades.EstadoActividad_Id);
-            ViewBag.registrofacescontratos_id = new SelectList(db.registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id", actividades.registrofacescontratos_id);
+            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividad, "EstadoActividad_Id", "Descripcion", actividades.EstadoActividad_Id);
+            ViewBag.registrofacescontratos_id = new SelectList(db.Registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id", actividades.Registrofacescontratos_id);
             return View(actividades);
         }
 
@@ -216,13 +216,13 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            actividades actividades = db.actividades.Find(id);
+            Actividades actividades = db.Actividades.Find(id);
             if (actividades == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividads, "EstadoActividad_Id", "Descripcion", actividades.EstadoActividad_Id);
-            ViewBag.registrofacescontratos_id = new SelectList(db.registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id", actividades.registrofacescontratos_id);
+            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividad, "EstadoActividad_Id", "Descripcion", actividades.EstadoActividad_Id);
+            ViewBag.registrofacescontratos_id = new SelectList(db.Registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id", actividades.Registrofacescontratos_id);
             return View(actividades);
         }
 
@@ -231,7 +231,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Actividad_Id,registrofacescontratos_id,FaseContrato_Id,Item,Descripción,DiasHabiles,FechaInicio,FechaFinal,EstadoActividad_Id,Observaciones")] actividades actividades)
+        public ActionResult Edit([Bind(Include = "Actividad_Id,registrofacescontratos_id,FaseContrato_Id,Item,Descripción,DiasHabiles,FechaInicio,FechaFinal,EstadoActividad_Id,Observaciones")] Actividades actividades)
         {
             if (ModelState.IsValid)
             {
@@ -239,8 +239,8 @@ namespace GCP_CF.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividads, "EstadoActividad_Id", "Descripcion", actividades.EstadoActividad_Id);
-            ViewBag.registrofacescontratos_id = new SelectList(db.registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id", actividades.registrofacescontratos_id);
+            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividad, "EstadoActividad_Id", "Descripcion", actividades.EstadoActividad_Id);
+            ViewBag.registrofacescontratos_id = new SelectList(db.Registrofacescontratos, "registrofacescontratos_id", "registrofacescontratos_id", actividades.Registrofacescontratos_id);
             return View(actividades);
         }
 
@@ -251,7 +251,7 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            actividades actividades = db.actividades.Find(id);
+            Actividades actividades = db.Actividades.Find(id);
             if (actividades == null)
             {
                 return HttpNotFound();
@@ -264,8 +264,8 @@ namespace GCP_CF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            actividades actividades = db.actividades.Find(id);
-            db.actividades.Remove(actividades);
+            Actividades actividades = db.Actividades.Find(id);
+            db.Actividades.Remove(actividades);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -41,7 +41,7 @@ namespace GCP_CF.Controllers
         // GET: Personas/Create
         public ActionResult Create()
         {
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersonas, "TipoPersona_Id", "Descripcion");
+            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace GCP_CF.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersonas, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
+            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
             return View(personas);
         }
 
@@ -75,7 +75,7 @@ namespace GCP_CF.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersonas, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
+            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
             return View(personas);
         }
 
@@ -92,7 +92,7 @@ namespace GCP_CF.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersonas, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
+            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
             return View(personas);
         }
 

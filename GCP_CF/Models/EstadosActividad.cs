@@ -12,7 +12,7 @@ namespace GCP_CF.Models
         public int EstadoActividad_Id { get; set; }
         public string Descripcion { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActividadesFases> ActividadesFases { get; set; }
     }
 }

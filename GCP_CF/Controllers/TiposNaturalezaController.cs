@@ -10,24 +10,24 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class TiposNaturalezasController : Controller
+    public class TiposNaturalezaController : Controller
     {
         private GCPContext db = new GCPContext();
 
-        // GET: TiposNaturalezas
+        // GET: TiposNaturaleza
         public ActionResult Index()
         {
-            return View(db.TiposNaturalezas.ToList());
+            return View(db.TiposNaturaleza.ToList());
         }
 
-        // GET: TiposNaturalezas/Details/5
+        // GET: TiposNaturaleza/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
+            TiposNaturaleza tiposNaturaleza = db.TiposNaturaleza.Find(id);
             if (tiposNaturaleza == null)
             {
                 return HttpNotFound();
@@ -35,13 +35,13 @@ namespace GCP_CF.Controllers
             return View(tiposNaturaleza);
         }
 
-        // GET: TiposNaturalezas/Create
+        // GET: TiposNaturaleza/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: TiposNaturalezas/Create
+        // POST: TiposNaturaleza/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -50,7 +50,7 @@ namespace GCP_CF.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TiposNaturalezas.Add(tiposNaturaleza);
+                db.TiposNaturaleza.Add(tiposNaturaleza);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -58,14 +58,14 @@ namespace GCP_CF.Controllers
             return View(tiposNaturaleza);
         }
 
-        // GET: TiposNaturalezas/Edit/5
+        // GET: TiposNaturaleza/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
+            TiposNaturaleza tiposNaturaleza = db.TiposNaturaleza.Find(id);
             if (tiposNaturaleza == null)
             {
                 return HttpNotFound();
@@ -73,7 +73,7 @@ namespace GCP_CF.Controllers
             return View(tiposNaturaleza);
         }
 
-        // POST: TiposNaturalezas/Edit/5
+        // POST: TiposNaturaleza/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,14 +89,14 @@ namespace GCP_CF.Controllers
             return View(tiposNaturaleza);
         }
 
-        // GET: TiposNaturalezas/Delete/5
+        // GET: TiposNaturaleza/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
+            TiposNaturaleza tiposNaturaleza = db.TiposNaturaleza.Find(id);
             if (tiposNaturaleza == null)
             {
                 return HttpNotFound();
@@ -104,13 +104,13 @@ namespace GCP_CF.Controllers
             return View(tiposNaturaleza);
         }
 
-        // POST: TiposNaturalezas/Delete/5
+        // POST: TiposNaturaleza/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
-            db.TiposNaturalezas.Remove(tiposNaturaleza);
+            TiposNaturaleza tiposNaturaleza = db.TiposNaturaleza.Find(id);
+            db.TiposNaturaleza.Remove(tiposNaturaleza);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GCP_CF.Models
 {
@@ -70,5 +71,21 @@ namespace GCP_CF.Models
 
         [Display(Name = "Seleccione Contrato Marco")]
         public Nullable<int> ContratoMarco_Id { get; set; }
+
+
+
+        [ForeignKey("Persona_Id")]
+        public virtual Personas EntidadContratante { get; set; }
+
+        [ForeignKey("PersonaAbogado_Id")]
+        public virtual Personas PersonaAbogado { get; set; }
+
+        [ForeignKey("PersonaSuperviosr_Id")]
+        public virtual Personas PersonaSuperviosr { get; set; }
+
+        [ForeignKey("PersonaSupervisorTecnico_Id")]
+        public virtual Personas PersonaSupervisorTecnico { get; set; }
+
+        
     }
 }
