@@ -32,7 +32,7 @@ namespace GCP_CF.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tiposNaturalezas);
+            return View(tiposNaturaleza);
         }
 
         // GET: TiposNaturaleza/Create
@@ -46,7 +46,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturalezas tiposNaturalezas)
+        public ActionResult Create([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturaleza tiposNaturaleza)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace GCP_CF.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(tiposNaturalezas);
+            return View(tiposNaturaleza);
         }
 
         // GET: TiposNaturaleza/Edit/5
@@ -70,7 +70,7 @@ namespace GCP_CF.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tiposNaturalezas);
+            return View(tiposNaturaleza);
         }
 
         // POST: TiposNaturaleza/Edit/5
@@ -78,7 +78,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturalezas tiposNaturalezas)
+        public ActionResult Edit([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturaleza tiposNaturalezas)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace GCP_CF.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tiposNaturalezas);
+            return View(tiposNaturaleza);
         }
 
         // POST: TiposNaturaleza/Delete/5

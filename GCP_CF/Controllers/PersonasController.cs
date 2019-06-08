@@ -17,7 +17,7 @@ namespace GCP_CF.Controllers
         // GET: Personas
         public ActionResult Index()
         {
-            var personas = db.Personas.Include(p => p.TiposPersonas);
+            var personas = db.Personas.Include(p => p.TiposPersona);
             return View(personas.ToList());
         }
 

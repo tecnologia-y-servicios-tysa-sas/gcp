@@ -138,10 +138,17 @@ namespace GCP_CF.Migrations
                         Descripcion = c.String(unicode: false),
                         Naturaleza_Id = c.Int(),
                         Cargo = c.String(unicode: false),
+                        TiposNaturaleza_Naturaleza_Id = c.Int(),
+                        TiposNaturaleza_Naturaleza_Id1 = c.Int(),
+                        TiposNaturalezas_Naturaleza_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.TipoPersona_Id)
-                .ForeignKey("dbo.TiposNaturaleza", t => t.Naturaleza_Id)
-                .Index(t => t.Naturaleza_Id);
+                .ForeignKey("dbo.TiposNaturaleza", t => t.TiposNaturaleza_Naturaleza_Id)
+                .ForeignKey("dbo.TiposNaturaleza", t => t.TiposNaturaleza_Naturaleza_Id1)
+                .ForeignKey("dbo.TiposNaturaleza", t => t.TiposNaturalezas_Naturaleza_Id)
+                .Index(t => t.TiposNaturaleza_Naturaleza_Id)
+                .Index(t => t.TiposNaturaleza_Naturaleza_Id1)
+                .Index(t => t.TiposNaturalezas_Naturaleza_Id);
             
             CreateTable(
                 "dbo.TiposNaturaleza",
@@ -220,14 +227,18 @@ namespace GCP_CF.Migrations
             DropForeignKey("dbo.Contratos", "PersonaSuperviosr_Id", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "PersonaAbogado_Id", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "Persona_Id", "dbo.Personas");
-            DropForeignKey("dbo.TiposPersona", "Naturaleza_Id", "dbo.TiposNaturaleza");
+            DropForeignKey("dbo.TiposPersona", "TiposNaturalezas_Naturaleza_Id", "dbo.TiposNaturaleza");
+            DropForeignKey("dbo.TiposPersona", "TiposNaturaleza_Naturaleza_Id1", "dbo.TiposNaturaleza");
+            DropForeignKey("dbo.TiposPersona", "TiposNaturaleza_Naturaleza_Id", "dbo.TiposNaturaleza");
             DropForeignKey("dbo.Personas", "TipoPersona_Id", "dbo.TiposPersona");
             DropForeignKey("dbo.Contratos", "Personas_Persona_Id2", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "Personas_Persona_Id1", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "Personas_Persona_Id", "dbo.Personas");
             DropIndex("dbo.Registrofacescontratos", new[] { "Contrato_Id" });
             DropIndex("dbo.Registrofacescontratos", new[] { "Fase_Id" });
-            DropIndex("dbo.TiposPersona", new[] { "Naturaleza_Id" });
+            DropIndex("dbo.TiposPersona", new[] { "TiposNaturalezas_Naturaleza_Id" });
+            DropIndex("dbo.TiposPersona", new[] { "TiposNaturaleza_Naturaleza_Id1" });
+            DropIndex("dbo.TiposPersona", new[] { "TiposNaturaleza_Naturaleza_Id" });
             DropIndex("dbo.Personas", new[] { "TipoPersona_Id" });
             DropIndex("dbo.Contratos", new[] { "TiposEstadoContrato_TiposEstadoContrato_Id" });
             DropIndex("dbo.Contratos", new[] { "Personas_Persona_Id2" });

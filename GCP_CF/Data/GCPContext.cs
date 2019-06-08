@@ -45,34 +45,5 @@ namespace GCP_CF.Models
 
         public DbSet<TiposPersona> TiposPersona { get; set; }
 
-}
-
-    //public class GCPContext : DbContext
-    //{
-    //    public GCPContext()
-    //       : base("DefaultConnection")
-    //    {
-
-    //    }
-
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.Contratos> Contratos { get; set; }
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.ContratosMarco> ContratosMarcoes { get; set; }
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.TiposContratos> TiposContratos { get; set; }
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.TiposEstadoContrato> TiposEstadoContrato { get; set; }
-
-
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.Personas> Personas { get; set; }
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.TiposPersona> TiposPersona { get; set; }
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.TiposNaturaleza> TiposNaturaleza { get; set; }
-
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.EstadosActividad> EstadosActividad { get; set; }
-
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.FasesContrato> FasesContrato { get; set; }
-
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.ActividadesFases> ActividadesFases { get; set; }
-
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.Actividades> Actividades { get; set; }
-
-    //    public System.Data.Entity.DbSet<GCP_CF.Models.Registrofacescontratos> Registrofacescontratos { get; set; }
-    //}
+    }
 }

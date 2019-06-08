@@ -153,9 +153,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906081341022_initial.cs" />
-    <Compile Include="Migrations\201906081341022_initial.Designer.cs">
-      <DependentUpon>201906081341022_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201906081429483_initial.cs" />
+    <Compile Include="Migrations\201906081429483_initial.Designer.cs">
+      <DependentUpon>201906081429483_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actividades.cs" />
@@ -169,8 +169,8 @@
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\TiposContratos.cs" />
     <Compile Include="Models\TiposEstadoContrato.cs" />
-    <Compile Include="Models\TiposNaturalezas.cs" />
-    <Compile Include="Models\TiposPersonas.cs" />
+    <Compile Include="Models\TiposNaturaleza.cs" />
+    <Compile Include="Models\TiposPersona.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -300,11 +300,6 @@
     <Content Include="Views\actividades\Edit.cshtml" />
     <Content Include="Views\actividades\Index.cshtml" />
     <Content Include="Views\actividades\_CargaContratos.cshtml" />
-    <Content Include="Views\TiposNaturalezas\Create.cshtml" />
-    <Content Include="Views\TiposNaturalezas\Delete.cshtml" />
-    <Content Include="Views\TiposNaturalezas\Details.cshtml" />
-    <Content Include="Views\TiposNaturalezas\Edit.cshtml" />
-    <Content Include="Views\TiposNaturalezas\Index.cshtml" />
     <Content Include="Views\TiposPersonas\Create.cshtml" />
     <Content Include="Views\TiposPersonas\Delete.cshtml" />
     <Content Include="Views\TiposPersonas\Details.cshtml" />
@@ -325,8 +320,8 @@
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906081341022_initial.resx">
-      <DependentUpon>201906081341022_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906081429483_initial.resx">
+      <DependentUpon>201906081429483_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

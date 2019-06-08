@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GCP_CF.Models
 {
-    public class TiposNaturalezas
+    public class TiposNaturaleza
     {
         [Key]
         public int Naturaleza_Id { get; set; }
