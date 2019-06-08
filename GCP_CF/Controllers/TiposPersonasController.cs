@@ -17,7 +17,7 @@ namespace GCP_CF.Controllers
         // GET: TiposPersonas
         public ActionResult Index()
         {
-            var tiposPersonas = db.TiposPersonas.Include(t => t.TiposNaturaleza);
+            var tiposPersonas = db.TiposPersonas.Include(t => t.TiposNaturalezas);
             return View(tiposPersonas.ToList());
         }
 
@@ -28,12 +28,12 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
-            if (tiposPersona == null)
+            TiposPersonas tiposPersonas = db.TiposPersonas.Find(id);
+            if (tiposPersonas == null)
             {
                 return HttpNotFound();
             }
-            return View(tiposPersona);
+            return View(tiposPersonas);
         }
 
         // GET: TiposPersonas/Create
@@ -48,17 +48,17 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersona tiposPersona)
+        public ActionResult Create([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersonas tiposPersonas)
         {
             if (ModelState.IsValid)
             {
-                db.TiposPersonas.Add(tiposPersona);
+                db.TiposPersonas.Add(tiposPersonas);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
-            return View(tiposPersona);
+            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersonas.Naturaleza_Id);
+            return View(tiposPersonas);
         }
 
         // GET: TiposPersonas/Edit/5
@@ -68,13 +68,13 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
-            if (tiposPersona == null)
+            TiposPersonas tiposPersonas = db.TiposPersonas.Find(id);
+            if (tiposPersonas == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
-            return View(tiposPersona);
+            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersonas.Naturaleza_Id);
+            return View(tiposPersonas);
         }
 
         // POST: TiposPersonas/Edit/5
@@ -82,16 +82,16 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersona tiposPersona)
+        public ActionResult Edit([Bind(Include = "TipoPersona_Id,Descripcion,Naturaleza_Id,Cargo")] TiposPersonas tiposPersonas)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tiposPersona).State = EntityState.Modified;
+                db.Entry(tiposPersonas).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersona.Naturaleza_Id);
-            return View(tiposPersona);
+            ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturalezas, "Naturaleza_Id", "Descripcion", tiposPersonas.Naturaleza_Id);
+            return View(tiposPersonas);
         }
 
         // GET: TiposPersonas/Delete/5
@@ -101,12 +101,12 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
-            if (tiposPersona == null)
+            TiposPersonas tiposPersonas = db.TiposPersonas.Find(id);
+            if (tiposPersonas == null)
             {
                 return HttpNotFound();
             }
-            return View(tiposPersona);
+            return View(tiposPersonas);
         }
 
         // POST: TiposPersonas/Delete/5
@@ -114,8 +114,8 @@ namespace GCP_CF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TiposPersona tiposPersona = db.TiposPersonas.Find(id);
-            db.TiposPersonas.Remove(tiposPersona);
+            TiposPersonas tiposPersonas = db.TiposPersonas.Find(id);
+            db.TiposPersonas.Remove(tiposPersonas);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -27,12 +27,12 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
-            if (tiposNaturaleza == null)
+            TiposNaturalezas tiposNaturalezas = db.TiposNaturalezas.Find(id);
+            if (tiposNaturalezas == null)
             {
                 return HttpNotFound();
             }
-            return View(tiposNaturaleza);
+            return View(tiposNaturalezas);
         }
 
         // GET: TiposNaturalezas/Create
@@ -46,16 +46,16 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturaleza tiposNaturaleza)
+        public ActionResult Create([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturalezas tiposNaturalezas)
         {
             if (ModelState.IsValid)
             {
-                db.TiposNaturalezas.Add(tiposNaturaleza);
+                db.TiposNaturalezas.Add(tiposNaturalezas);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(tiposNaturaleza);
+            return View(tiposNaturalezas);
         }
 
         // GET: TiposNaturalezas/Edit/5
@@ -65,12 +65,12 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
-            if (tiposNaturaleza == null)
+            TiposNaturalezas tiposNaturalezas = db.TiposNaturalezas.Find(id);
+            if (tiposNaturalezas == null)
             {
                 return HttpNotFound();
             }
-            return View(tiposNaturaleza);
+            return View(tiposNaturalezas);
         }
 
         // POST: TiposNaturalezas/Edit/5
@@ -78,15 +78,15 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturaleza tiposNaturaleza)
+        public ActionResult Edit([Bind(Include = "Naturaleza_Id,Descripcion")] TiposNaturalezas tiposNaturalezas)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tiposNaturaleza).State = EntityState.Modified;
+                db.Entry(tiposNaturalezas).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(tiposNaturaleza);
+            return View(tiposNaturalezas);
         }
 
         // GET: TiposNaturalezas/Delete/5
@@ -96,12 +96,12 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
-            if (tiposNaturaleza == null)
+            TiposNaturalezas tiposNaturalezas = db.TiposNaturalezas.Find(id);
+            if (tiposNaturalezas == null)
             {
                 return HttpNotFound();
             }
-            return View(tiposNaturaleza);
+            return View(tiposNaturalezas);
         }
 
         // POST: TiposNaturalezas/Delete/5
@@ -109,8 +109,8 @@ namespace GCP_CF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TiposNaturaleza tiposNaturaleza = db.TiposNaturalezas.Find(id);
-            db.TiposNaturalezas.Remove(tiposNaturaleza);
+            TiposNaturalezas tiposNaturalezas = db.TiposNaturalezas.Find(id);
+            db.TiposNaturalezas.Remove(tiposNaturalezas);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

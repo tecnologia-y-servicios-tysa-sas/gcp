@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GCP_CF.Models
 {
     public class Personas
     {
-
         [Key]
         public int Persona_Id { get; set; }
         public string Nombres { get; set; }
@@ -17,16 +14,6 @@ namespace GCP_CF.Models
         public string Correoo { get; set; }
         public Nullable<int> TipoPersona_Id { get; set; }
 
-        [NotMapped]
-        [Display(Name = "Nombre Completo")]
-        public String NombreCompleto { get { return Nombres + ' ' + Apellidos; } }
-
-        public virtual TiposPersona TiposPersona { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contratos> Contratos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contratos> Contratos1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contratos> Contratos2 { get; set; }
+        public virtual TiposPersonas TiposPersonas { get; set; }
     }
 }

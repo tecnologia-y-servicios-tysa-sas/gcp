@@ -21,8 +21,8 @@ namespace GCP_CF.Models
 
 
         public System.Data.Entity.DbSet<GCP_CF.Models.Personas> Personas { get; set; }
-        public System.Data.Entity.DbSet<GCP_CF.Models.TiposPersona> TiposPersonas { get; set; }
-        public System.Data.Entity.DbSet<GCP_CF.Models.TiposNaturaleza> TiposNaturalezas { get; set; }
+        public System.Data.Entity.DbSet<GCP_CF.Models.TiposPersonas> TiposPersonas { get; set; }
+        public System.Data.Entity.DbSet<GCP_CF.Models.TiposNaturalezas> TiposNaturalezas { get; set; }
 
         public System.Data.Entity.DbSet<GCP_CF.Models.EstadosActividad> EstadosActividads { get; set; }
 
