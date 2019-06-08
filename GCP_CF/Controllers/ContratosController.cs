@@ -38,14 +38,16 @@ namespace GCP_CF.Controllers
         // GET: Contratos/Create
         public ActionResult Create()
         {
-            ViewBag.PersonaCliente_Id = new SelectList(db.Personas.Where(x=> x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
+            //var list = db.Contratos.Where(c => c.ContratoMarco_Id == null).ToList();
+            ViewBag.PersonaCliente_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSupervisor_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
             ViewBag.TiposEstadoContrato_Id = new SelectList(db.TiposEstadoContratoes, "TiposEstadoContrato_Id", "Descripcion");
-            ViewBag.ContratoMarco_Id = new SelectList(db.ContratosMarcoes, "ContratoMarco_Id", "Descripcion");
+            ViewBag.Contrato_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato");
             ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion");
-            
+
+
             return View();
         }
 
@@ -54,10 +56,14 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FechaInicio,TipoContrato_Id,Persona_Id,ObjetoContractual,Plazo,FechaTerminacion,PersonaAbogado_Id,PersonaSuperviosr_Id,Crp,Cdp,FechaActaInicio,TipoEstadoContrato_Id,Year,ValorContrato,ValorAdministrar,Honorarios,Ejecucion,PorcentajeFacturado,PorcentajeFacturadoHonorarios,PersonaSupervisorTecnico_Id,ContratoMarco_Id")] Contratos contratos)
+        public ActionResult Create([Bind(Include = "Id,NumeroContrato,FechaInicio,TipoContrato_Id,Persona_Id,ObjetoContractual,Plazo,FechaTerminacion,PersonaAbogado_Id,PersonaSuperviosr_Id,Crp,Cdp,FechaActaInicio,TipoEstadoContrato_Id,Year,ValorContrato,ValorAdministrar,Honorarios,Ejecucion,PorcentajeFacturado,PorcentajeFacturadoHonorarios,PersonaSupervisorTecnico_Id,ContratoMarco_Id")] Contratos contratos)
         {
             if (ModelState.IsValid)
             {
+                contratos.ValorContrato = Convert.ToDecimal(contratos.ValorContrato);
+                contratos.ValorAdministrar = Convert.ToDecimal(contratos.ValorAdministrar);
+                contratos.Honorarios = Convert.ToDecimal(contratos.Honorarios);
+
                 db.Contratos.Add(contratos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -67,7 +73,7 @@ namespace GCP_CF.Controllers
             ViewBag.PersonaSupervisor_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
             ViewBag.TiposEstadoContrato_Id = new SelectList(db.TiposEstadoContratoes, "TiposEstadoContrato_Id", "Descripcion");
-            ViewBag.ContratoMarco_Id = new SelectList(db.ContratosMarcoes, "ContratoMarco_Id", "Descripcion");
+            ViewBag.Contrato_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato");
             ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion");
 
             return View(contratos);
