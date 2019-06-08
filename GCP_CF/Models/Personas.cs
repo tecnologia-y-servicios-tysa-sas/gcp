@@ -7,6 +7,7 @@ namespace GCP_CF.Models
 {
     public class Personas
     {
+
         [Key]
         public int Persona_Id { get; set; }
         public string Nombres { get; set; }
