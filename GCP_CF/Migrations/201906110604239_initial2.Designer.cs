@@ -7,13 +7,13 @@ namespace GCP_CF.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class initial : IMigrationMetadata
+    public sealed partial class initial2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201906081429483_initial"; }
+            get { return "201906110604239_initial2"; }
         }
         
         string IMigrationMetadata.Source

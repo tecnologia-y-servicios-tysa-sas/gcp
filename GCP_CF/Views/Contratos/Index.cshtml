@@ -15,7 +15,8 @@
             @Html.DisplayNameFor(model => model.FechaInicio)
         </th>
         <th class="head-table">
-            @Html.DisplayNameFor(model => model.TipoContrato_Id)
+            Contrato Marco
+            @*@Html.DisplayNameFor(model => model.TipoContrato_Id)*@
         </th>
         <th class="head-table">
             @Html.DisplayNameFor(model => model.Persona_Id)
@@ -83,7 +84,8 @@
             @Html.DisplayFor(modelItem => item.FechaInicio)
         </td>
         <td class="border-cell">
-            @Html.DisplayFor(modelItem => item.TipoContrato_Id)
+            @Html.DisplayFor(modelItem => item.NumeroContrato)
+            @*@Html.DisplayFor(modelItem => item.TipoContrato_Id)*@
         </td>
         <td class="border-cell">
             @Html.DisplayFor(modelItem => item.Persona_Id)

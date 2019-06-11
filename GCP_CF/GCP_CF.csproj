@@ -141,33 +141,40 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\actividadesController.cs" />
     <Compile Include="Controllers\ContratosController.cs" />
-    <Compile Include="Controllers\ContratosMarcoController.cs" />
     <Compile Include="Controllers\EstadosActividadController.cs" />
     <Compile Include="Controllers\FasesContratoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\TiposContratosController.cs" />
-    <Compile Include="Controllers\TiposEstadoContratoesController.cs" />
+    <Compile Include="Controllers\TiposEstadoContratosController.cs" />
     <Compile Include="Controllers\TiposNaturalezaController.cs" />
     <Compile Include="Controllers\TiposPersonaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906081429483_initial.cs" />
-    <Compile Include="Migrations\201906081429483_initial.Designer.cs">
-      <DependentUpon>201906081429483_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201906110424186_initial.cs" />
+    <Compile Include="Migrations\201906110424186_initial.Designer.cs">
+      <DependentUpon>201906110424186_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906110602482_initial1.cs" />
+    <Compile Include="Migrations\201906110602482_initial1.Designer.cs">
+      <DependentUpon>201906110602482_initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906110604239_initial2.cs" />
+    <Compile Include="Migrations\201906110604239_initial2.Designer.cs">
+      <DependentUpon>201906110604239_initial2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actividades.cs" />
     <Compile Include="Models\ActividadesFases.cs" />
     <Compile Include="Models\Contratos.cs" />
-    <Compile Include="Models\ContratosMarco.cs" />
     <Compile Include="Models\EstadosActividad.cs" />
     <Compile Include="Models\FasesContrato.cs" />
     <Compile Include="Data\GCPContext.cs" />
     <Compile Include="Models\Personas.cs" />
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\TiposContratos.cs" />
+    <Compile Include="Models\TiposDocumentos.cs" />
     <Compile Include="Models\TiposEstadoContrato.cs" />
     <Compile Include="Models\TiposNaturaleza.cs" />
     <Compile Include="Models\TiposPersona.cs" />
@@ -178,7 +185,7 @@
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrapCustom.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Alcaldia.png" />
     <Content Include="Content\Images\banner.png" />
@@ -256,11 +263,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ContratosMarco\Create.cshtml" />
-    <Content Include="Views\ContratosMarco\Delete.cshtml" />
-    <Content Include="Views\ContratosMarco\Details.cshtml" />
-    <Content Include="Views\ContratosMarco\Edit.cshtml" />
-    <Content Include="Views\ContratosMarco\Index.cshtml" />
     <Content Include="Views\TiposNaturaleza\Create.cshtml" />
     <Content Include="Views\TiposNaturaleza\Delete.cshtml" />
     <Content Include="Views\TiposNaturaleza\Details.cshtml" />
@@ -317,8 +319,14 @@
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906081429483_initial.resx">
-      <DependentUpon>201906081429483_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906110424186_initial.resx">
+      <DependentUpon>201906110424186_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906110602482_initial1.resx">
+      <DependentUpon>201906110602482_initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906110604239_initial2.resx">
+      <DependentUpon>201906110604239_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

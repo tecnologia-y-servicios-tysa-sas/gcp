@@ -46,7 +46,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TipoContrato_Id,Descripcion")] TiposContratos tiposContratos)
+        public ActionResult Create([Bind(Include = "TipoContrato_Id,Descripcion,Termino")] TiposContratos tiposContratos)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TipoContrato_Id,Descripcion")] TiposContratos tiposContratos)
+        public ActionResult Edit([Bind(Include = "TipoContrato_Id,Descripcion,Termino")] TiposContratos tiposContratos)
         {
             if (ModelState.IsValid)
             {

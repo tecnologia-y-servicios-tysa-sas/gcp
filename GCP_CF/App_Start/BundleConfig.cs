@@ -28,7 +28,7 @@ namespace GCP_CF
                       "~/Scripts/non-Generic-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrapCustom.css",
                       "~/Content/site.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/StyleTable.css"

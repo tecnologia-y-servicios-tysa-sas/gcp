@@ -102,7 +102,6 @@ namespace GCP_CF.Migrations
                 .ForeignKey("dbo.Personas", t => t.PersonaAbogado_Id)
                 .ForeignKey("dbo.Personas", t => t.PersonaSuperviosr_Id)
                 .ForeignKey("dbo.Personas", t => t.PersonaSupervisorTecnico_Id)
-                .ForeignKey("dbo.ContratosMarco", t => t.ContratoMarco_Id)
                 .ForeignKey("dbo.TiposContratos", t => t.TipoContrato_Id)
                 .ForeignKey("dbo.TiposEstadoContrato", t => t.TiposEstadoContrato_TiposEstadoContrato_Id)
                 .Index(t => t.TipoContrato_Id)
@@ -110,7 +109,6 @@ namespace GCP_CF.Migrations
                 .Index(t => t.PersonaAbogado_Id)
                 .Index(t => t.PersonaSuperviosr_Id)
                 .Index(t => t.PersonaSupervisorTecnico_Id)
-                .Index(t => t.ContratoMarco_Id)
                 .Index(t => t.Personas_Persona_Id)
                 .Index(t => t.Personas_Persona_Id1)
                 .Index(t => t.Personas_Persona_Id2)
@@ -140,17 +138,10 @@ namespace GCP_CF.Migrations
                         Descripcion = c.String(unicode: false),
                         Naturaleza_Id = c.Int(),
                         Cargo = c.String(unicode: false),
-                        TiposNaturaleza_Naturaleza_Id = c.Int(),
-                        TiposNaturaleza_Naturaleza_Id1 = c.Int(),
-                        TiposNaturalezas_Naturaleza_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.TipoPersona_Id)
-                .ForeignKey("dbo.TiposNaturaleza", t => t.TiposNaturaleza_Naturaleza_Id)
-                .ForeignKey("dbo.TiposNaturaleza", t => t.TiposNaturaleza_Naturaleza_Id1)
-                .ForeignKey("dbo.TiposNaturaleza", t => t.TiposNaturalezas_Naturaleza_Id)
-                .Index(t => t.TiposNaturaleza_Naturaleza_Id)
-                .Index(t => t.TiposNaturaleza_Naturaleza_Id1)
-                .Index(t => t.TiposNaturalezas_Naturaleza_Id);
+                .ForeignKey("dbo.TiposNaturaleza", t => t.Naturaleza_Id)
+                .Index(t => t.Naturaleza_Id);
             
             CreateTable(
                 "dbo.TiposNaturaleza",
@@ -185,15 +176,6 @@ namespace GCP_CF.Migrations
                 .Index(t => t.Contrato_Id);
             
             CreateTable(
-                "dbo.ContratosMarco",
-                c => new
-                    {
-                        ContratoMarco_Id = c.Int(nullable: false, identity: true),
-                        Descripcion = c.String(unicode: false),
-                    })
-                .PrimaryKey(t => t.ContratoMarco_Id);
-            
-            CreateTable(
                 "dbo.TiposContratos",
                 c => new
                     {
@@ -217,7 +199,6 @@ namespace GCP_CF.Migrations
         {
             DropForeignKey("dbo.Contratos", "TiposEstadoContrato_TiposEstadoContrato_Id", "dbo.TiposEstadoContrato");
             DropForeignKey("dbo.Contratos", "TipoContrato_Id", "dbo.TiposContratos");
-            DropForeignKey("dbo.Contratos", "ContratoMarco_Id", "dbo.ContratosMarco");
             DropForeignKey("dbo.Actividades", "EstadoActividad_Id", "dbo.EstadosActividad");
             DropForeignKey("dbo.ActividadesFases", "FasesContrato_fase_Id", "dbo.FasesContrato");
             DropForeignKey("dbo.Registrofacescontratos", "Fase_Id", "dbo.FasesContrato");
@@ -229,24 +210,19 @@ namespace GCP_CF.Migrations
             DropForeignKey("dbo.Contratos", "PersonaSuperviosr_Id", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "PersonaAbogado_Id", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "Persona_Id", "dbo.Personas");
-            DropForeignKey("dbo.TiposPersona", "TiposNaturalezas_Naturaleza_Id", "dbo.TiposNaturaleza");
-            DropForeignKey("dbo.TiposPersona", "TiposNaturaleza_Naturaleza_Id1", "dbo.TiposNaturaleza");
-            DropForeignKey("dbo.TiposPersona", "TiposNaturaleza_Naturaleza_Id", "dbo.TiposNaturaleza");
+            DropForeignKey("dbo.TiposPersona", "Naturaleza_Id", "dbo.TiposNaturaleza");
             DropForeignKey("dbo.Personas", "TipoPersona_Id", "dbo.TiposPersona");
             DropForeignKey("dbo.Contratos", "Personas_Persona_Id2", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "Personas_Persona_Id1", "dbo.Personas");
             DropForeignKey("dbo.Contratos", "Personas_Persona_Id", "dbo.Personas");
             DropIndex("dbo.Registrofacescontratos", new[] { "Contrato_Id" });
             DropIndex("dbo.Registrofacescontratos", new[] { "Fase_Id" });
-            DropIndex("dbo.TiposPersona", new[] { "TiposNaturalezas_Naturaleza_Id" });
-            DropIndex("dbo.TiposPersona", new[] { "TiposNaturaleza_Naturaleza_Id1" });
-            DropIndex("dbo.TiposPersona", new[] { "TiposNaturaleza_Naturaleza_Id" });
+            DropIndex("dbo.TiposPersona", new[] { "Naturaleza_Id" });
             DropIndex("dbo.Personas", new[] { "TipoPersona_Id" });
             DropIndex("dbo.Contratos", new[] { "TiposEstadoContrato_TiposEstadoContrato_Id" });
             DropIndex("dbo.Contratos", new[] { "Personas_Persona_Id2" });
             DropIndex("dbo.Contratos", new[] { "Personas_Persona_Id1" });
             DropIndex("dbo.Contratos", new[] { "Personas_Persona_Id" });
-            DropIndex("dbo.Contratos", new[] { "ContratoMarco_Id" });
             DropIndex("dbo.Contratos", new[] { "PersonaSupervisorTecnico_Id" });
             DropIndex("dbo.Contratos", new[] { "PersonaSuperviosr_Id" });
             DropIndex("dbo.Contratos", new[] { "PersonaAbogado_Id" });
@@ -259,7 +235,6 @@ namespace GCP_CF.Migrations
             DropIndex("dbo.Actividades", new[] { "Registrofacescontratos_id" });
             DropTable("dbo.TiposEstadoContrato");
             DropTable("dbo.TiposContratos");
-            DropTable("dbo.ContratosMarco");
             DropTable("dbo.Registrofacescontratos");
             DropTable("dbo.FasesContrato");
             DropTable("dbo.TiposNaturaleza");

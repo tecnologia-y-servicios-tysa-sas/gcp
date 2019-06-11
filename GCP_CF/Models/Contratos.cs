@@ -21,6 +21,7 @@ namespace GCP_CF.Models
         [Display(Name = "Entidad Contratante")]
         public int Persona_Id { get; set; }
 
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Objeto Contractual")]
         public string ObjetoContractual { get; set; }
 
@@ -56,12 +57,15 @@ namespace GCP_CF.Models
         [Display(Name = "Año")]
         public int Year { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C0}")]
         [Display(Name = "Valor Contrato")]
         public decimal ValorContrato { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C0}")]
         [Display(Name = "Valor Administrar")]
         public decimal ValorAdministrar { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Honorarios { get; set; }
 
         public int Ejecucion { get; set; }
@@ -78,7 +82,8 @@ namespace GCP_CF.Models
         [Display(Name = "Seleccione Contrato Marco")]
         public Nullable<int> ContratoMarco_Id { get; set; }
 
-
+        //[ForeignKey("ContratoMarco_Id")]
+        //public virtual ContratosMarco ContratosMarco{ get; set; }
 
         [ForeignKey("Persona_Id")]
         public virtual Personas EntidadContratante { get; set; }
@@ -87,7 +92,7 @@ namespace GCP_CF.Models
         public virtual Personas PersonaAbogado { get; set; }
 
         [ForeignKey("PersonaSuperviosr_Id")]
-        public virtual Personas PersonaSuperviosr { get; set; }
+        public virtual Personas PersonaSupervisor { get; set; }
 
         [ForeignKey("PersonaSupervisorTecnico_Id")]
         public virtual Personas PersonaSupervisorTecnico { get; set; }

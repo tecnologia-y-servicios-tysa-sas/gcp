@@ -27,7 +27,7 @@ namespace GCP_CF.Models
 
         public DbSet<Contratos> Contratos { get; set; }
 
-        public DbSet<ContratosMarco> ContratosMarco { get; set; }
+        //public DbSet<ContratosMarco> ContratosMarco { get; set; }
 
         public DbSet<EstadosActividad> EstadosActividad { get; set; }
 

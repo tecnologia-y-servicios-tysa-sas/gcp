@@ -12,9 +12,7 @@ namespace GCP_CF.Models
         public Nullable<int> Naturaleza_Id { get; set; }
         public string Cargo { get; set; }
 
-        public virtual TiposNaturaleza TiposNaturaleza { get; set; }
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual TiposNaturaleza TiposNaturaleza { get; set; } 
         public virtual ICollection<Personas> Personas { get; set; }
-        public virtual TiposNaturaleza TiposNaturalezas { get; set; }
     }
 }
