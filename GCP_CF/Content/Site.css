@@ -28,10 +28,12 @@ textarea {
     border: 1px solid #fff !important;
     background-color: #0058a1 !important;
     color: #ffffff !important;
+    font-size: 9pt;
 }
 
 .border-cell {
     border: 1px solid #dddddd !important;
+    font-size:8pt;
 }
 
 
@@ -340,4 +342,30 @@ a.article:hover {
     background-repeat: no-repeat;
     color: #fff;
     height: 473px;
+}
+
+.btn-edit {
+    background: url(Images/edit.png)no-repeat;
+    display: inline-table;
+    width: 24px;
+    height: 24px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+
+
+.btn-delete {
+    background: url(Images/delete.png)no-repeat;
+    display: inline-table;
+    width: 24px;
+    height: 24px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+.btn-details {
+    background: url(Images/details.png)no-repeat;
+    display: inline-table;
+    width: 24px;
+    height: 24px;
+    text-indent: -9999px; /* hides the link text */
 }

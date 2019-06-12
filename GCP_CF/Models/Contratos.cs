@@ -12,6 +12,7 @@ namespace GCP_CF.Models
         [Display(Name = "Numero de Contrato")]
         public string NumeroContrato { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Fecha de Inicio")]
         public DateTime FechaInicio { get; set; }
 
@@ -27,6 +28,7 @@ namespace GCP_CF.Models
 
         public int Plazo { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Fecha de Terminacion")]
         public DateTime FechaTerminacion { get; set; }
 
@@ -39,15 +41,21 @@ namespace GCP_CF.Models
         [Display(Name = "CRP")]
         public int Crp { get; set; }
 
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Fecha CRP")]
         public DateTime FechaCrp { get; set; }
 
         [Display(Name = "CDP")]
         public int Cdp { get; set; }
 
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Fecha CDP")]
         public DateTime FechaCdp { get; set; }
 
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Display(Name = "Fecha Acta Inicio")]
         public DateTime FechaActaInicio { get; set; }
 
@@ -81,6 +89,9 @@ namespace GCP_CF.Models
 
         [Display(Name = "Seleccione Contrato Marco")]
         public Nullable<int> ContratoMarco_Id { get; set; }
+
+        [NotMapped]
+        public string Estado { get; set; }
 
         //[ForeignKey("ContratoMarco_Id")]
         //public virtual ContratosMarco ContratosMarco{ get; set; }

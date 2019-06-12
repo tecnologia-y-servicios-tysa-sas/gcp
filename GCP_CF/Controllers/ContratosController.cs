@@ -17,11 +17,23 @@ namespace GCP_CF.Controllers
         // GET: Contratos
         public ActionResult Index()
         {
+            var estados = db.TiposEstadoContrato.ToList();
             //Son marco
             var list = (from contratos in db.Contratos
                         join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
-                        where contratos.ContratoMarco_Id == null && contratos.TipoEstadoContrato_Id == 1
+                        where contratos.ContratoMarco_Id == null 
                         select contratos).ToList();
+
+            foreach (var item in list)
+            {
+                foreach (var estado in estados)
+                {
+                    if(item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
+                    {
+                        item.Estado = estado.Descripcion;
+                    }
+                }
+            }
  
             return View(list.ToList());
         }
