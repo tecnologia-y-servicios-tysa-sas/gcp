@@ -3,8 +3,8 @@
     @model GCP_CF.Models.ActividadesFases
     ViewBag.Title = "Index";
 }
-
 <script src="~/Scripts/noGeneric/Actividades.js"></script>
+@if (TempData["error"] != null){<script>alert("@TempData["error"]");</script>}
 
 <div class="row">
     <h3 style="float:left;padding-left:13px">Listado de Contratos</h3>
@@ -13,10 +13,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="width:147px;">Número Contratual</th>
-                        <th style="width:125px;">Fecha de Inicio</th>
-                        <th>Objeto Contractual</th>
-                        <th>Acciones</th>
+                        <th class="col-md-1">Número Contratual</th>
+                        <th class="col-md-1">Fecha de Inicio</th>
+                        <th class="col-md-5">Objeto Contractual</th>
+                        <th class="col-md-3">Asignar Fases</th>
+                        <th class="col-md-1">Fases</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,12 +47,33 @@
                             <td>
                                 @itemContrato.ObjetoContractual
                             </td>
-                            <td style="width:83px;cursor:pointer"><span onclick="VerFases(@itemContrato.Contrato_Id)" class="label label-default">Ver Fases</span></td>
+                            <td>
+                                @using (Html.BeginForm("CrearContratoFase", "Actividades", FormMethod.Post, new { id = "formContratoFase_" + itemContrato.Contrato_Id.ToString() }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Contrato_Id" value="@itemContrato.Contrato_Id" />
+                                    <select class="form-control" name="Fase_Id" onchange="openconfirmModal('@itemContrato.Contrato_Id', '@itemContrato.NumeroContrato' );">
+                                        <option value="0">-- FASES DISPONIBLES --</option>
+                                        @{
+                                            foreach (var fase in ViewBag.ListaFases)
+                                            {
+                                                <option value="@fase.fase_Id">@fase.Descripcion </option>
+                                            }
+                                        }
+                                    </select>
+                                }
+                            </td>
+                            <td>
+                                <button class="btn-success form-control" onclick="VerFases(@itemContrato.Contrato_Id)">Listar</button>
+
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
+        <br />
+
     </div>
 </div>
 <br />
@@ -143,6 +165,23 @@
 </div>
 
 
+<div class="modal" id="confirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-left">Asignaciòn de Fases</h4>
+            </div>
+            <div class="modal-body text-left">
+                <p>Desea asignar esta fase a este contrato: &nbsp;<b><i id="codcontratoModal"></i></b>&nbsp;?</p>
+                <input type="hidden" id="codigoFormulario" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary" onclick="AsignarContratoFase()">Si</button>
+                <button type="button" data-dismiss="modal" class="btn">No</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

@@ -12,7 +12,25 @@ namespace GCP_CF.Models
         public int fase_Id { get; set; }
         public string Descripcion { get; set; }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Registrofacescontratos> Registrofacescontratos { get; set; }
+
+        public List<FasesContrato> Listar()
+        {
+            var fases = new List<FasesContrato>();
+            try
+            {
+                using (var context = new GCPContext())
+                {
+                    fases = context.FasesContrato.ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return fases;
+        }
     }
 }

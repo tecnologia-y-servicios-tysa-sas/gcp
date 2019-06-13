@@ -1,23 +1,39 @@
-﻿function VerFases(idContrato) {
+﻿function openconfirmModal(FormId, codContrato) {
+    $('#confirm').modal({ backdrop: 'static', keyboard: false });
+    $('#codcontratoModal').html(codContrato);
+    $('#codigoFormulario').val(FormId);
+}
+
+
+function AsignarContratoFase() {
+    var codformulario = "formContratoFase_" + $('#codigoFormulario').val();
+    $('#' + codformulario).submit();
+}
+
+
+function VerFases(CodContrato) {
+
+    console.log(CodContrato);
+
     $.ajax({
         async: false,
         url: "/Actividades/ObtenerFasesContratos",
         type: "POST",
-        data: JSON.stringify({ idContrato: idContrato }),
+        data: JSON.stringify({ 'idContrato': CodContrato }),
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         success: function (data, status, j) {
             $("#tableFases").html(data.html);
             $("#divFases").show();
             $("#texto1").html('<h3 style="float:left;padding-left:13px">Fases del Contrato ' + data.numContrato + '</h3>');
-            
-            
+
+
         }
     });
 }
 var idContrato;
 var idFase;
-function VerActividadesFaseContrato(idContrato,idFase) {
+function VerActividadesFaseContrato(idContrato, idFase) {
     $.ajax({
         async: false,
         url: "/Actividades/ObtenerActividadesFasesContratos",
@@ -29,10 +45,10 @@ function VerActividadesFaseContrato(idContrato,idFase) {
             $("#tableActividadesFases").html(data.html);
             $("#divActividadesFases").show();
             $("#texto2").html('<h3 style="float:left;padding-left:13px">Actividades de la fase ' + data.numFase + '  del Contrato ' + data.numContrato + '</h3>');
-            
+
             $("#hfvContrato").val(data.idContrato);
             $("#hfvFase").val(data.idFase);
-            
+
         }
     });
 }

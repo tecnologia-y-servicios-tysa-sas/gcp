@@ -17,6 +17,7 @@ namespace GCP_CF.Controllers
         // GET: FasesContrato
         public ActionResult Index()
         {
+
             return View(db.FasesContrato.ToList());
         }
 
@@ -123,5 +124,6 @@ namespace GCP_CF.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
