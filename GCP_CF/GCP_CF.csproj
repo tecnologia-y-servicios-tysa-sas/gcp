@@ -185,6 +185,7 @@
     <Content Include="Content\Images\details.png" />
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\eso.ico" />
+    <Content Include="Content\Images\filter.png" />
     <Content Include="Content\Images\Programa.png" />
     <Content Include="Content\StyleTable.css" />
     <Content Include="favicon.ico" />

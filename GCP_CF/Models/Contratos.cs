@@ -12,7 +12,7 @@ namespace GCP_CF.Models
         [Display(Name = "Numero de Contrato")]
         public string NumeroContrato { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha de Inicio")]
         public DateTime FechaInicio { get; set; }
 
@@ -28,7 +28,7 @@ namespace GCP_CF.Models
 
         public int Plazo { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha de Terminacion")]
         public DateTime FechaTerminacion { get; set; }
 
@@ -42,7 +42,7 @@ namespace GCP_CF.Models
         public int Crp { get; set; }
 
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha CRP")]
         public DateTime FechaCrp { get; set; }
 
@@ -50,12 +50,12 @@ namespace GCP_CF.Models
         public int Cdp { get; set; }
 
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha CDP")]
         public DateTime FechaCdp { get; set; }
 
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha Acta Inicio")]
         public DateTime FechaActaInicio { get; set; }
 
@@ -65,16 +65,17 @@ namespace GCP_CF.Models
         [Display(Name = "Año")]
         public int Year { get; set; }
 
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
         [DisplayFormat(DataFormatString = "{0:C0}")]
         [Display(Name = "Valor Contrato")]
-        public decimal ValorContrato { get; set; }
+        public double ValorContrato { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:C0}")]
+        //[DisplayFormat(DataFormatString = "{0:C0}")]
         [Display(Name = "Valor Administrar")]
-        public decimal ValorAdministrar { get; set; }
+        public double ValorAdministrar { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:C0}")]
-        public decimal Honorarios { get; set; }
+        //[DisplayFormat(DataFormatString = "{0:C0}")]
+        public double Honorarios { get; set; }
 
         public int Ejecucion { get; set; }
 
