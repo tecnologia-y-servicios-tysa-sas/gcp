@@ -219,9 +219,7 @@ namespace GCP_CF.Controllers
         {
             //Consulto Estados
             var estados = db.TiposEstadoContrato.ToList();
-
             //Son marco
-
             var list = (from contratos in db.Contratos
                         join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
                         where contratos.ContratoMarco_Id == null && contratos.TipoEstadoContrato_Id == 3
@@ -343,9 +341,9 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Contratos contratos)
+        public ActionResult Edit([Bind(Include = "Id,FechaInicio,TipoContrato_Id,Persona_Id,ObjetoContractual,Plazo,FechaTerminacion,PersonaAbogado_Id,PersonaSuperviosr_Id,Crp,Cdp,FechaActaInicio,TipoEstadoContrato_Id,Year,ValorContrato,ValorAdministrar,Honorarios,Ejecucion,PorcentajeFacturado,PorcentajeFacturadoHonorarios,PersonaSupervisorTecnico_Id,ContratoMarco_Id")] Contratos contratos)
         {
-            try
+            if (ModelState.IsValid)
             {
                 db.Entry(contratos).State = EntityState.Modified;
                 db.SaveChanges();

@@ -9,67 +9,6 @@
 <p class="text-left">
     @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-default btn-large" })
 </p>
-<div class="row">
-    <div class="col-lg-12 text-left">
-        <a class="btn-filter" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" title="Filtrar">
-        </a>
-    </div>
-    @Html.Hidden("activeFilter")
-</div>
-<div class="row">
-    <div class="col-md-6 text-left">
-        <div class="collapse" id="collapseExample" style="position:absolute">
-            <div class="card card-body box text-center">
-                <div class="container-fluid">
-                    @using (Html.BeginForm("Index","Contratos",FormMethod.Post))
-                    {
-                        <br />
-                        <h4 class="line-green"><strong>Opciones del Filtro</strong></h4>
-                        <div class="space-4"></div>
-                        <div>@Html.Label("Ver Contrato Desde", htmlAttributes: new { @class = "control-label" })</div>
-                        <div class='input-group date' id='datepicker'>
-                            @Html.Editor("fechaInicio", new { htmlAttributes = new { @class = "form-control", @Id = "Fecha", @value = ViewBag.fechainicio } })
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                        <br />
-                        <div>@Html.Label("Hasta", htmlAttributes: new { @class = "control-label" })</div>
-                        <div class='input-group date' id='datepicker2'>
-                            @Html.Editor("fechaFin", new { htmlAttributes = new { @class = "form-control", @Id = "Fecha", @value = ViewBag.fechafin } })
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                        <br />
-                        <div>@Html.Label("Número de Contrato", htmlAttributes: new { @class = "control-label" })</div>
-                        <div><input id="searchNumero" type="text" name="numero" autocomplete="off" class="form-control" value="@ViewData["numero"]" placeholder="Buscar Por Número de Contrato" /></div>
-                        <br />
-                        <div>@Html.Label("Entidad Contrante", htmlAttributes: new { @class = "control-label" })</div>
-                        <div><input id="searchEntidad" type="text" name="entidad" autocomplete="off" class="form-control" value="@ViewData["entidad"]" placeholder="Buscar Por Entidad Contratante" /></div>
-                        <br />
-                        <div>
-                            <br />
-                            <div><strong>Estados</strong></div>
-                            <br />
-                            @Html.CheckBox("chkAbiertos", true, htmlAttributes: new { @id = "chkAbiertos", @onchange = "checkabiertos(this);" }) Activos |
-                            @Html.CheckBox("chkCerrados", false, htmlAttributes: new { @id = "chkCerrados", @onchange = "checkcerrados(this);" }) Inactivos |
-                            @Html.CheckBox("chkTodos", false, htmlAttributes: new { @id = "chkTodos", @onchange = "checktodos(this);" }) Todos
-                        </div>
-                        <br />
-                        <br />
-                        <button id="btnSearch" type="submit" class="btn btn-default btn-large">Buscar</button>
-                        <div class="space-3"></div>
-                        <br />
-
-                        <br />
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6"></div>
-</div>
 <table class="table">
     <tr>
         <th class="head-table">
@@ -90,7 +29,7 @@
         <th class="head-table">
             @Html.DisplayNameFor(model => model.FechaTerminacion)
         </th>
-        <th class="head-table">
+        <th class="head-table" >
             @Html.DisplayNameFor(model => model.ValorContrato)
         </th>
         <th class="head-table">
@@ -112,225 +51,123 @@
             @Html.DisplayNameFor(model => model.FechaCdp)
         </th>
         <th class="head-table">
-            Estado
+           Estado
         </th>
         @* <th class="head-table">
-                @Html.DisplayNameFor(model => model.FechaActaInicio)
-            </th>
-             <th class="head-table">
-                @Html.DisplayNameFor(model => model.TipoEstadoContrato_Id)
-            </th>
-             <th class="head-table">
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
+            @Html.DisplayNameFor(model => model.FechaActaInicio)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.TipoEstadoContrato_Id)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
 
-             <th class="head-table">
-                @Html.DisplayNameFor(model => model.ValorAdministrar)
-            </th>
-             <th class="head-table">
-                @Html.DisplayNameFor(model => model.Honorarios)
-            </th>
-             <th class="head-table">
-                @Html.DisplayNameFor(model => model.Ejecucion)
-            </th>
-             <th class="head-table">
-                @Html.DisplayNameFor(model => model.PorcentajeFacturado)
-            </th>
-             <th class="head-table">
-                @Html.DisplayNameFor(model => model.PorcentajeFacturadoHonorarios)
-            </th>
-             <th class="head-table">
-                Supervisor Técnico
-            </th>
-             <th class="head-table">
-               Contrato Marco
-            </th>*@
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.ValorAdministrar)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Honorarios)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.Ejecucion)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.PorcentajeFacturado)
+        </th>
+         <th class="head-table">
+            @Html.DisplayNameFor(model => model.PorcentajeFacturadoHonorarios)
+        </th>
+         <th class="head-table">
+            Supervisor Técnico
+        </th>
+         <th class="head-table">
+           Contrato Marco
+        </th>*@
         <th class="head-table"></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaInicio)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.NumeroContrato)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
-            </td>
-            <td class="border-cell" style="font-size:9pt;width:300px">
-                @Html.DisplayFor(modelItem => item.ObjetoContractual)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Plazo)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaTerminacion)
-            </td>
-            <td class="border-cell" style="width:120px">
-                @Html.DisplayFor(modelItem => item.ValorContrato)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.PersonaAbogado.NombreCompleto)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Crp)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaCrp)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Cdp)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaCdp)
-            </td>
-            <td class="border-cell" style="width:90px">
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            @*<td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.FechaActaInicio)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.TipoEstadoContrato_Id)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.Year)
-                </td>
+@foreach (var item in Model) {
+    <tr>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaInicio)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.NumeroContrato)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
+        </td>
+        <td class="border-cell" style="font-size:9pt;width:300px">
+            @Html.DisplayFor(modelItem => item.ObjetoContractual)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Plazo)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaTerminacion)
+        </td>
+        <td class="border-cell" style="width:120px">
+            @Html.DisplayFor(modelItem => item.ValorContrato)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PersonaAbogado.NombreCompleto)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Crp)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaCrp)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Cdp)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaCdp)
+        </td>
+        <td class="border-cell" style="width:90px">
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        @*<td class="border-cell">
+            @Html.DisplayFor(modelItem => item.FechaActaInicio)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.TipoEstadoContrato_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Year)
+        </td>
 
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.ValorAdministrar)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.Honorarios)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.Ejecucion)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.PorcentajeFacturado)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.PorcentajeFacturadoHonorarios)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.PersonaSupervisorTecnico_Id)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.ContratoMarco_Id)
-                </td>*@
-            <td class="border-cell" style="width:120px">
-                @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
-                @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
-                @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
-            </td>
-        </tr>
-    }
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.ValorAdministrar)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Honorarios)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.Ejecucion)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PorcentajeFacturado)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PorcentajeFacturadoHonorarios)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.PersonaSupervisorTecnico_Id)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.ContratoMarco_Id)
+        </td>*@
+        <td class="border-cell" style="width:120px">
+            @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
+            @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
+            @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
+        </td>
+    </tr>
+}
 
 </table>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-<script>
-    var activeFilter = 0;
-
-    $("#searchNumero").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '@Url.Action("GetSearchNumeroContrato", "Contratos")',
-                    dataType: "json",
-                    type: "POST",
-                    data: {
-                        numeroContrato: $("#searchNumero").val()},
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.NumeroContrato, value: item.NumeroContrato };
-                        }));
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Error.");
-                    }
-                });
-            }
-            });
-
-    $("#searchEntidad").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '@Url.Action("GetSearchEntidadContratante", "Contratos")',
-                    dataType: "json",
-                    type: "POST",
-                    data: {
-                        entidad: $("#searchEntidad").val()},
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Entidad, value: item.Entidad };
-                        }));
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Error.");
-                    }
-                });
-            }
-    });
-
-    function checkabiertos(valor) {
-        if (valor.value == "true") {
-            $("#chkCerrados").prop("checked", false);
-            $("#chkTodos").prop("checked", false);
-        }
-    }
-
-    function checkcerrados(valor) {
-
-        if (valor.value == "true") {
-            $("#chkAbiertos").prop("checked", false);
-            $("#chkTodos").prop("checked", false);
-        }
-    }
-
-    function checktodos(valor) {
-        if (valor.value == "true") {
-            $("#chkAbiertos").prop("checked", false);
-            $("#chkCerrados").prop("checked", false);
-        }
-    }
-
-
-</script>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-    <script type="text/javascript">
-        $(function () {
-            $.validator.methods.date = function (value, element) {
-                return this.optional(element) || moment(value, true).isValid();
-            }
-
-            $('#datepicker').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                useCurrent: false
-            });
-
-            $('#datepicker2').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                useCurrent: false
-            });
-
-          
-
-           
-
-
-        });
-    </script>
-}
