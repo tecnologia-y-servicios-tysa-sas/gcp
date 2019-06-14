@@ -156,6 +156,10 @@
     <Compile Include="Migrations\201906121131371_initial.Designer.cs">
       <DependentUpon>201906121131371_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906140033223_Subir.cs" />
+    <Compile Include="Migrations\201906140033223_Subir.Designer.cs">
+      <DependentUpon>201906140033223_Subir.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actividades.cs" />
     <Compile Include="Models\ActividadesFases.cs" />
@@ -317,6 +321,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201906121131371_initial.resx">
       <DependentUpon>201906121131371_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906140033223_Subir.resx">
+      <DependentUpon>201906140033223_Subir.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
