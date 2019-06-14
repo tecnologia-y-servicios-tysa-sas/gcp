@@ -25,6 +25,7 @@ namespace GCP_CF.Controllers
         public ActionResult Index( string numero, string chkCerrados, string chkTodos, string chkAbiertos,
                                    string entidad, DateTime? fechaInicio, DateTime? fechaFin)
         {
+
             if(string.IsNullOrEmpty(numero) && chkCerrados== "false" && chkTodos=="false" &&
                chkAbiertos=="false" && string.IsNullOrEmpty(entidad) && fechaInicio == null &&  fechaFin == null)
             {
