@@ -39,20 +39,20 @@ namespace GCP_CF.Models
         public Nullable<int> PersonaSuperviosr_Id { get; set; }
 
         [Display(Name = "CRP")]
-        public int Crp { get; set; }
+        public Nullable<int>  Crp { get; set; }
 
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha CRP")]
-        public DateTime FechaCrp { get; set; }
+        public DateTime? FechaCrp { get; set; }
 
         [Display(Name = "CDP")]
-        public int Cdp { get; set; }
+        public Nullable<int>  Cdp { get; set; }
 
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha CDP")]
-        public DateTime FechaCdp { get; set; }
+        public DateTime? FechaCdp { get; set; }
 
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -63,18 +63,17 @@ namespace GCP_CF.Models
         public Nullable<int> TipoEstadoContrato_Id { get; set; }
 
         [Display(Name = "Año")]
-        public int Year { get; set; }
+        public Nullable<int> Year { get; set; }
 
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
-        [DisplayFormat(DataFormatString = "{0:C0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
         [Display(Name = "Valor Contrato")]
         public double ValorContrato { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{0:C0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
         [Display(Name = "Valor Administrar")]
         public double ValorAdministrar { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{0:C0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
         public double Honorarios { get; set; }
 
         public int Ejecucion { get; set; }

@@ -245,15 +245,15 @@
             }
 
         });
-            //$("#valorContrato").blur(function () {
-            //    $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-            //});
-            //$("#valorAdministrar").blur(function () {
-            //    $("#valorAdministrar").val(parseFloat($('#valorAdministrar').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-            //});
-            //$("#honorarios").blur(function () {
-            //    $("#honorarios").val(parseFloat($('#honorarios').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-            //});
+        $("#valorContrato").blur(function () {
+        $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        });
+        $("#valorAdministrar").blur(function () {
+           $("#valorAdministrar").val(parseFloat($('#valorAdministrar').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        });
+        $("#honorarios").blur(function () {
+            $("#honorarios").val(parseFloat($('#honorarios').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        });
     </script>
 
 }

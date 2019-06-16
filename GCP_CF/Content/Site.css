@@ -35,6 +35,30 @@ textarea {
     border: 1px solid #dddddd !important;
     font-size:8pt;
 }
+
+.alert-Error {
+    width: 30%;
+    background-color: #fb4233;
+    border-radius: 3px;
+}
+.alert-Succes {
+    width: 22%;
+    background-color: #2fa731;
+    border-radius: 3px;
+}
+
+.alert-Warning {
+    width: 22%;
+    background-color: #fb831b;
+    border-radius: 3px;
+}
+
+.alert-Information {
+    width: 22%;
+    background-color: #148bba;
+    border-radius: 3px;
+}
+
 .box {
     background-color: #d8e1eb;
     min-height: 100px;
