@@ -65,15 +65,15 @@ namespace GCP_CF.Models
         [Display(Name = "Año")]
         public Nullable<int> Year { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         [Display(Name = "Valor Contrato")]
         public double ValorContrato { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         [Display(Name = "Valor Administrar")]
         public double ValorAdministrar { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:C0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         public double Honorarios { get; set; }
 
         public int Ejecucion { get; set; }

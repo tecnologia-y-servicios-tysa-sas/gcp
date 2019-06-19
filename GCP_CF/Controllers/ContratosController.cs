@@ -22,210 +22,15 @@ namespace GCP_CF.Controllers
             return View(list.ToList());
         }
 
-        [HttpPost]
-        public ActionResult Index( string numero, string chkCerrados, string chkTodos, string chkAbiertos,
-                                   string entidad, DateTime? fechaInicio, DateTime? fechaFin)
-        {
-            if(string.IsNullOrEmpty(numero) && chkCerrados== "false" && chkTodos=="false" &&
-               chkAbiertos=="false" && string.IsNullOrEmpty(entidad) && fechaInicio == null &&  fechaFin == null)
-            {
-                List<Contratos> list = GetContratos();
-                return View(list.ToList());
-            }
-            else
-            {
-                var listAll = db.Contratos.Where(c => c.ContratoMarco_Id == null).ToList();
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "false" &&
-                   chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "true" && chkTodos == "false" &&
-                   chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin)&&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id== 2)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "false" &&
-                   chkAbiertos == "true" && !string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 3)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                  chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                 chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2)).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                chkAbiertos == "false" && string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2)
-                                                      ).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "true" && chkTodos == "false" &&
-                chkAbiertos == "false" && string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 2) ).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "false" &&
-                chkAbiertos == "true" && string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 3)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                 chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2) ).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                chkAbiertos == "false" && string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2)).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "true" && chkTodos == "false" &&
-                chkAbiertos == "false" && string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 2)).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "false" &&
-               chkAbiertos == "true" && string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 3)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                  chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "true" && chkTodos == "false" &&
-                    chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 2)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "false" &&
-                   chkAbiertos == "true" && !string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 3)).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                chkAbiertos == "false" && !string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2)).ToList();
-                }
-                if (!string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                chkAbiertos == "false" && string.IsNullOrEmpty(entidad) && fechaInicio != null && fechaFin != null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaInicio >= fechaInicio) &&
-                                                      (c.ContratoMarco_Id == null && c.FechaTerminacion <= fechaFin) &&
-                                                      (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2) ).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "true" &&
-                chkAbiertos == "false" && string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id >= 2)).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "true" && chkTodos == "false" &&
-                chkAbiertos == "false" && string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 2)).ToList();
-                }
-                if (string.IsNullOrEmpty(numero) && chkCerrados == "false" && chkTodos == "false" &&
-               chkAbiertos == "true" && string.IsNullOrEmpty(entidad) && fechaInicio == null && fechaFin == null)
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.TipoEstadoContrato_Id == 3)).ToList();
-                }
-                else if (!string.IsNullOrEmpty(numero))
-                {
-                    listAll = db.Contratos.Where(c => c.ContratoMarco_Id == null && c.NumeroContrato.Contains(numero)).ToList();
-                }
-                else if (!string.IsNullOrEmpty(entidad))
-                {
-                    listAll = db.Contratos.Where(c => (c.ContratoMarco_Id == null && c.EntidadContratante.Nombres.Contains(entidad)) && (c.ContratoMarco_Id == null && c.EntidadContratante.Apellidos.Contains(entidad))).ToList();
-                }
-
-                AddEstados(listAll);
-                return View(listAll.ToList());
-            }
-
-        }
-
-        private void AddEstados(List<Contratos> listAll)
-        {
-            var estados = db.TiposEstadoContrato.ToList();
-
-            foreach (var item in listAll)
-            {
-                foreach (var estado in estados)
-                {
-                    if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
-                    {
-                        item.Estado = estado.Descripcion;
-                    }
-                }
-            }
-        }
 
         private List<Contratos> GetContratos()
         {
             //Consulto Estados
             var estados = db.TiposEstadoContrato.ToList();
-
             //Son marco
-
             var list = (from contratos in db.Contratos
                         join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
-                        where contratos.ContratoMarco_Id == null && contratos.TipoEstadoContrato_Id == 3
+                        where contratos.ContratoMarco_Id == null
                         select contratos).ToList();
 
             foreach (var item in list)
@@ -238,7 +43,6 @@ namespace GCP_CF.Controllers
                     }
                 }
             }
-
             return list;
         }
 
@@ -391,6 +195,13 @@ namespace GCP_CF.Controllers
             db.Contratos.Remove(contratos);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public PartialViewResult PartialContratos()
+        {
+            List<Contratos> list = GetContratos();
+            return PartialView(list.ToList());
         }
 
         public JsonResult GetSearchNumeroContrato(string numeroContrato)

@@ -25,15 +25,15 @@ textarea {
 
 .head-table {
     text-align: center !important;
-    border: 1px solid #fff !important;
+    /*border: 1px solid #fff !important;*/
     background-color: #0058a1 !important;
     color: #ffffff !important;
     font-size: 9pt;
 }
 
 .border-cell {
-    border: 1px solid #dddddd !important;
-    font-size:8pt;
+    /*border: 1px solid #dddddd !important;*/
+    font-size: 8pt;
 }
 
 .alert-Error {

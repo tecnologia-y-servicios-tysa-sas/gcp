@@ -20,15 +20,16 @@
             @Html.DropDownList("ContratoMarco_Id", null, "Seleccione Contrato Marco", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.ContratoMarco_Id, "", new { @class = "text-danger" })
         </div>
-        <div class="col-md-4">
+        @*<div class="col-md-4">
             <div> @Html.LabelFor(model => model.TipoContrato_Id, "Tipo Contrato", htmlAttributes: new { @class = "control-label" })</div>
             @Html.DropDownList("TipoContrato_Id", null, "Seleccione Tipo Contrato", htmlAttributes: new { @class = "form-control", @id = "tipoContrato" })
             @Html.ValidationMessageFor(model => model.TipoContrato_Id, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-md-4">
+        </div>*@
+        <div class="col-md-8">
             <div>@Html.LabelFor(model => model.NumeroContrato, htmlAttributes: new { @class = "control-label" })</div>
-            @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato" } })
-            @Html.ValidationMessageFor(model => model.NumeroContrato, "", new { @class = "text-danger" })
+            @*@Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato" } })
+            @Html.ValidationMessageFor(model => model.NumeroContrato, "", new { @class = "text-danger" })*@
+            @Model.NumeroContrato
         </div>
     </div>
     <div class="form-group">
@@ -212,13 +213,14 @@
             });
 
 
-            $('#FechaCrp').datetimepicker({
+
+            $('#datetimeFechaCrp').datetimepicker({
                 locale: 'es',
                 format: 'DD/MM/YYYY',
                 useCurrent: false
             });
 
-            $('#FechaCdp').datetimepicker({
+            $('#datetimeFechaCdp').datetimepicker({
                 locale: 'es',
                 format: 'DD/MM/YYYY',
                 useCurrent: false
@@ -245,15 +247,15 @@
             }
 
         });
-        $("#valorContrato").blur(function () {
-        $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        });
-        $("#valorAdministrar").blur(function () {
-           $("#valorAdministrar").val(parseFloat($('#valorAdministrar').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        });
-        $("#honorarios").blur(function () {
-            $("#honorarios").val(parseFloat($('#honorarios').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        });
+        //$("#valorContrato").blur(function () {
+        //$("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        //});
+        //$("#valorAdministrar").blur(function () {
+        //   $("#valorAdministrar").val(parseFloat($('#valorAdministrar').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        //});
+        //$("#honorarios").blur(function () {
+        //    $("#honorarios").val(parseFloat($('#honorarios').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        //});
     </script>
 
 }

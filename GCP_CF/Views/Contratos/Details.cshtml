@@ -1,186 +1,182 @@
 ﻿@model GCP_CF.Models.Contratos
 
 @{
-    ViewBag.Title = "Details";
+    /**/
+
+    ViewBag.Title = "Detalles";
 }
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href=" https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href=" https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
 
-<h2>Details</h2>
+<h2>Contrato Marco</h2>
+<table id="table" class="table  table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th class="head-table">
+                Numero Contrato
+            </th>
+            <th class="head-table">
+                Entidad Contratante
+            </th>
 
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Plazo)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.FechaTerminacion)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ValorContrato)
+            </th>
+            <th class="head-table">
+                Abogado
+            </th>
+            <th class="head-table">
+                Supervisor
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Crp)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.FechaCrp)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Cdp)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.FechaCdp)
+            </th>
+            <th class="head-table">
+                Estado
+            </th>
+            @*<th class="head-table">Acciones</th>*@
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ObjetoContractual)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.FechaInicio)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.NumeroContrato)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.EntidadContratante.NombreCompleto)
+            </td>
+
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.Plazo)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.FechaTerminacion)
+            </td>
+            <td class="border-cell" style="width:100px">
+                @Html.DisplayFor(model => model.ValorContrato)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.PersonaAbogado.NombreCompleto)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.PersonaSupervisor.NombreCompleto)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.Crp)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.FechaCrp)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.Cdp)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.FechaCdp)
+            </td>
+            <td class="border-cell" style="width:90px">
+                @Html.DisplayFor(model => model.Estado)
+            </td>
+
+            @*<td class="border-cell" style="width:120px">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })
+                </td>*@
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(model => model.ObjetoContractual)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<br />
+<br />
+
+<h2>Detalles del Contrato</h2>
 <div>
-    <h4>Contratos</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaInicio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaInicio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoContrato_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoContrato_Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Persona_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Persona_Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ObjetoContractual)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ObjetoContractual)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Plazo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Plazo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaTerminacion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaTerminacion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PersonaAbogado_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PersonaAbogado_Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PersonaSuperviosr_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PersonaSuperviosr_Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Crp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Crp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cdp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cdp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaActaInicio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FechaActaInicio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TipoEstadoContrato_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TipoEstadoContrato_Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ValorContrato)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ValorContrato)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ValorAdministrar)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ValorAdministrar)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Honorarios)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Honorarios)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Ejecucion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Ejecucion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PorcentajeFacturado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PorcentajeFacturado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PorcentajeFacturadoHonorarios)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PorcentajeFacturadoHonorarios)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PersonaSupervisorTecnico_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PersonaSupervisorTecnico_Id)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ContratoMarco_Id)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ContratoMarco_Id)
-        </dd>
-
-    </dl>
+    @*@Html.Partial("PartialContratos")*@
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Contrato_Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Contrato_Id }) |
+    @Html.ActionLink("Regresar a la lista", "Index")
 </p>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+@*<script src="//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"></script>*@
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            var table = $('#table').DataTable({
+                responsive: true,
+                "language": {
+                    "lengthMenu": "Display _MENU_ records per page",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay información disponible",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+            new $.fn.dataTable.FixedHeader(table);
+        });
+    </script>
+}

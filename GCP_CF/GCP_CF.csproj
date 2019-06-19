@@ -309,6 +309,7 @@
     <Content Include="Views\TiposPersona\Details.cshtml" />
     <Content Include="Views\TiposPersona\Edit.cshtml" />
     <Content Include="Views\TiposPersona\Index.cshtml" />
+    <Content Include="Views\Contratos\PartialContratos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
