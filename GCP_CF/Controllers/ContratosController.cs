@@ -53,7 +53,7 @@ namespace GCP_CF.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contratos contratos = db.Contratos.Find(id);
+            Contratos contratos = GetContratosMarcoById(id).FirstOrDefault();//db.Contratos.Find(id);
             if (contratos == null)
             {
                 return HttpNotFound();
@@ -198,10 +198,56 @@ namespace GCP_CF.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult PartialContratos()
+        public PartialViewResult PartialContratos(int id)
         {
-            List<Contratos> list = GetContratos();
-            return PartialView(list.ToList());
+            List<Contratos> list = GetContratosById(id);
+            return PartialView("PartialContratos", list.ToList());
+        }
+
+        private List<Contratos> GetContratosById(int id)
+        {
+            //Consulto Estados
+            var estados = db.TiposEstadoContrato.ToList();
+            //No Son marco
+            var list = (from contratos in db.Contratos
+                        join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
+                        where contratos.ContratoMarco_Id != null && contratos.ContratoMarco_Id== id
+                        select contratos).ToList();
+
+            foreach (var item in list)
+            {
+                foreach (var estado in estados)
+                {
+                    if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
+                    {
+                        item.Estado = estado.Descripcion;
+                    }
+                }
+            }
+            return list;
+        }
+
+        private List<Contratos> GetContratosMarcoById(int? id)
+        {
+            //Consulto Estados
+            var estados = db.TiposEstadoContrato.ToList();
+            //No Son marco
+            var list = (from contratos in db.Contratos
+                        join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
+                        where contratos.ContratoMarco_Id == null && contratos.Contrato_Id == id
+                        select contratos).ToList();
+
+            foreach (var item in list)
+            {
+                foreach (var estado in estados)
+                {
+                    if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
+                    {
+                        item.Estado = estado.Descripcion;
+                    }
+                }
+            }
+            return list;
         }
 
         public JsonResult GetSearchNumeroContrato(string numeroContrato)

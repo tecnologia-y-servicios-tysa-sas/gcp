@@ -10,7 +10,7 @@
 <link rel="stylesheet" href=" https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
 
 <h2>Contrato Marco</h2>
-<table id="table" class="table  table-bordered" style="width:100%">
+<table id="" class="display table  table-bordered" style="width:100%">
     <thead>
         <tr>
             <th class="head-table">
@@ -53,9 +53,15 @@
             <th class="head-table">
                 Estado
             </th>
-            @*<th class="head-table">Acciones</th>*@
+
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.ObjetoContractual)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ValorAdministrar)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Honorarios)
             </th>
         </tr>
     </thead>
@@ -101,14 +107,14 @@
             <td class="border-cell" style="width:90px">
                 @Html.DisplayFor(model => model.Estado)
             </td>
-
-            @*<td class="border-cell" style="width:120px">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })
-                </td>*@
             <td class="border-cell" style="font-size:9pt;width:250px">
                 @Html.DisplayFor(model => model.ObjetoContractual)
+            </td>
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(model => model.ValorAdministrar)
+            </td>
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(model => model.Honorarios)
             </td>
         </tr>
     </tbody>
@@ -120,12 +126,12 @@
 
 <h2>Detalles del Contrato</h2>
 <div>
-    @*@Html.Partial("PartialContratos")*@
+    @Html.Action("PartialContratos", new { id = Model.Contrato_Id })
 </div>
-<p>
+@*<p>
     @Html.ActionLink("Editar", "Edit", new { id = Model.Contrato_Id }) |
     @Html.ActionLink("Regresar a la lista", "Index")
-</p>
+</p>*@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -144,7 +150,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
-            var table = $('#table').DataTable({
+            var table = $('table.display').DataTable({
                 responsive: true,
                 "language": {
                     "lengthMenu": "Display _MENU_ records per page",
