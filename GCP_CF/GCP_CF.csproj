@@ -80,6 +80,12 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.Configuration.Install" />
@@ -145,6 +151,7 @@
     <Compile Include="Controllers\FasesContratoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
+    <Compile Include="Controllers\SeguimientoController.cs" />
     <Compile Include="Controllers\TiposContratosController.cs" />
     <Compile Include="Controllers\TiposEstadoContratosController.cs" />
     <Compile Include="Controllers\TiposNaturalezaController.cs" />
@@ -191,6 +198,7 @@
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\eso.ico" />
     <Content Include="Content\Images\Programa.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\StyleTable.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -232,6 +240,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\noGeneric\Actividades.js" />
+    <Content Include="Scripts\noGeneric\FasesContrato.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
@@ -310,6 +319,8 @@
     <Content Include="Views\TiposPersona\Edit.cshtml" />
     <Content Include="Views\TiposPersona\Index.cshtml" />
     <Content Include="Views\Contratos\PartialContratos.cshtml" />
+    <Content Include="Views\Seguimiento\Index.cshtml" />
+    <Content Include="Views\Seguimiento\FasesContrato.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

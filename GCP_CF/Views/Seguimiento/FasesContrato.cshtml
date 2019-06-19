@@ -1,0 +1,118 @@
+﻿@model GCP_CF.Models.FasesContrato
+
+@{
+    ViewBag.Title = "Fases Contrato";
+}
+
+<script src="~/Scripts/noGeneric/Actividades.js"></script>
+<script src="~/Scripts/noGeneric/FasesContrato.js"></script>
+@if (TempData["error"] != null)
+{
+    <script>alert("@TempData["error"]");</script>
+}
+<div id="mensajeAccion" class="alert alert-dismissable" style="width: 100%">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <span id="textoMensaje"></span>
+</div>
+
+<div class="row">
+    @{
+        GCP_CF.Models.Contratos contrato = ViewBag.Contrato;
+    }
+    <h3>Fases del Contrato No. @contrato.NumeroContrato</h3>
+    <div class="col-md-12">
+        <h4 class="text-left">
+            <i class="glyphicon glyphicon-info-sign"></i> Información del Contrato
+        </h4>
+    </div>
+    <div class="datagrid">
+        <table class="table-bordered" style="width: 100%">
+            <tr>
+                <th class="col-md-2">Entidad Contratante:</th>
+                <td class="col-md-4 text-left">@contrato.EntidadContratante.NombreCompleto</td>
+                <th class="col-md-2">Plazo:</th>
+                <td class="col-md-4 text-left">@contrato.Plazo días</td>
+            </tr>
+            <tr>
+                <th class="col-md-2">N° de Contrato:</th>
+                <td class="col-md-4 text-left">@contrato.NumeroContrato</td>
+                <th class="col-md-2">Objeto:</th>
+                <td class="col-md-4 text-left">@contrato.ObjetoContractual</td>
+            </tr>
+            <tr>
+                <th class="col-md-2">Supervisor Contratante:</th>
+                <td class="col-md-4 text-left">@contrato.PersonaSupervisor.NombreCompleto</td>
+                <th class="col-md-2">Valor Contrato;</th>
+                <td class="col-md-4 text-left">@contrato.ValorContrato.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-co"))</td>
+            </tr>
+            <tr>
+                <th class="col-md-2">Recursos Administrar:</th>
+                <td class="col-md-4 text-left">@contrato.ValorAdministrar.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-co"))</td>
+                <th class="col-md-2">Honorarios:</th>
+                <td class="col-md-4 text-left">@contrato.Honorarios.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-co"))</td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    @{
+        int i = 0;
+    }
+</div>
+<div class="row">
+    <div class="clearfix">
+        <div class="col-md-9 col-xs-9 left text-left">
+            <h4>
+                <i class="glyphicon glyphicon-list"></i> Listado de Fases
+            </h4>
+        </div>
+        <div class="col-md-3 col-xs-3 right text-right">
+            <button class="btn btn-sm btn-primary" onclick="AgregarFaseContrato(@contrato.Contrato_Id)">Agregar Fase</button>
+        </div>
+    </div>
+    <div class="datagrid">
+        <table class="table-striped" style="width: 100%" id="tblListadoFases"></table>
+    </div>
+    <br />
+    <div class="text-center">
+        <button class="btn btn-sm btn-primary" onclick="$(location).attr('href', '/Seguimiento/Index');">Regresar</button>
+    </div>
+
+    <div id="agregarFaseContrato" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="CerrarModalFaseContrato()">&times;</button>
+                    <h4><i class="glyphicon glyphicon-list"></i> Agregar Fase</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AgregarContratoFase", "FasesContrato", FormMethod.Post, new { id = "AgregarContratoFaseForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div id="selectGroup" class="text-center">
+                            <div class="form-group">
+                                <label for="idFaseDisponible">Por favor seleccione una fase de la lista:</label>
+                            </div>
+                            <div class="form-group">
+                                <select name="idFaseDisponible" class="form-control" id="idFaseDisponible"></select>
+                                <button class="btn btn-default" type="button" onclick="AgregarFaseSeleccionada(@contrato.Contrato_Id)">Agregar</button>
+                            </div>
+                        </div>
+                    }
+                    <div id="mensajeError" class="alert-danger" style="padding: 5px"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal" onclick="CerrarModalFaseContrato()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#mensajeAccion").hide();
+        $("#textoMensaje").removeClass("alert-info").removeClass("alert-warning").text("");
+        ObtenerListadoFasesContrato(@contrato.Contrato_Id);
+    });
+</script>

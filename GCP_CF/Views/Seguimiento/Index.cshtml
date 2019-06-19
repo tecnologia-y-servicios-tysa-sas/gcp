@@ -1,0 +1,104 @@
+﻿@model PagedList.IPagedList<GCP_CF.Models.Contratos>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/Scripts/noGeneric/Actividades.js"></script>
+<script src="~/Scripts/noGeneric/FasesContrato.js"></script>
+@if (TempData["error"] != null)
+{
+<script>alert("@TempData["error"]");</script>
+}
+
+<h2 class="text-left">Seguimiento de Contratos</h2>
+<p class="text-left">Seleccione un contrato de la lista para poder ver sus fases</p>
+
+<div class="container-fluid">
+    <div class="row panel">
+        <div class=" panel-body" style="padding: 5px 8px">
+            @using (Html.BeginForm("Index", "Seguimiento", FormMethod.Get))
+            {
+                <div class="form-inline">
+                    <label for="SearchString">Buscar por Contrato:</label>
+                    <div class="input-group input-group-sm">
+                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", maxlength = 10 })
+                        <div class="right input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="datagrid">
+            <table class="table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-1 text-center">
+                            @Html.ActionLink("No. Contrato", "Index", new { sortBy = ViewBag.SortByIdContrato, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="col-md-1 text-center">
+                            @Html.ActionLink("Fecha Inicio", "Index", new { sortBy = ViewBag.SortByFechaInicio, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="col-md-2 text-center">
+                            @Html.ActionLink("Entidad Contratante", "Index", new { sortBy = ViewBag.SortByEntidadContratante, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="col-md-5 text-center">
+                            @Html.ActionLink("Objeto Contractual", "Index", new { sortBy = ViewBag.SortByObjetoContractual, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="col-md-1 text-center">
+                            @Html.ActionLink("Plazo", "Index", new { sortBy = ViewBag.SortByPlazo, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="col-md-1 text-center">
+                            @Html.ActionLink("Fecha Terminación", "Index", new { sortBy = ViewBag.SortByFechaTerminacion, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="col-md-1 text-center">
+                            @Html.ActionLink("Valor Total", "Index", new { sortBy = ViewBag.SortByValorContrato, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var itemContrato in Model)
+                    {
+                        <tr class="pointer" onclick="VerFasesContrato(@itemContrato.Contrato_Id)" title="Haga clic aquí para ver las fases del contrato No. @itemContrato.NumeroContrato">
+                            <td class="text-center">
+                                @itemContrato.NumeroContrato
+                            </td>
+                            <td class="text-center">
+                                @Convert.ToDateTime(@itemContrato.FechaInicio).ToShortDateString()
+                            </td>
+                            <td>
+                                @itemContrato.EntidadContratante.NombreCompleto
+                            </td>
+                            <td>
+                                @itemContrato.ObjetoContractual
+                            </td>
+                            <td class="text-center">
+                                @itemContrato.Plazo
+                            </td>
+                            <td class="text-center">
+                                @Convert.ToDateTime(itemContrato.FechaTerminacion).ToShortDateString()
+                            </td>
+                            <td class="text-right text-nowrap">
+                                @itemContrato.ValorContrato.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-co"))
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+            <div class="text-center">
+                Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            </div>
+        </div>
+        <br />
+
+    </div>
+</div>
+

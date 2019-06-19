@@ -21,13 +21,21 @@
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');
         background-color: #006699;
         color: #FFFFFF;
-        font-size: 15px;
-        font-weight: normal;
+        /*font-size: 15px;*/
+        font-weight: bold;
         border-left: 1px solid #0070A8;
     }
 
         .datagrid table thead th:first-child {
             border: none;
+        }
+
+    .datagrid table tbody tr.pointer {
+        cursor: pointer
+    }
+
+        .datagrid table tbody tr.pointer:hover > td {
+            background-color: #CFF5FF
         }
 
     .datagrid table tbody td {

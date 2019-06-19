@@ -42,9 +42,19 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#fasesSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <a href="#seguimientoSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-dashboard"></i>
                         Seguimiento
+                    </a>
+                    <ul class="collapse list-unstyled" id="seguimientoSubmenu">
+                        <li>@Html.ActionLink("Fases por Contrato", "Index", "Seguimiento")</li>
+
+                    </ul>
+                </li>
+                @*<li>
+                    <a href="#fasesSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-dashboard"></i>
+                        Maestros
                     </a>
                     <ul class="collapse list-unstyled" id="fasesSubmenu">
                         <li>@Html.ActionLink("Fases", "Index", "FasesContrato")</li>
@@ -52,14 +62,14 @@
                         <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividad")</li>
 
                     </ul>
-                </li>
+                </li>*@
                 <li>
                     <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-certificate"></i>
                         Personas
                     </a>
                     <ul class="collapse list-unstyled" id="personasSubmenu">
-                        <li>@Html.ActionLink("Crear Pesona", "Create", "Personas")</li>
+                        <li>@Html.ActionLink("Crear Persona", "Create", "Personas")</li>
                         <li>@Html.ActionLink("Ver Personas", "Index", "Personas")</li>
                         <li>@Html.ActionLink("Tipos de Persona", "Index", "TiposPersona")</li>
                         <li>@Html.ActionLink("Naturaleza", "Index", "TiposNaturaleza")</li>
