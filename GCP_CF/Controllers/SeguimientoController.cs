@@ -34,6 +34,8 @@ namespace GCP_CF.Controllers
             Contratos contrato = db.Contratos.Find(idContrato);
             ViewBag.Contrato = contrato;
 
+            ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividad.OrderBy(e => e.Descripcion), "EstadoActividad_Id", "Descripcion");
+
             List<Registrofacescontratos> listadoFasesContrato = (from e in db.Registrofacescontratos.Include(a => a.FasesContrato)
                                                                  where e.Contrato_Id == idContrato
                                                                  select e).ToList();
@@ -42,6 +44,7 @@ namespace GCP_CF.Controllers
             return View();
         }
 
+        [HttpPost]
         public JsonResult ObtenerListadoFasesContrato(int idContrato)
         {
             // TODO: Mejorar esta respuesta construyendo objetos
@@ -70,8 +73,8 @@ namespace GCP_CF.Controllers
         public JsonResult ObtenerFasesNoAsociadas(int idContrato)
         {
             List<int> listadoFasesContrato = (from fc in db.Registrofacescontratos.Include(a => a.FasesContrato)
-                                                                 where fc.Contrato_Id == idContrato
-                                                                 select fc.Fase_Id).ToList();
+                                              where fc.Contrato_Id == idContrato
+                                              select fc.Fase_Id).ToList();
 
             var listadoFasesNoAsociadas = db.FasesContrato.Select(f => new { f.fase_Id, f.Descripcion }).Where(f => !listadoFasesContrato.Contains(f.fase_Id));
 
@@ -92,19 +95,109 @@ namespace GCP_CF.Controllers
             rfc.Contrato_Id = idContrato;
             rfc.Fase_Id = idFase;
 
-                if (rfc.Fase_Id != 0)
-                    if (db.Registrofacescontratos.Where(x => x.Fase_Id == rfc.Fase_Id && x.Contrato_Id == rfc.Contrato_Id).Select(x => x).ToList().Count() == 0)
+            if (rfc.Fase_Id != 0)
+                if (db.Registrofacescontratos.Where(x => x.Fase_Id == rfc.Fase_Id && x.Contrato_Id == rfc.Contrato_Id).Select(x => x).ToList().Count() == 0)
+                {
+                    try
                     {
                         db.Registrofacescontratos.Add(rfc);
                         db.SaveChanges();
-                    mensaje = "La fase &quot;" + nombreFase.Trim() + "&quot; fue agregada exitosamente al contrato " + numeroContrato + ".";
+                        mensaje = "La fase &quot;" + nombreFase.Trim() + "&quot; fue agregada exitosamente al contrato " + numeroContrato + ".";
                     }
+                    catch (Exception)
+                    {
+                        error = "Ocurrió un error al intentar agregar la fase &quot;" + nombreFase.Trim() + "&quot; al contrato " + numeroContrato + ".";
+                    }
+                }
+                else
+                {
+                    error = "<b>Error:</b> La fase &quot;" + nombreFase.Trim() + "&quot; ya se encuentra asignada al contrato" + numeroContrato + ".";
+                }
+
+            return Json("{ \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\" }");
+        }
+
+        [HttpPost]
+        public JsonResult EliminarFaseContrato(int idContrato, int idFase)
+        {
+            string mensaje = "";
+            string error = "";
+
+            string numeroContrato = db.Contratos.Where(c => c.Contrato_Id == idContrato).Select(c => c.NumeroContrato).FirstOrDefault();
+            string nombreFase = db.FasesContrato.Where(f => f.fase_Id == idFase).Select(f => f.Descripcion).FirstOrDefault();
+
+            Registrofacescontratos rfc = db.Registrofacescontratos
+                                            .Where(x => x.Fase_Id == idFase && x.Contrato_Id == idContrato)
+                                            .Select(x => x).FirstOrDefault();
+
+            if (rfc.Fase_Id != 0)
+                if (rfc != null)
+                {
+                    // Validar antes si la fase que se eliminará del contrato ya tiene al menos una actividad asociada
+                    List<ActividadesFases> actividadesFase = db.ActividadesFases
+                                                               .Where(af => af.Contratos_Contrato_Id1 == idContrato && af.FasesContrato_fase_Id1 == idFase)
+                                                               .Select(af => af).ToList<ActividadesFases>();
+
+                    // Si la fase tiene al menos una actividad asociada, no se dejará eliminar
+                    if (actividadesFase.Count > 0)
+                        error = "<b>Error:</b> No es posible eliminar la fase &quot;" + nombreFase.Trim() + "&quot;, ya que tiene " + actividadesFase.Count + " actividades asociadas.";
                     else
                     {
-                        error = "<b>Error:</b> La fase &quot;" + nombreFase.Trim() + "&quot; ya se encuentra asignada al contrato" + numeroContrato + ".";
+                        try
+                        {
+                            db.Registrofacescontratos.Remove(rfc);
+                            db.SaveChanges();
+                            mensaje = "La fase &quot;" + nombreFase.Trim() + "&quot; fue eliminada exitosamente del contrato " + numeroContrato + ".";
+                        }
+                        catch (Exception)
+                        {
+                            error = "Ocurrió un error al intentar eliminar la fase &quot;" + nombreFase.Trim() + "&quot; del contrato " + numeroContrato + ".";
+                        }
                     }
+                }
+                else
+                {
+                    error = "<b>Error:</b> El identificador de la fase no es válido.";
+                }
 
-            return Json("{ \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\"}");
+            return Json("{ \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\" }");
+        }
+
+        [HttpPost]
+        public JsonResult GuardarActividadFase(int idContrato, int idFase, string item, string descripcion, 
+            string diasHabiles, string fechaInicio, string fechaFin, string estadoActividad)
+        {
+            string mensaje = "";
+            string error = "";
+            string detalleError = "";
+
+            try
+            {
+                ActividadesFases actividad = new ActividadesFases
+                {
+                    Contratos_Contrato_Id1 = idContrato,
+                    FasesContrato_fase_Id1 = idFase,
+                    Item = item,
+                    Descripción = descripcion,
+                    DiasHabiles = Convert.ToInt32(diasHabiles),
+                    FechaInicio = Convert.ToDateTime(fechaInicio),
+                    FechaFinal = Convert.ToDateTime(fechaFin),
+                    EstadoActividad_Id = Convert.ToInt32(estadoActividad)
+                };
+
+                db.ActividadesFases.Add(actividad);
+                db.SaveChanges();
+
+                mensaje = "La actividad ha sido agregada exitosamente.";
+            }
+            catch (Exception e)
+            {
+                error = "Ocurrió un error al agregar la actividad.";
+                detalleError = e.Message + (e.InnerException != null ? " - " + e.InnerException.Message : "N/A" );
+            }
+
+            return Json("{ \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\", \"detalleError\": \"" + detalleError + "\" }");
+
         }
 
         private IQueryable<Contratos> GetListadoContratos(string sortBy, string currentFilter, string searchString, int? page)
