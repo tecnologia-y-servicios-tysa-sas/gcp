@@ -18,7 +18,6 @@ namespace GCP_CF.Controllers
         public ActionResult Index()
         {
             List<Contratos> list = GetContratos();
-
             return View(list.ToList());
         }
 
@@ -28,10 +27,11 @@ namespace GCP_CF.Controllers
             //Consulto Estados
             var estados = db.TiposEstadoContrato.ToList();
             //Son marco
-            var list = (from contratos in db.Contratos
-                        join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
-                        where contratos.ContratoMarco_Id == null
-                        select contratos).ToList();
+            var list = db.Contratos.Include(s => s.HistoriaObservaciones).Where(s => s.ContratoMarco_Id == null).ToList();
+                //(from contratos in db.Contratos
+                //join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
+                //where contratos.ContratoMarco_Id == null
+                //select contratos).ToList();
 
             foreach (var item in list)
             {
@@ -87,6 +87,18 @@ namespace GCP_CF.Controllers
             {
                 db.Contratos.Add(contratos);
                 db.SaveChanges();
+
+                int id = contratos.Contrato_Id;
+                //Almaceno la observacion en la tabla historiaobservaciones
+                HistoriaObservaciones historiaObs = new HistoriaObservaciones
+                {
+                    Observaciones = contratos.Observaciones,
+                    Fecha = DateTime.Now,
+                    ContratoId = id,
+                };
+                db.HistoriaObservaciones.Add(historiaObs);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -149,15 +161,43 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Contratos contratos)
+        public ActionResult Edit(Contratos contratos, FormCollection form)
         {
             try
             {
+                
+                string valorContrato = Request.Form["valorContrato1"];
+                string[] arrayValorContrato;
+                arrayValorContrato = valorContrato.Split(',');
+
+                string valorAdministrar = Request.Form["valorAdministrar1"];
+                string[] arrayValorAdministrar;
+                arrayValorAdministrar = valorAdministrar.Split(',');
+
+                string honorario = Request.Form["honorarios"];
+                string[] arrayHonorario;
+                arrayHonorario = honorario.Split(',');
+
+
+                contratos.ValorContrato  = Convert.ToDouble(arrayValorContrato[0]);
+                contratos.ValorAdministrar = Convert.ToDouble(arrayValorAdministrar[0]);
+                contratos.Honorarios = Convert.ToDouble(arrayHonorario[1]);
                 db.Entry(contratos).State = EntityState.Modified;
+
+
+                //Almaceno la observacion en la tabla historiaobservaciones
+                HistoriaObservaciones historiaObs = new HistoriaObservaciones
+                {
+                    Observaciones = contratos.Observaciones,
+                    Fecha = DateTime.Now,
+                    ContratoId = contratos.Contrato_Id,
+                };
+                db.HistoriaObservaciones.Add(historiaObs);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto", contratos.EntidadContratante.Persona_Id);
                 ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto", contratos.PersonaAbogado_Id);
@@ -209,10 +249,11 @@ namespace GCP_CF.Controllers
             //Consulto Estados
             var estados = db.TiposEstadoContrato.ToList();
             //No Son marco
-            var list = (from contratos in db.Contratos
-                        join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
-                        where contratos.ContratoMarco_Id != null && contratos.ContratoMarco_Id== id
-                        select contratos).ToList();
+            var list  = db.Contratos.Include(s => s.HistoriaObservaciones).Where(s => s.ContratoMarco_Id != null && s.ContratoMarco_Id==id).ToList();
+            //(from contratos in db.Contratos
+            //            join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
+            //            where contratos.ContratoMarco_Id != null && contratos.ContratoMarco_Id== id
+            //            select contratos).ToList();
 
             foreach (var item in list)
             {
@@ -232,10 +273,11 @@ namespace GCP_CF.Controllers
             //Consulto Estados
             var estados = db.TiposEstadoContrato.ToList();
             //No Son marco
-            var list = (from contratos in db.Contratos
-                        join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
-                        where contratos.ContratoMarco_Id == null && contratos.Contrato_Id == id
-                        select contratos).ToList();
+            var list = db.Contratos.Include(s => s.HistoriaObservaciones).Where(s => s.ContratoMarco_Id == null && s.Contrato_Id == id).ToList();
+            //(from contratos in db.Contratos
+            //        join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
+            //        where contratos.ContratoMarco_Id == null && contratos.Contrato_Id == id
+            //        select contratos).ToList();
 
             foreach (var item in list)
             {
@@ -264,6 +306,18 @@ namespace GCP_CF.Controllers
             var list = (from N in allsearch
                         select new { Entidad=N.Nombres +" " +N.Apellidos }).Distinct();
             return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetObservaciones(int id)
+        {
+            var datos = (from h in db.HistoriaObservaciones
+                         //join u in db.Users on h.UsuarioCrea equals u.Email
+                         where h.ContratoId == id
+                         select new { h.Fecha, h.Observaciones}
+                        );
+
+
+            return Json(datos.Select(o => new { o.Fecha, o.Observaciones }).OrderBy(o => o.Fecha), JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

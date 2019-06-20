@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href=" https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
 <link rel="stylesheet" href=" https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
-   
+
 <h2 class="text-left">Contratos Marco</h2>
 
 <p class="text-left">
@@ -67,69 +67,79 @@
             <th class="head-table">
                 Supervisor
             </th>
+            <th class="head-table">
+                Observaciones
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaInicio)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.NumeroContrato)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
-            </td>
+            <tr>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.NumeroContrato)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
+                </td>
 
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Plazo)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaTerminacion)
-            </td>
-            <td class="border-cell" style="width:100px">
-                @Html.DisplayFor(modelItem => item.ValorContrato)
-            </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
-                @Html.DisplayFor(modelItem => item.ValorAdministrar)
-            </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
-                @Html.DisplayFor(modelItem => item.Honorarios)
-            </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Plazo)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaTerminacion)
+                </td>
+                <td class="border-cell" style="width:100px">
+                    @Html.DisplayFor(modelItem => item.ValorContrato)
+                </td>
+                <td class="border-cell" style="font-size:9pt;width:250px">
+                    @Html.DisplayFor(modelItem => item.ValorAdministrar)
+                </td>
+                <td class="border-cell" style="font-size:9pt;width:250px">
+                    @Html.DisplayFor(modelItem => item.Honorarios)
+                </td>
 
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Crp)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaCrp)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Cdp)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.FechaCdp)
-            </td>
-            <td class="border-cell" style="width:90px">
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Crp)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaCrp)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Cdp)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaCdp)
+                </td>
+                <td class="border-cell" style="width:90px">
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
 
-            <td class="border-cell" style="width:120px">
-                @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
-                @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
-                @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
-            </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
-                @Html.DisplayFor(modelItem => item.ObjetoContractual)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.PersonaAbogado.NombreCompleto)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
-            </td>
-        </tr>
+                <td class="border-cell" style="width:120px">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
+                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
+                    @if (item.HistoriaObservaciones.Count > 0)
+                    {
+                        <input type="image" class="btn-Annotations" title="Ver Observaciones" onclick="CargarObservaciones('@item.Contrato_Id')" />
+                    }
+                </td>
+                <td class="border-cell" style="font-size:9pt;width:250px">
+                    @Html.DisplayFor(modelItem => item.ObjetoContractual)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.PersonaAbogado.NombreCompleto)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Observaciones)
+                </td>
+            </tr>
         }
     </tbody>
     <tfoot>
@@ -148,10 +158,10 @@
                 @*@Html.DisplayNameFor(model => model.Plazo)*@
             </th>
             <th style="font-size:10pt">
-              Totales
+                Totales
             </th>
             <th style="font-size:10pt">
-                <strong>@String.Format("{0:N0}",@Model.Sum(i => i.ValorContrato))</strong>
+                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.ValorContrato))</strong>
             </th>
             <th>
                 <strong>@String.Format("{0:N0}", @Model.Sum(i => i.ValorAdministrar))</strong>
@@ -160,19 +170,19 @@
                 <strong>@String.Format("{0:N0}", @Model.Sum(i => i.Honorarios))</strong>
             </th>
             <th>
-               
+
             </th>
             <th>
-              
+
             </th>
             <th>
-              
+
             </th>
             <th>
-               
+
             </th>
             <th>
-               
+
             </th>
             <th></th>
             <th>
@@ -184,10 +194,43 @@
             <th>
                 @*@Html.DisplayNameFor(model => model.Honorarios)*@
             </th>
+            <th></th>
         </tr>
     </tfoot>
 </table>
 
+<div class="modal fade" tabindex="-1" id="PopUPModal"
+     data-keyboard="false" data-backdrop="static">
+<div class="modal-dialog popUp-mobile" style="width:77%;">
+    <div class="modal-content" style="border:1px solid  #4c5b76 !important;">
+        <div class="modal-header" style="background-color:#fff;border-radius:3px;">
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4">
+                    <button type="button" class="close" data-dismiss="modal" style="color:#fff !important">
+                        ×
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="modal-body" id="body">
+        </div>
+
+        <div class="text-center" style="background-color:#f7f6f6;">
+            <br />
+            <button type="button" id="btnHideModal" class="btn btn-default" data-dismiss="modal">
+                Cerrar
+                <br />
+            </button>
+            <div class="space-2"></div>
+
+            <p class="text-center">Tysa &copy; @DateTime.Now.Year - GCP</p>
+        </div>
+    </div>
+</div>
+</div>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -206,73 +249,6 @@
 
 
 
-<script>
-    var activeFilter = 0;
-
-    $("#searchNumero").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '@Url.Action("GetSearchNumeroContrato", "Contratos")',
-                    dataType: "json",
-                    type: "POST",
-                    data: {
-                        numeroContrato: $("#searchNumero").val()},
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.NumeroContrato, value: item.NumeroContrato };
-                        }));
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Error.");
-                    }
-                });
-            }
-            });
-
-    $("#searchEntidad").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '@Url.Action("GetSearchEntidadContratante", "Contratos")',
-                    dataType: "json",
-                    type: "POST",
-                    data: {
-                        entidad: $("#searchEntidad").val()},
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Entidad, value: item.Entidad };
-                        }));
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Error.");
-                    }
-                });
-            }
-    });
-
-    function checkabiertos(valor) {
-        if (valor.value == "true") {
-            $("#chkCerrados").prop("checked", false);
-            $("#chkTodos").prop("checked", false);
-        }
-    }
-
-    function checkcerrados(valor) {
-
-        if (valor.value == "true") {
-            $("#chkAbiertos").prop("checked", false);
-            $("#chkTodos").prop("checked", false);
-        }
-    }
-
-    function checktodos(valor) {
-        if (valor.value == "true") {
-            $("#chkAbiertos").prop("checked", false);
-            $("#chkCerrados").prop("checked", false);
-        }
-    }
-
-
-</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
@@ -330,5 +306,74 @@
             });
             new $.fn.dataTable.FixedHeader(table);
         });
+
+
+
+         //codigo para mostar Historia de observaciones Bitácora
+        function CargarObservaciones(ContratoId) {
+        //$("#title").empty();
+        $("#body").empty();
+        //$("#body").append();
+        //$("#list").empty();
+        //$("#list").append();
+           var body = document.getElementById('body');
+            var url = '@Url.Action("GetObservaciones", "Contratos")';
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: { id: ContratoId },
+                success: function (data) {
+                    var cont = 1;
+                    if (data.length > 0) {
+
+                        $("#body").append('<div class="text-center"><table class="text-center">'
+                            + '<tr>'
+                            + '<td class="head-table" style="width:50px;">'
+                            + '<h5 style ="font-weight:bold;">#</h5 >'
+                            + '</td>'
+                            + '<td class="head-table" style="width:250px;">'
+                            + '<h5 style ="font-weight:bold;">Fecha</h5>'
+                            + '</td>'
+                            + '<td class="head-table" style="width:250px;">'
+                            + '<h5 style ="font-weight:bold;">Observación de respuesta</h5>'
+                            + '</td>'
+                            //+ '<td class="head-table" style="width:250px;">'
+                            //+ '<h5 style ="font-weight:bold;">Usuario crea</h5>'
+                            //+ '</td>'
+                            + '</tr>'
+                        );
+                    }
+
+                    $.each(data, function (index, itemT) {
+
+                        $("#body").append( '<tr>'
+                            + '<td class="border-cell" style="width:50px;">'
+                                            +  cont
+                                            + '</td>'
+                            + '<td class="border-cell" style="width:250px;">'
+                                            + moment(itemT.Fecha).format('MM / DD / YYYY h: mm a')
+                                            + '</td>'
+                            + '<td class="border-cell" style="width:250px;">'
+                                            + itemT.Observaciones
+                                            + '</td>'
+                                            //+ '</td>'
+                            //+ '<td class="border-cell" style="width:250px;">'
+                            //                + itemT.Nombres
+                            //                + '</td>'
+                                            + '</tr> '
+                                            + '</table></div>'
+                        );
+                        cont++;
+                    });
+            },
+            error: function (ex) {
+                alert('Error al consultar las observaciones.' + ex);
+            }
+        });
+
+
+            $("#PopUPModal").modal('show');
+    }
+
     </script>
 }

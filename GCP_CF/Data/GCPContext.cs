@@ -45,5 +45,7 @@ namespace GCP_CF.Models
 
         public DbSet<TiposPersona> TiposPersona { get; set; }
 
+        public DbSet<HistoriaObservaciones> HistoriaObservaciones { get; set; }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -93,6 +94,10 @@ namespace GCP_CF.Models
         [NotMapped]
         public string Estado { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [StringLength(500)]
+        public string Observaciones { get; set; }
+
         //[ForeignKey("ContratoMarco_Id")]
         //public virtual ContratosMarco ContratosMarco{ get; set; }
 
@@ -108,6 +113,6 @@ namespace GCP_CF.Models
         [ForeignKey("PersonaSupervisorTecnico_Id")]
         public virtual Personas PersonaSupervisorTecnico { get; set; }
 
-        
+        public virtual ICollection<HistoriaObservaciones> HistoriaObservaciones { get; set; }
     }
 }

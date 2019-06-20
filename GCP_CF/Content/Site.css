@@ -417,3 +417,11 @@ a.article:hover {
     height: 24px;
     text-indent: -9999px; /* hides the link text */
 }
+
+.btn-Annotations {
+    background: url(Images/eye.png)no-repeat;
+    display: inline-table;
+    width: 24px;
+    height: 24px;
+    text-indent: -9999px; /* hides the link text */
+}

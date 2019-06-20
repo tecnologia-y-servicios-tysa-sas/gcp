@@ -54,6 +54,9 @@
             <th class="head-table">
                 Supervisor
             </th>
+            <th class="head-table">
+                Observaciones
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -104,6 +107,10 @@
 
             <td class="border-cell" style="width:120px">
                 @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
+                @if (item.HistoriaObservaciones.Count > 0)
+                {
+                    <input type="image" class="btn-Annotations" title="Ver Observaciones" onclick="CargarObservaciones('@item.Contrato_Id')" />
+                }
                 @*@Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })*@
                 @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
             </td>
@@ -115,6 +122,9 @@
             </td>
             <td class="border-cell">
                 @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Observaciones)
             </td>
 
         </tr>
@@ -162,6 +172,7 @@
             <th>
 
             </th>
+            <th></th>
             <th></th>
             <th>
                 @*@Html.DisplayNameFor(model => model.ObjetoContractual)*@

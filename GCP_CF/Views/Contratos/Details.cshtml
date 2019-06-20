@@ -63,6 +63,9 @@
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Honorarios)
             </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Observaciones)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -116,6 +119,9 @@
             <td class="border-cell" style="font-size:9pt;width:250px">
                 @Html.DisplayFor(model => model.Honorarios)
             </td>
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(model => model.Observaciones)
+            </td>
         </tr>
     </tbody>
 </table>
@@ -133,6 +139,38 @@
     @Html.ActionLink("Regresar a la lista", "Index")
 </p>*@
 
+<div class="modal fade" tabindex="-1" id="PopUPModal"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog popUp-mobile" style="width:77%;">
+        <div class="modal-content" style="border:1px solid  #4c5b76 !important;">
+            <div class="modal-header" style="background-color:#fff;border-radius:3px;">
+                <div class="row">
+                    <div class="col-lg-4">
+                    </div>
+                    <div class="col-lg-4">
+                        <button type="button" class="close" data-dismiss="modal" style="color:#fff !important">
+                            ×
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="modal-body" id="body">
+            </div>
+
+            <div class="text-center" style="background-color:#f7f6f6;">
+                <br />
+                <button type="button" id="btnHideModal" class="btn btn-default" data-dismiss="modal">
+                    Cerrar
+                    <br />
+                </button>
+                <div class="space-2"></div>
+
+                <p class="text-center">Tysa &copy; @DateTime.Now.Year - GCP</p>
+            </div>
+        </div>
+    </div>
+</div>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -184,5 +222,72 @@
             });
             new $.fn.dataTable.FixedHeader(table);
         });
+
+        
+         //codigo para mostar Historia de observaciones Bitácora
+        function CargarObservaciones(ContratoId) {
+        //$("#title").empty();
+        $("#body").empty();
+        //$("#body").append();
+        //$("#list").empty();
+        //$("#list").append();
+           var body = document.getElementById('body');
+            var url = '@Url.Action("GetObservaciones", "Contratos")';
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: { id: ContratoId },
+                success: function (data) {
+                    var cont = 1;
+                    if (data.length > 0) {
+
+                        $("#body").append('<div class="text-center"><table class="text-center">'
+                            + '<tr>'
+                            + '<td class="head-table" style="width:50px;">'
+                            + '<h5 style ="font-weight:bold;">#</h5 >'
+                            + '</td>'
+                            + '<td class="head-table" style="width:250px;">'
+                            + '<h5 style ="font-weight:bold;">Fecha</h5>'
+                            + '</td>'
+                            + '<td class="head-table" style="width:250px;">'
+                            + '<h5 style ="font-weight:bold;">Observación de respuesta</h5>'
+                            + '</td>'
+                            //+ '<td class="head-table" style="width:250px;">'
+                            //+ '<h5 style ="font-weight:bold;">Usuario crea</h5>'
+                            //+ '</td>'
+                            + '</tr>'
+                        );
+                    }
+
+                    $.each(data, function (index, itemT) {
+
+                        $("#body").append( '<tr>'
+                            + '<td class="border-cell" style="width:50px;">'
+                                            +  cont
+                                            + '</td>'
+                            + '<td class="border-cell" style="width:250px;">'
+                                            + moment(itemT.Fecha).format('MM / DD / YYYY h: mm a')
+                                            + '</td>'
+                            + '<td class="border-cell" style="width:250px;">'
+                                            + itemT.Observaciones
+                                            + '</td>'
+                                            //+ '</td>'
+                            //+ '<td class="border-cell" style="width:250px;">'
+                            //                + itemT.Nombres
+                            //                + '</td>'
+                                            + '</tr> '
+                                            + '</table></div>'
+                        );
+                        cont++;
+                    });
+            },
+            error: function (ex) {
+                alert('Error al consultar las observaciones.' + ex);
+            }
+        });
+
+
+            $("#PopUPModal").modal('show');
+    }
     </script>
 }

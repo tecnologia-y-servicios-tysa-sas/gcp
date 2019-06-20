@@ -149,6 +149,7 @@
     <Compile Include="Controllers\ContratosController.cs" />
     <Compile Include="Controllers\EstadosActividadController.cs" />
     <Compile Include="Controllers\FasesContratoController.cs" />
+    <Compile Include="Models\HistoriaObservaciones.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\SeguimientoController.cs" />
@@ -197,6 +198,7 @@
     <Content Include="Content\Images\details.png" />
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\eso.ico" />
+    <Content Include="Content\Images\eye.png" />
     <Content Include="Content\Images\Programa.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\StyleTable.css" />
