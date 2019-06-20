@@ -31,10 +31,10 @@ function ObtenerListadoFasesContrato(idContrato) {
                     i++;
                     var tblRow = "<tr>"
                         + "<td class=\"col-md-1\">" + i + "</td>"
-                        + "<td class=\"col-md-10\">" + entry.Descripcion.trim() + "</td>"
+                        + "<td class=\"col-md-10\"><span id=\"fc_descripcion_" + entry.fase_Id + "\">" + entry.Descripcion.trim() + "</span></td>"
                         + "<td class=\"col-md-1 text-center\">"
-                        + "<a class=\"btn-details\" href=\"javascript:void(0)\" title=\"Ver Actividades\" onclick=\"VerActividadesFase(" + entry.fase_Id + ")\">Actividades</a>"
-                        + "<a class=\"btn-delete\" href=\"javascript:void(0)\" title=\"Eliminar\" onclick=\"EliminarFaseContrato(" + entry.fase_Id + ")\">Eliminar</a>"
+                        + "<a class=\"btn-details\" href=\"javascript:void(0)\" title=\"Agregar una actividad\" onclick=\"AgregarActividadFase(" + idContrato + ", " + entry.fase_Id + ")\">Actividades</a>"
+                        + "<a class=\"btn-delete\" href=\"javascript:void(0)\" title=\"Eliminar\" onclick=\"EliminarFaseContrato(" + idContrato + ", " + entry.fase_Id + ")\">Eliminar</a>"
                         + "</td>"
                         + "</tr>";
                     $(tblListadoFases).append(tblRow);
@@ -66,8 +66,108 @@ function VerActividadesFase(idContrato) {
     NoImplementado();
 }
 
-function EliminarFaseContrato(idContrato) {
-    NoImplementado();
+function AgregarActividadFase(idContrato, idFase) {
+    $("#addAct_IdContrato").val(idContrato);
+    $("#addAct_IdFase").val(idFase);
+    $("#agregarActividadFase").modal("show");
+}
+
+function GuardarActividadFase() {
+
+    //debugger
+
+    var mensaje = "";
+    var claseMensaje = "";
+
+    $("#mensajeAccion").hide();
+    $("#textoMensaje").removeClass("alert-info").removeClass("alert-warning").text("");
+
+    var item = $("#item").val();
+    var descripcion = $("#descripcion").val();
+    var diasHabiles = $("#diasHabiles").val();
+    var fechaInicio = $("#fechaInicio").val();
+    var fechaFin = $("#fechaFinal").val();
+    var estadoActividad = $("#estadoActividad").val();
+    var idContrato = $("#addAct_IdContrato").val();
+    var idFase = $("#addAct_IdFase").val();
+
+    if (confirm("¿Está seguro de agregar la actividad a la fase seleccionada?")) {
+        $.ajax({
+            async: false,
+            url: "/Seguimiento/GuardarActividadFase",
+            type: "POST",
+            data: JSON.stringify({
+                idContrato: idContrato, idFase: idFase, item: item, descripcion: descripcion,
+                diasHabiles: diasHabiles, fechaInicio: fechaInicio, fechaFin: fechaFin,
+                estadoActividad: estadoActividad
+            }),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                jsonData = jQuery.parseJSON(data);
+                console.log(jsonData);
+                if (jsonData.error.trim().length > 0) {
+                    mensaje = jsonData.error.trim();
+                    claseMensaje = "alert-danger";
+                } else {
+                    mensaje = jsonData.mensaje.trim();
+                    claseMensaje = "alert-info";
+                }
+            }, error: function (xhr, textStatus, errorThrown) {
+                console.log("ERROR: " + textStatus + " - " + errorThrown);
+                mensaje = "Ha ocurrido un error interno al intentar eliminar la fase seleccionada.";
+                claseMensaje = "alert-danger";
+            }
+        });
+    }
+
+    ObtenerListadoFasesContrato(idContrato); // Refrescar el listado
+    CerrarModalActividadFase();
+    $("#mensajeAccion").addClass(claseMensaje).fadeIn();
+    $("#textoMensaje").html(mensaje);
+}
+
+function EliminarFaseContrato(idContrato, idFase) {
+
+    var mensaje = "";
+    var claseMensaje = "";
+
+    $("#mensajeAccion").hide();
+    $("#textoMensaje").removeClass("alert-info").removeClass("alert-warning").text("");
+
+    if (idFase == "" || idFase == "-1") {
+        alert("Por favor seleccione una fase para eliminar del contrato");
+        return false;
+    } else {
+        if (confirm("¿Está seguro de eliminar la fase " + $("#fc_descripcion_" + idFase).text().trim() + " del contrato actual?")) {
+            $.ajax({
+                async: false,
+                url: "/Seguimiento/EliminarFaseContrato",
+                type: "POST",
+                data: JSON.stringify({ idContrato: idContrato, idFase: idFase }),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    jsonData = jQuery.parseJSON(data);
+                    console.log(jsonData);
+                    if (jsonData.error.trim().length > 0) {
+                        mensaje = jsonData.error.trim();
+                        claseMensaje = "alert-danger";
+                    } else {
+                        mensaje = jsonData.mensaje.trim();
+                        claseMensaje = "alert-info";
+                    }
+                }, error: function () {
+                    mensaje = "Ha ocurrido un error interno al intentar eliminar la fase seleccionada.";
+                    claseMensaje = "alert-danger";
+                }
+            })
+
+            ObtenerListadoFasesContrato(idContrato); // Refrescar el listado
+            $("#mensajeAccion").addClass(claseMensaje).fadeIn();
+            $("#textoMensaje").html(mensaje);
+        }
+    }
 }
 
 function LimpiarModalFaseContrato() {
@@ -80,6 +180,11 @@ function LimpiarModalFaseContrato() {
 function CerrarModalFaseContrato() {
     LimpiarModalFaseContrato();
     $("#agregarFaseContrato").modal("hide");
+}
+
+function CerrarModalActividadFase() {
+    // Limpiar formulario
+    $("#agregarActividadFase").modal("hide");
 }
 
 function CargarFasesDisponibles(idContrato) {
