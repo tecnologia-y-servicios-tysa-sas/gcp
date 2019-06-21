@@ -224,7 +224,6 @@
             $('#datetimeFechaInicio').datetimepicker({
                 locale: 'es',
                 format: 'DD/MM/YYYY',
-                minDate: fechaActual,
                 useCurrent: false
             });
 
@@ -756,33 +755,8 @@
         }
 
         function validateHonorarios() {
-            if ($('#honorarios').val() == "") {
-                $('#honorarios').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Honorarios es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-                if (!/^([0-9.])*$/.test($('#honorarios').val())) {
-                    // document.getElementById("valorContrato").value = "";
-                    $('#honorarios').css('border-color', 'red');
-                    //alert('El campo Valor Compromiso debe ser un número.');
-                    $("#bodyError").html('<div><strong>Error!</strong> El campo Honorarios debe ser un número.</div>');
-                    $("#PopUPModalError").modal('show');
-                    setTimeout(function () {
-                        $('#PopUPModalError').modal('hide');
-                    }, 5000);
-                    return false;
-                }
-                else {
-                    // $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-                    $('#honorarios').css('border-color', 'green');
-                }
+           $('#honorarios').css('border-color', 'green');
 
-            }
         }
 
         function validateObjeto() {

@@ -75,9 +75,9 @@ namespace GCP_CF.Models
         public double ValorAdministrar { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
-        public double Honorarios { get; set; }
+        public Nullable<double> Honorarios { get; set; }
 
-        public int Ejecucion { get; set; }
+        public Nullable<double> Ejecucion { get; set; }
 
         [Display(Name = "Procentaje Facturado")]
         public decimal PorcentajeFacturado { get; set; }
