@@ -17,10 +17,11 @@ function ObtenerListadoFasesContrato(idContrato) {
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         success: function (data) {
+            console.log(data);
             if (data.fases && data.fases.length > 0) {       
                 $(tblListadoFases).html("");
                 var tblHeader = "<thead><tr>"
-                    + "<th class=\"col-md-1\">ID</th>"
+                    + "<th class=\"col-md-1\">No.</th>"
                     + "<th class=\"col-md-10\">Fase</th>"
                     + "<th class=\"col-md-1 text-center\">Acciones</th>"
                     + "</tr></thead>"
@@ -30,11 +31,26 @@ function ObtenerListadoFasesContrato(idContrato) {
                 $.each(data.fases, function (key, entry) {
                     i++;
                     var tblRow = "<tr>"
-                        + "<td class=\"col-md-1\">" + i + "</td>"
-                        + "<td class=\"col-md-10\"><span id=\"fc_descripcion_" + entry.fase_Id + "\">" + entry.Descripcion.trim() + "</span></td>"
+                        + "<td class=\"col-md-1\" style=\"vertical-align: top\"><span style=\"padding: 6px 1px\">" + i + "</span></td>"
+                        + "<td class=\"col-md-10\" style=\"vertical-align: top\">"
+                        + "<span class=\"float-left\" style=\"padding-left: 0px; margin-right: 5px\">"
+                        + "<button style =\"padding: 1px 2px\" type=\"button\" class=\"btn btn-secondary btn-sm\" title=\"Mostrar actividades\" onclick=\"VerActividadesFase(" + idContrato + ", " + entry.Id + ")\">"
+                        + "<i class=\"glyphicon glyphicon-plus-sign\" id=\"toggle_" + idContrato + "_" + entry.Id + "\"></i></button>"
+                        + "</span>"
+                        + "<span id=\"fc_descripcion_" + entry.Id + "\" style=\"padding: 6px 1px\">" + entry.Descripcion.trim() + "</span>"
+                        + "<div id=\"regionActividadesC" + idContrato + "F" + entry.Id + "\" style=\"display: none\">";
+
+                    if (entry.Actividades && entry.Actividades.length > 0) {
+                        tblRow += ProcesarActividadesFase(entry.Actividades)
+                    } else {
+                        tblRow += "<div class=\"alert alert-warning\" style=\"padding: 4px; margin-bottom: 6px\">Aún no hay actividades asociadas a esta fase</div>";
+                    }
+
+                    tblRow += "</div>"
+                        + "</td>"
                         + "<td class=\"col-md-1 text-center\">"
-                        + "<a class=\"btn-details\" href=\"javascript:void(0)\" title=\"Agregar una actividad\" onclick=\"AgregarActividadFase(" + idContrato + ", " + entry.fase_Id + ")\">Actividades</a>"
-                        + "<a class=\"btn-delete\" href=\"javascript:void(0)\" title=\"Eliminar\" onclick=\"EliminarFaseContrato(" + idContrato + ", " + entry.fase_Id + ")\">Eliminar</a>"
+                        + "<a class=\"btn-details\" href=\"javascript:void(0)\" title=\"Agregar una actividad\" onclick=\"AgregarActividadFase(" + idContrato + ", " + entry.Id + ")\">Actividades</a>"
+                        + "<a class=\"btn-delete\" href=\"javascript:void(0)\" title=\"Eliminar\" onclick=\"EliminarFaseContrato(" + idContrato + ", " + entry.Id + ")\">Eliminar</a>"
                         + "</td>"
                         + "</tr>";
                     $(tblListadoFases).append(tblRow);
@@ -57,13 +73,60 @@ function ObtenerListadoFasesContrato(idContrato) {
     });
 }
 
+function VerActividadesFase(idContrato, idFase) {
+
+    var toggleButton = $("#toggle_" + idContrato + "_" + idFase);
+    var toggleRegion = $("#regionActividadesC" + idContrato + "F" + idFase);
+
+    if ($(toggleRegion).css("display") != "block") {
+        $(toggleButton).attr("title", "Ocultar actividades");
+        $(toggleButton).removeClass("glyphicon-plus-sign");
+        $(toggleButton).addClass("glyphicon-minus-sign");
+    } else {
+        $(toggleButton).attr("title", "Mostrar actividades");
+        $(toggleButton).removeClass("glyphicon-minus-sign");
+        $(toggleButton).addClass("glyphicon-plus-sign");
+    }
+
+    $(toggleRegion).toggle(500);
+}
+
+function ProcesarActividadesFase(actividades) {
+
+    var tblActividades = "<table width=\"100%\">"
+        + "<thead>"
+        + "<tr>"
+        + "<th class=\"col-md-1 col-xs-1\">No.</th>"
+        + "<th class=\"col-md-5 col-xs-5\">Descripción</th>"
+        + "<th class=\"col-md-2 col-xs-2\">Fecha Inicio</th>"
+        + "<th class=\"col-md-2 col-xs-2\">Fecha Final</th>"
+        + "<th class=\"col-md-2 col-xs-2\">Estado</th>"
+        + "</tr>"
+        + "</thead>"
+        + "<tbody>";
+
+    for (var i = 1; i <= actividades.length; i++) {
+        var formatFechaInicio = FormatoFecha(actividades[i - 1].FechaInicio, "/");
+        var formatFechaFinal = FormatoFecha(actividades[i - 1].FechaFinal, "/");
+
+        tblActividades += "<tr>"
+            + "<td class=\"col-md-1 col-xs-1\">" + i + "</td>"
+            + "<td class=\"col-md-5 col-xs-5\">" + actividades[i-1].Descripcion + "</td>"
+            + "<td class=\"col-md-2 col-xs-2\">" + formatFechaInicio + "</td>"
+            + "<td class=\"col-md-2 col-xs-2\">" + formatFechaFinal + "</td>"
+            + "<td class=\"col-md-2 col-xs-2\">" + actividades[i-1].DescripcionEstado + "</td>"
+            + "</tr>";
+    }
+
+    tblActividades += "</tbody>"
+        + "</table>";
+
+    return tblActividades;
+}
+
 function AgregarFaseContrato(idContrato) {
     $("#agregarFaseContrato").modal("show");
     CargarFasesDisponibles(idContrato);
-}
-
-function VerActividadesFase(idContrato) {
-    NoImplementado();
 }
 
 function AgregarActividadFase(idContrato, idFase) {

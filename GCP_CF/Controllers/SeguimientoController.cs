@@ -52,12 +52,39 @@ namespace GCP_CF.Controllers
 
             try
             {
-                var listadoFasesContrato = db.Registrofacescontratos
-                                            .Include(a => a.FasesContrato)
-                                            .Where(e => e.Contrato_Id == idContrato)
-                                            .Select(e => new { e.FasesContrato.fase_Id, e.FasesContrato.Descripcion });
+                List<Registrofacescontratos> listadoFasesContrato = db.Registrofacescontratos
+                                                                        .Include(a => a.FasesContrato)
+                                                                        .Where(e => e.Contrato_Id == idContrato)
+                                                                        .Select(e => e)
+                                                                        .ToList<Registrofacescontratos>();
+                //.Select(e => new { e.FasesContrato.fase_Id, e.FasesContrato.Descripcion });
+
                 if (listadoFasesContrato.Count() > 0)
-                    response = new { fases = listadoFasesContrato };
+                {
+                    var listadoFases = new List<object>();
+
+                    foreach (Registrofacescontratos fase in listadoFasesContrato) {
+                        var listadoActividadesFase = db.ActividadesFases
+                                                        .Include(a => a.EstadosActividad)
+                                                        .Where(a => a.FasesContrato_fase_Id1 == fase.Fase_Id && a.Contratos_Contrato_Id1 == idContrato)
+                                                        .Select(a => new {
+                                                            IdFase = a.FasesContrato_fase_Id1,
+                                                            IdContrato = a.Contratos_Contrato_Id1,
+                                                            IdActividad = a.Actividad_Id,
+                                                            a.Item,
+                                                            Descripcion = a.Descripción,
+                                                            DiasEntreFechas = a.DiasHabiles,
+                                                            FechaInicio = a.FechaInicio.HasValue ? a.FechaInicio.Value.ToString() : string.Empty,
+                                                            FechaFinal = a.FechaFinal.HasValue ? a.FechaFinal.Value.ToString() : string.Empty,
+                                                            CodigoEstado = a.EstadoActividad_Id.Value, 
+                                                            DescripcionEstado = a.EstadosActividad.Descripcion
+                                                        });
+
+                        listadoFases.Add(new { Id = fase.FasesContrato.fase_Id, Descripcion = fase.FasesContrato.Descripcion, Actividades = listadoActividadesFase });
+                    }
+
+                    response = new { fases = listadoFases };
+                } 
                 else
                     response = new { mensaje = "No existen fases asociadas a este contrato" };
 
@@ -198,6 +225,32 @@ namespace GCP_CF.Controllers
 
             return Json("{ \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\", \"detalleError\": \"" + detalleError + "\" }");
 
+        }
+
+        [HttpPost]
+        public JsonResult ObtenerListadoActividadesFase(int idContrato, int idFase)
+        {
+            // TODO: Mejorar esta respuesta construyendo objetos
+            object response = null;
+
+            try
+            {
+                var listadoActividadesFase = db.ActividadesFases
+                                            .Where(a => a.FasesContrato_fase_Id1 == idFase && a.Contratos_Contrato_Id1 == idContrato)
+                                            .Select(a => a);
+
+                if (listadoActividadesFase.Count() > 0)
+                    response = new { fases = listadoActividadesFase };
+                else
+                    response = new { mensaje = "Esta fase aún no tiene actividades asociadas." };
+
+            }
+            catch (Exception e)
+            {
+                response = new { mensaje = "Ha ocurrido un error al obtener las actividades asociadas a esta fase.", detalle = e.Message };
+            }
+
+            return Json(response);
         }
 
         private IQueryable<Contratos> GetListadoContratos(string sortBy, string currentFilter, string searchString, int? page)
