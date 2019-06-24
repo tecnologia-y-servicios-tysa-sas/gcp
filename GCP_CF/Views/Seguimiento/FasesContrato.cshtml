@@ -49,7 +49,7 @@
                 <th class="col-md-2">Recursos Administrar:</th>
                 <td class="col-md-4 text-left">@contrato.ValorAdministrar.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-co"))</td>
                 <th class="col-md-2">Honorarios:</th>
-                <td class="col-md-4 text-left">@contrato.Honorarios.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-co"))</td>
+                <td class="col-md-4 text-left">@(contrato.Honorarios.HasValue ? contrato.Honorarios.Value.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-co")) : "N/A")</td>
             </tr>
         </table>
     </div>
