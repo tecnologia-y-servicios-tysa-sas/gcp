@@ -193,6 +193,7 @@
     <Content Include="Content\bootstrapCustom.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Alcaldia.png" />
+    <Content Include="Content\Images\back.png" />
     <Content Include="Content\Images\banner.png" />
     <Content Include="Content\Images\delete.png" />
     <Content Include="Content\Images\details.png" />

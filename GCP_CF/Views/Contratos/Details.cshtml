@@ -8,36 +8,43 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href=" https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
 <link rel="stylesheet" href=" https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+@Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back", @title = "Regresar" })
 
 <h2>Contrato Marco</h2>
-<table id="" class="display table  table-bordered" style="width:100%">
+<table id="" class="table  table-bordered" style="width:100%">
     <thead>
         <tr>
             <th class="head-table">
-                @Html.DisplayNameFor(model => model.FechaInicio)
+                Fecha&nbsp;Inicio
             </th>
             <th class="head-table">
-                Numero Contrato
+                Fecha&nbsp;Fín
             </th>
             <th class="head-table">
-                Entidad Contratante
+                Número
             </th>
-
+            <th class="head-table">
+                Entidad&nbsp;Contratante
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ObjetoContractual)
+            </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Plazo)
-            </th>
-            <th class="head-table">
-                @Html.DisplayNameFor(model => model.FechaTerminacion)
             </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.ValorContrato)
             </th>
             <th class="head-table">
-                Abogado
+                Valor&nbsp;Administrar
             </th>
             <th class="head-table">
-                Supervisor
+                @Html.DisplayNameFor(model => model.Honorarios)
             </th>
+            <th class="head-table">
+                Estado
+            </th>
+            <th class="head-table">Acciones</th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Crp)
             </th>
@@ -51,21 +58,14 @@
                 @Html.DisplayNameFor(model => model.FechaCdp)
             </th>
             <th class="head-table">
-                Estado
-            </th>
-
-            <th class="head-table">
-                @Html.DisplayNameFor(model => model.ObjetoContractual)
+                Abogado
             </th>
             <th class="head-table">
-                @Html.DisplayNameFor(model => model.ValorAdministrar)
+                Supervisor
             </th>
-            <th class="head-table">
-                @Html.DisplayNameFor(model => model.Honorarios)
-            </th>
-            <th class="head-table">
-                @Html.DisplayNameFor(model => model.Observaciones)
-            </th>
+            @*<th class="head-table">
+                Observaciones
+            </th>*@
         </tr>
     </thead>
     <tbody>
@@ -74,27 +74,34 @@
                 @Html.DisplayFor(model => model.FechaInicio)
             </td>
             <td class="border-cell">
+                @Html.DisplayFor(model => model.FechaTerminacion)
+            </td>
+            <td class="border-cell">
                 @Html.DisplayFor(model => model.NumeroContrato)
             </td>
             <td class="border-cell">
                 @Html.DisplayFor(model => model.EntidadContratante.NombreCompleto)
             </td>
-
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(model => model.ObjetoContractual)
+            </td>
             <td class="border-cell">
                 @Html.DisplayFor(model => model.Plazo)
             </td>
-            <td class="border-cell">
-                @Html.DisplayFor(model => model.FechaTerminacion)
-            </td>
             <td class="border-cell" style="width:100px">
-                @Html.DisplayFor(model => model.ValorContrato)
+                <strong>@Html.DisplayFor(model => model.ValorContrato)</strong>
             </td>
-            <td class="border-cell">
-                @Html.DisplayFor(model => model.PersonaAbogado.NombreCompleto)
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(model => model.ValorAdministrar)
             </td>
-            <td class="border-cell">
-                @Html.DisplayFor(model => model.PersonaSupervisor.NombreCompleto)
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(model => model.Honorarios)
             </td>
+
+            <td class="border-cell" style="width:90px">
+                @Html.DisplayFor(model => model.Estado)
+            </td>
+        
             <td class="border-cell">
                 @Html.DisplayFor(model => model.Crp)
             </td>
@@ -107,21 +114,15 @@
             <td class="border-cell">
                 @Html.DisplayFor(model => model.FechaCdp)
             </td>
-            <td class="border-cell" style="width:90px">
-                @Html.DisplayFor(model => model.Estado)
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.PersonaAbogado.NombreCompleto)
             </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
-                @Html.DisplayFor(model => model.ObjetoContractual)
+            <td class="border-cell">
+                @Html.DisplayFor(model => model.PersonaSupervisor.NombreCompleto)
             </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
-                @Html.DisplayFor(model => model.ValorAdministrar)
-            </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
-                @Html.DisplayFor(model => model.Honorarios)
-            </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
+            @*<td class="border-cell">
                 @Html.DisplayFor(model => model.Observaciones)
-            </td>
+            </td>*@
         </tr>
     </tbody>
 </table>
@@ -134,10 +135,12 @@
 <div>
     @Html.Action("PartialContratos", new { id = Model.Contrato_Id })
 </div>
+<div class="col-md-12 text-center">@Html.ActionLink("Regresar a la lista", "Index", null, new { @class = "btn btn-default", @title = "Regresar" })</div>
+
 @*<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Contrato_Id }) |
-    @Html.ActionLink("Regresar a la lista", "Index")
-</p>*@
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Contrato_Id }) |
+        @Html.ActionLink("Regresar a la lista", "Index")
+    </p>*@
 
 <div class="modal fade" tabindex="-1" id="PopUPModal"
      data-keyboard="false" data-backdrop="static">
@@ -223,7 +226,7 @@
             new $.fn.dataTable.FixedHeader(table);
         });
 
-        
+
          //codigo para mostar Historia de observaciones Bitácora
         function CargarObservaciones(ContratoId) {
         //$("#title").empty();

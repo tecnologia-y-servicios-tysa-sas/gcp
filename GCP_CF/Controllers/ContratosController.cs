@@ -15,35 +15,42 @@ namespace GCP_CF.Controllers
         private GCPContext db = new GCPContext();
 
         // GET: Contratos
-        public ActionResult Index()
+        public ActionResult Index(Contratos contratos)
         {
-            List<Contratos> list = GetContratos();
-            return View(list.ToList());
+            if (contratos.TipoEstadoContrato_Id == null)
+            {
+                contratos.TipoEstadoContrato_Id = 3;
+                ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion",3);
+            }
+            else
+            {
+                ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion", contratos.TipoEstadoContrato_Id);
+            }
+            
+            
+            List<Contratos> list = GetContratos(Convert.ToInt16(contratos.TipoEstadoContrato_Id));
+            return View(list.OrderBy(x=> x.Contrato_Id).ToList());
         }
 
 
-        private List<Contratos> GetContratos()
+        private List<Contratos> GetContratos(int estadoId)
         {
             //Consulto Estados
             var estados = db.TiposEstadoContrato.ToList();
             //Son marco
-            var list = db.Contratos.Include(s => s.HistoriaObservaciones).Where(s => s.ContratoMarco_Id == null).ToList();
-                //(from contratos in db.Contratos
-                //join contratos2 in db.Contratos on contratos.Contrato_Id equals contratos2.Contrato_Id
-                //where contratos.ContratoMarco_Id == null
-                //select contratos).ToList();
-
-            foreach (var item in list)
-            {
-                foreach (var estado in estados)
+  
+                var list = db.Contratos.Include(s => s.HistoriaObservaciones).Where(s => s.ContratoMarco_Id == null && s.TipoEstadoContrato_Id == estadoId).ToList();
+                foreach (var item in list)
                 {
-                    if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
+                    foreach (var estado in estados)
                     {
-                        item.Estado = estado.Descripcion;
+                        if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
+                        {
+                            item.Estado = estado.Descripcion;
+                        }
                     }
                 }
-            }
-            return list;
+                return list;
         }
 
         // GET: Contratos/Details/5
@@ -81,23 +88,38 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Contratos contratos)
+        public ActionResult Create(Contratos contratos, FormCollection form)
         {
             try
             {
+
+                double valorContratoAux = Convert.ToDouble(contratos.ValorContratoAux.Replace(",", "").Replace(".00",""));
+                contratos.ValorContrato = valorContratoAux;
+
+                double valorAdministrarAux = Convert.ToDouble(contratos.ValorAdministrarAux.Replace(",", "").Replace(".00", ""));
+                contratos.ValorAdministrar = valorAdministrarAux;
+
+                double honorariosAux = Convert.ToDouble(contratos.HonorariosAux.Replace(",", "").Replace(".00", ""));
+                contratos.Honorarios = honorariosAux;
+
+
                 db.Contratos.Add(contratos);
                 db.SaveChanges();
 
                 int id = contratos.Contrato_Id;
-                //Almaceno la observacion en la tabla historiaobservaciones
-                HistoriaObservaciones historiaObs = new HistoriaObservaciones
+                if(!string.IsNullOrEmpty(contratos.Observaciones))
                 {
-                    Observaciones = contratos.Observaciones,
-                    Fecha = DateTime.Now,
-                    ContratoId = id,
-                };
-                db.HistoriaObservaciones.Add(historiaObs);
-                db.SaveChanges();
+                    //Almaceno la observacion en la tabla historiaobservaciones
+                    HistoriaObservaciones historiaObs = new HistoriaObservaciones
+                    {
+                        Observaciones = contratos.Observaciones,
+                        Fecha = DateTime.Now,
+                        ContratoId = id,
+                    };
+                    db.HistoriaObservaciones.Add(historiaObs);
+                    db.SaveChanges();
+                }
+               
 
                 return RedirectToAction("Index");
             }
@@ -186,14 +208,17 @@ namespace GCP_CF.Controllers
 
 
                 //Almaceno la observacion en la tabla historiaobservaciones
-                HistoriaObservaciones historiaObs = new HistoriaObservaciones
+                if (!string.IsNullOrEmpty(contratos.Observaciones))
                 {
-                    Observaciones = contratos.Observaciones,
-                    Fecha = DateTime.Now,
-                    ContratoId = contratos.Contrato_Id,
-                };
-                db.HistoriaObservaciones.Add(historiaObs);
-                db.SaveChanges();
+                    HistoriaObservaciones historiaObs = new HistoriaObservaciones
+                    {
+                        Observaciones = contratos.Observaciones,
+                        Fecha = DateTime.Now,
+                        ContratoId = contratos.Contrato_Id,
+                    };
+                    db.HistoriaObservaciones.Add(historiaObs);
+                    db.SaveChanges();
+                }
 
                 return RedirectToAction("Index");
             }

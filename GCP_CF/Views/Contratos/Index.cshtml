@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<GCP_CF.Models.Contratos>
 
 @{
-    ViewBag.Title = "Contratos Marco";
+    ViewBag.Title = "Contratos";
 }
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
@@ -13,34 +13,57 @@
 <p class="text-left">
     @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-default btn-large" })
 </p>
-
+<style>
+    thead input {
+        width: 100%;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm())
+        {
+        <p>
+            <h5>Filtrar Por Estado</h5>
+            @Html.DropDownList("TipoEstadoContrato_Id", null, "Seleccione Estado Contrato", htmlAttributes: new { @class = "form-control", @id = "estadoContrato" })
+            @*<input type="checkbox" name="activos" value="3" @ViewBag.activos> Activos*@
+            <button id="btnSearch" type="submit" class="btn btn-default btn-large">Buscar</button>
+        </p>
+        }
+    </div>
+</div>
 <table id="example" class="table  table-bordered" style="width:100%">
     <thead>
         <tr>
+            <th class="head-table">Acciones&nbsp;Contrato</th>
             <th class="head-table">
-                @Html.DisplayNameFor(model => model.FechaInicio)
+                Fecha&nbsp;Inicio
             </th>
             <th class="head-table">
-                Numero Contrato
+                Fecha&nbsp;Fín
             </th>
             <th class="head-table">
-                Entidad Contratante
+                Número
             </th>
-
+            <th class="head-table">
+                Entidad&nbsp;Contratante
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ObjetoContractual)
+            </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Plazo)
-            </th>
-            <th class="head-table">
-                @Html.DisplayNameFor(model => model.FechaTerminacion)
             </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.ValorContrato)
             </th>
             <th class="head-table">
-                @Html.DisplayNameFor(model => model.ValorAdministrar)
+                Valor&nbsp;Administrar
             </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Honorarios)
+            </th>
+            <th class="head-table">
+                Estado
             </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Crp)
@@ -53,13 +76,6 @@
             </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.FechaCdp)
-            </th>
-            <th class="head-table">
-                Estado
-            </th>
-            <th class="head-table">Acciones</th>
-            <th class="head-table">
-                @Html.DisplayNameFor(model => model.ObjetoContractual)
             </th>
             <th class="head-table">
                 Abogado
@@ -75,88 +91,78 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.FechaInicio)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.NumeroContrato)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
-                </td>
+        <tr>
+            <td class="border-cell" style="width:120px">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
+                @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
+                @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
+                @if (item.HistoriaObservaciones.Count > 0)
+                {
+                    <input type="image" class="btn-Annotations" title="Ver Observaciones" onclick="CargarObservaciones('@item.Contrato_Id')" />
+                }
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.FechaTerminacion)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.NumeroContrato)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
+            </td>
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(modelItem => item.ObjetoContractual)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Plazo)
+            </td>
+            <td class="border-cell" style="width:100px">
+                <strong>@Html.DisplayFor(modelItem => item.ValorContrato)</strong>
+            </td>
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(modelItem => item.ValorAdministrar)
+            </td>
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(modelItem => item.Honorarios)
+            </td>
 
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.Plazo)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.FechaTerminacion)
-                </td>
-                <td class="border-cell" style="width:100px">
-                    @Html.DisplayFor(modelItem => item.ValorContrato)
-                </td>
-                <td class="border-cell" style="font-size:9pt;width:250px">
-                    @Html.DisplayFor(modelItem => item.ValorAdministrar)
-                </td>
-                <td class="border-cell" style="font-size:9pt;width:250px">
-                    @Html.DisplayFor(modelItem => item.Honorarios)
-                </td>
+            <td class="border-cell" style="width:90px">
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
 
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.Crp)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.FechaCrp)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.Cdp)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.FechaCdp)
-                </td>
-                <td class="border-cell" style="width:90px">
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-
-                <td class="border-cell" style="width:120px">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
-                    @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
-                    @if (item.HistoriaObservaciones.Count > 0)
-                    {
-                        <input type="image" class="btn-Annotations" title="Ver Observaciones" onclick="CargarObservaciones('@item.Contrato_Id')" />
-                    }
-                </td>
-                <td class="border-cell" style="font-size:9pt;width:250px">
-                    @Html.DisplayFor(modelItem => item.ObjetoContractual)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.PersonaAbogado.NombreCompleto)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
-                </td>
-                <td class="border-cell">
-                    @Html.DisplayFor(modelItem => item.Observaciones)
-                </td>
-            </tr>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Crp)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.FechaCrp)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Cdp)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.FechaCdp)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.PersonaAbogado.NombreCompleto)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Observaciones)
+            </td>
+        </tr>
         }
     </tbody>
     <tfoot>
         <tr>
-            <th>
-                @*@Html.DisplayNameFor(model => model.FechaInicio)*@
-            </th>
-            <th>
-                @*Numero Contrato*@
-            </th>
-            <th>
-                @*Entidad Contratante*@
-            </th>
-
-            <th>
-                @*@Html.DisplayNameFor(model => model.Plazo)*@
-            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
             <th style="font-size:10pt">
                 Totales
             </th>
@@ -169,31 +175,15 @@
             <th>
                 <strong>@String.Format("{0:N0}", @Model.Sum(i => i.Honorarios))</strong>
             </th>
-            <th>
-
-            </th>
-            <th>
-
-            </th>
-            <th>
-
-            </th>
-            <th>
-
-            </th>
-            <th>
-
-            </th>
             <th></th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.ObjetoContractual)*@
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.ValorAdministrar)*@
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Honorarios)*@
-            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
     </tfoot>
@@ -271,8 +261,11 @@
             });
         });
 
+
         $(document).ready(function () {
+
             var table = $('#example').DataTable({
+
                 responsive: true,
                 "language": {
                     "lengthMenu": "Display _MENU_ records per page",
@@ -302,7 +295,7 @@
                         "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
-                }
+                },
             });
             new $.fn.dataTable.FixedHeader(table);
         });
@@ -311,11 +304,7 @@
 
          //codigo para mostar Historia de observaciones Bitácora
         function CargarObservaciones(ContratoId) {
-        //$("#title").empty();
         $("#body").empty();
-        //$("#body").append();
-        //$("#list").empty();
-        //$("#list").append();
            var body = document.getElementById('body');
             var url = '@Url.Action("GetObservaciones", "Contratos")';
             $.ajax({
@@ -337,9 +326,6 @@
                             + '<td class="head-table" style="width:250px;">'
                             + '<h5 style ="font-weight:bold;">Observación de respuesta</h5>'
                             + '</td>'
-                            //+ '<td class="head-table" style="width:250px;">'
-                            //+ '<h5 style ="font-weight:bold;">Usuario crea</h5>'
-                            //+ '</td>'
                             + '</tr>'
                         );
                     }
@@ -356,10 +342,6 @@
                             + '<td class="border-cell" style="width:250px;">'
                                             + itemT.Observaciones
                                             + '</td>'
-                                            //+ '</td>'
-                            //+ '<td class="border-cell" style="width:250px;">'
-                            //                + itemT.Nombres
-                            //                + '</td>'
                                             + '</tr> '
                                             + '</table></div>'
                         );
@@ -373,7 +355,7 @@
 
 
             $("#PopUPModal").modal('show');
-    }
+        }
 
     </script>
 }

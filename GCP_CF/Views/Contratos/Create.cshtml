@@ -147,21 +147,21 @@
         </div>
         <div class="col-md-4">
             <div>@Html.LabelFor(model => model.ValorContrato, htmlAttributes: new { @class = "control-label" })*</div>
-            @Html.EditorFor(model => model.ValorContrato, new { htmlAttributes = new { @class = "form-control", @id = "valorContrato" } })
-            @Html.ValidationMessageFor(model => model.ValorContrato, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.ValorContratoAux, new { htmlAttributes = new { @class = "form-control", @id = "valorContrato" } })
+            @Html.ValidationMessageFor(model => model.ValorContratoAux, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-4">
             <div>@Html.LabelFor(model => model.ValorAdministrar, htmlAttributes: new { @class = "control-label" })*</div>
-            @Html.EditorFor(model => model.ValorAdministrar, new { htmlAttributes = new { @class = "form-control", @id = "valorAdministrar" } })
-            @Html.ValidationMessageFor(model => model.ValorAdministrar, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.ValorAdministrarAux, new { htmlAttributes = new { @class = "form-control", @id = "valorAdministrar" } })
+            @Html.ValidationMessageFor(model => model.ValorAdministrarAux, "", new { @class = "text-danger" })
         </div>
 
         <div class="col-md-4">
             <div>@Html.LabelFor(model => model.Honorarios, htmlAttributes: new { @class = "control-label" })*</div>
-            @Html.EditorFor(model => model.Honorarios, new { htmlAttributes = new { @class = "form-control", @id = "honorarios" } })
+            @Html.EditorFor(model => model.HonorariosAux, new { htmlAttributes = new { @class = "form-control", @id = "honorarios" } })
 
         </div>
 
@@ -211,9 +211,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-
-
-
+       
         $(function () {
             $.validator.methods.date = function (value, element) {
                 return this.optional(element) || moment(value, true).isValid();
@@ -290,15 +288,15 @@
 
 
 
-        //$("#valorContrato").blur(function () {
-        //$("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        //});
-        //$("#valorAdministrar").blur(function () {
-        //   $("#valorAdministrar").val(parseFloat($('#valorAdministrar').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        //});
-        //$("#honorarios").blur(function () {
-        //    $("#honorarios").val(parseFloat($('#honorarios').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        //});
+        $("#valorContrato").blur(function () {
+        $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        });
+        $("#valorAdministrar").blur(function () {
+           $("#valorAdministrar").val(parseFloat($('#valorAdministrar').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        });
+        $("#honorarios").blur(function () {
+            $("#honorarios").val(parseFloat($('#honorarios').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+        });
 
 
             //Obtengo el numero del contrato
@@ -705,10 +703,8 @@
                 return false;
             }
             else {
-                if (!/^([0-9.])*$/.test($('#valorContrato').val())) {
-                   // document.getElementById("valorContrato").value = "";
+                if (!/^([0-9.,])*$/.test($('#valorContrato').val())) {
                     $('#valorContrato').css('border-color', 'red');
-                    //alert('El campo Valor Compromiso debe ser un número.');
                     $("#bodyError").html('<div><strong>Error!</strong> El campo Valor Contrato debe ser un número.</div>');
                     $("#PopUPModalError").modal('show');
                     setTimeout(function () {
@@ -717,7 +713,7 @@
                     return false;
                 }
                 else {
-                   // $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+                    // $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
                     $('#valorContrato').css('border-color', 'green');
                 }
 
@@ -735,10 +731,8 @@
                 return false;
             }
             else {
-                if (!/^([0-9.])*$/.test($('#valorAdministrar').val())) {
-                    // document.getElementById("valorContrato").value = "";
+                if (!/^([0-9.,])*$/.test($('#valorAdministrar').val())) {
                     $('#valorAdministrar').css('border-color', 'red');
-                    //alert('El campo Valor Compromiso debe ser un número.');
                     $("#bodyError").html('<div><strong>Error!</strong> El campo Valor Administrar debe ser un número.</div>');
                     $("#PopUPModalError").modal('show');
                     setTimeout(function () {
@@ -747,7 +741,7 @@
                     return false;
                 }
                 else {
-                    // $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+                     //$("#valorAdministrar").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
                     $('#valorAdministrar').css('border-color', 'green');
                 }
 

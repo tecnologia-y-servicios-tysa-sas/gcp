@@ -425,3 +425,11 @@ a.article:hover {
     height: 24px;
     text-indent: -9999px; /* hides the link text */
 }
+
+.btn-back {
+    background: url(Images/back.png)no-repeat;
+    display: inline-table;
+    width: 24px;
+    height: 32px;
+    text-indent: -9999px; /* hides the link text */
+}

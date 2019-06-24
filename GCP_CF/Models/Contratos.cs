@@ -66,7 +66,8 @@ namespace GCP_CF.Models
         [Display(Name = "Año")]
         public Nullable<int> Year { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
+
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         [Display(Name = "Valor Contrato")]
         public double ValorContrato { get; set; }
 
@@ -76,6 +77,13 @@ namespace GCP_CF.Models
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         public Nullable<double> Honorarios { get; set; }
+
+        [NotMapped]
+        public string ValorContratoAux { get; set; }
+        [NotMapped]
+        public string ValorAdministrarAux { get; set; }
+        [NotMapped]
+        public string HonorariosAux { get; set; }
 
         public Nullable<double> Ejecucion { get; set; }
 
