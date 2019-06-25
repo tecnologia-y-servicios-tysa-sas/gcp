@@ -22,14 +22,12 @@ namespace GCP_CF.Models
         public Nullable<int> DiasHabiles { get; set; }
 
         [Required(ErrorMessage = "{0} es Requerido")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de Inicio")]
         public Nullable<System.DateTime> FechaInicio { get; set; }
 
         [Required(ErrorMessage = "{0} es Requerido")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha Final")]
         public Nullable<System.DateTime> FechaFinal { get; set; }
 

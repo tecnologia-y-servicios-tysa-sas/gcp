@@ -67,7 +67,9 @@ namespace GCP_CF.Controllers
                         var listadoActividadesFase = db.ActividadesFases
                                                         .Include(a => a.EstadosActividad)
                                                         .Where(a => a.FasesContrato_fase_Id1 == fase.Fase_Id && a.Contratos_Contrato_Id1 == idContrato)
+                                                        .OrderBy(a => new { a.FechaInicio, a.FechaFinal })
                                                         .Select(a => new {
+                                                            Id = a.Actividad_Id, 
                                                             IdFase = a.FasesContrato_fase_Id1,
                                                             IdContrato = a.Contratos_Contrato_Id1,
                                                             IdActividad = a.Actividad_Id,
@@ -191,35 +193,55 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
-        public JsonResult GuardarActividadFase(int idContrato, int idFase, string item, string descripcion, 
+        public JsonResult GuardarActividadFase(int idActividad, int idContrato, int idFase, string item, string descripcion, 
             string diasHabiles, string fechaInicio, string fechaFin, string estadoActividad)
         {
+            string accionVerbo = idActividad > 1 ? "actualizar" : "agregar";
+            string accionEjecutada = idActividad > 1 ? "actualizada" : "agregada";
+
             string mensaje = "";
             string error = "";
             string detalleError = "";
 
             try
             {
-                ActividadesFases actividad = new ActividadesFases
+                ActividadesFases actividad = null;
+
+                if (idActividad > -1)
                 {
-                    Contratos_Contrato_Id1 = idContrato,
-                    FasesContrato_fase_Id1 = idFase,
-                    Item = item,
-                    Descripción = descripcion,
-                    DiasHabiles = Convert.ToInt32(diasHabiles),
-                    FechaInicio = Convert.ToDateTime(fechaInicio),
-                    FechaFinal = Convert.ToDateTime(fechaFin),
-                    EstadoActividad_Id = Convert.ToInt32(estadoActividad)
-                };
+                    actividad = (from a in db.ActividadesFases
+                                 where a.Actividad_Id == idActividad
+                                 select a).FirstOrDefault<ActividadesFases>();
+                    if (actividad.Item != item) actividad.Item = item;
+                    if (actividad.Descripción != descripcion) actividad.Descripción = descripcion;
+                    if (actividad.DiasHabiles.GetValueOrDefault() != Convert.ToInt32(diasHabiles)) actividad.DiasHabiles = Convert.ToInt32(diasHabiles);
+                    if (actividad.FechaInicio != Convert.ToDateTime(fechaInicio)) actividad.FechaInicio = Convert.ToDateTime(fechaInicio);
+                    if (actividad.FechaFinal != Convert.ToDateTime(fechaFin)) actividad.FechaFinal = Convert.ToDateTime(fechaFin);
+                    if (actividad.EstadoActividad_Id != Convert.ToInt32(estadoActividad)) actividad.EstadoActividad_Id = Convert.ToInt32(estadoActividad);
+                }                    
+                else
+                {
+                    actividad = new ActividadesFases
+                    {
+                        Contratos_Contrato_Id1 = idContrato,
+                        FasesContrato_fase_Id1 = idFase,
+                        Item = item,
+                        Descripción = descripcion,
+                        DiasHabiles = Convert.ToInt32(diasHabiles),
+                        FechaInicio = Convert.ToDateTime(fechaInicio),
+                        FechaFinal = Convert.ToDateTime(fechaFin),
+                        EstadoActividad_Id = Convert.ToInt32(estadoActividad)
+                    };
+                    db.ActividadesFases.Add(actividad);
+                }
 
-                db.ActividadesFases.Add(actividad);
                 db.SaveChanges();
+                mensaje = "La actividad ha sido " + accionEjecutada + " exitosamente.";
 
-                mensaje = "La actividad ha sido agregada exitosamente.";
             }
             catch (Exception e)
             {
-                error = "Ocurrió un error al agregar la actividad.";
+                error = "Ocurrió un error al " + accionVerbo + " la actividad.";
                 detalleError = e.Message + (e.InnerException != null ? " - " + e.InnerException.Message : "N/A" );
             }
 
@@ -251,6 +273,78 @@ namespace GCP_CF.Controllers
             }
 
             return Json(response);
+        }
+
+        [HttpPost]
+        public JsonResult ObtenerActividadFase(int idActividad)
+        {
+            // TODO: Mejorar esta respuesta construyendo objetos
+            object response = null;
+
+            var actividad = db.ActividadesFases
+                              .Where(a => a.Actividad_Id == idActividad)
+                              .Select(a => new {
+                                  Id = a.Actividad_Id,
+                                  IdFase = a.FasesContrato_fase_Id1,
+                                  IdContrato = a.Contratos_Contrato_Id1,
+                                  IdActividad = a.Actividad_Id,
+                                  a.Item,
+                                  Descripcion = a.Descripción,
+                                  DiasEntreFechas = a.DiasHabiles,
+                                  FechaInicio = a.FechaInicio.HasValue ? a.FechaInicio.Value.ToString() : string.Empty,
+                                  FechaFinal = a.FechaFinal.HasValue ? a.FechaFinal.Value.ToString() : string.Empty,
+                                  CodigoEstado = a.EstadoActividad_Id.Value,
+                                  DescripcionEstado = a.EstadosActividad.Descripcion
+                              }).FirstOrDefault();
+
+            if (actividad != null && actividad.Id != 0)
+            {
+                try
+                {
+                    response = new { actividadFase = actividad };
+                }
+                catch (Exception e)
+                {
+                    response = new { mensaje = "Ha ocurrido un error al obtener el detalle de la actividad.", detalle = e.Message };
+                }
+            }
+            else
+            {
+                response = new { error = "<b>Error:</b> El identificador de la actividad no es válido." };
+            }
+
+            return Json(response);
+        }
+
+        [HttpPost]
+        public JsonResult EliminarActividadFase(int idActividad)
+        {
+            string mensaje = "";
+            string error = "";
+
+            ActividadesFases actividad = db.ActividadesFases
+                                           .Where(x => x.Actividad_Id == idActividad)
+                                           .Select(x => x).FirstOrDefault();
+
+            if (actividad != null && actividad.Actividad_Id != 0)
+            {
+                try
+                {
+                    db.ActividadesFases.Remove(actividad);
+                    db.SaveChanges();
+                    mensaje = "La actividad &quot;" + actividad.Descripción.Trim() + "&quot; fue eliminada exitosamente.";
+                }
+                catch (Exception)
+                {
+                    error = "Ocurrió un error al intentar eliminar la actividad &quot;" + actividad.Descripción.Trim() + "&quot;.";
+                }
+            }
+            else
+            {
+                error = "<b>Error:</b> El identificador de la actividad no es válido.";
+            }
+
+            return Json("{ \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\" }");
         }
 
         private IQueryable<Contratos> GetListadoContratos(string sortBy, string currentFilter, string searchString, int? page)
