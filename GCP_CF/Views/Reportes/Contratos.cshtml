@@ -1,0 +1,221 @@
+﻿@model IEnumerable<GCP_CF.Models.Contratos>
+
+@{
+    ViewBag.Title = "Reporte de Contratos";
+}
+
+@if (TempData["error"] != null)
+{
+    <script>alert('@TempData["error"]');</script>
+}
+
+<script src="~/Scripts/noGeneric/Reportes.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
+<style>
+    thead input {
+        width: 100%;
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href=" https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href=" https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+
+<h2 class="text-left">Reporte de Contratos</h2>
+<p class="text-left">Por favor diligencie al menos uno de los siguientes filtros para realizar la búsqueda</p>
+
+
+@using (Html.BeginForm("Contratos", "Reportes", FormMethod.Post, new { id = "filtrosReporteContratosForm" }))
+{
+    <div class="row">
+        <div class="col-lg-2 col-md-2 text-center">
+            <label for="anioContrato" class="control-label" style="margin-top: 5px">Año:</label><br />
+            @Html.DropDownList("Anio", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "anioContrato", @name = "anio" })
+        </div>
+        <div class="col-lg-3 col-md-3 text-center">
+            <label for="entidades" class="control-label" style="margin-top: 5px">Entidad Contratante:</label><br />
+            @Html.DropDownList("IdEntidadContratante", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "entidades", @name = "idEntidadContratante" })
+        </div>
+        <div class="col-lg-3 col-md-3 text-center">
+            <label for="nroContrato" class="control-label" style="margin-top: 5px">No. Contrato:</label><br />
+            @Html.Editor("NumeroContrato", new { htmlAttributes = new { @class = "form-control", @id = "nroContrato", @name = "numeroContrato", @value = ViewBag.NumeroContrato } })
+        </div>
+        <div class="col-lg-3 col-md-3 text-center">
+            <label for="estados" class="control-label" style="margin-top: 5px">Estado:</label><br />
+            @Html.DropDownList("IdEstadoContrato", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "estados", @name = "idEstadoContrato" })
+        </div>
+        <div class="col-lg-1 col-md-1">
+            <label class="control-label" style="margin-top: 5px">&nbsp;</label><br />
+            <button id="btnSearch" type="submit" class="btn btn-default btn-large">Buscar</button>
+        </div>
+    </div>
+    <br />
+}
+
+@if (Model != null && Model.Count() > 0) {
+<table id="example" class="table  table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th class="head-table">
+                Fecha Inicio
+            </th>
+            <th class="head-table">
+                Fecha Fin
+            </th>
+            <th class="head-table">
+                Número
+            </th>
+            <th class="head-table">
+                Entidad Contratante
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ObjetoContractual)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Plazo)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ValorContrato)
+            </th>
+            <th class="head-table">
+                Valor Administrar
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Honorarios)
+            </th>
+            <th class="head-table">
+                Estado
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Crp)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.FechaCrp)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Cdp)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.FechaCdp)
+            </th>
+            <th class="head-table">
+                Abogado
+            </th>
+            <th class="head-table">
+                Supervisor
+            </th>
+            <th class="head-table">
+                Observaciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaTerminacion)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.NumeroContrato)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
+                </td>
+                <td class="border-cell" style="font-size:9pt;width:250px">
+                    @Html.DisplayFor(modelItem => item.ObjetoContractual)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Plazo)
+                </td>
+                <td class="border-cell" style="width:100px">
+                    <strong>@Html.DisplayFor(modelItem => item.ValorContrato)</strong>
+                </td>
+                <td class="border-cell" style="font-size:9pt;width:250px">
+                    @Html.DisplayFor(modelItem => item.ValorAdministrar)
+                </td>
+                <td class="border-cell" style="font-size:9pt;width:250px">
+                    @Html.DisplayFor(modelItem => item.Honorarios)
+                </td>
+
+                <td class="border-cell" style="width:90px">
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Crp)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaCrp)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Cdp)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.FechaCdp)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.PersonaAbogado.NombreCompleto)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.PersonaSupervisor.NombreCompleto)
+                </td>
+                <td class="border-cell">
+                    @if (item.HistoriaObservaciones.Count > 0)
+                    {
+                        <input type="image" class="btn-Annotations" title="Ver Observaciones" onclick="CargarObservaciones('@item.Contrato_Id')" />
+                    }
+
+                    @Html.DisplayFor(modelItem => item.Observaciones)
+                </td>
+            </tr>
+            }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th style="font-size:10pt">
+                Totales
+            </th>
+            <th style="font-size:10pt">
+                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.ValorContrato))</strong>
+            </th>
+            <th>
+                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.ValorAdministrar))</strong>
+            </th>
+            <th>
+                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.Honorarios))</strong>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+}
+
+@*Alert Error*@
+<div class="modal fade" id="modalError" data-keyboard="false" data-backdrop="" style="position: center">
+    <div class="modal-dialog alert-Error" style="width: 30%">
+        <div class="row">
+            <div class="col-lg-11 modal-body" id="bodyError" style="color: #fff">
+            </div>
+            <div class="col-lg-1 text-right">
+                <button type="button" id="btnClose" class="close" data-dismiss="modal" style="color: #fff !important; padding-right: 10px">×</button>
+            </div>
+        </div>
+    </div>
+</div>

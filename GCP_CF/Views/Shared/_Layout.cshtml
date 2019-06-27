@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/eso.ico" />
     <title>ESO</title>
-    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <!-- Scrollbar Custom CSS -->
@@ -53,18 +53,16 @@
 
                     </ul>
                 </li>
-                @*<li>
-                    <a href="#fasesSubmenu" data-toggle="collapse" aria-expanded="false">
-                        <i class="glyphicon glyphicon-dashboard"></i>
-                        Maestros
+                <li>
+                    <a href="#reportesSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-book"></i>
+                        Reportes
                     </a>
-                    <ul class="collapse list-unstyled" id="fasesSubmenu">
-                        <li>@Html.ActionLink("Fases", "Index", "FasesContrato")</li>
-                        <li>@Html.ActionLink("Creación Actividades", "Index", "actividades")</li>
-                        <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividad")</li>
-
+                    <ul class="collapse list-unstyled" id="reportesSubmenu">
+                        <li>@Html.ActionLink("Contratos", "Contratos", "Reportes")</li>
+                        <li>@Html.ActionLink("Facturas", "Facturas", "Reportes")</li>
                     </ul>
-                </li>*@
+                </li>
                 <li>
                     <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-certificate"></i>
@@ -95,6 +93,32 @@
                     </a>
                     <ul class="collapse list-unstyled" id="userSubmenu">
                         <li>@Html.ActionLink("Listado de Usuarios", "Index", "")</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#maestrosSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        Maestros
+                    </a>
+                    <ul class="collapse list-unstyled" id="maestrosSubmenu">
+                        <li>
+                            <a href="#maestroFasesSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-list"></i> Fases
+                            </a>
+                            <ul class="collapse list-unstyled" id="maestroFasesSubmenu">
+                                <li>@Html.ActionLink("Fases", "Index", "FasesContrato")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#maestroActividadesSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-calendar"></i> Actividades
+                            </a>
+                            <ul class="collapse list-unstyled" id="maestroActividadesSubmenu">
+                                @*<li>@Html.ActionLink("Ver Actividades", "Index", "actividades")</li>
+                                <li>@Html.ActionLink("Crear Actividad", "Index", "actividades")</li>*@
+                                <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividad")</li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>

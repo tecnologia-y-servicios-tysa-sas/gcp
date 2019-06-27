@@ -77,8 +77,8 @@
     <Reference Include="MySql.Data.EntityFramework, Version=8.0.16.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.EntityFramework.8.0.16\lib\net452\MySql.Data.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -155,6 +155,7 @@
       <DependentUpon>201906271751003_initial1.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\FormaPago.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Models\HistoriaObservaciones.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
@@ -196,8 +197,9 @@
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrapCustom.css" />
+    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrapCustom.css" />
     <Content Include="Content\Images\Alcaldia.png" />
     <Content Include="Content\Images\back.png" />
     <Content Include="Content\Images\banner.png" />
@@ -224,11 +226,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy1.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -238,6 +239,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-confirm.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -250,11 +253,10 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\noGeneric\Actividades.js" />
     <Content Include="Scripts\noGeneric\FasesContrato.js" />
+    <Content Include="Scripts\noGeneric\Reportes.js" />
     <Content Include="Scripts\noGeneric\Utilidades.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Scripts\Nueva carpeta\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.min.js" />
@@ -331,6 +333,8 @@
     <Content Include="Views\Contratos\PartialContratos.cshtml" />
     <Content Include="Views\Seguimiento\Index.cshtml" />
     <Content Include="Views\Seguimiento\FasesContrato.cshtml" />
+    <Content Include="Views\Reportes\Contratos.cshtml" />
+    <Content Include="Views\Reportes\Facturas.cshtml" />
     <Content Include="Views\TiposDocumentos\Create.cshtml" />
     <Content Include="Views\TiposDocumentos\Delete.cshtml" />
     <Content Include="Views\TiposDocumentos\Details.cshtml" />
