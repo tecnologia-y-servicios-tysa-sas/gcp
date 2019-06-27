@@ -149,6 +149,12 @@
     <Compile Include="Controllers\ContratosController.cs" />
     <Compile Include="Controllers\EstadosActividadController.cs" />
     <Compile Include="Controllers\FasesContratoController.cs" />
+    <Compile Include="Controllers\TiposDocumentosController.cs" />
+    <Compile Include="Migrations\201906271751003_initial1.cs" />
+    <Compile Include="Migrations\201906271751003_initial1.Designer.cs">
+      <DependentUpon>201906271751003_initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FormaPago.cs" />
     <Compile Include="Models\HistoriaObservaciones.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
@@ -325,6 +331,11 @@
     <Content Include="Views\Contratos\PartialContratos.cshtml" />
     <Content Include="Views\Seguimiento\Index.cshtml" />
     <Content Include="Views\Seguimiento\FasesContrato.cshtml" />
+    <Content Include="Views\TiposDocumentos\Create.cshtml" />
+    <Content Include="Views\TiposDocumentos\Delete.cshtml" />
+    <Content Include="Views\TiposDocumentos\Details.cshtml" />
+    <Content Include="Views\TiposDocumentos\Edit.cshtml" />
+    <Content Include="Views\TiposDocumentos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -340,6 +351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906140033223_Subir.resx">
       <DependentUpon>201906140033223_Subir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906271751003_initial1.resx">
+      <DependentUpon>201906271751003_initial1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

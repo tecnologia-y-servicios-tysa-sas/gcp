@@ -6,16 +6,14 @@ using System.Web;
 
 namespace GCP_CF.Models
 {
-    public class TiposDocumentos
+    public class FormaPago
     {
         [Key]
-        public int DocumentoId { get; set; }
+        public int Id { get; set; }
 
-        //[Index(IsUnique = true)]
         public string Descripcion { get; set; }
 
-        public string Prefijo { get; set; }
+        public virtual ICollection<Contratos> Contratos { get; set; }
 
-        public virtual ICollection<TiposPersona> TiposPersona { get; set; }
     }
 }

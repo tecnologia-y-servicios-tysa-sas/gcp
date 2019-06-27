@@ -14,8 +14,10 @@ namespace GCP_CF.Models
         public string Direccion { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
+        [Display(Name = "Número de Identificación")]
+        public string NumeroDocumento { get; set; }
         public Nullable<int> TipoPersona_Id { get; set; }
-
+        public int? TipoDocumentoId { get; set; }
         [NotMapped]
         [Display(Name = "Nombre Completo")]
         public String NombreCompleto { get { return Nombres + ' ' + Apellidos; } }
@@ -27,5 +29,8 @@ namespace GCP_CF.Models
         public virtual ICollection<Contratos> Contratos1 { get; set; }
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contratos> Contratos2 { get; set; }
+
+        [ForeignKey("TipoDocumentoId")]
+        public virtual TiposDocumentos TiposDocumentos { get; set; }
     }
 }

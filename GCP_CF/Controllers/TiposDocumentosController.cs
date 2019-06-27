@@ -10,114 +10,107 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class PersonasController : Controller
+    public class TiposDocumentosController : Controller
     {
         private GCPContext db = new GCPContext();
 
-        // GET: Personas
+        // GET: TiposDocumentos
         public ActionResult Index()
         {
-            var personas = db.Personas.Include(p => p.TiposPersona);
-            return View(personas.ToList());
+            return View(db.TiposDocumentos.ToList());
         }
 
-        // GET: Personas/Details/5
+        // GET: TiposDocumentos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Personas personas = db.Personas.Find(id);
-            if (personas == null)
+            TiposDocumentos tiposDocumentos = db.TiposDocumentos.Find(id);
+            if (tiposDocumentos == null)
             {
                 return HttpNotFound();
             }
-            return View(personas);
+            return View(tiposDocumentos);
         }
 
-        // GET: Personas/Create
+        // GET: TiposDocumentos/Create
         public ActionResult Create()
         {
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion");
-            ViewBag.TipoDocumentoId = new SelectList(db.TiposDocumentos, "DocumentoId", "Descripcion");
             return View();
         }
 
-        // POST: Personas/Create
+        // POST: TiposDocumentos/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Persona_Id,Nombres,Apellidos,Direccion,Telefono,Correo,TipoPersona_Id,TipoDocumentoId,NumeroDocumento")] Personas personas)
+        public ActionResult Create([Bind(Include = "DocumentoId,Descripcion,Prefijo")] TiposDocumentos tiposDocumentos)
         {
             if (ModelState.IsValid)
             {
-                db.Personas.Add(personas);
+                db.TiposDocumentos.Add(tiposDocumentos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
-            ViewBag.TipoDocumentoId = new SelectList(db.TiposDocumentos, "DocumentoId", "Descripcion");
-            return View(personas);
+            return View(tiposDocumentos);
         }
 
-        // GET: Personas/Edit/5
+        // GET: TiposDocumentos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Personas personas = db.Personas.Find(id);
-            if (personas == null)
+            TiposDocumentos tiposDocumentos = db.TiposDocumentos.Find(id);
+            if (tiposDocumentos == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
-            return View(personas);
+            return View(tiposDocumentos);
         }
 
-        // POST: Personas/Edit/5
+        // POST: TiposDocumentos/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Persona_Id,Nombres,Apellidos,Direccion,Telefono,Correoo,TipoPersona_Id")] Personas personas)
+        public ActionResult Edit([Bind(Include = "DocumentoId,Descripcion,Prefijo")] TiposDocumentos tiposDocumentos)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(personas).State = EntityState.Modified;
+                db.Entry(tiposDocumentos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion", personas.TipoPersona_Id);
-            return View(personas);
+            return View(tiposDocumentos);
         }
 
-        // GET: Personas/Delete/5
+        // GET: TiposDocumentos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Personas personas = db.Personas.Find(id);
-            if (personas == null)
+            TiposDocumentos tiposDocumentos = db.TiposDocumentos.Find(id);
+            if (tiposDocumentos == null)
             {
                 return HttpNotFound();
             }
-            return View(personas);
+            return View(tiposDocumentos);
         }
 
-        // POST: Personas/Delete/5
+        // POST: TiposDocumentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Personas personas = db.Personas.Find(id);
-            db.Personas.Remove(personas);
+            TiposDocumentos tiposDocumentos = db.TiposDocumentos.Find(id);
+            db.TiposDocumentos.Remove(tiposDocumentos);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -47,5 +47,6 @@ namespace GCP_CF.Models
 
         public DbSet<HistoriaObservaciones> HistoriaObservaciones { get; set; }
 
+        public System.Data.Entity.DbSet<GCP_CF.Models.TiposDocumentos> TiposDocumentos { get; set; }
     }
 }

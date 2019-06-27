@@ -106,8 +106,10 @@ namespace GCP_CF.Models
         [StringLength(500)]
         public string Observaciones { get; set; }
 
-        //[ForeignKey("ContratoMarco_Id")]
-        //public virtual ContratosMarco ContratosMarco{ get; set; }
+       public int? FormaPagoId { get; set; }
+
+        [ForeignKey("FormaPagoId")]
+        public virtual FormaPago FormaPago { get; set; }
 
         [ForeignKey("Persona_Id")]
         public virtual Personas EntidadContratante { get; set; }

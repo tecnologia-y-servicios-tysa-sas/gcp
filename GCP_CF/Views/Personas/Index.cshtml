@@ -16,6 +16,12 @@
             @*@Html.DisplayNameFor(model => model.TiposPersona.Descripcion)*@
         </th>
         <th class="head-table">
+            Tipo Documento
+        </th>
+        <th class="head-table">
+            Número Documento
+        </th>
+        <th class="head-table">
             @Html.DisplayNameFor(model => model.Nombres)
         </th>
         <th class="head-table">
@@ -39,6 +45,12 @@
             @Html.DisplayFor(modelItem => item.TiposPersona.Descripcion)
         </td>
         <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.TiposDocumentos.Descripcion)
+        </td>
+        <td class="border-cell">
+            @Html.DisplayFor(modelItem => item.NumeroDocumento)
+        </td>
+        <td class="border-cell">
             @Html.DisplayFor(modelItem => item.Nombres)
         </td>
         <td class="border-cell">
@@ -54,9 +66,9 @@
             @Html.DisplayFor(modelItem => item.Correo)
         </td>
         <td class="border-cell">
-            @Html.ActionLink("Editar", "Edit", new { id=item.Persona_Id }) |
-            @Html.ActionLink("Detalles", "Details", new { id=item.Persona_Id }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.Persona_Id })
+            @Html.ActionLink("Editar", "Edit", new { id = item.Persona_Id }) |
+            @Html.ActionLink("Detalles", "Details", new { id = item.Persona_Id }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id = item.Persona_Id })
         </td>
     </tr>
 }
