@@ -86,6 +86,9 @@
             <th class="head-table">
                 Observaciones
             </th>
+            <th class="head-table">
+                Forma de Pago
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -154,6 +157,9 @@
             <td class="border-cell">
                 @Html.DisplayFor(modelItem => item.Observaciones)
             </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.FormaPago.Descripcion)
+            </td>
         </tr>
         }
     </tbody>
@@ -175,6 +181,7 @@
             <th>
                 <strong>@String.Format("{0:N0}", @Model.Sum(i => i.Honorarios))</strong>
             </th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>

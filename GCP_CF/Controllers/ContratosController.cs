@@ -78,6 +78,8 @@ namespace GCP_CF.Controllers
             ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion");
             ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato");
             ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion");
+            ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
+
 
 
             return View();
@@ -132,6 +134,7 @@ namespace GCP_CF.Controllers
                 ViewBag.TiposEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion");
                 ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato");
                 ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion");
+                ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
 
                 return View(contratos);
             }              
@@ -175,6 +178,7 @@ namespace GCP_CF.Controllers
             ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion",contratos.TipoEstadoContrato_Id);
             ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato",contratos.ContratoMarco_Id);
             ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion", contratos.TipoContrato_Id);
+            ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
             return View(contratos);
         }
 
@@ -231,6 +235,7 @@ namespace GCP_CF.Controllers
                 ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion", contratos.TipoEstadoContrato_Id);
                 ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato", contratos.ContratoMarco_Id);
                 ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion", contratos.TipoContrato_Id);
+                ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
 
                 return View(contratos);
             }

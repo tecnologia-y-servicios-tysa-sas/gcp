@@ -166,6 +166,9 @@
         </div>
 
         <div class="col-md-4">
+            <div> @Html.LabelFor(model => model.FormaPagoId, "Forma de Pago", htmlAttributes: new { @class = "control-label" })</div>
+            @Html.DropDownList("FormaPagoId", null, "Seleccione Forma de Pago", htmlAttributes: new { @class = "form-control", @id = "formaPago" })
+            @Html.ValidationMessageFor(model => model.FormaPagoId, "", new { @class = "text-danger" })
         </div>
     </div>
 

@@ -149,6 +149,7 @@
     <Compile Include="Controllers\ContratosController.cs" />
     <Compile Include="Controllers\EstadosActividadController.cs" />
     <Compile Include="Controllers\FasesContratoController.cs" />
+    <Compile Include="Controllers\FormaPagosController.cs" />
     <Compile Include="Controllers\TiposDocumentosController.cs" />
     <Compile Include="Migrations\201906271751003_initial1.cs" />
     <Compile Include="Migrations\201906271751003_initial1.Designer.cs">
@@ -340,6 +341,11 @@
     <Content Include="Views\TiposDocumentos\Details.cshtml" />
     <Content Include="Views\TiposDocumentos\Edit.cshtml" />
     <Content Include="Views\TiposDocumentos\Index.cshtml" />
+    <Content Include="Views\FormaPagos\Create.cshtml" />
+    <Content Include="Views\FormaPagos\Delete.cshtml" />
+    <Content Include="Views\FormaPagos\Details.cshtml" />
+    <Content Include="Views\FormaPagos\Edit.cshtml" />
+    <Content Include="Views\FormaPagos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

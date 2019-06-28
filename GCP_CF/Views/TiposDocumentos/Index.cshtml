@@ -1,38 +1,38 @@
 ﻿@model IEnumerable<GCP_CF.Models.TiposDocumentos>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tipos Documentos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Tipos de Documentos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create",null,new { @class="btn btn-default"})
 </p>
-<table class="table">
+<table class="table text-center">
     <tr>
-        <th>
+        <th  class="head-table">
             @Html.DisplayNameFor(model => model.Descripcion)
         </th>
-        <th>
+        <th  class="head-table">
             @Html.DisplayNameFor(model => model.Prefijo)
         </th>
-        <th></th>
+        <th  class="head-table">Acciones</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="border-cell">
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
-        <td>
+        <td class="border-cell">
             @Html.DisplayFor(modelItem => item.Prefijo)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DocumentoId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DocumentoId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DocumentoId })
+        <td class="border-cell">
+            @Html.ActionLink("Editar", "Edit", new { id=item.DocumentoId }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.DocumentoId }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.DocumentoId })
         </td>
     </tr>
 }
