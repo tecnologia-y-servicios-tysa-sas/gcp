@@ -1,28 +1,12 @@
-﻿function validarAnio() {
-    if ($('#anioContrato').val() == "") {
-        $('#anioContrato').css('border-color', 'red');
-        $("#mensaje").html('<div><strong>¡Error!</strong> Debe seleccionar un año</div>');
-        $("#modalValidacion").modal('show');
-        setTimeout(function () {
-            $('#modalValidacion').modal('hide');
-        }, 5000);
-        return false;
-    }
-}
+﻿function ExportarContratos() {
+    var newUrl = "/Reportes/ExportarReporteContratos";
+    var oldUrl = "/Reportes/Contratos";
+    var form = $("#filtrosReporteContratosForm");
 
-$(function () {
+    $(form).attr("action", newUrl);
+    $(form).submit();
 
-    $("#anioContrato").change(function () {
-        $("#anioContrato").css('border-color', $("#anioContrato").val() == "" ? 'red' : "green");
-    });
-
-    $("#filtrosReporteContratosForm").submit(function () {
-        return validarAnio();
-    });
-});
-
-function ExportarContratos() {
-    NoDisponible();
+    $(form).attr("action", oldUrl);
 }
 
 function NoDisponible() {

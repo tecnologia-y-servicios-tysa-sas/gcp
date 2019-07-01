@@ -1,0 +1,170 @@
+﻿@model IEnumerable<GCP_CF.Models.Contratos>
+
+@{ 
+    string tipoContratoMarco = System.Configuration.ConfigurationManager.AppSettings["tipoContratoMarco"];
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+
+<table id="tblReporteContratos" class="table table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th class="head-table">Tipo</th>
+            <th class="head-table">Número</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.ValorContrato)</th>
+            <th class="head-table">Valor<br />Administrar</th>
+            <th class="head-table">% Ejecutado</th>
+            <th class="head-table">Valor<br />Ejecutado</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Honorarios)</th>
+            <th class="head-table">Entidad<br />Contratante</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.ObjetoContractual)</th>
+            <th class="head-table">Fecha<br />Inicio</th>
+            <th class="head-table">Fecha<br />Fin</th>
+            <th class="head-table">Estado</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Plazo)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="border-cell">
+                    @if (@item.TipoContrato != null) {
+                    <span data-toggle="tooltip" title="@item.TipoContrato.Descripcion">@Html.DisplayFor(modelItem => item.TipoContrato.Termino)</span>
+                    } else {
+                    <span data-toggle="tooltip" title="Tipo no especificado">N/A</span>
+                    }
+                </td>
+                <td class="border-cell" style="width: 200px">
+                    @if (!string.IsNullOrEmpty(item.NumeroContrato)) {
+                        @Html.DisplayFor(modelItem => item.NumeroContrato)
+                    } else {
+                        @Html.Raw("N/A")
+                    }
+                </td>
+                <td class="border-cell text-right">@Html.DisplayFor(modelItem => item.ValorContrato)</td>
+                <td class="border-cell text-right"><strong>@Html.DisplayFor(modelItem => item.ValorAdministrar)</strong></td>
+                <td class="border-cell text-right">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="@Html.DisplayFor(modelItem => item.PorcentajeValorEjecutado)"
+                             aria-valuemin="0" aria-valuemax="100">
+                            <div class="text-center" style="color: black; font-weight: bold; font-size: 11px">@Html.DisplayFor(modelItem => item.PorcentajeValorEjecutado)%</div>
+                        </div>
+                    </div>
+                </td>
+                <td class="border-cell text-right">@Html.DisplayFor(modelItem => item.Ejecucion)</td>
+                <td class="border-cell text-right">@Html.DisplayFor(modelItem => item.Honorarios)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)</td>
+                <td class="border-cell" style="width: 250px">@Html.DisplayFor(modelItem => item.ObjetoContractual)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.FechaInicio)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.FechaTerminacion)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.Estado)</td>
+                <td class="border-cell text-right">@Html.DisplayFor(modelItem => item.Plazo)</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        @{
+            double valorTotalContratos = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.ValorContrato : 0);
+            double valorTotalAdministrar = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.ValorAdministrar : 0);
+            double valorTotalEjecutado = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.Ejecucion.GetValueOrDefault() : 0);
+            double valorTotalHonorarios = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.Honorarios.GetValueOrDefault() : 0);
+            double porcentajeTotalEjecutado = valorTotalAdministrar > 0 ? Math.Round(valorTotalEjecutado / valorTotalAdministrar, 2) : 0;
+
+            // Valores pendientes
+            double valorPendienteEjecutar = valorTotalAdministrar - valorTotalEjecutado;
+            double porcentajePendienteEjecutar = 100 - porcentajeTotalEjecutado;
+        }
+        <tr style="background-color: #eee">
+            <th>&nbsp;</th>
+            <th style="font-size: 9pt">TOTALES</th>
+            <th class="text-right" style="font-size: 9pt">
+                <strong>@String.Format("{0:N0}", valorTotalContratos)</strong>
+            </th>
+            <th class="text-right" style="font-size: 9pt">
+                <strong>@String.Format("{0:N0}", valorTotalAdministrar)</strong>
+            </th>
+            <th class="text-right" style="font-size: 9pt">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="@String.Format("{0:N0}", porcentajeTotalEjecutado)"
+                         aria-valuemin="0" aria-valuemax="100">
+                        <div class="text-center" style="color: black; font-weight: bold; font-size: 12px">
+                            @String.Format("{0:N0}", porcentajeTotalEjecutado)%
+                        </div>
+                    </div>
+                </div>
+            </th>
+            <th class="text-right" style="font-size: 9pt">
+                <strong>@String.Format("{0:N0}", valorTotalEjecutado)</strong>
+            </th>
+            <th class="text-right" style="font-size: 9pt">
+                <strong>@String.Format("{0:N0}", valorTotalHonorarios)</strong>
+            </th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </tfoot>
+</table>
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var table = $('#tblReporteContratos').dataTable({
+
+            responsive: true,
+            "language": {
+                "lengthMenu": "Display _MENU_ records per page",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay información disponible",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar en los resultados:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+        });
+
+        new $.fn.dataTable.FixedHeader(table);
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+    });
+
+</script>

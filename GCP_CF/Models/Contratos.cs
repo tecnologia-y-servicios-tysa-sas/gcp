@@ -42,7 +42,6 @@ namespace GCP_CF.Models
         [Display(Name = "CRP")]
         public Nullable<int>  Crp { get; set; }
 
-
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha CRP")]
         public DateTime? FechaCrp { get; set; }
@@ -50,11 +49,9 @@ namespace GCP_CF.Models
         [Display(Name = "CDP")]
         public Nullable<int>  Cdp { get; set; }
 
-
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha CDP")]
         public DateTime? FechaCdp { get; set; }
-
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Display(Name = "Fecha Acta Inicio")]
@@ -65,7 +62,6 @@ namespace GCP_CF.Models
 
         [Display(Name = "Año")]
         public Nullable<int> Year { get; set; }
-
 
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         [Display(Name = "Valor Contrato")]
@@ -80,8 +76,10 @@ namespace GCP_CF.Models
 
         [NotMapped]
         public string ValorContratoAux { get; set; }
+
         [NotMapped]
         public string ValorAdministrarAux { get; set; }
+
         [NotMapped]
         public string HonorariosAux { get; set; }
 
@@ -106,7 +104,9 @@ namespace GCP_CF.Models
         [StringLength(500)]
         public string Observaciones { get; set; }
 
-       public int? FormaPagoId { get; set; }
+        public int? FormaPagoId { get; set; }
+
+        /* CAMPOS VIRTUALES - SOLO VISUALIZACIÓN */
 
         [ForeignKey("FormaPagoId")]
         public virtual FormaPago FormaPago { get; set; }
@@ -123,6 +123,14 @@ namespace GCP_CF.Models
         [ForeignKey("PersonaSupervisorTecnico_Id")]
         public virtual Personas PersonaSupervisorTecnico { get; set; }
 
+        [ForeignKey("TipoContrato_Id")]
+        public virtual TiposContratos TipoContrato { get; set; }
+
         public virtual ICollection<HistoriaObservaciones> HistoriaObservaciones { get; set; }
+
+        public virtual double PorcentajeValorEjecutado
+        {
+            get { return Ejecucion.HasValue && ValorAdministrar > 0 ? Math.Round(Ejecucion.Value / ValorAdministrar, 2) : 0; }
+        }
     }
 }

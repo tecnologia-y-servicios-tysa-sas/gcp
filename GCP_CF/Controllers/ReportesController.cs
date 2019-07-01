@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
+using ClosedXML.Excel;
 using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
     public class ReportesController : Controller
     {
-        private GCPContext db = new GCPContext();
+        private readonly GCPContext db = new GCPContext();
 
         public ActionResult Contratos(FormCollection filterForm)
+        {
+            return View(ListarContratos(filterForm));
+        }
+
+        public List<Contratos> ListarContratos(FormCollection filterForm)
         {
             int anio = !string.IsNullOrEmpty(filterForm["Anio"]) ? int.Parse(filterForm["Anio"]) : 0;
             int idEntidadContratante = !string.IsNullOrEmpty(filterForm["IdEntidadContratante"]) ? int.Parse(filterForm["IdEntidadContratante"]) : 0;
@@ -37,7 +45,7 @@ namespace GCP_CF.Controllers
             ViewBag.Anio = new SelectList(aniosContratos.Distinct().Where(x => x > 0).OrderByDescending(x => x), anio);
 
             List<Contratos> list = ObtenerContratos(anio, idEntidadContratante, numeroContrato, idEstadoContrato);
-            return View(list != null ? list.OrderBy(x => x.Contrato_Id).ToList() : new List<Contratos>());
+            return list != null ? list.OrderBy(x => x.Contrato_Id).ToList() : new List<Contratos>();
         }
 
         public ActionResult Facturas()
@@ -55,32 +63,38 @@ namespace GCP_CF.Controllers
             bool hayNumeroContrato = !string.IsNullOrEmpty(numeroContrato);
             bool hayEstadoContrato = idEstadoContrato > 0;
 
-            List<Contratos> list = null;
+            var contratos = (from c in db.Contratos select c).Include(c => c.HistoriaObservaciones);
 
-            if (hayFechas || hayEntidadContratante || hayNumeroContrato || hayEstadoContrato)
+            if (hayFechas)
             {
-                list = (from c in db.Contratos
-                         where (
-                             (
-                                 hayFechas ?
-                                     (fechaInicio.Value <= c.FechaInicio && c.FechaInicio <= fechaFin.Value) ||
-                                     (fechaInicio.Value <= c.FechaTerminacion && c.FechaInicio <= fechaFin.Value) ||
-                                     (fechaInicio.Value <= c.FechaActaInicio && c.FechaInicio <= fechaFin.Value) ||
-                                     (fechaInicio.Value <= c.FechaCdp && c.FechaInicio <= fechaFin.Value) ||
-                                     (fechaInicio.Value <= c.FechaCrp && c.FechaInicio <= fechaFin.Value)
-                                 : true
-                             )
-                             && (hayEntidadContratante ? c.EntidadContratante.Persona_Id == idEntidadContratante : true)
-                             && (hayNumeroContrato ? c.NumeroContrato.Contains(numeroContrato) : true)
-                             && (hayEstadoContrato ? c.TipoEstadoContrato_Id == idEstadoContrato : true)
-                        )
-                        select c).Include(c => c.HistoriaObservaciones).ToList<Contratos>();
+                contratos = contratos.Where(c => (fechaInicio.Value <= c.FechaInicio && c.FechaInicio <= fechaFin.Value) ||
+                                                 (fechaInicio.Value <= c.FechaTerminacion && c.FechaInicio <= fechaFin.Value) ||
+                                                 (fechaInicio.Value <= c.FechaActaInicio && c.FechaInicio <= fechaFin.Value) ||
+                                                 (fechaInicio.Value <= c.FechaCdp && c.FechaInicio <= fechaFin.Value) ||
+                                                 (fechaInicio.Value <= c.FechaCrp && c.FechaInicio <= fechaFin.Value));
             }
 
-            if (list != null)
+            if (hayEntidadContratante)
+                contratos = contratos.Where(c => c.EntidadContratante.Persona_Id == idEntidadContratante);
+
+            if (hayNumeroContrato)
+            {
+                int idContratoMarco = (from cm in db.Contratos
+                                       where cm.NumeroContrato.ToUpper().Trim() == numeroContrato.ToUpper().Trim()
+                                       select cm.Contrato_Id).FirstOrDefault();
+
+                contratos = contratos.Where(c => (idContratoMarco > 0 ? c.Contrato_Id == idContratoMarco || c.ContratoMarco_Id.Value == idContratoMarco : true))
+                                     .OrderByDescending(c => c.ContratoMarco_Id)
+                                     .OrderByDescending(c => c.NumeroContrato);
+            }
+
+            if (hayEstadoContrato)
+                contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato);
+
+            if (contratos != null)
             {
                 var estados = db.TiposEstadoContrato.ToList();
-                foreach (Contratos item in list)
+                foreach (Contratos item in contratos)
                 {
                     foreach (var estado in estados)
                     {
@@ -90,9 +104,74 @@ namespace GCP_CF.Controllers
                         }
                     }
                 }
+
+                return contratos.ToList<Contratos>();
             }
 
-            return list;
+            return null;
+        }
+
+        [HttpPost]
+        public FileResult ExportarReporteContratos(FormCollection filterForm)
+        {
+            List<Contratos> contratos = ListarContratos(filterForm);
+
+            DataTable dt = new DataTable("Contratos");
+            dt.Columns.AddRange(new DataColumn[21]
+            {
+                new DataColumn("Tipo"),
+                new DataColumn("Número"),
+                new DataColumn("Valor Contrato"),
+                new DataColumn("Valor Administrar"),
+                new DataColumn("% Ejecutado"),
+                new DataColumn("Valor Ejecutado"),
+                new DataColumn("Honorarios"),
+                new DataColumn("Entidad Contratante"),
+                new DataColumn("Objeto Contractual"),
+                new DataColumn("Fecha Inicio"),
+                new DataColumn("Fecha Fin"),
+                new DataColumn("Plazo"),
+                new DataColumn("Estado"),
+                new DataColumn("CRP"),
+                new DataColumn("Fecha CRP"),
+                new DataColumn("CDP"),
+                new DataColumn("Fecha CDP"),
+                new DataColumn("Fecha Acta Inicio"),
+                new DataColumn("Abogado"),
+                new DataColumn("Supervisor"),
+                new DataColumn("Observaciones")
+            });
+
+            foreach (Contratos c in contratos)
+            {
+                dt.Rows.Add(c.TipoContrato != null ? c.TipoContrato.Termino : "N/A", 
+                            c.NumeroContrato, c.ValorContrato, c.ValorAdministrar, c.PorcentajeValorEjecutado + "%", 
+                            c.Ejecucion.HasValue ? c.Ejecucion.Value : 0, c.Honorarios,
+                            c.EntidadContratante != null ? c.EntidadContratante.NombreCompleto : "N/A", 
+                            c.ObjetoContractual, c.FechaInicio, c.FechaTerminacion, c.Plazo, 
+                            c.Estado != null ? c.Estado : c.TipoEstadoContrato_Id.GetValueOrDefault().ToString(), 
+                            c.Crp, c.FechaCrp, c.Cdp, c.FechaCdp, c.FechaActaInicio, 
+                            c.PersonaAbogado != null ? c.PersonaAbogado.NombreCompleto: "N/A", 
+                            c.PersonaSupervisor != null ? c.PersonaSupervisor.NombreCompleto : "N/A", 
+                            c.Observaciones);
+            }
+
+            return ExportarAExcel("Contratos", dt);
+        }
+
+        public FileResult ExportarAExcel(string nombre, DataTable dt)
+        {
+            string nombreArchivo = DateTime.Now.ToString("yyyyMMddHHmmss") + "_Reporte" + nombre + ".xlsx";
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", nombreArchivo);
+                }
+            }
         }
     }
 }
