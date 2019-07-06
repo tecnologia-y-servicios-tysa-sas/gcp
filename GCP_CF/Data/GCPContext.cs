@@ -18,7 +18,6 @@ namespace GCP_CF.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             //modelBuilder.Entity<HistoryRow>().Property(h => h.MigrationId).HasMaxLength(100).IsRequired();
             //modelBuilder.Entity<HistoryRow>().Property(h => h.ContextKey).HasMaxLength(200).IsRequired();
-
         }
 
         public DbSet<Actividades> Actividades { get; set; }
@@ -47,8 +46,12 @@ namespace GCP_CF.Models
 
         public DbSet<HistoriaObservaciones> HistoriaObservaciones { get; set; }
 
-        public System.Data.Entity.DbSet<GCP_CF.Models.TiposDocumentos> TiposDocumentos { get; set; }
+        public DbSet<TiposDocumentos> TiposDocumentos { get; set; }
 
-        public System.Data.Entity.DbSet<GCP_CF.Models.FormaPago> FormaPagoes { get; set; }
+        public DbSet<FormaPago> FormaPagoes { get; set; }
+
+        public DbSet<Facturas> Facturas { get; set; }
+
+        public DbSet<EstadosFactura> EstadosFactura { get; set; }
     }
 }

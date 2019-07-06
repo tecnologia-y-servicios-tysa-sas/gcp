@@ -38,10 +38,6 @@
                     <ul class="collapse list-unstyled" id="contratosSubmenu">
                         <li>@Html.ActionLink("Crear Contratos", "Create", "Contratos")</li>
                         <li>@Html.ActionLink("Ver Contratos", "Index", "Contratos")</li>
-
-                        <li>@Html.ActionLink("Tipos de Contratos", "Index", "TiposContratos")</li>
-                        <li>@Html.ActionLink("Estados Contratos", "Index", "TiposEstadoContrato")</li>
-                        <li>@Html.ActionLink("Formas de Pago", "Index", "FormaPagos")</li>
                     </ul>
                 </li>
                 <li>
@@ -51,6 +47,17 @@
                     </a>
                     <ul class="collapse list-unstyled" id="seguimientoSubmenu">
                         <li>@Html.ActionLink("Fases por Contrato", "Index", "Seguimiento")</li>
+
+                    </ul>
+                </li>
+                <li>
+                    <a href="#facturasSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-list-alt"></i> 
+                        Facturación
+                    </a>
+                    <ul class="collapse list-unstyled" id="facturasSubmenu">
+                        <li>@Html.ActionLink("Crear Factura", "Create", "Facturas")</li>
+                        <li>@Html.ActionLink("Listado de Facturas", "Index", "Facturas")</li>
 
                     </ul>
                 </li>
@@ -103,6 +110,16 @@
                     </a>
                     <ul class="collapse list-unstyled" id="maestrosSubmenu">
                         <li>
+                            <a href="#maestroContratos" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-blackboard"></i> Contratos
+                            </a>
+                            <ul class="collapse list-unstyled" id="maestroContratos">
+                                <li>@Html.ActionLink("Tipos de Contratos", "Index", "TiposContratos")</li>
+                                <li>@Html.ActionLink("Estados Contratos", "Index", "TiposEstadoContrato")</li>
+                                <li>@Html.ActionLink("Formas de Pago", "Index", "FormaPagos")</li>
+                            </ul>
+                        </li>
+                        <li>
                             <a href="#maestroFasesSubmenu" data-toggle="collapse" aria-expanded="false">
                                 <i class="glyphicon glyphicon-list"></i> Fases
                             </a>
@@ -116,8 +133,17 @@
                             </a>
                             <ul class="collapse list-unstyled" id="maestroActividadesSubmenu">
                                 @*<li>@Html.ActionLink("Ver Actividades", "Index", "actividades")</li>
-                                <li>@Html.ActionLink("Crear Actividad", "Index", "actividades")</li>*@
+                        <li>@Html.ActionLink("Crear Actividad", "Index", "actividades")</li>*@
                                 <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividad")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#maestroFacturasSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-list-alt"></i> Facturas
+                            </a>
+                            <ul class="collapse list-unstyled" id="maestroFacturasSubmenu">
+                                <li>@Html.ActionLink("Nuevo Estado de Factura", "Create", "EstadosFactura")</li>
+                                <li>@Html.ActionLink("Listar Estados de Factura", "Index", "EstadosFactura")</li>
                             </ul>
                         </li>
                     </ul>

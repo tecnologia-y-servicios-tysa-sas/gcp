@@ -1,0 +1,39 @@
+﻿@model GCP_CF.Models.EstadosFactura
+
+@{
+    ViewBag.Title = "Estados de Factura";
+}
+
+<h2>Estado de Factura</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoFactura_Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstadoFactura_Id)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Termino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Termino)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.EstadoFactura_Id }) |
+    @Html.ActionLink("Regresar al listado", "Index")
+</p>

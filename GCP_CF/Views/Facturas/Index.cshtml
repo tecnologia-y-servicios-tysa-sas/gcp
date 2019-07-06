@@ -1,0 +1,18 @@
+﻿@model IEnumerable<GCP_CF.Models.Facturas>
+
+@{
+    ViewBag.Title = "Listado de Facturas";
+}
+
+<h2 class="text-left">Facturas</h2>
+
+<p class="text-left">
+    @Html.ActionLink("Crear Nueva", "Create", null, new { @class = "btn btn-default btn-large" })
+</p>
+
+@if (Model != null)
+{
+    <h3>Listado de Facturas</h3>
+
+    Html.RenderPartial("Facturas/PartialFacturas", Model);
+}

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<GCP_CF.Models.Facturas>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+
+<table id="tblReporteFacturas" class="table table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th class="head-table">&nbsp;</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Numero)</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Anio)</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Mes)</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Estado)</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Municipio)</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.Contrato)</th>
+            <th class="head-table">@Html.DisplayNameFor(model => model.TotalHonorarios)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr onclick="VerFactura(@item.Factura_Id)" class="pointer">
+                <td class="border-cell">@Html.HiddenFor(modelItem => item.Factura_Id, new { id = "IdFactura_" + item.Factura_Id })</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.Numero)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.Anio)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.NombreMes)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.Estado.Descripcion)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.Municipio.NombreCompleto)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.Contrato.NumeroContrato)</td>
+                <td class="border-cell">@Html.DisplayFor(modelItem => item.TotalHonorarios)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+    function VerFactura(IdFactura) {
+        $(location).attr("href", "/Facturas/Details/" + IdFactura);
+    }
+
+    $(document).ready(function () {
+
+        var table = $('#tblReporteFacturas').dataTable({
+
+            responsive: true,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay información disponible",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar en los resultados:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+        });
+
+        new $.fn.dataTable.FixedHeader(table);
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+    });
+
+</script>

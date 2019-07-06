@@ -167,6 +167,8 @@
     <Compile Include="Controllers\actividadesController.cs" />
     <Compile Include="Controllers\ContratosController.cs" />
     <Compile Include="Controllers\EstadosActividadController.cs" />
+    <Compile Include="Controllers\EstadosFacturaController.cs" />
+    <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\FasesContratoController.cs" />
     <Compile Include="Controllers\FormaPagosController.cs" />
     <Compile Include="Controllers\TiposDocumentosController.cs" />
@@ -174,6 +176,15 @@
     <Compile Include="Migrations\201906271751003_initial1.Designer.cs">
       <DependentUpon>201906271751003_initial1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907030541166_AddFacturas.cs" />
+    <Compile Include="Migrations\201907030541166_AddFacturas.Designer.cs">
+      <DependentUpon>201907030541166_AddFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907060358430_initial2.cs" />
+    <Compile Include="Migrations\201907060358430_initial2.Designer.cs">
+      <DependentUpon>201907060358430_initial2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FormaPago.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Models\HistoriaObservaciones.cs" />
@@ -208,6 +219,7 @@
     <Compile Include="Models\TiposContratos.cs" />
     <Compile Include="Models\TiposDocumentos.cs" />
     <Compile Include="Models\TiposEstadoContrato.cs" />
+    <Compile Include="Models\EstadosFactura.cs" />
     <Compile Include="Models\TiposNaturaleza.cs" />
     <Compile Include="Models\TiposPersona.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -365,7 +377,14 @@
     <Content Include="Views\FormaPagos\Details.cshtml" />
     <Content Include="Views\FormaPagos\Edit.cshtml" />
     <Content Include="Views\FormaPagos\Index.cshtml" />
-    <Content Include="Views\Reportes\PartialSeguimientoContrato.cshtml" />
+    <Content Include="Views\Shared\Seguimiento\PartialSeguimientoContrato.cshtml" />
+    <Content Include="Views\EstadosFactura\Create.cshtml" />
+    <Content Include="Views\EstadosFactura\Details.cshtml" />
+    <Content Include="Views\EstadosFactura\Edit.cshtml" />
+    <Content Include="Views\EstadosFactura\Index.cshtml" />
+    <Content Include="Views\Facturas\Index.cshtml" />
+    <Content Include="Views\Shared\Facturas\PartialFacturas.cshtml" />
+    <Content Include="Views\Facturas\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -384,6 +403,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906271751003_initial1.resx">
       <DependentUpon>201906271751003_initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907030541166_AddFacturas.resx">
+      <DependentUpon>201907030541166_AddFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907060358430_initial2.resx">
+      <DependentUpon>201907060358430_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

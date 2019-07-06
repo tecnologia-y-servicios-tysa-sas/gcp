@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -48,9 +49,37 @@ namespace GCP_CF.Controllers
             return list != null ? list.OrderBy(x => x.Contrato_Id).ToList() : new List<Contratos>();
         }
 
-        public ActionResult Facturas()
+        public ActionResult Facturas(FormCollection filterForm)
         {
-            return View();
+            return View(ListarFacturas(filterForm));
+        }
+
+        public string NombreMes(int mes)
+        {
+            DateTimeFormatInfo dtinfo = new CultureInfo("es-ES", false).DateTimeFormat;
+            return CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(dtinfo.GetMonthName(mes));
+        }
+
+        private List<Facturas> ListarFacturas(FormCollection filterForm)
+        {
+            int idEntidad = !string.IsNullOrEmpty(filterForm["IdMunicipio"]) ? int.Parse(filterForm["IdMunicipio"]) : 0;
+            int mes = !string.IsNullOrEmpty(filterForm["Mes"]) ? int.Parse(filterForm["Mes"]) : 0;
+            int anio = !string.IsNullOrEmpty(filterForm["Anio"]) ? int.Parse(filterForm["Anio"]) : 0;
+
+            ViewBag.IdMunicipio = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto", idEntidad);
+            var mesesFacturas = db.Facturas.Select(f => f.Mes).Distinct();
+
+            List<object> listadoMeses = new List<object>();
+            foreach (var m in mesesFacturas)
+                listadoMeses.Add(new { id = m, nombre = NombreMes(m) });
+
+            ViewBag.Mes = new SelectList(listadoMeses, "id", "nombre", mes);
+
+            List<int> aniosFacturas = db.Facturas.Select(f => f.Anio).Distinct().ToList<int>();
+            ViewBag.Anio = new SelectList(aniosFacturas.Where(x => x > 0).OrderByDescending(x => x), anio);
+
+            List<Facturas> list = ObtenerFacturas(idEntidad, mes, anio);
+            return list != null ? list.OrderBy(x => x.Factura_Id).ToList() : new List<Facturas>();
         }
 
         private List<Contratos> ObtenerContratos(int anio, int idEntidadContratante, string numeroContrato, int idEstadoContrato)
@@ -111,6 +140,29 @@ namespace GCP_CF.Controllers
             return null;
         }
 
+        private List<Facturas> ObtenerFacturas(int idEntidad, int mes, int anio)
+        {
+            bool hayMes = mes > 0;
+            bool hayAnio = anio > 0;
+            bool hayEntidad = idEntidad > 0;
+
+            var facturas = (from f in db.Facturas select f).Include(f => f.Contrato);
+            
+            if (hayEntidad)
+                facturas = facturas.Where(f => f.Municipio_Id == idEntidad);
+
+            if (hayMes)
+                facturas = facturas.Where(c => c.Mes == mes);
+
+            if (hayAnio)
+                facturas = facturas.Where(c => c.Anio == anio);
+
+            if (facturas != null)
+                return facturas.ToList<Facturas>();
+
+            return null;
+        }
+
         [HttpPost]
         public FileResult ExportarReporteContratos(FormCollection filterForm)
         {
@@ -154,6 +206,41 @@ namespace GCP_CF.Controllers
                             c.PersonaAbogado != null ? c.PersonaAbogado.NombreCompleto: "N/A", 
                             c.PersonaSupervisor != null ? c.PersonaSupervisor.NombreCompleto : "N/A", 
                             c.Observaciones);
+            }
+
+            return ExportarAExcel("Contratos", dt);
+        }
+
+        [HttpPost]
+        public FileResult ExportarReporteFacturas(FormCollection filterForm)
+        {
+            List<Facturas> facturas = ListarFacturas(filterForm);
+
+            DataTable dt = new DataTable("Facturas");
+            dt.Columns.AddRange(new DataColumn[15]
+            {
+                new DataColumn("Año"),
+                new DataColumn("Estado"),
+                new DataColumn("Número"),
+                new DataColumn("Mes"),
+                new DataColumn("Fecha de Pago"),
+                new DataColumn("Municipio"),
+                new DataColumn("Conceptos"),
+                new DataColumn("Contrato"),
+                new DataColumn("Objeto"),
+                new DataColumn("Base"),
+                new DataColumn("%"),
+                new DataColumn("IVA"),
+                new DataColumn("Total Honorarios"),
+                new DataColumn("Vr. Cancelado"),
+                new DataColumn("Observaciones")
+            });
+
+            foreach (Facturas f in facturas)
+            {
+                dt.Rows.Add(f.Anio, f.Estado.Termino, f.Numero, f.NombreMes, f.FechaPago.ToShortDateString(), 
+                    f.Municipio.NombreCompleto, f.Concepto, f.Contrato.NumeroContrato, f.Objeto, 
+                    f.ValorBase, f.PorcentajeIva, f.ValorIva, f.TotalHonorarios, f.ValorCancelado, f.Observaciones);
             }
 
             return ExportarAExcel("Contratos", dt);
