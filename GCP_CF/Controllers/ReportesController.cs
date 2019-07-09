@@ -243,7 +243,7 @@ namespace GCP_CF.Controllers
                     f.ValorBase, f.PorcentajeIva, f.ValorIva, f.TotalHonorarios, f.ValorCancelado, f.Observaciones);
             }
 
-            return ExportarAExcel("Contratos", dt);
+            return ExportarAExcel("Facturas", dt);
         }
 
         public FileResult ExportarAExcel(string nombre, DataTable dt)
