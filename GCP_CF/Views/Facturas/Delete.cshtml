@@ -1,0 +1,53 @@
+﻿@model GCP_CF.Models.Facturas
+
+<div id="mensajeError" style="display: none">@ViewBag.MensajeError</div>
+
+@{
+    ViewBag.Title = "Eliminar Factura";
+}
+
+@Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back", @title = "Regresar al listado" })
+
+<h2>Eliminar Factura No. @Html.DisplayFor(@model => model.Numero)</h2>
+
+<h4>¿Está seguro de que quiere eliminar esta factura?</h4>
+
+@{
+    Html.RenderPartial("PartialDetalleFactura", Model);
+}
+
+<div class="text-center">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" />
+            <a href="@Url.Action("Index", "Facturas")" class="btn btn-success">
+                <i class="glyphicon glyphicon-list"></i> Regresar al Listado
+            </a>
+        </div>
+    }
+</div>
+
+@*Alert Error*@
+<div class="modal fade" tabindex="-1" id="mensajeAccion" data-keyboard="false" data-backdrop="" style="position: center">
+    <div class="modal-dialog alert-Error" style="width: 30%">
+        <div class="">
+            <div class="row" style="margin-left: 5px">
+                <div class="col-lg-11 modal-body" id="textoMensaje" style="color: #fff"></div>
+                <div class="col-lg-1 text-right">
+                    <button type="button" id="btnClose" class="close" data-dismiss="modal" style="color: #fff !important; margin-right: 13px; margin-top: 13px">×</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#document").ready(function () {
+        if ($("#mensajeError") != null && $("#mensajeError").text().trim().length > 0) {
+            MostrarMensajeAccion($("#mensajeError").text(), "alert-Error", 5000);
+        }
+    });
+</script>

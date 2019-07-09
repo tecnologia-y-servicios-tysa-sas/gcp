@@ -92,13 +92,13 @@
             @Html.ValidationMessageFor(model => model.PersonaSuperviosr_Id, "", new { @class = "text-danger" })
         </div>
         <div class="col-md-4">
-            <div> @Html.LabelFor(model => model.PersonaAbogado_Id, "Abogado", htmlAttributes: new { @class = "control-label" })</div>
-            @Html.DropDownList("PersonaAbogado_Id", null, "Seleccione Abogado", htmlAttributes: new { @class = "form-control", @id = "abogado" })
+            <div> @Html.LabelFor(model => model.PersonaAbogado_Id, "Apoyo Jurídico", htmlAttributes: new { @class = "control-label" })</div>
+            @Html.DropDownList("PersonaAbogado_Id", null, "Seleccione Apoyo Jurídico", htmlAttributes: new { @class = "form-control", @id = "abogado" })
             @Html.ValidationMessageFor(model => model.PersonaAbogado_Id, "", new { @class = "text-danger" })
         </div>
         <div class="col-md-4">
-            <div> @Html.LabelFor(model => model.PersonaSupervisorTecnico_Id, "Supervisor Técnico", htmlAttributes: new { @class = "control-label" })</div>
-            @Html.DropDownList("PersonaSupervisorTecnico_Id", null, "Seleccione Supervisor Técnico", htmlAttributes: new { @class = "form-control", @id = "supervisorTecnico" })
+            <div> @Html.LabelFor(model => model.PersonaSupervisorTecnico_Id, "Apoyo Técnico", htmlAttributes: new { @class = "control-label" })</div>
+            @Html.DropDownList("PersonaSupervisorTecnico_Id", null, "Seleccione Apoyo Técnico", htmlAttributes: new { @class = "form-control", @id = "supervisorTecnico" })
             @Html.ValidationMessageFor(model => model.PersonaSupervisorTecnico_Id, "", new { @class = "text-danger" })
         </div>
     </div>

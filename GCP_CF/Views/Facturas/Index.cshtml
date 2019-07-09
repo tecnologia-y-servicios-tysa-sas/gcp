@@ -2,13 +2,10 @@
 
 @{
     ViewBag.Title = "Listado de Facturas";
+    ViewBag.IsReport = false;
 }
 
 <h2 class="text-left">Facturas</h2>
-
-<p class="text-left">
-    @Html.ActionLink("Crear Nueva", "Create", null, new { @class = "btn btn-default btn-large" })
-</p>
 
 @if (Model != null)
 {

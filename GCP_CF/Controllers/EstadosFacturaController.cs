@@ -1,4 +1,5 @@
 ﻿using GCP_CF.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -97,10 +98,25 @@ namespace GCP_CF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            bool exito = false;
+
             EstadosFactura estadosFactura = db.EstadosFactura.Find(id);
-            db.EstadosFactura.Remove(estadosFactura);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (estadosFactura == null) return HttpNotFound();
+
+            try
+            {
+                db.EstadosFactura.Remove(estadosFactura);
+                exito = db.SaveChanges() > 0;
+            }
+            catch (Exception e)
+            {
+                ViewBag.MensajeError = "Ha ocurrido un error al eliminar la factura: " + e.Message;
+            }
+
+            if (exito)
+                return RedirectToAction("Index");
+            else
+                return View(estadosFactura);
         }
 
         protected override void Dispose(bool disposing)

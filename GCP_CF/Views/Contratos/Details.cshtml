@@ -18,7 +18,7 @@
                 Fecha&nbsp;Inicio
             </th>
             <th class="head-table">
-                Fecha&nbsp;Fín
+                Fecha&nbsp;Fin
             </th>
             <th class="head-table">
                 Número
@@ -44,7 +44,6 @@
             <th class="head-table">
                 Estado
             </th>
-            <th class="head-table">Acciones</th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Crp)
             </th>
@@ -58,14 +57,11 @@
                 @Html.DisplayNameFor(model => model.FechaCdp)
             </th>
             <th class="head-table">
-                Abogado
+                Apoyo&nbsp;Jurídico
             </th>
             <th class="head-table">
                 Supervisor
             </th>
-            @*<th class="head-table">
-                Observaciones
-            </th>*@
         </tr>
     </thead>
     <tbody>
@@ -120,9 +116,6 @@
             <td class="border-cell">
                 @Html.DisplayFor(model => model.PersonaSupervisor.NombreCompleto)
             </td>
-            @*<td class="border-cell">
-                @Html.DisplayFor(model => model.Observaciones)
-            </td>*@
         </tr>
     </tbody>
 </table>

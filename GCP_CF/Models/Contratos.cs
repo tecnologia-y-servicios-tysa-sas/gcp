@@ -30,13 +30,13 @@ namespace GCP_CF.Models
         public int Plazo { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        [Display(Name = "Fecha de Terminacion")]
+        [Display(Name = "Fecha de Terminación")]
         public DateTime FechaTerminacion { get; set; }
 
-        [Display(Name = "Seleccione Abogado")]
+        [Display(Name = "Seleccione Apoyo Jurídico")]
         public Nullable<int> PersonaAbogado_Id { get; set; }
 
-        [Display(Name = "Seleccione Supervisor")]
+        [Display(Name = "Seleccione Apoyo Técnico")]
         public Nullable<int> PersonaSuperviosr_Id { get; set; }
 
         [Display(Name = "CRP")]

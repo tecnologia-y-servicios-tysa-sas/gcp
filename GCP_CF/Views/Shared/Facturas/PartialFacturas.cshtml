@@ -8,7 +8,6 @@
 <table id="tblReporteFacturas" class="table table-bordered" style="width: 100%">
     <thead>
         <tr>
-            <th class="head-table">&nbsp;</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.Numero)</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.Anio)</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.Mes)</th>
@@ -16,20 +15,30 @@
             <th class="head-table">@Html.DisplayNameFor(model => model.Municipio)</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.Contrato)</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.TotalHonorarios)</th>
+            @if (!ViewBag.IsReport)
+            {
+            <th class="head-table" style="width: 120px">Acciones</th>
+            }
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr onclick="VerFactura(@item.Factura_Id)" class="pointer">
-                <td class="border-cell">@Html.HiddenFor(modelItem => item.Factura_Id, new { id = "IdFactura_" + item.Factura_Id })</td>
-                <td class="border-cell">@Html.DisplayFor(modelItem => item.Numero)</td>
-                <td class="border-cell">@Html.DisplayFor(modelItem => item.Anio)</td>
-                <td class="border-cell">@Html.DisplayFor(modelItem => item.NombreMes)</td>
-                <td class="border-cell">@Html.DisplayFor(modelItem => item.Estado.Descripcion)</td>
-                <td class="border-cell">@Html.DisplayFor(modelItem => item.Municipio.NombreCompleto)</td>
-                <td class="border-cell">@Html.DisplayFor(modelItem => item.Contrato.NumeroContrato)</td>
-                <td class="border-cell">@Html.DisplayFor(modelItem => item.TotalHonorarios)</td>
+                <td class="border-cell col-md-1">@Html.DisplayFor(modelItem => item.Numero)</td>
+                <td class="border-cell col-md-1">@Html.DisplayFor(modelItem => item.Anio)</td>
+                <td class="border-cell col-md-1">@Html.DisplayFor(modelItem => item.NombreMes)</td>
+                <td class="border-cell col-md-1 text-center">@Html.DisplayFor(modelItem => item.Estado.Termino)</td>
+                <td class="border-cell col-md-3">@Html.DisplayFor(modelItem => item.Municipio.NombreCompleto)</td>
+                <td class="border-cell col-md-1 text-center">@Html.DisplayFor(modelItem => item.Contrato.NumeroContrato)</td>
+                <td class="border-cell col-md-2 text-right text-nowrap">$ @Html.DisplayFor(modelItem => item.TotalHonorarios)</td>
+                @if (!ViewBag.IsReport) {
+                <td class="border-cell col-md-2 text-center text-nowrap">
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Factura_Id }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Factura_Id }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Factura_Id })
+                </td>
+                }
             </tr>
         }
     </tbody>
@@ -44,6 +53,7 @@
 <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
 
 <script type="text/javascript">
 
@@ -53,10 +63,13 @@
 
     $(document).ready(function () {
 
-        var table = $('#tblReporteFacturas').dataTable({
+        var table = $('#tblReporteFacturas').DataTable({
 
             responsive: true,
-            "language": {
+            fixedColumns: {
+                rightColumns: 1
+            }, 
+            language: {
                 "lengthMenu": "Mostrar _MENU_ registros por página",
                 "zeroRecords": "No se encontraron resultados",
                 "info": "Mostrando página _PAGE_ de _PAGES_",

@@ -1,13 +1,13 @@
 ﻿@model GCP_CF.Models.Facturas
 
 @{
-    ViewBag.Title = "Crear Factura";
+    ViewBag.Title = "Editar Factura";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back", @title = "Regresar al listado" })
 
-<h2>Crear Factura</h2>
+<h2>Editar Factura</h2>
 
 @{
     Html.RenderPartial("PartialFacturas", Model);

@@ -1,0 +1,22 @@
+﻿@model GCP_CF.Models.Facturas
+
+@{
+    ViewBag.Title = "Detalle de Factura";
+}
+
+@Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back", @title = "Regresar al listado" })
+
+<h2>Detalle de Factura No. @Html.DisplayFor(@model => model.Numero)</h2>
+
+@{
+    Html.RenderPartial("PartialDetalleFactura", Model);
+}
+
+<p class="text-center">
+    <a href="/Facturas/Edit/@(Model.Factura_Id)" class="btn btn-primary">
+        <i class="glyphicon glyphicon-edit"></i> Editar
+    </a>
+    <a href="@Url.Action("Index", "Facturas")" class="btn btn-success">
+        <i class="glyphicon glyphicon-list"></i> Regresar al Listado
+    </a>
+</p>

@@ -284,6 +284,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\noGeneric\Actividades.js" />
+    <Content Include="Scripts\noGeneric\Facturas.js" />
     <Content Include="Scripts\noGeneric\FasesContrato.js" />
     <Content Include="Scripts\noGeneric\Reportes.js" />
     <Content Include="Scripts\noGeneric\Utilidades.js" />
@@ -385,6 +386,12 @@
     <Content Include="Views\Facturas\Index.cshtml" />
     <Content Include="Views\Shared\Facturas\PartialFacturas.cshtml" />
     <Content Include="Views\Facturas\Create.cshtml" />
+    <Content Include="Views\Facturas\PartialFacturas.cshtml" />
+    <Content Include="Views\Facturas\Edit.cshtml" />
+    <Content Include="Views\Facturas\Details.cshtml" />
+    <Content Include="Views\Facturas\PartialDetalleFactura.cshtml" />
+    <Content Include="Views\Facturas\Delete.cshtml" />
+    <Content Include="Views\EstadosFactura\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

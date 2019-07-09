@@ -1,0 +1,152 @@
+﻿@model GCP_CF.Models.Facturas
+
+<div>
+    <hr />
+    <div class="col-md-7">
+        <div class="panel">
+            <div class="panel-heading text-center">
+                <h3>Información General</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Numero)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Numero)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        Mes
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Mes)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Anio)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Anio)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Estado)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Estado.Termino) (@Html.DisplayFor(model => model.Estado.Descripcion))
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaPago)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaPago)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Municipio)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Municipio.NombreCompleto)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Concepto)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Concepto)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Objeto)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Objeto)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Observaciones)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Observaciones)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+
+        <div class="panel">
+            <div class="panel-heading text-center">
+                <h3>Contrato</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Contrato_Id)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Contrato.NumeroContrato)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading text-center">
+                <h3>Valores Facturados</h3>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TotalHonorarios)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalHonorarios)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PorcentajeIva)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PorcentajeIva)%
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ValorBase)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ValorBase)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ValorIva)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ValorIva)
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ValorCancelado)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ValorCancelado)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
