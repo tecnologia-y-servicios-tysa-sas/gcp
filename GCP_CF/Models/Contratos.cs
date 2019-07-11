@@ -67,11 +67,11 @@ namespace GCP_CF.Models
         [Display(Name = "Valor Contrato")]
         public double ValorContrato { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
         [Display(Name = "Valor Administrar")]
         public double ValorAdministrar { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
         public Nullable<double> Honorarios { get; set; }
 
         [NotMapped]
@@ -94,7 +94,7 @@ namespace GCP_CF.Models
         [Display(Name = "Seleccione Supervisor Técnico")]
         public Nullable<int> PersonaSupervisorTecnico_Id { get; set; }
 
-        [Display(Name = "Seleccione Contrato Marco")]
+        [Display(Name = "Seleccione Contrato Interadministrativo")]
         public Nullable<int> ContratoMarco_Id { get; set; }
 
         [NotMapped]
@@ -105,6 +105,23 @@ namespace GCP_CF.Models
         public string Observaciones { get; set; }
 
         public int? FormaPagoId { get; set; }
+
+        [Display(Name = "Número de Póliza")]
+        public string NumeroPoliza { get; set; }
+
+        [NotMapped]
+        public string ValorPolizaAux { get; set; }
+
+        [Display(Name = "Valor")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double? ValorPoliza { get; set; }
+
+        [Display(Name = "Aseguradora")]
+        public string NombreAseguradora { get; set; }
+
+        [Display(Name = "Notas")]
+        [DataType(DataType.MultilineText)]
+        public string NotasPoliza { get; set; }
 
         /* CAMPOS VIRTUALES - SOLO VISUALIZACIÓN */
 
@@ -135,5 +152,7 @@ namespace GCP_CF.Models
 
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Facturas> Facturas { get; set; }
+
+        public virtual ICollection<PagosContrato> PagosContrato { get; set; }
     }
 }

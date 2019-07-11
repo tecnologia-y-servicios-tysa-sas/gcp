@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201907060358430_initial2.Designer.cs">
       <DependentUpon>201907060358430_initial2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907110355355_initial3.cs" />
+    <Compile Include="Migrations\201907110355355_initial3.Designer.cs">
+      <DependentUpon>201907110355355_initial3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FormaPago.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
@@ -214,6 +218,7 @@
     <Compile Include="Models\EstadosActividad.cs" />
     <Compile Include="Models\FasesContrato.cs" />
     <Compile Include="Data\GCPContext.cs" />
+    <Compile Include="Models\PagosContrato.cs" />
     <Compile Include="Models\Personas.cs" />
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\RelacionContratoFase.cs" />
@@ -420,6 +425,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907060358430_initial2.resx">
       <DependentUpon>201907060358430_initial2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907110355355_initial3.resx">
+      <DependentUpon>201907110355355_initial3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

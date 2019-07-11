@@ -14,6 +14,8 @@ namespace GCP_CF.Controllers
     {
         private GCPContext db = new GCPContext();
 
+        private string tipoContratoMarco = System.Configuration.ConfigurationManager.AppSettings["tipoContratoMarco"];
+
         // GET: Contratos
         public ActionResult Index(Contratos contratos)
         {
@@ -76,7 +78,7 @@ namespace GCP_CF.Controllers
             ViewBag.PersonaSuperviosr_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
             ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion");
-            ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato");
+            ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.TipoContrato.Termino == tipoContratoMarco), "Contrato_Id", "NumeroContrato");
             ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion");
             ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
 
@@ -94,7 +96,6 @@ namespace GCP_CF.Controllers
         {
             try
             {
-
                 double valorContratoAux = Convert.ToDouble(contratos.ValorContratoAux.Replace(",", "").Replace(".00",""));
                 contratos.ValorContrato = valorContratoAux;
 
@@ -104,7 +105,9 @@ namespace GCP_CF.Controllers
                 double honorariosAux = Convert.ToDouble(contratos.HonorariosAux.Replace(",", "").Replace(".00", ""));
                 contratos.Honorarios = honorariosAux;
 
-
+                double valorPolizaAux = Convert.ToDouble(contratos.ValorPolizaAux.Replace(",", "").Replace(".00", ""));
+                contratos.ValorPoliza = valorPolizaAux;
+                
                 db.Contratos.Add(contratos);
                 db.SaveChanges();
 
@@ -132,7 +135,7 @@ namespace GCP_CF.Controllers
                 ViewBag.PersonaSuperviosr_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
                 ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
                 ViewBag.TiposEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion");
-                ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato");
+                ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.TipoContrato.Termino == tipoContratoMarco), "Contrato_Id", "NumeroContrato");
                 ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion");
                 ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
 
@@ -190,8 +193,7 @@ namespace GCP_CF.Controllers
         public ActionResult Edit(Contratos contratos, FormCollection form)
         {
             try
-            {
-                
+            {                
                 string valorContrato = Request.Form["valorContrato1"];
                 string[] arrayValorContrato;
                 arrayValorContrato = valorContrato.Split(',');
@@ -200,16 +202,20 @@ namespace GCP_CF.Controllers
                 string[] arrayValorAdministrar;
                 arrayValorAdministrar = valorAdministrar.Split(',');
 
-                string honorario = Request.Form["honorarios"];
+                string honorario = Request.Form["honorarios1"];
                 string[] arrayHonorario;
                 arrayHonorario = honorario.Split(',');
 
+                string valorPoliza = Request.Form["valorPoliza1"];
+                string[] arrayValorPoliza;
+                arrayValorPoliza = valorPoliza.Split(',');
 
                 contratos.ValorContrato  = Convert.ToDouble(arrayValorContrato[0]);
                 contratos.ValorAdministrar = Convert.ToDouble(arrayValorAdministrar[0]);
-                contratos.Honorarios = Convert.ToDouble(arrayHonorario[1]);
-                db.Entry(contratos).State = EntityState.Modified;
+                contratos.Honorarios = Convert.ToDouble(arrayHonorario[0]);
+                if (!string.IsNullOrEmpty(valorPoliza)) contratos.ValorPoliza = Convert.ToDouble(arrayValorPoliza[0]);
 
+                db.Entry(contratos).State = EntityState.Modified;
 
                 //Almaceno la observacion en la tabla historiaobservaciones
                 if (!string.IsNullOrEmpty(contratos.Observaciones))
@@ -221,8 +227,9 @@ namespace GCP_CF.Controllers
                         ContratoId = contratos.Contrato_Id,
                     };
                     db.HistoriaObservaciones.Add(historiaObs);
-                    db.SaveChanges();
                 }
+
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
