@@ -1,0 +1,10 @@
+﻿
+@{ 
+    var myChart = new Chart(width: 400, height: 400)
+        .AddTitle("Prueba")
+        .AddSeries(
+            name: "Estados",
+            xValue: new[] { "Activo", "Terminado", "En ejecución" }, 
+            yValues: new[] { "7", "4", "5" })
+        .Write();
+}

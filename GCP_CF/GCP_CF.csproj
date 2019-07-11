@@ -171,6 +171,7 @@
     <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\FasesContratoController.cs" />
     <Compile Include="Controllers\FormaPagosController.cs" />
+    <Compile Include="Controllers\GraphicsController.cs" />
     <Compile Include="Controllers\TiposDocumentosController.cs" />
     <Compile Include="Migrations\201906271751003_initial1.cs" />
     <Compile Include="Migrations\201906271751003_initial1.Designer.cs">
@@ -232,6 +233,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapCustom.css" />
+    <Content Include="Content\Graphics.css" />
     <Content Include="Content\Images\Alcaldia.png" />
     <Content Include="Content\Images\back.png" />
     <Content Include="Content\Images\banner.png" />
@@ -286,6 +288,7 @@
     <Content Include="Scripts\noGeneric\Actividades.js" />
     <Content Include="Scripts\noGeneric\Facturas.js" />
     <Content Include="Scripts\noGeneric\FasesContrato.js" />
+    <Content Include="Scripts\noGeneric\Graphics.js" />
     <Content Include="Scripts\noGeneric\Reportes.js" />
     <Content Include="Scripts\noGeneric\Utilidades.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.js" />
@@ -392,6 +395,7 @@
     <Content Include="Views\Facturas\PartialDetalleFactura.cshtml" />
     <Content Include="Views\Facturas\Delete.cshtml" />
     <Content Include="Views\EstadosFactura\Delete.cshtml" />
+    <Content Include="Views\Graphics\PartialGraficoContratos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
