@@ -7,6 +7,8 @@
 
 <h2>Crear Contrato</h2>
 
+<div id="mensajeErrorOperacion" style="display: none">@ViewBag.MensajeError</div>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -33,7 +35,7 @@
                 </div>
                 <div class="col-md-4">
                     <div>@Html.LabelFor(model => model.NumeroContrato, htmlAttributes: new { @class = "control-label" })</div>
-                    @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato" } })
+                    @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @readonly = "true" } })
                     @Html.ValidationMessageFor(model => model.NumeroContrato, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -84,10 +86,8 @@
                 </div>
                 <div class="col-md-4">
                     <div>@Html.LabelFor(model => model.Plazo, htmlAttributes: new { @class = "control-label" })*</div>
-                    @Html.EditorFor(model => model.Plazo, new { htmlAttributes = new { @class = "form-control", @id = "plazo" } })
-                    @Html.ValidationMessageFor(model => model.Plazo, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Plazo, new { htmlAttributes = new { @class = "form-control", @id = "plazo", @readonly = "true" } })
                     @Html.HiddenFor(model => model.Plazo)
-
                 </div>
             </div>
 
@@ -190,7 +190,50 @@
     </div>
 
     <!-- Pagos -->
-
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>Forma de Pago</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered" style="width: 100%" id="tablaPagos">
+                <thead>
+                    <tr>
+                        <th class="head-table col-md-1" style="width: 75px">#</th>
+                        <th class="head-table col-md-3">Valor</th>
+                        <th class="head-table col-md-2">Fecha</th>
+                        <th class="head-table col-md-5">Notas</th>
+                        <th class="head-table col-md-1" style="width: 75px">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="pago_0">
+                        <td class="border-cell col-md-1 text-right" style="font-weight: bold; font-size: 1.3em; padding-top: 10px; width: 70px">1</td>
+                        <td class="border-cell col-md-3">
+                            <input class="form-control" type="text" name="valorPago_0" id="valorPago_0" />
+                        </td>
+                        <td class="border-cell col-md-2">
+                            <div class="input-group date text-center" id="datetimeFechaPago_0" style="width: 280px">
+                                <input class="form-control" type="text" name="fechaPago_0" id="fechaPago_0" autocomplete="off" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="border-cell col-md-5">
+                            <textarea class="form-control" name="notasPago_0" id="notasPago_0" style="min-width: 100%"></textarea>
+                        </td>
+                        <td class="border-cell col-md-1" style="width: 75px">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer">
+            <a class="btn btn-default" onclick="AgregarPago()">
+                <i class="glyphicon glyphicon-plus-sign"></i> Agregar Pago
+            </a>
+            <input type="hidden" name="numeroPagos" id="numeroPagos" value="1" />
+        </div>
+    </div>
 
     <!-- Datos de la póliza -->
     <div class="panel">
@@ -227,596 +270,35 @@
 
     <div class="form-group text-center">
         <div class="col-md-12">
-            <input type="submit" value="Crear Contrato" class="btn btn-default" />
+            <input type="submit" id="btnEnviar" value="Crear Contrato" class="btn btn-default" />
         </div>
     </div>
 </div>
+
 }
 
 <div class="text-center">
     @Html.ActionLink("Regresar a la Lista", "Index")
 </div>
+
 @*Alert Error*@
 <div class="modal fade" tabindex="-1" id="PopUPModalError" data-keyboard="false" data-backdrop="" style="position:center;">
-    <div class="modal-dialog alert-Error" style="width:30%;">
+    <div class="modal-dialog alert-Error" style="width: 30%">
         <div class="">
             <div class="row">
-                <div class="col-lg-11 modal-body" id="bodyError" style="color:#fff;">
+                <div class="col-lg-11 modal-body" id="bodyError" style="color: #fff; left: 16px">
                 </div>
                 <div class="col-lg-1 text-right">
-                    <button type="button" id="btnSave" class="close" data-dismiss="modal" style="color:#fff !important;padding-right:10px;">×</button>
+                    <button type="button" id="btnClose" class="close" data-dismiss="modal" style="color: #fff !important; margin-right: 15px; margin-top: 13px">×</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@*<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>*@
+
+<script type="text/javascript" src="~/Scripts/noGeneric/Contratos.js"></script>
+<script type="text/javascript" src="~/Scripts/noGeneric/Utilidades.js"></script>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
-    <script type="text/javascript">
-       
-        $(function () {
-            $.validator.methods.date = function (value, element) {
-                return this.optional(element) || moment(value, true).isValid();
-            }
-            var fechaActual = new Date();
-            //fechaActual.setHours(23, 59, 59, 0);
-
-            $('#datetimeFechaInicio').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                useCurrent: false
-            });
-
-            $('#datetimeFechaTerminacion').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                minDate: fechaActual,
-                useCurrent: false
-            });
-
-            $('#datetimeFechaActaInicio').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                useCurrent: false
-            });
-
-
-            $('#datetimeFechaCrp').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                useCurrent: false
-            });
-
-            $('#datetimeFechaCdp').datetimepicker({
-                locale: 'es',
-                format: 'DD/MM/YYYY',
-                useCurrent: false
-            });
-
-
-            $("#fechaFinal").blur(function () {
-                var start = moment(stringToDate($("#fechaInicial").val(), "dd/MM/yyyy", "/"));
-                var end = moment(stringToDate($("#fechaFinal").val(), "dd/MM/yyyy", "/"));
-
-                if (start > end) {
-                    document.getElementById("fechaFinal").value = "";
-                    $('#fechaFinal').css('border-color', 'red');
-                    $("#bodyError").html('<div><strong>Error!</strong> La Fecha Final debe ser mayor que la Fecha Inicial</div>');
-                    $("#PopUPModalError").modal('show');
-                    setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                     }, 5000);
-                     return false;
-                }
-                else {
-                    $('#fechaFinal').css('border-color', 'green');
-                    $("#plazo").val(end.diff(start, "days"));
-                }
-
-            });
-
-            function stringToDate(_date, _format, _delimiter) {
-                var formatLowerCase = _format.toLowerCase();
-                var formatItems = formatLowerCase.split(_delimiter);
-                var dateItems = _date.split(_delimiter);
-                var monthIndex = formatItems.indexOf("mm");
-                var dayIndex = formatItems.indexOf("dd");
-                var yearIndex = formatItems.indexOf("yyyy");
-                var month = parseInt(dateItems[monthIndex]);
-                month -= 1;
-                var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
-                return formatedDate;
-            }
-
-
-
-        $("#valorContrato").blur(function () {
-        $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        });
-        $("#valorAdministrar").blur(function () {
-           $("#valorAdministrar").val(parseFloat($('#valorAdministrar').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        });
-        $("#honorarios").blur(function () {
-            $("#honorarios").val(parseFloat($('#honorarios').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-        });
-
-
-            //Obtengo el numero del contrato
-         $("#tipoContrato").change(function () {
-                var url = '@Url.Action("GetDocumento", "Contratos")';
-                $.ajax({
-                type: 'POST',
-                url: url,
-                    data: { id: $("#tipoContrato").val()},
-                    success: function (data) {
-                        $("#numeroContrato").val(data);
-                },
-                    error: function (ex) {
-                        document.getElementById("numeroContrato").value = "";  
-                }
-                });
-            });
-
-        });
-
-        //Validaciones
-
-        $("#tipoContrato").change(function () {
-            if ($('#tipoContrato').val() == "") {
-                $('#tipoContrato').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Tipo Contrato es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-                $('#tipoContrato').css('border-color', 'green');
-
-            }
-
-        });
-
-        $("#entidadContratante").change(function () {
-            if ($('#tipoContrato').val() == "") {
-                document.getElementById("entidadContratante").value = "";
-                $('#tipoContrato').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Tipo Contrato es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-                $('#entidadContratante').css('border-color', 'green');
-            }
-        });
-
-
-        $("#entidadContratante").change(function () {
-            validateEntidadContratante();
-        });
-
-
-        $("#fechaActa").blur(function () {
-            validateTipoContrato()
-            validateEntidadContratante();
-            validateFechaActa();
-        });
-
-        $("#estadoContrato").change(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-        });
-
-        $("#fechaInicial").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-        });
-
-        $("#fechaFinal").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-        });
-
-        $("#supervisor").change(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validatesupervisor();
-        });
-
-        $("#abogado").change(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateAbogado();
-        });
-
-        $("#supervisorTecnico").change(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateSupervisorTecnico();
-        });
-
-        $("#crp").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateCrp();
-        });
-
-          $("#fechaCrp").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateFechaCrp();
-          });
-
-        $("#year").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateYear();
-        });
-
-        $("#cdp").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateCdp();
-        });
-
-        $("#fechaCdp").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal(); 
-            validateFechaCdp();
-        });
-
-
-
-        $("#valorContrato").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateValorContrato();
-        });
-
-        $("#valorAdministrar").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateValorContrato();
-            validateValorAdministrar();
-        });
-
-        $("#honorarios").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateValorContrato();
-            validateValorAdministrar();
-            validateHonorarios();
-        });
-
-        $("#objeto").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateValorContrato();
-            validateValorAdministrar();
-            validateHonorarios();
-            validateObjeto();
-        });
-
-        $("#observaciones").blur(function () {
-            validateTipoContrato();
-            validateEntidadContratante();
-            validateFechaActa();
-            validateEstadoContrato();
-            validateFechaInicial();
-            validateFechaFinal();
-            validateValorContrato();
-            validateValorAdministrar();
-            validateHonorarios();
-            validateObjeto();
-            validateObservaciones();
-        });
-
-
-
-        //$("#abogado").change(function () {
-        //    validateTipoContrato();
-        //    validateEntidadContratante();
-        //    validateFechaActa();
-        //    validateEstadoContrato();
-        //    validateFechaInicial();
-        //    validateFechaFinal();
-        //    validatesupervisor();
-        //    validateAbogado();
-        //});
-
-        //$("#supervisorTecnico").change(function () {
-        //    validateTipoContrato();
-        //    validateEntidadContratante();
-        //    validateFechaActa();
-        //    validateEstadoContrato();
-        //    validateFechaInicial();
-        //    validateFechaFinal();
-        //    validatesupervisor();
-        //    validateAbogado();
-        //    validateSupervisorTecnico();
-        //});
-
-        function validateTipoContrato() {
-            if ($('#tipoContrato').val() == "") {
-                $('#tipoContrato').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Tipo Contrato es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-                $('#tipoContrato').css('border-color', 'green');
-
-            }
-        }
-
-        function validateEntidadContratante() {
-            if ($('#entidadContratante').val() == "") {
-                $('#entidadContratante').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Entidad Contratante es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-
-                $('#entidadContratante').css('border-color', 'green');
-            }
-        }
-
-        function validateFechaActa() {
-            if ($('#fechaActa').val() == "") {
-                $('#fechaActa').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Fecha Acta es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-
-                $('#fechaActa').css('border-color', 'green');
-            }
-        }
-
-        function validateEstadoContrato() {
-            if ($('#estadoContrato').val() == "") {
-                $('#estadoContrato').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Estado Contrato es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-
-                $('#estadoContrato').css('border-color', 'green');
-            }
-        }
-
-        function validateFechaInicial() {
-            if ($('#fechaInicial').val() == "") {
-                $('#fechaInicial').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Fecha Inicial es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-
-                $('#fechaInicial').css('border-color', 'green');
-            }
-        }
-
-        function validateFechaFinal() {
-            if ($('#fechaFinal').val() == "") {
-                $('#fechaFinal').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Fecha Final es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-
-                $('#fechaFinal').css('border-color', 'green');
-            }
-        }
-
-        function validatesupervisor() {
-           $('#supervisor').css('border-color', 'green');
-        }
-
-        function validateAbogado() {
-          $('#abogado').css('border-color', 'green');
-        }
-
-        function validateSupervisorTecnico() {
-          $('#supervisorTecnico').css('border-color', 'green');
-
-        }
-
-        function validateCrp() {
-            $('#crp').css('border-color', 'green');
-
-        }
-
-        function validateFechaCrp() {
-
-           $('#fechaCrp').css('border-color', 'green');
-
-        }
-
-        function validateYear() {
-
-            $('#year').css('border-color', 'green');
-
-        }
-
-        function validateCdp() {
-            $('#cdp').css('border-color', 'green');
-
-        }
-
-        function validateFechaCdp() {
-
-            $('#fechaCdp').css('border-color', 'green');
-
-        }
-
-        function validateValorContrato() {
-            if ($('#valorContrato').val() == "") {
-                $('#valorContrato').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Valor Contrato es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-                if (!/^([0-9.,])*$/.test($('#valorContrato').val())) {
-                    $('#valorContrato').css('border-color', 'red');
-                    $("#bodyError").html('<div><strong>Error!</strong> El campo Valor Contrato debe ser un número.</div>');
-                    $("#PopUPModalError").modal('show');
-                    setTimeout(function () {
-                        $('#PopUPModalError').modal('hide');
-                    }, 5000);
-                    return false;
-                }
-                else {
-                    // $("#valorContrato").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-                    $('#valorContrato').css('border-color', 'green');
-                }
-
-            }
-        }
-
-        function validateValorAdministrar() {
-            if ($('#valorAdministrar').val() == "") {
-                $('#valorAdministrar').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Valor Administrar es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-                if (!/^([0-9.,])*$/.test($('#valorAdministrar').val())) {
-                    $('#valorAdministrar').css('border-color', 'red');
-                    $("#bodyError").html('<div><strong>Error!</strong> El campo Valor Administrar debe ser un número.</div>');
-                    $("#PopUPModalError").modal('show');
-                    setTimeout(function () {
-                        $('#PopUPModalError').modal('hide');
-                    }, 5000);
-                    return false;
-                }
-                else {
-                     //$("#valorAdministrar").val(parseFloat($('#valorContrato').val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-                    $('#valorAdministrar').css('border-color', 'green');
-                }
-
-            }
-        }
-
-        function validateHonorarios() {
-           $('#honorarios').css('border-color', 'green');
-
-        }
-
-        function validateObjeto() {
-            if ($('#objeto').val() == "") {
-                $('#objeto').css('border-color', 'red');
-                $("#bodyError").html('<div><strong>Error!</strong> El campo Objeto es requerido</div>');
-                $("#PopUPModalError").modal('show');
-                setTimeout(function () {
-                    $('#PopUPModalError').modal('hide');
-                }, 5000);
-                return false;
-            }
-            else {
-
-                $('#objeto').css('border-color', 'green');
-            }
-        }
-
-        function validateObservaciones() {
-                $('#observaciones').css('border-color', 'green');
-        }
- 
-    </script>
-
 }

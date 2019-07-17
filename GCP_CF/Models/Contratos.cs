@@ -104,7 +104,7 @@ namespace GCP_CF.Models
         [StringLength(500)]
         public string Observaciones { get; set; }
 
-        public int? FormaPagoId { get; set; }
+        public Nullable<int> FormaPagoId { get; set; }
 
         [Display(Name = "Número de Póliza")]
         public string NumeroPoliza { get; set; }

@@ -105,11 +105,13 @@ namespace GCP_CF.Controllers
                 double honorariosAux = Convert.ToDouble(contratos.HonorariosAux.Replace(",", "").Replace(".00", ""));
                 contratos.Honorarios = honorariosAux;
 
-                double valorPolizaAux = Convert.ToDouble(contratos.ValorPolizaAux.Replace(",", "").Replace(".00", ""));
-                contratos.ValorPoliza = valorPolizaAux;
+                if (!string.IsNullOrEmpty(contratos.ValorPolizaAux))
+                {
+                    double valorPolizaAux = Convert.ToDouble(contratos.ValorPolizaAux.Replace(",", "").Replace(".00", ""));
+                    contratos.ValorPoliza = valorPolizaAux;
+                }
                 
                 db.Contratos.Add(contratos);
-                db.SaveChanges();
 
                 int id = contratos.Contrato_Id;
                 if(!string.IsNullOrEmpty(contratos.Observaciones))
@@ -122,22 +124,43 @@ namespace GCP_CF.Controllers
                         ContratoId = id,
                     };
                     db.HistoriaObservaciones.Add(historiaObs);
-                    db.SaveChanges();
                 }
-               
+
+                // Revisión de pagos
+                string strNumeroPagos = form["numeroPagos"];
+                if (!string.IsNullOrEmpty(strNumeroPagos))
+                {
+                    int numeroPagos = int.Parse(strNumeroPagos);
+                    for (int i = 0; i < numeroPagos; i++)
+                    {
+                        double valorPagoAux = Convert.ToDouble(form["valorPago_" + i].Replace(",", "").Replace(".00", ""));
+
+                        PagosContrato pago = new PagosContrato
+                        {
+                            Contrato_Id = id,
+                            Valor = valorPagoAux,
+                            Fecha = DateTime.Parse(form["fechaPago_" + i]),
+                            Notas = form["notasPago_" + i]
+                        };
+                    }
+                }
+
+                // Solamente se deben guardar los cambios cuando NADA falle
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
                 ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto");
                 ViewBag.PersonaSuperviosr_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
                 ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
-                ViewBag.TiposEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion");
+                ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion");
                 ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.TipoContrato.Termino == tipoContratoMarco), "Contrato_Id", "NumeroContrato");
                 ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion");
                 ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
+                ViewBag.MensajeError = "Ha ocurrido un error al crear la factura: " + e.Message;
 
                 return View(contratos);
             }              
@@ -229,20 +252,22 @@ namespace GCP_CF.Controllers
                     db.HistoriaObservaciones.Add(historiaObs);
                 }
 
+                // Solamente se deben guardar los cambios cuando NADA falle
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto", contratos.EntidadContratante.Persona_Id);
                 ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto", contratos.PersonaAbogado_Id);
                 ViewBag.PersonaSuperviosr_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto", contratos.PersonaSuperviosr_Id);
                 ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto", contratos.PersonaSupervisorTecnico_Id);
-                ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion", contratos.TipoEstadoContrato_Id);
+                ViewBag.TiposEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion", contratos.TipoEstadoContrato_Id);
                 ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato", contratos.ContratoMarco_Id);
                 ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion", contratos.TipoContrato_Id);
                 ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
+                ViewBag.MensajeError = "Ha ocurrido un error al editar la factura: " + e.Message;
 
                 return View(contratos);
             }
