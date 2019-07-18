@@ -53,5 +53,7 @@ namespace GCP_CF.Models
         public DbSet<Facturas> Facturas { get; set; }
 
         public DbSet<EstadosFactura> EstadosFactura { get; set; }
+
+        public DbSet<PagosContrato> PagosContrato { get; set; }
     }
 }

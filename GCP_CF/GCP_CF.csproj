@@ -402,6 +402,7 @@
     <Content Include="Views\Facturas\Delete.cshtml" />
     <Content Include="Views\EstadosFactura\Delete.cshtml" />
     <Content Include="Views\Graphics\PartialGraficoContratos.cshtml" />
+    <Content Include="Views\Contratos\PartialEditarContrato.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

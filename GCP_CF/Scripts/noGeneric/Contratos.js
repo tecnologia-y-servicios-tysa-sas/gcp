@@ -75,17 +75,25 @@ $(function () {
         }
     });
 
-    $("#valorPago_0").blur(function () {
-        if ($(this).val() != "" && !isNaN($(this).val())) {
-            cambiarFormatoNumerico($(this));
-            return validarPagos();
-        }
-    });
+    // Para la parte de pagos, según si se está agregando o editando un contrato
+    var tablaPagos = $("#tablaPagos");
+    var filasPagos = tablaPagos.find("tbody tr");
 
-    $("#fechaPago_0").blur(function () {
-        if (validarFechaPago(0)) {
-            return validarPagos();
-        }
+    $(filasPagos).each(function (filaPago) {
+
+        $("#valorPago_" + filaPago).blur(function () {
+            if ($(this).val() != "" && !isNaN($(this).val())) {
+                cambiarFormatoNumerico($(this));
+                return validarPagos();
+            }
+        });
+
+        $("#fechaPago_" + filaPago).blur(function () {
+            if (validarFechaPago(filaPago)) {
+                return validarPagos();
+            }
+        });
+
     });
 
     // Obtengo el numero del contrato
