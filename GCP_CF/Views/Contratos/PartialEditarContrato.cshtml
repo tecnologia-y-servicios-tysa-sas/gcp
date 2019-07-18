@@ -233,7 +233,7 @@
                                 <tr id="pago_@i">
                                     <td class="border-cell col-md-1 text-right" style="font-weight: bold; font-size: 1.3em; padding-top: 10px; width: 70px">@(i + 1)</td>
                                     <td class="border-cell col-md-3">
-                                        @Html.HiddenFor(model => pago.PagosContrato_Id, htmlAttributes: new { @id = "idPago_" + i })
+                                        <input type="hidden" name="idPago_@i" id="idPago_@i" value="@pago.PagosContrato_Id" />
                                         <input class="form-control" type="text" name="valorPago_@i" id="valorPago_@i" value="@pago.Valor.ToString("#,###.#0", formatter)" />
                                     </td>
                                     <td class="border-cell col-md-2">
@@ -247,7 +247,12 @@
                                     <td class="border-cell col-md-5">
                                         <textarea class="form-control" name="notasPago_@i" id="notasPago_@i" style="min-width: 100%">@pago.Notas</textarea>
                                     </td>
-                                    <td class="border-cell col-md-1" style="width: 75px">&nbsp;</td>
+                                    <td class="border-cell col-md-1" style="width: 75px">
+                                        @if (@i != 0)
+                                        {
+                                            <a class="btn btn-delete" onclick="EliminarFilaPago(@i)">Eliminar Pago</a>
+                                        }
+                                    </td>
                                 </tr>
                                 i++;
                             }
@@ -275,12 +280,19 @@
                         }
                     </tbody>
                 </table>
+                @if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+                {
+                    <input type="hidden" name="numeroPagos" id="numeroPagos" value="@Model.PagosContrato.Count" />
+                }
+                else
+                {
+                    <input type="hidden" name="numeroPagos" id="numeroPagos" value="1" />
+                }
             </div>
             <div class="panel-footer">
                 <a class="btn btn-default" onclick="AgregarPago()">
                     <i class="glyphicon glyphicon-plus-sign"></i> Agregar Pago
                 </a>
-                <input type="hidden" name="numeroPagos" id="numeroPagos" value="1" />
             </div>
         </div>
 
