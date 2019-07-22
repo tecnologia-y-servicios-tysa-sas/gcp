@@ -1,0 +1,47 @@
+﻿@model GCP_CF.Models.Usuarios
+
+<div id="mensajeErrorOperacion" style="display: none">
+    @Html.ValidationSummary()
+</div>
+
+<div class="login-form">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="avatar">
+            <img src="~/Content/Images/LogoTransparente.png" />
+        </div>
+        <h2 class="text-center">Iniciar Sesión</h2>
+        <div class="form-group">
+            @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @id = "usuario", @placeholder = "Usuario", @required = "required" } })
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(model => model.Password, new { @class = "form-control", @id = "password", @placeholder = "Contraseña", @required = "required" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnIngreso">Ingresar</button>
+        </div>
+    }
+</div>
+
+@*Alert Error*@
+<div class="modal fade" tabindex="-1" id="PopUPModalError" data-keyboard="false" data-backdrop="" style="position: center">
+    <div class="modal-dialog alert-Error" style="width: 30%">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-11 modal-body" id="bodyError" style="color: #fff; left: 16px">
+                </div>
+                <div class="col-lg-1 text-right">
+                    <button type="button" id="btnClose" class="close" data-dismiss="modal" style="color: #fff !important; margin-right: 15px; margin-top: 13px">×</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/noGeneric/Login.js"></script>
+<script type="text/javascript" src="~/Scripts/noGeneric/Utilidades.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -10,7 +10,7 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class PersonasController : Controller
+    public class TercerosController : Controller
     {
         private GCPContext db = new GCPContext();
 
@@ -21,7 +21,7 @@ namespace GCP_CF.Controllers
             return View(personas.ToList());
         }
 
-        // GET: Personas/Details/5
+        // GET: Terceros/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,7 +36,7 @@ namespace GCP_CF.Controllers
             return View(personas);
         }
 
-        // GET: Personas/Create
+        // GET: Terceros/Create
         public ActionResult Create()
         {
             ViewBag.TipoPersona_Id = new SelectList(db.TiposPersona, "TipoPersona_Id", "Descripcion");
@@ -44,7 +44,7 @@ namespace GCP_CF.Controllers
             return View();
         }
 
-        // POST: Personas/Create
+        // POST: Terceros/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -63,7 +63,7 @@ namespace GCP_CF.Controllers
             return View(personas);
         }
 
-        // GET: Personas/Edit/5
+        // GET: Terceros/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,7 +79,7 @@ namespace GCP_CF.Controllers
             return View(personas);
         }
 
-        // POST: Personas/Edit/5
+        // POST: Terceros/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -96,7 +96,7 @@ namespace GCP_CF.Controllers
             return View(personas);
         }
 
-        // GET: Personas/Delete/5
+        // GET: Terceros/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -111,7 +111,7 @@ namespace GCP_CF.Controllers
             return View(personas);
         }
 
-        // POST: Personas/Delete/5
+        // POST: Terceros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class TiposPersonaController : Controller
+    public class TiposTercerosController : Controller
     {
         private GCPContext db = new GCPContext();
 
@@ -21,7 +17,7 @@ namespace GCP_CF.Controllers
             return View(TiposPersona.ToList());
         }
 
-        // GET: TiposPersona/Details/5
+        // GET: TiposTerceros/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,7 +32,7 @@ namespace GCP_CF.Controllers
             return View(tiposPersona);
         }
 
-        // GET: TiposPersona/Create
+        // GET: TiposTerceros/Create
         public ActionResult Create()
         {
             ViewBag.Naturaleza_Id = new SelectList(db.TiposNaturaleza, "Naturaleza_Id", "Descripcion");
@@ -61,7 +57,7 @@ namespace GCP_CF.Controllers
             return View(tiposPersona);
         }
 
-        // GET: TiposPersona/Edit/5
+        // GET: TiposTerceros/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,7 +73,7 @@ namespace GCP_CF.Controllers
             return View(tiposPersona);
         }
 
-        // POST: TiposPersona/Edit/5
+        // POST: TiposTerceros/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -94,7 +90,7 @@ namespace GCP_CF.Controllers
             return View(tiposPersona);
         }
 
-        // GET: TiposPersona/Delete/5
+        // GET: TiposTerceros/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,7 +105,7 @@ namespace GCP_CF.Controllers
             return View(tiposPersona);
         }
 
-        // POST: TiposPersona/Delete/5
+        // POST: TiposTerceros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

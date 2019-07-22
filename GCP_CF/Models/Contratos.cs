@@ -54,7 +54,11 @@ namespace GCP_CF.Models
         public DateTime? FechaCdp { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        [Display(Name = "Fecha Acta Inicio")]
+        [Display(Name = "Fecha de Firma de Contrato")]
+        public DateTime FechaFirmaContrato { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Fecha de Firma de Acta")]
         public DateTime FechaActaInicio { get; set; }
 
         [Display(Name = "Seleccione Tipo de Contrato")]
@@ -68,11 +72,15 @@ namespace GCP_CF.Models
         public double ValorContrato { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
-        [Display(Name = "Valor Administrar")]
+        [Display(Name = "Recursos a Administrar")]
         public double ValorAdministrar { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
         public Nullable<double> Honorarios { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
+        [Display(Name = "Porcentaje IVA Honorarios")]
+        public Nullable<double> PorcentajeIvaHonorarios { get; set; }
 
         [NotMapped]
         public string ValorContratoAux { get; set; }

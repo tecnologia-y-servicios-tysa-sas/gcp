@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    GCP_CF.Helpers.UserState userState = null;
+    if (Session["UserState"] == null)
+    {
+        var viewPath = ((RazorView)ViewContext.View).ViewPath;
+        if (!viewPath.Contains("Login"))
+        {
+            Response.Redirect(Url.Action("", "Login"));
+        }
+    } else
+    {
+        userState = new GCP_CF.Helpers.UserState();
+        userState.FromString(Session["UserState"].ToString());
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,6 +30,12 @@
 
 </head>
 <body>
+    @{
+        string leftBarStyle = "width: 100% !important";
+    }
+    @if (userState != null)
+    {
+        leftBarStyle = string.Empty;
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -52,7 +74,7 @@
                 </li>
                 <li>
                     <a href="#facturasSubmenu" data-toggle="collapse" aria-expanded="false">
-                        <i class="glyphicon glyphicon-list-alt"></i> 
+                        <i class="glyphicon glyphicon-list-alt"></i>
                         Facturación
                     </a>
                     <ul class="collapse list-unstyled" id="facturasSubmenu">
@@ -74,35 +96,26 @@
                 <li>
                     <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-certificate"></i>
-                        Personas
+                        Terceros
                     </a>
                     <ul class="collapse list-unstyled" id="personasSubmenu">
-                        <li>@Html.ActionLink("Crear Persona", "Create", "Personas")</li>
-                        <li>@Html.ActionLink("Ver Personas", "Index", "Personas")</li>
-                        <li>@Html.ActionLink("Tipos de Persona", "Index", "TiposPersona")</li>
+                        <li>@Html.ActionLink("Crear Tercero", "Create", "Terceros")</li>
+                        <li>@Html.ActionLink("Ver Terceros", "Index", "Terceros")</li>
+                        <li>@Html.ActionLink("Tipos de Terceros", "Index", "TiposTerceros")</li>
                         <li>@Html.ActionLink("Naturaleza", "Index", "TiposNaturaleza")</li>
                         <li>@Html.ActionLink("Tipos Documentos", "Index", "TiposDocumentos")</li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#rolesSubmenu" data-toggle="collapse" aria-expanded="false">
-                        <i class="glyphicon glyphicon-road"></i>
-                        Roles
-                    </a>
-                    <ul class="collapse list-unstyled" id="rolesSubmenu">
-                        <li>@Html.ActionLink("Crear Rol", "Create", "")</li>
-                        <li>@Html.ActionLink("Listado de Roles", "Index", "")</li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
-                        <i class="glyphicon glyphicon-user"></i>
-                        Usuarios
-                    </a>
-                    <ul class="collapse list-unstyled" id="userSubmenu">
-                        <li>@Html.ActionLink("Listado de Usuarios", "Index", "")</li>
-                    </ul>
-                </li>
+                @*<li>
+            <a href="#rolesSubmenu" data-toggle="collapse" aria-expanded="false">
+                <i class="glyphicon glyphicon-road"></i>
+                Roles
+            </a>
+            <ul class="collapse list-unstyled" id="rolesSubmenu">
+                <li>@Html.ActionLink("Crear Rol", "Create", "")</li>
+                <li>@Html.ActionLink("Listado de Roles", "Index", "")</li>
+            </ul>
+        </li>*@
                 <li>
                     <a href="#maestrosSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-edit"></i>
@@ -148,15 +161,31 @@
                         </li>
                     </ul>
                 </li>
+                @if (userState.IsSuperUser)
+                {
+                <li>
+                    <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-user"></i>
+                        Usuarios
+                    </a>
+                    <ul class="collapse list-unstyled" id="userSubmenu">
+                        @*<li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>*@
+                        <li>@Html.ActionLink("Listado de Usuarios", "Index", "Usuarios")</li>
+                    </ul>
+                </li>
+                }
             </ul>
             <ul class="list-unstyled btn-close">
-                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="glyphicon glyphicon-off"></i>Cerrar</a></li>
+                <li><a href="javascript:void(0)" onclick="Logout()"><i class="glyphicon glyphicon-off"></i>Cerrar</a></li>
             </ul>
         </nav>
         <!-- Page Content Holder -->
     </div>
-    <div id="content" class="">
-        <nav class="navbar navbar-default ">
+    }
+<div id="content" class="" style="@leftBarStyle">
+    @if (userState != null)
+    {
+        <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-default navbar-btn">
@@ -169,6 +198,7 @@
                 @*@Html.Partial("_LoginPartial")*@
             </div>
         </nav>
+    }
         <div class="container-fluid">
             <div class="col-lg-12 box-border-gray">
                 @RenderBody()
@@ -196,6 +226,12 @@
                 $('a[aria-expanded=true]').attr('aria-expanded', 'false');
             });
         });
+
+        function Logout() {
+            if (confirm("¿Está seguro de cerrar la sesión en el sistema?")) {
+                location.href = '@Url.Action("Logout", "Login")';
+            }
+        }
     </script>
 </body>
 </html>

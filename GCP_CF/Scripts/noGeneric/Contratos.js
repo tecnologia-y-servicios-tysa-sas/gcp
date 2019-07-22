@@ -33,6 +33,12 @@ $(function () {
         useCurrent: false
     });
 
+    $('#datetimeFechaFirmaContrato').datetimepicker({
+        locale: 'es',
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+
     $('#datetimeFechaCrp').datetimepicker({
         locale: 'es',
         format: 'DD/MM/YYYY',
@@ -188,6 +194,10 @@ $("#fechaActa").blur(function () {
     validateFechaActa();
 });
 
+$("#fechaFirmaContrato").blur(function () {
+    validateFechaFirmaContrato();
+});
+
 $("#estadoContrato").change(function () {
     validateEstadoContrato();
 });
@@ -253,6 +263,7 @@ function validarTodosLosCamposGenerales() {
     var esValido = validateTipoContrato();
     if (esValido) esValido = validateEntidadContratante();
     if (esValido) esValido = validateFechaActa();
+    if (esValido) esValido = validateFechaFirmaContrato();
     if (esValido) esValido = validateEstadoContrato();
     if (esValido) esValido = validateFechaInicial();
     if (esValido) esValido = validateFechaFinal();
@@ -329,7 +340,11 @@ function validateEntidadContratante() {
 }
 
 function validateFechaActa() {
-    return validateRequired($("#fechaActa"), "Fecha Acta Inicio");
+    return validateRequired($("#fechaActa"), "Fecha de Firma de Acta");
+}
+
+function validateFechaFirmaContrato() {
+    return validateRequired($("#fechaFirmaContrato"), "Fecha Firma Contrato");
 }
 
 function validateEstadoContrato() {
@@ -408,7 +423,7 @@ function validateValorContrato() {
 }
 
 function validateValorAdministrar() {
-    return validateNumeric($("#valorAdministrar"), "Valor Administrar");
+    return validateNumeric($("#valorAdministrar"), "Recursos a Administrar");
 }
 
 function validateHonorarios() {
@@ -553,18 +568,18 @@ function validarPagos() {
     if (esValido) {
 
         var mensaje = "";
-        var valorAdministrar = Number($("#valorAdministrar").val().replace(/,/gi, ""));
+        var valorContrato = Number($("#valorContrato").val().replace(/,/gi, ""));
 
         console.log("Suma valores pago: " + sumaValoresPago);
-        console.log("Valor administrar: " + valorAdministrar);
+        console.log("Valor contrato: " + valorContrato);
 
-        if (sumaValoresPago > valorAdministrar) {
+        if (sumaValoresPago > valorContrato) {
             $(filasPagos).each(function (filaPago) {
                 if (Number($("#valorPago_" + filaPago).val().replace(/,/gi, "")) > 0) {
                     $("#valorPago_" + filaPago).css('border-color', 'red');
                 }
             });
-            mensaje = "<strong>Error!</strong> La sumatoria de valores de pago no debe ser mayor al Valor Administrar";
+            mensaje = "<strong>Error!</strong> La sumatoria de valores de pago no debe ser mayor al valor del contrato";
             MostrarMensajeValidacion(idMensaje, idPopup, mensaje, 5000);
             esValido = false;
         } else {

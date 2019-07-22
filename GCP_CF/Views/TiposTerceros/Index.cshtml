@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2 class="text-left">Crear Tipo Persona</h2>
+<h2 class="text-left">Tipos de Terceros</h2>
 
 <p class="text-left">
     @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-default btn-large" })
@@ -16,12 +16,13 @@
 
         </th>
         <th class="head-table">
-            @Html.DisplayNameFor(model => model.TiposNaturaleza.Descripcion)
+            @*Html.DisplayNameFor(model => model.TiposNaturaleza)*@
+            Naturaleza
         </th>
         <th class="head-table">
             @Html.DisplayNameFor(model => model.Cargo)
         </th>
-        <th class="head-table"></th>
+        <th class="head-table">Acciones</th>
     </tr>
 
     @foreach (var item in Model)

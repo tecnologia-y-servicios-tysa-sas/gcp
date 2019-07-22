@@ -1,13 +1,13 @@
 ﻿@model GCP_CF.Models.Personas
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
 }
 
-<h2>Details</h2>
+<h2>Eliminar Tercero</h2>
 
+<h3>¿Está seguro de eliminar a este tercero?</h3>
 <div>
-    <h4>Personas</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -59,8 +59,13 @@
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar al listado", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Persona_Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
