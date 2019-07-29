@@ -1,0 +1,119 @@
+﻿@model IEnumerable<GCP_CF.Models.Usuarios>
+
+@{
+    ViewBag.Title = "Listado de Usuarios";
+}
+
+@if (TempData["error"] != null)
+{
+    <script>alert('@TempData["error"]');</script>
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+
+<h2 class="text-left">Usuarios</h2>
+
+<table id="tblUsuarios" class="table table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.NombreCompleto)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.IdRoles)
+            </th>
+            <th class="head-table">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="border-cell">@Html.DisplayFor(modelItem => item.NombreCompleto)</td>
+            <td class="border-cell">@Html.DisplayFor(modelItem => item.Usuario)</td>
+            <td class="border-cell">@Html.DisplayFor(modelItem => item.CorreoElectronico)</td>
+            <td class="border-cell">
+                @foreach (KeyValuePair<int, string> rol in item.ListadoRoles) {
+                    @Html.DisplayFor(r => rol.Value)<br />
+                }
+            </td>
+            <td class="border-cell col-md-2 text-center text-nowrap">
+                @Html.ActionLink("Editar", "Edit", new { id = item.Usuario_Id }) 
+                | @Html.ActionLink("Detalles", "Details", new { id = item.Usuario_Id }) 
+                @{
+                    if (!GCP_CF.Helpers.RolHelper.UsuarioTieneRol(item.IdRoles, 0)) {
+                      @Html.Raw("|")  @Html.ActionLink("Eliminar", "Delete", new { id = item.Usuario_Id })
+                    }
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "Usuarios")" class="btn btn-success">
+    <i class="glyphicon glyphicon-list"></i> Regresar al Listado
+</a>
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var table = $('#tblUsuarios').dataTable({
+
+            responsive: true,
+            "language": {
+                "lengthMenu": "Display _MENU_ records per page",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay información disponible",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar en los resultados:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+        });
+
+        new $.fn.dataTable.FixedHeader(table);
+
+    });
+
+</script>

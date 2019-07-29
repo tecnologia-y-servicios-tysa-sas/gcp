@@ -45,6 +45,12 @@ namespace GCP_CF.Controllers
 
             ViewBag.Anio = new SelectList(aniosContratos.Distinct().Where(x => x > 0).OrderByDescending(x => x), anio);
 
+            // Guardar valores seleccionados para los gráficos
+            ViewBag.AnioSeleccionado = anio;
+            ViewBag.IdEntidadSeleccionada = idEntidadContratante;
+            ViewBag.NumeroContratoEnviado = numeroContrato;
+            ViewBag.IdEstadoSeleccionado = idEstadoContrato;
+
             List<Contratos> list = ObtenerContratos(anio, idEntidadContratante, numeroContrato, idEstadoContrato);
             return list != null ? list.OrderBy(x => x.Contrato_Id).ToList() : new List<Contratos>();
         }

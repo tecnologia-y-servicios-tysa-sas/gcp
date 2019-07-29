@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GCP_CF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,13 @@ namespace GCP_CF.Controllers
 {
     public class UsuariosController : Controller
     {
+        private readonly GCPContext db = new GCPContext();
+
         // GET: Usuarios
         public ActionResult Index()
         {
-            return View();
+            List<Usuarios> usuarios = db.Usuarios.ToList();
+            return View(usuarios);
         }
     }
 }
