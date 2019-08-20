@@ -16,62 +16,62 @@
     @Html.HiddenFor(model => model.Persona_Id)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
             @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
             @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
             @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
             @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
             @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.TipoPersona_Id, "TipoPersona_Id", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        @Html.LabelFor(model => model.TipoPersona_Id, "Tipo de Tercero", htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
             @Html.DropDownList("TipoPersona_Id", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.TipoPersona_Id, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-12">
-            @Html.LabelFor(model => model.RecibirNotificaciones, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.CheckBoxFor(model => model.RecibirNotificaciones, htmlAttributes: new { @class = "form-control", @id = "recibirNotificaciones" })
+        @Html.LabelFor(model => model.RecibirNotificaciones, htmlAttributes: new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
+            <div class="checkbox-inline" style="margin-top: -15px !important">@Html.CheckBoxFor(model => model.RecibirNotificaciones, htmlAttributes: new { @id = "recibirNotificaciones" })</div>
         </div>
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-3 col-md-9">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>

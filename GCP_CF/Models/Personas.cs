@@ -24,6 +24,7 @@ namespace GCP_CF.Models
         [Display(Name = "Número de Identificación")]
         public string NumeroDocumento { get; set; }
 
+        [Display(Name = "Tipo de Persona")]
         public Nullable<int> TipoPersona_Id { get; set; }
 
         public int? TipoDocumentoId { get; set; }
