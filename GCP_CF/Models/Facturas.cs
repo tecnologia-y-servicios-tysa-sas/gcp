@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -73,16 +74,16 @@ namespace GCP_CF.Models
 
         [Display(Name = "% IVA")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Debe especificar el porcentaje de IVA")]
-        public double PorcentajeIva { get; set; }
+        public Nullable<double> PorcentajeIva { get; set; }
 
         [Display(Name = "Valor IVA")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
-        public double ValorIva { get; set; }
+        public Nullable<double> ValorIva { get; set; }
 
         [Display(Name = "Honorarios")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
         [Required(ErrorMessage = "Debe especificar el valor de honorarios")]
-        public double TotalHonorarios { get; set; }
+        public Nullable<double> TotalHonorarios { get; set; }
 
         [Display(Name = "Valor Cancelado")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
@@ -91,6 +92,8 @@ namespace GCP_CF.Models
         [Display(Name = "Observaciones")]
         [DataType(DataType.MultilineText)]
         public string Observaciones { get; set; }
+
+        public List<PagosContrato> PagosContrato { get; set; }
 
         [NotMapped]
         public string TotalHonorariosAux { get; set; }

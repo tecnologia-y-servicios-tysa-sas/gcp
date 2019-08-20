@@ -138,9 +138,9 @@ namespace GCP_CF.Controllers
             formatter.NumberDecimalSeparator = ".";
             formatter.NumberDecimalDigits = 2;
 
-            factura.TotalHonorariosAux = factura.TotalHonorarios.ToString("#,###.#0", formatter);
+            factura.TotalHonorariosAux = factura.TotalHonorarios.HasValue ? factura.TotalHonorarios.Value.ToString("#,###.#0", formatter) : string.Empty;
             factura.ValorBaseAux = factura.ValorBase.ToString("#,###.#0", formatter);
-            factura.ValorIvaAux = factura.ValorIva.ToString("#,###.#0", formatter);
+            factura.ValorIvaAux = factura.ValorIva.HasValue ? factura.ValorIva.Value.ToString("#,###.#0", formatter) : string.Empty;
             factura.ValorCanceladoAux = factura.ValorCancelado.ToString("#,###.#0", formatter);
 
             return View(factura);

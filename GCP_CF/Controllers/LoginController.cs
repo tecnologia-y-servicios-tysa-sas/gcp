@@ -19,6 +19,7 @@ namespace GCP_CF.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            ViewBag.SesionIniciada = (Session["UserState"] != null);
             return View();
         }
 
@@ -35,15 +36,19 @@ namespace GCP_CF.Controllers
                 UserManager um = new UserManager();
                 Usuarios dbUser = um.EsValido(db, usuario, password);
 
-                if (dbUser != null)
+                if (dbUser != null && dbUser.EsActivo)
                 {
                     UserState userState = new UserState()
                     {
                         UserId = dbUser.Usuario,
                         Name = dbUser.NombreCompleto,
                         Email = dbUser.CorreoElectronico,
-                        IsSuperUser = RolHelper.UsuarioTieneRol(dbUser.IdRoles, 0),
-                        RoleList = RolHelper.ObtenerRolesUsuario(dbUser.IdRoles).Select(s => s.Value).ToArray<string>()
+                        IsActive = dbUser.EsActivo, 
+                        IsSuperUser = dbUser.EsSuperUsuario,
+                        CanWrite = (dbUser.EsSuperUsuario || dbUser.TipoPermisos == "W"),
+                        AllContracts = (dbUser.EsSuperUsuario || dbUser.TodosLosContratos),
+                        ContractIds = dbUser.IdContratos,
+                        Role = dbUser.IdRoles
                     };
 
                     IdentitySignIn(userState);
@@ -75,14 +80,10 @@ namespace GCP_CF.Controllers
                     {
                         new Claim(ClaimTypes.NameIdentifier, userState.UserId),
                         new Claim(ClaimTypes.Name, userState.Name),
-                        new Claim("userstate", userState.ToString())
+                        new Claim("SuperUsuario", userState.IsSuperUser.ToString()),
+                        new Claim("PuedeEscribir", userState.CanWrite.ToString()),
+                        new Claim("UserState", userState.ToString())
                     };
-
-            if (userState.RoleList.Any())
-            {
-                var roleClaims = userState.RoleList.Select(r => new Claim(ClaimTypes.Role, r));
-                claims.AddRange(roleClaims);
-            }
 
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
@@ -117,7 +118,7 @@ namespace GCP_CF.Controllers
             {
                 var user = User as ClaimsPrincipal;
                 var claims = user.Claims.ToList();
-                var userStateString = GetClaim(claims, "userState");
+                var userStateString = GetClaim(claims, "UserState");
 
                 if (!string.IsNullOrEmpty(userStateString))
                 {

@@ -23,22 +23,27 @@ namespace GCP_CF.Helpers
             return listadoRoles;
         }
 
-        public static List<KeyValuePair<int, string>> ObtenerRolesUsuario(string rolesUsuario)
+        public static bool EsSuperUsuario(string rolUsuario)
         {
-            List<KeyValuePair<int, string>> listadoRoles = ObtenerListadoRoles();
-            List<int> listadoIdRolesUsuario = ObtenerIdRolesPorUsuario(rolesUsuario);
+            string rolSuperUsuario = ConfigurationManager.AppSettings["rolSuperUsuario"];
+            if (!string.IsNullOrEmpty(rolSuperUsuario)) return rolSuperUsuario == rolUsuario;
 
-            List<KeyValuePair<int, string>> listadoRolesUsuario = new List<KeyValuePair<int, string>>();
+            return false;
+        }
+
+        public static KeyValuePair<int, string> ObtenerRolUsuario(string rolesUsuario)
+        {
+            int rolActualUsuario = int.Parse(rolesUsuario);
+            List<KeyValuePair<int, string>> listadoRoles = ObtenerListadoRoles();
+
+            KeyValuePair<int, string> rolUsuario = new KeyValuePair<int, string>();
             foreach (KeyValuePair<int, string> parValor in listadoRoles)
             {
-                if (listadoIdRolesUsuario.Contains(parValor.Key))
-                {
-                    KeyValuePair<int, string> rol = new KeyValuePair<int, string>(parValor.Key, parValor.Value);
-                    listadoRolesUsuario.Add(rol);
-                }
+                if (parValor.Key == rolActualUsuario)
+                    rolUsuario = parValor;
             }
 
-            return listadoRolesUsuario;
+            return rolUsuario;
         }
 
         public static int ObtenerIdRol(string tipoRol)

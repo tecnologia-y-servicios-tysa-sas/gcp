@@ -72,6 +72,7 @@ $(function () {
     $("#honorarios").blur(function () {
         if ($(this).val() != "") {
             cambiarFormatoNumerico($("#honorarios"));
+            calcularValorNetoHonorarios($(this), $("#porcentajeIvaHonorarios"));
         }
     });
 
@@ -120,6 +121,8 @@ $(function () {
         } else {
             $("#numeroContrato").val("");
         }
+
+        enableOrDisableNonCIADFields();
     });
 
 });
@@ -258,6 +261,20 @@ $("#objeto").blur(function () {
     validateObjeto();
 });
 
+function calcularValorNetoHonorarios(honorarios, porcentajeIvaHonorarios) {
+    var valorNeto = 0;
+    var valorNetoHonorarios = $("#valorNetoHonorarios");
+    var numHonorarios = RestablecerFormato($(honorarios).val());
+    var ivaHonorarios = $(porcentajeIvaHonorarios).val();
+
+    if (!isNaN(numHonorarios)) {
+        valorNeto = Math.round(100 * (numHonorarios * ivaHonorarios / 100)) / 100;
+    }
+
+    $(valorNetoHonorarios).val(valorNeto);
+    cambiarFormatoNumerico($(valorNetoHonorarios));
+}
+
 function validarTodosLosCamposGenerales() {
 
     var esValido = validateTipoContrato();
@@ -332,7 +349,29 @@ $("#notasPoliza").blur(function () {
 });
 
 function validateTipoContrato() {
-    return validateRequired($("#tipoContrato"), "Tipo Contrato");
+
+    if (validateRequired($("#tipoContrato"), "Tipo Contrato")) {
+        enableOrDisableNonCIADFields();
+        return true;
+    }
+
+    return false;
+}
+
+function enableOrDisableNonCIADFields() {
+
+    var tipoContratoCIAD = $("#tipoContratoCiad").val();
+    var disableFields = $("#tipoContrato").val() != tipoContratoCIAD;
+
+    if (disableFields) {
+        $("#honorarios").val("");
+        $("#honorarios").css("border-color", "none");
+        $("#valorNetoHonorarios").val("");
+    }
+
+    $("#honorarios").prop("disabled", disableFields);
+    $("#valorNetoHonorarios").prop("disabled", disableFields);
+    //$("#ContratoMarco_Id").prop("disabled", disableFields);
 }
 
 function validateEntidadContratante() {
@@ -427,7 +466,11 @@ function validateValorAdministrar() {
 }
 
 function validateHonorarios() {
-    return validateNumeric($("#honorarios"), "Honorarios");
+    if (validateNumeric($("#honorarios"), "Honorarios")) {
+        calcularValorNetoHonorarios($("#honorarios"), $("#porcentajeIvaHonorarios"));
+    }
+
+    return false;
 }
 
 function validateObjeto() {

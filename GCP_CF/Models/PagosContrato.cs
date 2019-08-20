@@ -26,7 +26,12 @@ namespace GCP_CF.Models
         [Display(Name = "Notas")]
         public string Notas { get; set; }
 
+        public Nullable<int> Factura_Id { get; set; }
+
         [ForeignKey("Contrato_Id")]
         public virtual Contratos Contrato { get; set; }
+
+        [ForeignKey("Factura_Id")]
+        public virtual Facturas Factura { get; set; }
     }
 }

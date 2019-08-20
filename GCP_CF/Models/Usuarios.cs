@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using GCP_CF.Helpers;
 
 namespace GCP_CF.Models
@@ -24,10 +26,37 @@ namespace GCP_CF.Models
         [Display(Name = "Roles")]
         public string IdRoles { get; set; }
 
+        [Display(Name = "Permisos")]
+        public string TipoPermisos { get; set; }
+
+        [Display(Name = "Todos los contratos")]
+        public bool TodosLosContratos { get; set; }
+
+        [Column(TypeName = "longtext")]
+        public string IdContratos { get; set; }
+
         [NotMapped]
-        public List<KeyValuePair<int, string>> ListadoRoles
+        public List<int> ListadoIdContratos
         {
-            get { return RolHelper.ObtenerRolesUsuario(IdRoles); }
+            get { return IdContratos.Split(',').Select(int.Parse).ToList(); }
+            set {
+                if (!TodosLosContratos)
+                    IdContratos = String.Join(",", value.Select(p => p.ToString()));
+                else
+                    IdContratos = "-1"; // Todos
+            }
+        }
+
+        [NotMapped]
+        public KeyValuePair<int, string> Rol
+        {
+            get { return RolHelper.ObtenerRolUsuario(IdRoles); }
+        }
+
+        [NotMapped]
+        public bool EsSuperUsuario
+        {
+            get { return RolHelper.EsSuperUsuario(IdRoles); }
         }
 
         [MaxLength(30, ErrorMessage = "El campo {0} no puede contener más de {1} caracteres.")]

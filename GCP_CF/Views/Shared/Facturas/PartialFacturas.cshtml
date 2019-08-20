@@ -14,11 +14,11 @@
             <th class="head-table">@Html.DisplayNameFor(model => model.Estado)</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.Municipio)</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.Contrato)</th>
-            <th class="head-table">@Html.DisplayNameFor(model => model.TotalHonorarios)</th>
+            @*<th class="head-table">@Html.DisplayNameFor(model => model.TotalHonorarios)</th>
             @if (!ViewBag.IsReport)
             {
             <th class="head-table" style="width: 120px">Acciones</th>
-            }
+            }*@
         </tr>
     </thead>
     <tbody>
@@ -31,7 +31,7 @@
                 <td class="border-cell col-md-1 text-center">@Html.DisplayFor(modelItem => item.Estado.Termino)</td>
                 <td class="border-cell col-md-3">@Html.DisplayFor(modelItem => item.Municipio.NombreCompleto)</td>
                 <td class="border-cell col-md-1 text-center">@Html.DisplayFor(modelItem => item.Contrato.NumeroContrato)</td>
-                <td class="border-cell col-md-2 text-right text-nowrap">$ @Html.DisplayFor(modelItem => item.TotalHonorarios)</td>
+                @*<td class="border-cell col-md-2 text-right text-nowrap">$ @Html.DisplayFor(modelItem => item.TotalHonorarios)</td>*@
                 @if (!ViewBag.IsReport) {
                 <td class="border-cell col-md-2 text-center text-nowrap">
                     @Html.ActionLink("Editar", "Edit", new { id = item.Factura_Id }) |

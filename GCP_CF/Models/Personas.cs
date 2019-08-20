@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace GCP_CF.Models
 {
+    /// <summary>
+    /// Esta es la clase que gestiona a los Terceros de la aplicación, y es totalmente independiente de los usuarios del sistema.
+    /// </summary>
     public class Personas
     {
         [Key]
@@ -28,6 +31,9 @@ namespace GCP_CF.Models
         [NotMapped]
         [Display(Name = "Nombre Completo")]
         public String NombreCompleto { get { return Nombres + ' ' + Apellidos; } }
+
+        [Display(Name = "Recibir notificaciones")]
+        public bool RecibirNotificaciones { get; set; }
 
         public virtual TiposPersona TiposPersona { get; set; }
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

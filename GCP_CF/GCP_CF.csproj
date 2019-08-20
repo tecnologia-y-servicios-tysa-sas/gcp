@@ -199,6 +199,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TiposDocumentosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Helpers\ContratosHelper.cs" />
     <Compile Include="Helpers\GraphicsHelper.cs" />
     <Compile Include="Helpers\RolHelper.cs" />
     <Compile Include="Helpers\UserManager.cs" />
@@ -222,6 +223,14 @@
     <Compile Include="Migrations\201907220702319_initial4.cs" />
     <Compile Include="Migrations\201907220702319_initial4.Designer.cs">
       <DependentUpon>201907220702319_initial4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908120214393_initial5.cs" />
+    <Compile Include="Migrations\201908120214393_initial5.Designer.cs">
+      <DependentUpon>201908120214393_initial5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908192207135_initial6.cs" />
+    <Compile Include="Migrations\201908192207135_initial6.Designer.cs">
+      <DependentUpon>201908192207135_initial6.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FormaPago.cs" />
@@ -446,6 +455,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Logout.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Shared\PartialAccesoDenegado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -476,6 +486,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907220702319_initial4.resx">
       <DependentUpon>201907220702319_initial4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908120214393_initial5.resx">
+      <DependentUpon>201908120214393_initial5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908192207135_initial6.resx">
+      <DependentUpon>201908192207135_initial6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GCP_CF.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -81,6 +82,18 @@ namespace GCP_CF.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
         [Display(Name = "Porcentaje IVA Honorarios")]
         public Nullable<double> PorcentajeIvaHonorarios { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Valor Neto Honorarios")]
+        public double ValorNetoHonorarios
+        {
+            get {
+                if (Honorarios.HasValue && Honorarios.Value > 0)
+                    return Math.Round(Honorarios.Value * PorcentajeIvaHonorarios.Value / 100, 2);
+                else
+                    return 0;
+            }
+        }
 
         [NotMapped]
         public string ValorContratoAux { get; set; }

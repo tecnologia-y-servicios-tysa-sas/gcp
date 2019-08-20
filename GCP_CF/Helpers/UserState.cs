@@ -1,5 +1,6 @@
 ﻿using GCP_CF.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GCP_CF.Helpers
 {
@@ -8,12 +9,25 @@ namespace GCP_CF.Helpers
         public string Name = string.Empty;
         public string Email = string.Empty;
         public string UserId = string.Empty;
+        public bool IsActive = false;
         public bool IsSuperUser = false;
-        public string[] RoleList = new string[]{};
+        public bool CanWrite = false;
+        public string Role = string.Empty;
+        public bool AllContracts = false;
+        public string ContractIds = string.Empty;
 
         public override string ToString()
         {
-            return string.Join("|", new string[] { this.UserId, this.Name, this.IsSuperUser.ToString(), string.Join(",", this.RoleList) });
+            return string.Join("|", new string[] {
+                this.UserId,
+                this.Name,
+                this.IsActive.ToString(),
+                this.IsSuperUser.ToString(),
+                this.CanWrite.ToString(),
+                this.AllContracts.ToString(),
+                this.ContractIds,
+                this.Role
+            });
         }
 
         public bool FromString(string itemString)
@@ -21,12 +35,16 @@ namespace GCP_CF.Helpers
             if (string.IsNullOrEmpty(itemString)) return false;
 
             string[] strings = itemString.Split('|');
-            if (strings.Length < 3) return false;
+            if (strings.Length < 7) return false;
 
             UserId = strings[0];
             Name = strings[1];
-            IsSuperUser = strings[2] == "True";
-            RoleList = strings[3].Split(',');
+            IsActive = strings[2] == "True";
+            IsSuperUser = strings[3] == "True";
+            CanWrite = strings[4] == "True";
+            AllContracts = strings[5] == "True";
+            ContractIds = strings[6];
+            Role = strings[7];
 
             return true;
         }
@@ -36,7 +54,17 @@ namespace GCP_CF.Helpers
             UserId = usuario.Usuario;
             Name = usuario.NombreCompleto;
             Email = usuario.CorreoElectronico;
-            IsSuperUser = RolHelper.UsuarioTieneRol(usuario.IdRoles, 0);
+            IsActive = usuario.EsActivo;
+            IsSuperUser = usuario.EsSuperUsuario;
+            CanWrite = usuario.TipoPermisos == "W";
+            AllContracts = usuario.TodosLosContratos;
+            ContractIds = usuario.IdContratos;
+            Role = usuario.IdRoles;
+        }
+
+        public List<int> ContractIdListFromUser()
+        {
+            return ContractIds.Split(',').Select(int.Parse).ToList();
         }
 
         public bool IsEmpty()
