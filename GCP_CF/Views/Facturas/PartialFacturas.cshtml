@@ -11,10 +11,11 @@
         @Html.HiddenFor(model => model.Factura_Id, htmlAttributes: new { @id = "idFactura" });
     }
 
-    <div class="panel">
-        <div class="panel-body">
-            <div class="form-horizontal text-left">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal text-left">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="panel">
+            <div class="panel-body">
+                <h3>Información Básica</h3>
                 <div class="form-group">
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.Numero, "Número Factura", htmlAttributes: new { @class = "control-label" }) *</div>
@@ -67,6 +68,12 @@
                         @Html.ValidationMessageFor(model => model.Objeto, "", new { @class = "text-danger" })
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-body">
+                <h3>Información de Pagos</h3>
                 <div class="form-group">
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.Contrato_Id, "Contrato", htmlAttributes: new { @class = "control-label" }) *</div>
@@ -74,6 +81,8 @@
                         @Html.HiddenFor(model => model.Contrato_Id, new { @id = "idContrato" })
                         @Html.ValidationMessageFor(model => model.Contrato_Id, "", new { @class = "text-danger" })
                     </div>
+                </div>
+                <div class="form-group">
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.TotalHonorarios, "Honorarios", htmlAttributes: new { @type = "number", @class = "control-label" }) *</div>
                         @Html.EditorFor(model => model.TotalHonorariosAux, new { htmlAttributes = new { @class = "form-control", @id = "valorHonorarios" } })
@@ -87,17 +96,17 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.ValorBase, "Valor Base", htmlAttributes: new { @type = "number", @class = "control-label" }) *</div>
+                        <div>@Html.LabelFor(model => model.ValorBase, "Valor Base", htmlAttributes: new { @type = "number", @class = "control-label" })</div>
                         @Html.EditorFor(model => model.ValorBaseAux, new { htmlAttributes = new { @class = "form-control", @id = "valorBase", @readonly = true } })
                         @Html.ValidationMessageFor(model => model.ValorBaseAux, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.ValorIva, "Valor IVA", htmlAttributes: new { @type = "number", @class = "control-label" }) *</div>
+                        <div>@Html.LabelFor(model => model.ValorIva, "Valor IVA", htmlAttributes: new { @type = "number", @class = "control-label" })</div>
                         @Html.EditorFor(model => model.ValorIvaAux, new { htmlAttributes = new { @class = "form-control", @id = "valorIVA", @readonly = true } })
                         @Html.ValidationMessageFor(model => model.ValorIvaAux, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.ValorCancelado, "Valor Cancelado", htmlAttributes: new { @type = "number", @class = "control-label" }) *</div>
+                        <div>@Html.LabelFor(model => model.ValorCancelado, "Valor Cancelado", htmlAttributes: new { @type = "number", @class = "control-label" })</div>
                         @Html.EditorFor(model => model.ValorCanceladoAux, new { htmlAttributes = new { @class = "form-control", @id = "valorCancelado" } })
                         @Html.ValidationMessageFor(model => model.ValorCanceladoAux, "", new { @class = "text-danger" })
                     </div>
@@ -108,7 +117,6 @@
                         @Html.EditorFor(model => model.Observaciones, new { htmlAttributes = new { @class = "form-control", @id = "observaciones", @style = "max-width: 500px" } })
                         @Html.ValidationMessageFor(model => model.Observaciones, "", new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-6">&nbsp;</div>
                 </div>
                 <div class="form-group text-center">
                     <div class="col-md-12">
@@ -117,6 +125,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 }
 

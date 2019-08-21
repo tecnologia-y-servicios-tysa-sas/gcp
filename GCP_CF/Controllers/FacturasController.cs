@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
@@ -28,19 +29,28 @@ namespace GCP_CF.Controllers
         {
             string mensaje = string.Empty;
             string idContrato = string.Empty;
+            object listaPagos = new { };
+            var jsonSerializer = new JavaScriptSerializer();
 
             if (string.IsNullOrEmpty(numeroContrato))
                 mensaje = "Debe ingresar un número de contrato";
             else
             {
                 Contratos contrato = db.Contratos.Where(c => c.NumeroContrato.ToLower() == numeroContrato.Trim().ToLower()).FirstOrDefault();
-                if (contrato != null)
+                if (contrato != null) {
                     idContrato = contrato.Contrato_Id.ToString();
-                else
+                    listaPagos = contrato.PagosContrato.Select(p => new {
+                        id = p.PagosContrato_Id,
+                        numero = p.NumeroPago,
+                        valor = p.Valor,
+                        fecha = p.Fecha.ToShortDateString(),
+                        notas = p.Notas
+                    });
+                } else
                     mensaje = "No se encontró un contrato con el número ingresado";
             }
 
-            object response = new { id = idContrato, error = mensaje };
+            object response = new { id = idContrato, pagos = listaPagos, error = mensaje };
             return Json(response);
         }
 

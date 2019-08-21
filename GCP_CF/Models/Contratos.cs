@@ -88,10 +88,9 @@ namespace GCP_CF.Models
         public double ValorNetoHonorarios
         {
             get {
-                if (Honorarios.HasValue && Honorarios.Value > 0)
-                    return Math.Round(Honorarios.Value * PorcentajeIvaHonorarios.Value / 100, 2);
-                else
-                    return 0;
+                double valorHonorarios = Honorarios ?? 0;
+                double ivaHonorarios = PorcentajeIvaHonorarios ?? 0;
+                return Math.Round(valorHonorarios * ivaHonorarios / 100, 2);
             }
         }
 

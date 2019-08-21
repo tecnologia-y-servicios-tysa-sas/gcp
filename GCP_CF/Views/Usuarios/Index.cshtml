@@ -37,19 +37,11 @@
     <tbody>
         @foreach (var item in Model)
         {
-            string nombreRol = GCP_CF.Helpers.RolHelper.ObtenerValorRol(int.Parse(item.IdRoles));
-            string lecturaEscritura = (item.TipoPermisos == "W") ? "puede leer" : "puede escribir";
-            string contratos = (item.TodosLosContratos) ? "sobre todos los contratos" : "sobre algunos contratos";
         <tr>
             <td class="border-cell">@Html.DisplayFor(modelItem => item.NombreCompleto)</td>
             <td class="border-cell">@Html.DisplayFor(modelItem => item.Usuario)</td>
             <td class="border-cell">@Html.DisplayFor(modelItem => item.CorreoElectronico)</td>
-            <td class="border-cell">
-                @Html.Raw(nombreRol + ", " + lecturaEscritura + " " + contratos)
-                @*foreach (KeyValuePair<int, string> rol in item.ListadoRoles) {
-                    @Html.DisplayFor(r => rol.Value)<br />
-                }*@
-            </td>
+            <td class="border-cell">@Html.DisplayFor(modelItem => item.EstadoPermisos)</td>
             <td class="border-cell col-md-2 text-center text-nowrap">
                 @Html.ActionLink("Editar", "Edit", new { id = item.Usuario_Id }) 
                 | @Html.ActionLink("Detalles", "Details", new { id = item.Usuario_Id }) 

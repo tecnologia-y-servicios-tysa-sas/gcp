@@ -362,11 +362,25 @@ function enableOrDisableNonCIADFields() {
 
     var tipoContratoCIAD = $("#tipoContratoCiad").val();
     var disableFields = $("#tipoContrato").val() != tipoContratoCIAD;
+    var panelPagos = $("#panelPagos");
+    var tablaPagos = $("#tablaPagos");
 
-    if (disableFields) {
+    if (!disableFields) {
+        // Se esconde la tabla de pagos
+        panelPagos.fadeOut();
+
+        var numRows = tablaPagos.find("tbody tr").length;
+        for (var i = numRows; i > 1; i--) {
+            var pos = i - 1;
+            $("#pago_" + pos).remove();
+            $("#numeroPagos").val(pos);
+        }
+    } else {
+        // Se desactivan campos
         $("#honorarios").val("");
         $("#honorarios").css("border-color", "none");
         $("#valorNetoHonorarios").val("");
+        panelPagos.fadeIn();
     }
 
     $("#honorarios").prop("disabled", disableFields);
@@ -574,71 +588,79 @@ function EliminarFilaPago(fila) {
 }
 
 function validarPagos() {
-    console.log("Validando pagos...");
 
-    var tablaPagos = $("#tablaPagos");
-    var filasPagos = tablaPagos.find("tbody tr");
     var esValido = true;
-    var sumaValoresPago = 0;
+    var tipoContratoCIAD = $("#tipoContratoCiad").val();
 
-    // Se valida si ya se ingresó el valor a administrar
-    if (!validateValorAdministrar()) {
-        $(filasPagos).each(function (filaPago) {
-            $("#valorPago_" + filaPago).val("");
-            $("#fechaPago_" + filaPago).val("");
-        });
-        return false;
-    }
+    // Los pagos no pueden validarse para un contrato interadministrativo
+    if ($("#tipoContrato").val() != tipoContratoCIAD) {
 
-    // Se valida si las fechas iniciales y finales ya están
-    if (!validateFechaInicial() || !validateFechaFinal()) {
-        $(filasPagos).each(function (filaPago) {
-            $("#valorPago_" + filaPago).val("");
-            $("#fechaPago_" + filaPago).val("");
-        });
-        return false;
-    }
+        console.log("Validando pagos...");
 
-    $(filasPagos).each(function (filaPago) {
-        if (!validarCamposFilaPago(filaPago)) {
-            esValido = false;
-            return false; // Para salir del each
-        } else {
-            sumaValoresPago += Number($("#valorPago_" + filaPago).val().replace(/,/gi, ""));
+        var tablaPagos = $("#tablaPagos");
+        var filasPagos = tablaPagos.find("tbody tr");
+        var sumaValoresPago = 0;
+
+        // Se valida si ya se ingresó el valor a administrar
+        if (!validateValorAdministrar()) {
+            $(filasPagos).each(function (filaPago) {
+                $("#valorPago_" + filaPago).val("");
+                $("#fechaPago_" + filaPago).val("");
+            });
+            return false;
         }
-    });
 
-    if (esValido) {
-
-        var mensaje = "";
-        var valorContrato = Number($("#valorContrato").val().replace(/,/gi, ""));
-
-        console.log("Suma valores pago: " + sumaValoresPago);
-        console.log("Valor contrato: " + valorContrato);
-
-        if (sumaValoresPago > valorContrato) {
+        // Se valida si las fechas iniciales y finales ya están
+        if (!validateFechaInicial() || !validateFechaFinal()) {
             $(filasPagos).each(function (filaPago) {
-                if (Number($("#valorPago_" + filaPago).val().replace(/,/gi, "")) > 0) {
-                    $("#valorPago_" + filaPago).css('border-color', 'red');
-                }
+                $("#valorPago_" + filaPago).val("");
+                $("#fechaPago_" + filaPago).val("");
             });
-            mensaje = "<strong>Error!</strong> La sumatoria de valores de pago no debe ser mayor al valor del contrato";
-            MostrarMensajeValidacion(idMensaje, idPopup, mensaje, 5000);
-            esValido = false;
-        } else {
-            var hayVacios = false;
-            $(filasPagos).each(function (filaPago) {
-                if ($("#valorPago_" + filaPago).val() == "") {
-                    $("#valorPago_" + filaPago).css('border-color', 'red');
-                    hayVacios = true;
-                    return false;
-                }
-            });
-            if (hayVacios) {
-                mensaje = "<strong>Error!</strong> Existe al menos un valor de pago sin especificar.";
+            return false;
+        }
+
+        $(filasPagos).each(function (filaPago) {
+            if (!validarCamposFilaPago(filaPago)) {
+                esValido = false;
+                return false; // Para salir del each
+            } else {
+                sumaValoresPago += Number($("#valorPago_" + filaPago).val().replace(/,/gi, ""));
+            }
+        });
+
+        if (esValido) {
+
+            var mensaje = "";
+            var valorContrato = Number($("#valorContrato").val().replace(/,/gi, ""));
+
+            console.log("Suma valores pago: " + sumaValoresPago);
+            console.log("Valor contrato: " + valorContrato);
+
+            if (sumaValoresPago > valorContrato) {
+                $(filasPagos).each(function (filaPago) {
+                    if (Number($("#valorPago_" + filaPago).val().replace(/,/gi, "")) > 0) {
+                        $("#valorPago_" + filaPago).css('border-color', 'red');
+                    }
+                });
+                mensaje = "<strong>Error!</strong> La sumatoria de valores de pago no debe ser mayor al valor del contrato";
                 MostrarMensajeValidacion(idMensaje, idPopup, mensaje, 5000);
                 esValido = false;
+            } else {
+                var hayVacios = false;
+                $(filasPagos).each(function (filaPago) {
+                    if ($("#valorPago_" + filaPago).val() == "") {
+                        $("#valorPago_" + filaPago).css('border-color', 'red');
+                        hayVacios = true;
+                        return false;
+                    }
+                });
+                if (hayVacios) {
+                    mensaje = "<strong>Error!</strong> Existe al menos un valor de pago sin especificar.";
+                    MostrarMensajeValidacion(idMensaje, idPopup, mensaje, 5000);
+                    esValido = false;
+                }
             }
+
         }
 
     }

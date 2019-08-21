@@ -81,5 +81,15 @@ namespace GCP_CF.Models
 
         [Display(Name = "Activar Usuario")]
         public bool EsActivo { get; set; }
+
+        [NotMapped]
+        public virtual string EstadoPermisos {
+            get {
+                string nombreRol = RolHelper.ObtenerValorRol(int.Parse(IdRoles));
+                string lecturaEscritura = (TipoPermisos == "W") ? "puede leer" : "puede escribir";
+                string contratos = (TodosLosContratos) ? "sobre todos los contratos" : "sobre algunos contratos";
+                return nombreRol + ", " + lecturaEscritura + " " + contratos;
+            }
+        }
     }
 }

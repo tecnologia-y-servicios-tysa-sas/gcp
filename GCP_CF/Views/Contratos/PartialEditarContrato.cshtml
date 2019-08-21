@@ -267,8 +267,41 @@
 
         </div>
 
-        <!-- Pagos -->
+        <!-- Datos de la póliza -->
         <div class="panel">
+            <div class="panel-heading">
+                <h3>Datos de la Póliza</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <div>@Html.LabelFor(model => model.NumeroPoliza, htmlAttributes: new { @class = "control-label" })</div>
+                        @Html.EditorFor(model => model.NumeroPoliza, new { htmlAttributes = new { @class = "form-control", @id = "numeroPoliza" } })
+                        @Html.ValidationMessageFor(model => model.NumeroPoliza, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        <div>@Html.LabelFor(model => model.ValorPoliza, htmlAttributes: new { @class = "control-label" })</div>
+                        @Html.EditorFor(model => model.ValorPolizaAux, new { htmlAttributes = new { @class = "form-control", @id = "valorPoliza" } })
+                        @Html.ValidationMessageFor(model => model.ValorPolizaAux, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        <div>@Html.LabelFor(model => model.NombreAseguradora, htmlAttributes: new { @class = "control-label" })</div>
+                        @Html.EditorFor(model => model.NombreAseguradora, new { htmlAttributes = new { @class = "form-control", @id = "nombreAseguradora" } })
+                        @Html.ValidationMessageFor(model => model.NombreAseguradora, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12" id="editor-multiline-field">
+                        <div>@Html.LabelFor(model => model.NotasPoliza, htmlAttributes: new { @class = "control-label" })</div>
+                        @Html.EditorFor(model => model.NotasPoliza, new { htmlAttributes = new { @class = "form-control", @id = "notasPoliza" } })
+                        @Html.ValidationMessageFor(model => model.NotasPoliza, "", new { @class = "text-danger", @style = "max-width:500px" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagos -->
+        <div class="panel" id="panelPagos" style="display: none">
             <div class="panel-heading">
                 <h3>Forma de Pago</h3>
             </div>
@@ -357,39 +390,6 @@
                 <a class="btn btn-default" onclick="AgregarPago()">
                     <i class="glyphicon glyphicon-plus-sign"></i> Agregar Pago
                 </a>
-            </div>
-        </div>
-
-        <!-- Datos de la póliza -->
-        <div class="panel">
-            <div class="panel-heading">
-                <h3>Datos de la Póliza</h3>
-            </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.NumeroPoliza, htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.EditorFor(model => model.NumeroPoliza, new { htmlAttributes = new { @class = "form-control", @id = "numeroPoliza" } })
-                        @Html.ValidationMessageFor(model => model.NumeroPoliza, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.ValorPoliza, htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.EditorFor(model => model.ValorPolizaAux, new { htmlAttributes = new { @class = "form-control", @id = "valorPoliza" } })
-                        @Html.ValidationMessageFor(model => model.ValorPolizaAux, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.NombreAseguradora, htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.EditorFor(model => model.NombreAseguradora, new { htmlAttributes = new { @class = "form-control", @id = "nombreAseguradora" } })
-                        @Html.ValidationMessageFor(model => model.NombreAseguradora, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12" id="editor-multiline-field">
-                        <div>@Html.LabelFor(model => model.NotasPoliza, htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.EditorFor(model => model.NotasPoliza, new { htmlAttributes = new { @class = "form-control", @id = "notasPoliza" } })
-                        @Html.ValidationMessageFor(model => model.NotasPoliza, "", new { @class = "text-danger", @style = "max-width:500px" })
-                    </div>
-                </div>
             </div>
         </div>
 
