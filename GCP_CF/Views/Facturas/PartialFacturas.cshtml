@@ -1,10 +1,20 @@
 ﻿@model GCP_CF.Models.Facturas
 
+@{ 
+    double porcentajeIva = double.Parse(System.Configuration.ConfigurationManager.AppSettings["porcentajeIva"]);
+    var formatter = new System.Globalization.CultureInfo("es-CO", false).NumberFormat;
+    formatter.NumberGroupSeparator = ",";
+    formatter.NumberDecimalSeparator = ".";
+    formatter.NumberDecimalDigits = 2;
+}
+
 <div id="mensajeErrorCreacion" style="display: none">@ViewBag.MensajeError</div>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+    <input type="hidden" name="defaultPorcentajeIva" id="defaultPorcentajeIva" value="@porcentajeIva" />
 
     if (ViewBag.IsEdit)
     {
@@ -58,7 +68,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <div>@Html.LabelFor(model => model.Concepto, "Concepto", htmlAttributes: new { @class = "control-label" }) *</div>
+                        <div>@Html.LabelFor(model => model.Concepto, "Concepto", htmlAttributes: new { @class = "control-label" })</div>
                         @Html.EditorFor(model => model.Concepto, new { htmlAttributes = new { @class = "form-control", @id = "concepto", @style = "max-width: 500px" } })
                         @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
                     </div>
@@ -74,23 +84,75 @@
         <div class="panel">
             <div class="panel-body">
                 <h3>Información de Pagos</h3>
+                @{
+                    string mostrarRegionPagos = "none";
+                    string mostrarRegionMensaje = "block";
+                    if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+                    {
+                        mostrarRegionPagos = "block";
+                        mostrarRegionMensaje = "none";
+                    }
+                }
                 <div class="form-group">
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.Contrato_Id, "Contrato", htmlAttributes: new { @class = "control-label" }) *</div>
-                        <input type="text" class="form-control" , id="numeroContrato" value="@ViewBag.NumeroContrato" maxlength="15" />
+                        <input type="text" class="form-control" id="numeroContrato" value="@ViewBag.NumeroContrato" maxlength="15" />
+                        <a href="javascript:void(0)" onclick="ConsultarContrato()"><i class="glyphicon glyphicon-search"></i></a>
                         @Html.HiddenFor(model => model.Contrato_Id, new { @id = "idContrato" })
                         @Html.ValidationMessageFor(model => model.Contrato_Id, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Mensaje-->
+                        <div id="alertaPagos" class="alert alert-info" style="width: 100%; display: @mostrarRegionMensaje">Por favor busque por número de contrato para mostrar el listado de pagos</div>
+                        <!-- Pagos -->
+                        <div id="regionPagos" style="width: 100%; display: @mostrarRegionPagos">
+                            <div>Por favor seleccione al menos un pago de la lista:<br /><br /></div>
+                            <table id="tablaPagos" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="head-table col-md-1" style="width: 75px">&nbsp;</th>
+                                        <th class="head-table col-md-2">No.</th>
+                                        <th class="head-table col-md-4">Fecha Pago</th>
+                                        <th class="head-table col-md-5">Valor Pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+                                    {
+                                        var pagos = Model.PagosContrato;
+                                        for (int i = 0; i < Model.PagosContrato.Count; i++)
+                                        {
+                                            <tr class="filaPago" id="filaPago_@pagos[i].PagosContrato_Id">
+                                                <td class="border-cell col-md-1 text-center" style="width: 75px">
+                                                    <input type="checkbox" class="chkPagos" name="idPagoContrato" id="idPagoContrato_@pagos[i].PagosContrato_Id" value="@pagos[i].PagosContrato_Id" onchange="@((i + 1) < pagos.Count ? "HabilitarSiguientePago(" + pagos[i].PagosContrato_Id + ", " + pagos[i + 1].PagosContrato_Id + "); " : "ActualizarValorHonorarios(" + pagos[i].PagosContrato_Id + ", -1);")" checked="checked" />
+                                                </td>
+                                                <td class="border-cell col-md-2 text-right">@pagos[i].NumeroPago</td>
+                                                <td class="border-cell col-md-4 text-center">
+                                                    @pagos[i].Fecha.ToShortDateString()
+                                                    <input type="hidden" class="valorFecha" id="valorFecha_@pagos[i].PagosContrato_Id" value="@pagos[i].Fecha.ToShortDateString()" />
+                                                </td>
+                                                <td class="border-cell col-md-5 text-right">
+                                                    @pagos[i].Valor.ToString("#,###.#0", formatter)
+                                                    <input type="hidden" class="valorPago" id="valorPago_@pagos[i].PagosContrato_Id" value="@pagos[i].Valor" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div>Si desea asociar otros pagos, por favor repita la búsqueda con el actual u otro número de contrato.</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.TotalHonorarios, "Honorarios", htmlAttributes: new { @type = "number", @class = "control-label" }) *</div>
-                        @Html.EditorFor(model => model.TotalHonorariosAux, new { htmlAttributes = new { @class = "form-control", @id = "valorHonorarios" } })
+                        @Html.EditorFor(model => model.TotalHonorariosAux, new { htmlAttributes = new { @class = "form-control", @id = "valorHonorarios", @readonly = "true" } })
                         @Html.ValidationMessageFor(model => model.TotalHonorariosAux, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.PorcentajeIva, "Porcentaje IVA", htmlAttributes: new { @type = "number", @class = "control-label" }) *</div>
-                        @Html.EditorFor(model => model.PorcentajeIva, new { htmlAttributes = new { @class = "form-control", @id = "porcentajeIva" } }) %
+                        @Html.EditorFor(model => model.PorcentajeIva, new { htmlAttributes = new { @class = "form-control", @id = "porcentajeIva", @readonly = "true" } }) %
                         @Html.ValidationMessageFor(model => model.PorcentajeIva, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -120,7 +182,7 @@
                 </div>
                 <div class="form-group text-center">
                     <div class="col-md-12">
-                        <input type="submit" value="@(ViewBag.Accion)" class="btn btn-default" />
+                        <input type="submit" id="btnEnviar" value="@(ViewBag.Accion)" class="btn btn-default" />
                     </div>
                 </div>
             </div>
@@ -149,3 +211,4 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 <script type="text/javascript" src="~/Scripts/noGeneric/Facturas.js"></script>
+<script type="text/javascript" src="~/Scripts/noGeneric/Utilidades.js"></script>

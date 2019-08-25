@@ -23,3 +23,48 @@ function MostrarMensajeValidacion(idMensaje, idPopup, mensaje, timeout) {
     }, timeout);
 
 }
+
+// Validaciones
+
+function cambiarFormatoNumerico(campo) {
+    campo.val(parseFloat(campo.val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+}
+
+function RestablecerFormato(campo) {
+    var valorActual = campo.val();
+    return valorActual.replace(/,/gi, "").toString();
+}
+
+function validateRequired(campo, nombreCampo) {
+    var mensaje = "<strong>Error:</strong> El campo " + nombreCampo + " es requerido";
+    if (campo.val() == "") {
+        campo.css("border-color", "red");
+        MostrarMensajeValidacion(idMensaje, idPopup, mensaje, 5000);
+        return false;
+    } else {
+        campo.css("border-color", "green");
+        return true;
+    }
+}
+
+function validateNumeric(campo, nombreCampo) {
+
+    if (validateRequired(campo, nombreCampo)) {
+
+        console.log(">> Nombre campo: " + nombreCampo + ", valor: " + campo.val());
+        console.log(">> Test: " + /^([0-9.,])*$/.test(campo.val()));
+
+        var mensaje = "<strong>Error:</strong> El campo " + nombreCampo + " debe ser un número";
+
+        if (!/^([0-9.,])*$/.test(campo.val())) {
+            campo.css('border-color', 'red');
+            MostrarMensajeValidacion(idMensaje, idPopup, mensaje, 5000);
+            return false;
+        } else {
+            campo.css('border-color', 'green');
+            return true;
+        }
+    }
+
+    return false;
+}

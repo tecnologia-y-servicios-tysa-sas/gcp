@@ -13,7 +13,7 @@ namespace GCP_CF.Controllers
 {
     public class FacturasController : Controller
     {
-        private GCPContext db = new GCPContext();
+        private readonly GCPContext db = new GCPContext();
         private const string CREAR = "Crear Factura";
         private const string EDITAR = "Editar Factura";
 
@@ -39,13 +39,29 @@ namespace GCP_CF.Controllers
                 Contratos contrato = db.Contratos.Where(c => c.NumeroContrato.ToLower() == numeroContrato.Trim().ToLower()).FirstOrDefault();
                 if (contrato != null) {
                     idContrato = contrato.Contrato_Id.ToString();
-                    listaPagos = contrato.PagosContrato.Select(p => new {
-                        id = p.PagosContrato_Id,
-                        numero = p.NumeroPago,
-                        valor = p.Valor,
-                        fecha = p.Fecha.ToShortDateString(),
-                        notas = p.Notas
-                    });
+
+                    List<PagosContrato> pagosContrato = contrato.PagosContrato.Select(p => p).ToList<PagosContrato>();
+                    if (pagosContrato == null || pagosContrato.Count == 0)
+                        mensaje = "No existen pagos asociados al contrato " + numeroContrato + ".";
+                    else
+                    {
+                        // Deben llegar los pagos que no estén asociados a una factura
+                        pagosContrato = pagosContrato.Where(p => p.Factura_Id == null).ToList<PagosContrato>();
+
+                        if (pagosContrato == null || pagosContrato.Count == 0)
+                            mensaje = "Todos los pagos asociados al contrato " + numeroContrato + " han sido facturados.";
+                        else
+                        {
+                            listaPagos = pagosContrato.Select(p => new {
+                                id = p.PagosContrato_Id,
+                                numero = p.NumeroPago,
+                                valor = p.Valor,
+                                fecha = p.Fecha.ToShortDateString(),
+                                notas = p.Notas
+                            });
+                        }
+                    }
+
                 } else
                     mensaje = "No se encontró un contrato con el número ingresado";
             }
@@ -60,7 +76,7 @@ namespace GCP_CF.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Facturas factura = db.Facturas.Where(f => f.Factura_Id == id.Value).FirstOrDefault();
+            Facturas factura = db.Facturas.Where(f => f.Factura_Id == id.Value).Include(f => f.PagosContrato).FirstOrDefault();
             if (factura == null)
                 return HttpNotFound();
 
@@ -73,6 +89,7 @@ namespace GCP_CF.Controllers
             CargarListados(string.Empty, string.Empty, string.Empty);
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
+
             return View();
         }
 
@@ -104,6 +121,23 @@ namespace GCP_CF.Controllers
 
             try
             {
+                // Validar si se seleccionó al menos un pago
+                string[] idsPagosContrato = collection.GetValues("idPagoContrato");
+                if (idsPagosContrato == null)
+                    throw new Exception("Debe seleccionar al menos un pago del contrato " + factura.Contrato.NumeroContrato);
+
+                // Validar si la factura tiene pagos asociados
+                List<PagosContrato> pagosContrato = db.PagosContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
+                if (pagosContrato == null || pagosContrato.Count == 0)
+                    throw new Exception("El contrato " + factura.Contrato.NumeroContrato + " no tiene pagos asociados.");
+
+                // Se filtra el arreglo de pagos para las coincidencias con los pagos seleccionados
+                pagosContrato = pagosContrato.Where(p => idsPagosContrato.Contains(p.PagosContrato_Id.ToString())).ToList();
+
+                // Validación adicional de seguridad
+                if (pagosContrato == null || pagosContrato.Count == 0)
+                    throw new Exception("Los pagos seleccionados no coinciden con los pagos del contrato " + factura.Contrato.NumeroContrato + ".");
+
                 double totalHonorariosAux = Convert.ToDouble(factura.TotalHonorariosAux.Replace(",", "").Replace(".00", ""));
                 factura.TotalHonorarios = totalHonorariosAux;
 
@@ -113,8 +147,17 @@ namespace GCP_CF.Controllers
                 double valorIvaAux = Convert.ToDouble(factura.ValorIvaAux.Replace(",", "").Replace(".00", ""));
                 factura.ValorIva = valorIvaAux;
 
-                double valorCanceladoAux = Convert.ToDouble(factura.ValorCanceladoAux.Replace(",", "").Replace(".00", ""));
-                factura.ValorCancelado = valorCanceladoAux;
+                if (!string.IsNullOrEmpty(factura.ValorCanceladoAux))
+                {
+                    double valorCanceladoAux = Convert.ToDouble(factura.ValorCanceladoAux.Replace(",", "").Replace(".00", ""));
+                    factura.ValorCancelado = valorCanceladoAux;
+                }
+                else
+                    factura.ValorCancelado = 0;
+
+                // Se asocian los pagos a la factura
+                if (factura.PagosContrato == null) factura.PagosContrato = new List<PagosContrato>();
+                factura.PagosContrato.AddRange(pagosContrato);
 
                 db.Facturas.Add(factura);
                 db.SaveChanges();
@@ -126,6 +169,16 @@ namespace GCP_CF.Controllers
                 CargarListados(collection["Estado_Id"], collection["Municipio_Id"], collection["Mes"]);
                 ViewBag.MensajeError = "Ha ocurrido un error al crear la factura: " + e.Message;
                 ViewBag.Accion = CREAR;
+
+                factura.ValorBase = 0;
+                factura.ValorBaseAux = string.Empty;
+                factura.ValorCancelado = 0;
+                factura.ValorCanceladoAux = string.Empty;
+                factura.ValorIva = 0;
+                factura.ValorIvaAux = string.Empty;
+                factura.TotalHonorarios = 0;
+                factura.TotalHonorariosAux = string.Empty;
+
                 return View(factura);
             }
         }
@@ -135,7 +188,7 @@ namespace GCP_CF.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Facturas factura = db.Facturas.Find(id);
+            Facturas factura = db.Facturas.Where(f => f.Factura_Id == id.Value).Include(f => f.PagosContrato).FirstOrDefault();
             if (factura == null) return HttpNotFound();
 
             CargarListados(factura.Estado_Id.ToString(), factura.Municipio_Id.ToString(), factura.Mes.ToString());
@@ -173,6 +226,23 @@ namespace GCP_CF.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    // Validar si se seleccionó al menos un pago
+                    string[] idsPagosContrato = form.GetValues("idPagoContrato");
+                    if (idsPagosContrato == null)
+                        throw new Exception("Debe seleccionar al menos un pago del contrato " + factura.Contrato.NumeroContrato);
+
+                    // Validar si la factura tiene pagos asociados
+                    List<PagosContrato> pagosContrato = db.PagosContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
+                    if (pagosContrato == null || pagosContrato.Count == 0)
+                        throw new Exception("El contrato " + factura.Contrato.NumeroContrato + " no tiene pagos asociados.");
+
+                    // Se filtra el arreglo de pagos para las coincidencias con los pagos seleccionados
+                    pagosContrato = pagosContrato.Where(p => idsPagosContrato.Contains(p.PagosContrato_Id.ToString())).ToList();
+
+                    // Validación adicional de seguridad
+                    if (pagosContrato == null || pagosContrato.Count == 0)
+                        throw new Exception("Los pagos seleccionados no coinciden con los pagos del contrato " + factura.Contrato.NumeroContrato + ".");
+
                     double totalHonorariosAux = Convert.ToDouble(factura.TotalHonorariosAux.Replace(",", "").Replace(".", ","));
                     factura.TotalHonorarios = totalHonorariosAux;
 
@@ -182,8 +252,17 @@ namespace GCP_CF.Controllers
                     double valorIvaAux = Convert.ToDouble(factura.ValorIvaAux.Replace(",", "").Replace(".", ","));
                     factura.ValorIva = valorIvaAux;
 
-                    double valorCanceladoAux = Convert.ToDouble(factura.ValorCanceladoAux.Replace(",", "").Replace(".", ","));
-                    factura.ValorCancelado = valorCanceladoAux;
+                    if (!string.IsNullOrEmpty(factura.ValorCanceladoAux))
+                    {
+                        double valorCanceladoAux = Convert.ToDouble(factura.ValorCanceladoAux.Replace(",", "").Replace(".00", ""));
+                        factura.ValorCancelado = valorCanceladoAux;
+                    }
+                    else
+                        factura.ValorCancelado = 0;
+
+                    // Se asocian los nuevos pagos a la factura
+                    factura.PagosContrato = new List<PagosContrato>();
+                    factura.PagosContrato.AddRange(pagosContrato);
 
                     db.Entry(factura).State = EntityState.Modified;
 
