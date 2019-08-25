@@ -480,6 +480,10 @@ function validateValorAdministrar() {
 }
 
 function validateHonorarios() {
+    var tipoContratoCIAD = $("#tipoContratoCiad").val();
+    var esUnCIAD = $("#tipoContrato").val() == tipoContratoCIAD;
+    if (!esUnCIAD) return true;
+
     if (validateNumeric($("#honorarios"), "Honorarios")) {
         calcularValorNetoHonorarios($("#honorarios"), $("#porcentajeIvaHonorarios"));
     }

@@ -116,8 +116,11 @@ namespace GCP_CF.Controllers
                     double valorAdministrarAux = Convert.ToDouble(contratos.ValorAdministrarAux.Replace(",", "").Replace(".00", ""));
                     contratos.ValorAdministrar = valorAdministrarAux;
 
-                    double honorariosAux = Convert.ToDouble(contratos.HonorariosAux.Replace(",", "").Replace(".00", ""));
-                    contratos.Honorarios = honorariosAux;
+                    if (!string.IsNullOrEmpty(contratos.HonorariosAux))
+                    {
+                        double honorariosAux = Convert.ToDouble(contratos.HonorariosAux.Replace(",", "").Replace(".00", ""));
+                        contratos.Honorarios = honorariosAux;
+                    }
 
                     if (!string.IsNullOrEmpty(contratos.ValorPolizaAux))
                     {

@@ -1,4 +1,7 @@
-﻿function MostrarMensajeAccion(mensaje, claseMensaje, timeout) {
+﻿var idMensaje = "textoMensaje";
+var idPopup = "mensajeAccion";
+
+function MostrarMensajeAccion(mensaje, claseMensaje, timeout) {
     $("#mensajeAccion > div.modal-dialog").addClass(claseMensaje);
     $("#mensajeAccion").modal("show");
     $("#textoMensaje").html(mensaje);
@@ -79,7 +82,7 @@ function ObtenerListadoFasesContrato(idContrato) {
                 $(tblListadoFases).append($("<tbody>"));
                 $(tblListadoFases).append($("<tr><td class=\"alert-info\">" + data.mensaje + "</td></tr>"));
                 $(tblListadoFases).append($("</tbody>"));
-                console.log(data.detalle);
+                //console.log(data.detalle);
             }
         },
         error: function () {
@@ -573,5 +576,60 @@ $(function () {
         month -= 1;
         var formattedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
         return formattedDate;
+    }
+
+    $("#valorEjecutado").blur(function () {
+        if ($(this).val() != "" && !isNaN($(this).val())) {
+            cambiarFormatoNumerico($("#valorEjecutado"));
+        }
+    });
+});
+
+// Actualizar valor ejecutado
+$("#btnActualizarEjecucion").click(function () {
+
+    var porcentajeEjecucion = 0;
+    var fmtValorEjecutado = $("#valorEjecutado").val();
+    var idContrato = $("#idContratoValorEjecutado").val();
+    var mensaje = "";
+    var claseMensaje = "";
+
+    ResetMensajeAccion();
+
+    if (validateNumeric($("#valorEjecutado"), "Valor Ejecutado")) {
+        var valorEjecutado = fmtValorEjecutado.replace(/,/gi, "").toString();
+        console.log(idContrato + ", " + valorEjecutado);
+        $.ajax({
+            async: false,
+            url: "/Seguimiento/ActualizarValorEjecutado",
+            type: "POST",
+            data: JSON.stringify({ idContrato: idContrato, valorEjecutado: Number(valorEjecutado) }),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                jsonData = jQuery.parseJSON(data);
+                console.log(jsonData);
+                if (jsonData.error != null && jsonData.error.length > 0) {
+                    mensaje = jsonData.error;
+                    claseMensaje = "alert-Error";
+                } else {
+                    porcentajeEjecucion = jsonData.porcentajeEjecucion;
+                    mensaje = jsonData.mensaje;
+                    claseMensaje = "alert-Succes";
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                mensaje = "Ha ocurrido un error al intentar actualizar el valor ejecutado del contrato: " + errorThrown;
+                claseMensaje = "alert-Error";
+            }
+        });
+
+        $("#textoPorcentajeEjecutado").text(porcentajeEjecucion + "%");
+        $("#porcentajeValorEjecutado").attr("aria-valuenow", porcentajeEjecucion);
+        $("#porcentajeValorEjecutado").attr("style", "width: " + porcentajeEjecucion + "%");
+
+        if (mensaje != "") {
+            MostrarMensajeAccion(mensaje, claseMensaje, 5000); // Mostrar mensaje
+        }
     }
 });

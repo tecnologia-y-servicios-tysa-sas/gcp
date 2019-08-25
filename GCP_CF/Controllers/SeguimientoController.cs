@@ -416,11 +416,54 @@ namespace GCP_CF.Controllers
                     listadoContratos = listadoContratos.OrderBy(c => c.ValorContrato);
                     break;
                 default:
-                    listadoContratos = listadoContratos.OrderByDescending(c => c.NumeroContrato);
+                    listadoContratos = listadoContratos.OrderByDescending(c => c.Contrato_Id);
                     break;
             }
 
             return listadoContratos;
+        }
+
+        [HttpPost]
+        public JsonResult ActualizarValorEjecutado(int idContrato, double? valorEjecutado)
+        {
+            double porcentajeEjecucion = 0;
+            string mensaje = "";
+            string error = "";
+
+            if (valorEjecutado != null)
+            {
+                Contratos contrato = db.Contratos.Where(c => c.Contrato_Id == idContrato).FirstOrDefault();
+
+                if (valorEjecutado > 0)
+                {
+                    try
+                    {
+                        contrato.Ejecucion = valorEjecutado;
+                        db.Entry(contrato).State = EntityState.Modified;
+                        if (db.SaveChanges() > 0)
+                        {
+                            mensaje = "El valor ejecutado del contrato " + contrato.NumeroContrato + " fue actualizado exitosamente.";
+                            porcentajeEjecucion = Math.Round(contrato.PorcentajeValorEjecutado, 2);
+                        }
+                        else
+                        {
+                            mensaje = "No fue posible actualizar el valor ejecutado del contrato " + contrato.NumeroContrato + ".";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        error = "Ocurrió un error al intentar actualizar el valor ejecutado del contrato " + contrato.NumeroContrato + ".";
+                    }
+                }
+                else
+                {
+                    error = "<b>Error:</b> El valor ejecutado ingresado no es válido.";
+                }
+
+            } else
+                error = "<b>Error:</b> Debe especificar el valor ejecutado.";
+
+            return Json("{ \"porcentajeEjecucion\": " + porcentajeEjecucion + ", \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\" }");
         }
     }
 }

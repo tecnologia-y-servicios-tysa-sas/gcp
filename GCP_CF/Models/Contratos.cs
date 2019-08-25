@@ -103,6 +103,7 @@ namespace GCP_CF.Models
         [NotMapped]
         public string HonorariosAux { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
         public Nullable<double> Ejecucion { get; set; }
 
         [Display(Name = "Procentaje Facturado")]
@@ -167,7 +168,11 @@ namespace GCP_CF.Models
 
         public virtual double PorcentajeValorEjecutado
         {
-            get { return Ejecucion.HasValue && ValorAdministrar > 0 ? Math.Round(Ejecucion.Value / ValorAdministrar, 2) : 0; }
+            get {
+                double valorHonorarios = Honorarios ?? 0;
+                double valorEjecutado = Ejecucion ?? 0;
+                return 100 * Math.Round(valorEjecutado / (ValorContrato - valorHonorarios), 2);
+            }
         }
 
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

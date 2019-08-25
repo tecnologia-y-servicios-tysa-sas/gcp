@@ -48,9 +48,9 @@
                 <td class="border-cell text-right">@Html.DisplayFor(modelItem => item.ValorContrato)</td>
                 <td class="border-cell text-right"><strong>@Html.DisplayFor(modelItem => item.ValorAdministrar)</strong></td>
                 <td class="border-cell text-right">
-                    <div class="progress">
+                    <div class="progress" style="border: 1px solid #bbb">
                         <div class="progress-bar" role="progressbar" aria-valuenow="@Html.DisplayFor(modelItem => item.PorcentajeValorEjecutado)"
-                             aria-valuemin="0" aria-valuemax="100">
+                             aria-valuemin="0" aria-valuemax="100" style="width: @item.PorcentajeValorEjecutado%">
                             <div class="text-center" style="color: black; font-weight: bold; font-size: 11px">@Html.DisplayFor(modelItem => item.PorcentajeValorEjecutado)%</div>
                         </div>
                     </div>
