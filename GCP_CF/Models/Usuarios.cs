@@ -22,6 +22,9 @@ namespace GCP_CF.Models
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
+        [NotMapped]
+        public string PasswordAux { get; set; }
+
         [MaxLength(30)]
         [Display(Name = "Roles")]
         public string IdRoles { get; set; }
@@ -38,7 +41,13 @@ namespace GCP_CF.Models
         [NotMapped]
         public List<int> ListadoIdContratos
         {
-            get { return IdContratos.Split(',').Select(int.Parse).ToList(); }
+            get {
+                if (!string.IsNullOrEmpty(IdContratos))
+                    return IdContratos.Split(',').Select(int.Parse).ToList();
+                else
+                    return new List<int>();
+            }
+
             set {
                 if (!TodosLosContratos)
                     IdContratos = String.Join(",", value.Select(p => p.ToString()));
@@ -85,9 +94,9 @@ namespace GCP_CF.Models
         [NotMapped]
         public virtual string EstadoPermisos {
             get {
-                string nombreRol = RolHelper.ObtenerValorRol(int.Parse(IdRoles));
-                string lecturaEscritura = (TipoPermisos == "W") ? "puede leer" : "puede escribir";
-                string contratos = (TodosLosContratos) ? "sobre todos los contratos" : "sobre algunos contratos";
+                string nombreRol = RolHelper.ObtenerRolUsuario(IdRoles).Value;
+                string lecturaEscritura = EsSuperUsuario ? "tiene poder" : (TipoPermisos == "W") ? "puede escribir" : "puede leer";
+                string contratos = EsSuperUsuario ? "sobre todo" : (TodosLosContratos) ? "sobre todos los contratos" : "sobre algunos contratos";
                 return nombreRol + ", " + lecturaEscritura + " " + contratos;
             }
         }

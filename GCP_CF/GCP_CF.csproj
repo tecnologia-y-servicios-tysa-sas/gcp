@@ -345,6 +345,7 @@
     <Content Include="Scripts\noGeneric\Graphics.js" />
     <Content Include="Scripts\noGeneric\Login.js" />
     <Content Include="Scripts\noGeneric\Reportes.js" />
+    <Content Include="Scripts\noGeneric\Usuarios.js" />
     <Content Include="Scripts\noGeneric\Utilidades.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.min.js" />
@@ -456,6 +457,11 @@
     <Content Include="Views\Login\Logout.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Shared\PartialAccesoDenegado.cshtml" />
+    <Content Include="Views\Usuarios\Create.cshtml" />
+    <Content Include="Views\Usuarios\Delete.cshtml" />
+    <Content Include="Views\Usuarios\Details.cshtml" />
+    <Content Include="Views\Usuarios\Edit.cshtml" />
+    <Content Include="Views\Usuarios\PartialEditarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

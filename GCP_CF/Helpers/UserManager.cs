@@ -14,7 +14,7 @@ namespace GCP_CF.Helpers
             return db.Usuarios.Where(u => u.Usuario == usuario && u.Password == decodedPassword && u.EsActivo).FirstOrDefault();
         }
 
-        private string Base64Encode(string sData) // Encode
+        public string Base64Encode(string sData) // Encode
         {
             if (string.IsNullOrEmpty(sData)) return sData;
 

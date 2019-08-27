@@ -1,0 +1,13 @@
+﻿@model GCP_CF.Models.Usuarios
+
+@{
+    ViewBag.Title = "Editar";
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back", @title = "Regresar al listado" })
+}
+
+<h2>Editar Usuario</h2>
+<hr />
+
+@{
+    Html.RenderPartial("PartialEditarUsuario", Model);
+}

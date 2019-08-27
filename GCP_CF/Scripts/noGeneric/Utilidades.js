@@ -68,3 +68,15 @@ function validateNumeric(campo, nombreCampo) {
 
     return false;
 }
+
+function IsEmail(email) {
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!regex.test(email.val())) {
+        email.css('border-color', 'red');
+        MostrarMensajeValidacion(idMensaje, idPopup, "<strong>Error:</strong> El correo electrónico no es válido", 5000);
+        return false;
+    } else {
+        email.css('border-color', 'green');
+        return true;
+    }
+}

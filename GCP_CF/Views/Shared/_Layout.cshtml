@@ -161,7 +161,7 @@
                         </li>
                     </ul>
                 </li>
-                @if (userState.IsSuperUser)
+                @if (userState.IsActive && userState.IsSuperUser)
                 {
                 <li>
                     <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
@@ -169,8 +169,8 @@
                         Usuarios
                     </a>
                     <ul class="collapse list-unstyled" id="userSubmenu">
-                        @*<li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>*@
                         <li>@Html.ActionLink("Listado de Usuarios", "Index", "Usuarios")</li>
+                        <li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>
                     </ul>
                 </li>
                 }

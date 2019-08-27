@@ -1,0 +1,223 @@
+﻿@model GCP_CF.Models.Usuarios
+
+<div id="mensajeErrorOperacion" style="display: none">@ViewBag.MensajeError</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    if (ViewBag.IsEdit)
+    {
+        @Html.HiddenFor(model => model.Usuario_Id, htmlAttributes: new { @id = "idUsuario" })
+    }
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>
+            <i class="glyphicon glyphicon-book"></i> Datos Básicos
+        </h3>
+    </div>
+
+    <div class="panel-body">
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", @id = "nombres" } })
+                    @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.Apellidos, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", @id = "apellidos" } })
+                    @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.CorreoElectronico, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CorreoElectronico, new { htmlAttributes = new { @class = "form-control", @id = "correo" } })
+                    @Html.ValidationMessageFor(model => model.CorreoElectronico, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.EsActivo, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.EsActivo, new { htmlAttributes = new { @style = "width: 18px; height: 18px; margin-top: 8px" } })
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>
+            <i class="glyphicon glyphicon-user"></i> Datos de Autenticación
+        </h3>
+    </div>
+
+    <div class="panel-body">
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @if (!ViewBag.IsEdit)
+                    {
+                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @id = "usuario" } })
+                    }
+                    else
+                    {
+                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "usuario" } })
+                    }
+                    @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.PasswordFor(model => model.PasswordAux, new { @class = "form-control", @id = "password" })
+                    @Html.HiddenFor(model => model.Password, new { @id = "originalPassword" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>    
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>
+            <i class="glyphicon glyphicon-dashboard"></i> Permisos Asignados
+        </h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="form-group">
+            <div class="col-md-1 text-right">
+                @if (Model != null && Model.EsSuperUsuario)
+                {
+                    <input checked="checked" type="checkbox" name="esSuperUsuario" id="esSuperUsuario" value="0" style="width: 18px; height: 18px; margin-top: 2px" />
+                }
+                else
+                {
+                    <input type="checkbox" name="esSuperUsuario" id="esSuperUsuario" value="0" style="width: 18px; height: 18px; margin-top: 2px" />
+                }
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">¿Es SuperUsuario?</label>
+            </div>
+            <div class="col-md-1 text-right">
+                @if (Model != null && Model.TipoPermisos == "W")
+                {
+                    <input checked="checked" type="checkbox" name="tipoPermiso" id="tipoPermiso" value="W" style="width: 18px; height: 18px; margin-top: 2px" />
+                }
+                else
+                {
+                    <input type="checkbox" name="tipoPermiso" id="tipoPermiso" value="W" style="width: 18px; height: 18px; margin-top: 2px" />
+                }
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">¿Puede Escribir?</label>
+            </div>
+            <div class="col-md-1 text-right">
+                @Html.CheckBoxFor(@model => model.TodosLosContratos, htmlAttributes: new { @id = "todosLosContratos", @style = "width: 18px; height: 18px; margin-top: 2px" })
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">¿Sobre todos los contratos?</label>
+            </div>
+        </div>
+
+        <!-- Listado Contratos -->
+        <div class="clearfix"><br /></div>
+        <div class="form-group" id="seccionContratos" style="display: none">
+            @if (ViewBag.Contratos != null)
+            {
+                <div class="panel">
+                    <div class="panel-heading" style="background-color: #ddd">Seleccione los contratos sobre los cuales desea establecer los permisos:</div>
+                    <div class="panel-body" style="padding: 0px; height: 400px; overflow-y: auto">
+                        <table id="tblContratos" class="table table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th class="head-table" style="width: 50px">&nbsp;</th>
+                                    <th class="head-table">No. Contrato</th>
+                                    <th class="head-table">Tipo</th>
+                                    <th class="head-table">Entidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (GCP_CF.Models.Contratos contrato in ViewBag.Contratos)
+                                {
+                                    <tr>
+                                        <td class="border-cell text-center" style="width: 50px">
+                                            @if (Model != null && Model.ListadoIdContratos.Contains(contrato.Contrato_Id))
+                                            {
+                                                <input type="checkbox" class="checkbox-inline" name="contratos" value="@contrato.Contrato_Id" checked="checked" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="checkbox-inline" name="contratos" value="@contrato.Contrato_Id" />
+                                            }
+                                        </td>
+                                        <td class="border-cell">@contrato.NumeroContrato</td>
+                                        <td class="border-cell">@(contrato.TipoContrato != null ? contrato.TipoContrato.Termino + " (" + contrato.TipoContrato.Descripcion + ")" : "N/A (Sin definir)")</td>
+                                        <td class="border-cell">@(contrato.EntidadContratante != null ? contrato.EntidadContratante.NombreCompleto : "N/A")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>
+
+<div class="btn-block text-center">
+    <input type="submit" value="@(ViewBag.Accion)" id="btnGuardarUsuario" class="btn btn-default" />
+    <a href="@Url.Action("Index", "Usuarios")" class="btn btn-success">
+        <i class="glyphicon glyphicon-list"></i> Regresar al Listado
+    </a>
+</div>
+}
+
+@*Alert Error*@
+<div class="modal fade" tabindex="-1" id="PopUPModalError" data-keyboard="false" data-backdrop="" style="position: center">
+    <div class="modal-dialog alert-Error" style="width: 30%">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-11 modal-body" id="bodyError" style="color: #fff; left: 16px">
+                </div>
+                <div class="col-lg-1 text-right">
+                    <button type="button" id="btnClose" class="close" data-dismiss="modal" style="color: #fff !important; margin-right: 15px; margin-top: 13px">×</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/noGeneric/Usuarios.js"></script>
+<script type="text/javascript" src="~/Scripts/noGeneric/Utilidades.js"></script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

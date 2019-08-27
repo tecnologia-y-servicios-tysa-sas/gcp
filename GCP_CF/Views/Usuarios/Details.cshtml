@@ -1,0 +1,70 @@
+﻿@model GCP_CF.Models.Usuarios
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles del Usuario</h2>
+<hr />
+<div class="panel">
+    <div class="panel-body">
+        <dl class="container-fluid">
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.Usuario)
+            </dt>
+            <dd class="col-md-4">
+                @Html.DisplayFor(model => model.Usuario)
+            </dd>
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+            <dd class="col-md-4">
+                ***********
+            </dd>
+        </dl>
+        <dl class="container-fluid">
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.Nombres)
+            </dt>
+            <dd class="col-md-4">
+                @Html.DisplayFor(model => model.Nombres)
+            </dd>
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.Apellidos)
+            </dt>
+            <dd class="col-md-4">
+                @Html.DisplayFor(model => model.Apellidos)
+            </dd>
+        </dl>
+        <dl class="container-fluid">
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.CorreoElectronico)
+            </dt>
+            <dd class="col-md-4">
+                @Html.DisplayFor(model => model.CorreoElectronico)
+            </dd>
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.EsActivo)
+            </dt>
+            <dd class="col-md-4">
+                @(Model.EsActivo ? "Sí" : "No")
+            </dd>
+        </dl>
+        <dl class="container-fluid">
+            <dt class="col-md-2">
+                @Html.DisplayNameFor(model => model.TipoPermisos)
+            </dt>
+            <dd class="col-md-10">
+                @Html.DisplayFor(model => model.EstadoPermisos)
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="btn-block text-center">
+    <a href="@Url.Action("Edit", "Usuarios", new { id = Model.Usuario_Id })" class="btn btn-default">
+        <i class="glyphicon glyphicon-edit"></i> Editar
+    </a>
+    <a href="@Url.Action("Index", "Usuarios")" class="btn btn-success">
+        <i class="glyphicon glyphicon-list"></i> Regresar al Listado
+    </a>
+</div>

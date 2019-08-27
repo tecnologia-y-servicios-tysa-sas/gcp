@@ -33,14 +33,18 @@ namespace GCP_CF.Helpers
 
         public static KeyValuePair<int, string> ObtenerRolUsuario(string rolesUsuario)
         {
-            int rolActualUsuario = int.Parse(rolesUsuario);
-            List<KeyValuePair<int, string>> listadoRoles = ObtenerListadoRoles();
-
             KeyValuePair<int, string> rolUsuario = new KeyValuePair<int, string>();
-            foreach (KeyValuePair<int, string> parValor in listadoRoles)
+
+            if (!string.IsNullOrEmpty(rolesUsuario))
             {
-                if (parValor.Key == rolActualUsuario)
-                    rolUsuario = parValor;
+                int rolActualUsuario = int.Parse(rolesUsuario);
+                List<KeyValuePair<int, string>> listadoRoles = ObtenerListadoRoles();
+
+                foreach (KeyValuePair<int, string> parValor in listadoRoles)
+                {
+                    if (parValor.Key == rolActualUsuario)
+                        rolUsuario = parValor;
+                }
             }
 
             return rolUsuario;
