@@ -269,7 +269,7 @@ function calcularValorNetoHonorarios(honorarios, porcentajeIvaHonorarios) {
     console.log(numHonorarios + ", IVA: " + ivaHonorarios);
 
     if (!isNaN(numHonorarios)) {
-        valorNeto = Math.round(100 * (Number(numHonorarios) * Number(ivaHonorarios) / 100)) / 100;
+        valorNeto = Number(numHonorarios) - Math.round(100 * (Number(numHonorarios) * Number(ivaHonorarios) / 100)) / 100;
     }
 
     $(valorNetoHonorarios).val(valorNeto);

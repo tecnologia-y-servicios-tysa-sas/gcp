@@ -89,7 +89,7 @@ namespace GCP_CF.Models
             get {
                 double valorHonorarios = Honorarios ?? 0;
                 double ivaHonorarios = PorcentajeIvaHonorarios ?? 0;
-                return Math.Round(valorHonorarios * ivaHonorarios / 100, 2);
+                return valorHonorarios - Math.Round(valorHonorarios * ivaHonorarios / 100, 2);
             }
         }
 
