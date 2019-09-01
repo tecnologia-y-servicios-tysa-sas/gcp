@@ -23,7 +23,7 @@ $(function () {
     $('#datetimeFechaTerminacion').datetimepicker({
         locale: 'es',
         format: 'DD/MM/YYYY',
-        minDate: fechaActual,
+        //minDate: fechaActual,
         useCurrent: false
     });
 
