@@ -70,7 +70,7 @@ $(function () {
     });
 
     $("#honorarios").blur(function () {
-        if ($(this).val() != "") {
+        if ($(this).val() != "" && !isNaN($(this).val())) {
             cambiarFormatoNumerico($("#honorarios"));
             calcularValorNetoHonorarios($(this), $("#porcentajeIvaHonorarios"));
         }
@@ -148,11 +148,6 @@ function stringToDate(_date, _format, _delimiter) {
 
 function cambiarFormatoNumerico(campo) {
     campo.val(parseFloat(campo.val(), 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
-}
-
-function RestablecerFormato(campo) {
-    var valorActual = campo.val();
-    return valorActual.replace(/,/gi, "").toString();
 }
 
 function validateRequired(campo, nombreCampo) {
