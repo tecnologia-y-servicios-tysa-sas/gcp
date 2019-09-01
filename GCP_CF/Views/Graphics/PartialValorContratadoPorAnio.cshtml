@@ -2,13 +2,13 @@
 <script type="text/javascript" src="~/Scripts/Chart.utils.js"></script>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="panel">
             <div class="panel-body">
-                <div id="mensajeCarga">
-                    <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i> <span id="mensaje">Cargando gráfico...</span>
+                <div id="mensajeCarga2">
+                    <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i> <span id="mensaje2">Cargando gráfico...</span>
                 </div>
-                <canvas id="canvas1" height="250" style="display: none"></canvas>
+                <canvas id="canvas2" height="250" style="display: none"></canvas>
             </div>
         </div>
     </div>
@@ -20,18 +20,20 @@
 
     $(function () {
 
-        function colorizeLegend(v) {
+        /*function colorizeLegend(v) {
             var c = v == 0 ? 'rgb(255, 238, 69)'
 			    : v == 1 ? 'rgb(122, 154, 191)'
 			    : v == 2 ? 'rgb(198, 52, 52)'
                         : 'rgb(119, 198, 183)';
 
             return c;
-        }
+        }*/
+
+        var color = Chart.helpers.color;
 
         $.ajax({
             async: false,
-            url: "/Graphics/PresupuestoPorAnio",
+            url: "/Graphics/ValorContratadoDirectamentePorAnio",
             type: "POST",
             data: JSON.stringify({
                 anioSeleccionado: @(ViewBag.AnioSeleccionado > 0 ? ViewBag.AnioSeleccionado : "-1"),
@@ -43,10 +45,13 @@
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 var chartData = jQuery.parseJSON(result);
+                chartData.datasets[0].backgroundColor = color(window.chartColors.blue).alpha(0.5).rgbString();
+                chartData.datasets[0].borderColor = window.chartColors.blue;
+                chartData.datasets[0].borderWidth = 1;
 
-                var ctx = $("#canvas1");
+                var ctx = $("#canvas2");
                 var chart = new Chart(ctx, {
-                    type: "horizontalBar",
+                    type: "bar",
                     data: chartData,
                     options: {
                         responsive: true,
@@ -56,7 +61,7 @@
                         },
                         title: {
                             display: true,
-                            text: "Presupuesto por Año",
+                            text: "Valor contratado directamente por año",
                             fontSize: 24,
                             fontStyle: "normal",
                             fontColor: "#333"
@@ -69,19 +74,15 @@
                     }
                 });
 
-                for (var ds in chart.data.datasets) {
-                    chart.data.datasets[ds].backgroundColor = colorizeLegend(ds);
-                }
-
                 chart.update();
                 
-                $("#mensajeCarga").fadeOut();
-                $("#canvas1").fadeIn();
+                $("#mensajeCarga2").fadeOut();
+                $("#canvas2").fadeIn();
             }, 
             error: function () {
-                $("#mensajeCarga").fadeIn();
-                $("#canvas1").fadeOut();
-                $("#mensaje").text("No se pudo cargar el gráfico");
+                $("#mensajeCarga2").fadeIn();
+                $("#canvas2").fadeOut();
+                $("#mensaje2").text("No se pudo cargar el gráfico");
             }
         });
         

@@ -76,6 +76,10 @@ $(function () {
         }
     });
 
+    if ($("#valorNetoHonorarios").val().trim() != "") {
+        cambiarFormatoNumerico($("#valorNetoHonorarios"));
+    }
+
     $("#valorPoliza").blur(function () {
         if ($(this).val() != "" && !isNaN($(this).val())) {
             cambiarFormatoNumerico($("#valorPoliza"));
@@ -264,11 +268,13 @@ $("#objeto").blur(function () {
 function calcularValorNetoHonorarios(honorarios, porcentajeIvaHonorarios) {
     var valorNeto = 0;
     var valorNetoHonorarios = $("#valorNetoHonorarios");
-    var numHonorarios = RestablecerFormato($(honorarios).val());
+    var numHonorarios = RestablecerFormato($(honorarios));
     var ivaHonorarios = $(porcentajeIvaHonorarios).val();
 
+    console.log(numHonorarios + ", IVA: " + ivaHonorarios);
+
     if (!isNaN(numHonorarios)) {
-        valorNeto = Math.round(100 * (numHonorarios * ivaHonorarios / 100)) / 100;
+        valorNeto = Math.round(100 * (Number(numHonorarios) * Number(ivaHonorarios) / 100)) / 100;
     }
 
     $(valorNetoHonorarios).val(valorNeto);
@@ -278,17 +284,29 @@ function calcularValorNetoHonorarios(honorarios, porcentajeIvaHonorarios) {
 function validarTodosLosCamposGenerales() {
 
     var esValido = validateTipoContrato();
+    console.log("-- 1... " + esValido);
     if (esValido) esValido = validateEntidadContratante();
+    console.log("-- 2... " + esValido);
     if (esValido) esValido = validateFechaActa();
+    console.log("-- 3... " + esValido);
     if (esValido) esValido = validateFechaFirmaContrato();
+    console.log("-- 4... " + esValido);
     if (esValido) esValido = validateEstadoContrato();
+    console.log("-- 5... " + esValido);
     if (esValido) esValido = validateFechaInicial();
+    console.log("-- 6... " + esValido);
     if (esValido) esValido = validateFechaFinal();
+    console.log("-- 7... " + esValido);
     if (esValido) esValido = validateValorContrato();
+    console.log("-- 8... " + esValido);
     if (esValido) esValido = validateValorAdministrar();
+    console.log("-- 9... " + esValido);
     if (esValido) esValido = validateHonorarios();
+    console.log("-- 10... " + esValido);
     if (esValido) esValido = validateObjeto();
+    console.log("-- 11... " + esValido);
 
+    console.log("- Validar todos los campos... " + esValido);
     return esValido;
 
 }
@@ -482,10 +500,14 @@ function validateValorAdministrar() {
 function validateHonorarios() {
     var tipoContratoCIAD = $("#tipoContratoCiad").val();
     var esUnCIAD = $("#tipoContrato").val() == tipoContratoCIAD;
-    if (!esUnCIAD) return true;
-
-    if (validateNumeric($("#honorarios"), "Honorarios")) {
-        calcularValorNetoHonorarios($("#honorarios"), $("#porcentajeIvaHonorarios"));
+    console.log("--- " + tipoContratoCIAD + " == " + $("#tipoContrato").val() + "?");
+    if (esUnCIAD) {
+        if (validateNumeric($("#honorarios"), "Honorarios")) {
+            calcularValorNetoHonorarios($("#honorarios"), $("#porcentajeIvaHonorarios"));
+            return true;
+        }
+    } else {
+        return true;
     }
 
     return false;
@@ -518,6 +540,8 @@ function validarDatosPoliza() {
             esValido = validateRequired(nombreAseguradora, "Aseguradora");
         }
     }
+
+    console.log("- Validar datos póliza... " + esValido);
 
     return esValido;
 }
@@ -669,6 +693,7 @@ function validarPagos() {
 
     }
 
+    console.log("- Validar pagos... " + esValido);
     return esValido;
 }
 

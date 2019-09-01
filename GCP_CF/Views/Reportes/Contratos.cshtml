@@ -19,14 +19,16 @@
     }
 </style>
 
-<h2 class="text-left">Reporte de Contratos</h2>
+<h2 class="text-left">Reporte de Contratos</h2><hr />
 
 @if (Model != null && Model.Count() > 0)
 {
-    @Html.Partial("~/Views/Graphics/PartialGraficoContratos.cshtml");
+    @Html.Partial("~/Views/Graphics/TodosLosGraficos.cshtml")
 }
 
-<p class="text-left">Por favor diligencie al menos uno de los siguientes parámetros para filtrar los resultados</p>
+<div class="clearfix">
+    <p class="text-left">Por favor diligencie al menos uno de los siguientes parámetros para filtrar los resultados</p>
+</div>
 
 <div class="well">
     @using (Html.BeginForm("Contratos", "Reportes", FormMethod.Post, new { id = "filtrosReporteContratosForm" }))

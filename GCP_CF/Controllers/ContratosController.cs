@@ -146,64 +146,68 @@ namespace GCP_CF.Controllers
                         db.HistoriaObservaciones.Add(historiaObs);
                     }
 
-                    // Revisión de pagos
-                    List<PagosContrato> pagosActuales = null;
-                    List<int> pagosModificados = new List<int>();
-                    if (esModificado) pagosActuales = db.PagosContrato.Where(p => p.Contrato_Id == id).ToList<PagosContrato>();
-
-                    string strNumeroPagos = form["numeroPagos"];
-
-                    if (!string.IsNullOrEmpty(strNumeroPagos))
+                    // Revisión de pagos - No aplican para los contratos que sean CIAD
+                    int idTipoContratoCIAD = (new ContratosHelper()).ObtenerIdCIAD();
+                    if (contratos.TipoContrato_Id != idTipoContratoCIAD)
                     {
-                        int numeroPagos = int.Parse(strNumeroPagos);
-                        for (int i = 0; i < numeroPagos; i++)
+                        List<PagosContrato> pagosActuales = null;
+                        List<int> pagosModificados = new List<int>();
+                        if (esModificado) pagosActuales = db.PagosContrato.Where(p => p.Contrato_Id == id).ToList<PagosContrato>();
+
+                        string strNumeroPagos = form["numeroPagos"];
+
+                        if (!string.IsNullOrEmpty(strNumeroPagos))
                         {
-                            string idPagoAux = form["idPago_" + i];
-
-                            double valorPagoAux = Convert.ToDouble(form["valorPago_" + i].Replace(",", "").Replace(".00", ""));
-
-                            PagosContrato pago = null;
-                            if (esModificado && !string.IsNullOrEmpty(idPagoAux))
+                            int numeroPagos = int.Parse(strNumeroPagos);
+                            for (int i = 0; i < numeroPagos; i++)
                             {
-                                int idPago = int.Parse(idPagoAux);
-                                pagosModificados.Add(idPago);
-                                pago = pagosActuales.Where(p => p.PagosContrato_Id == idPago).FirstOrDefault<PagosContrato>();
-                                pago.Valor = valorPagoAux;
-                                pago.Fecha = DateTime.Parse(form["fechaPago_" + i]);
-                                pago.Notas = !string.IsNullOrEmpty(form["notasPago_" + i]) ? form["notasPago_" + i] : string.Empty;
-                                db.Entry(pago).State = EntityState.Modified;
-                            }
-                            else
-                            {
-                                pago = new PagosContrato
+                                string idPagoAux = form["idPago_" + i];
+
+                                double valorPagoAux = Convert.ToDouble(form["valorPago_" + i].Replace(",", "").Replace(".00", ""));
+
+                                PagosContrato pago = null;
+                                if (esModificado && !string.IsNullOrEmpty(idPagoAux))
                                 {
-                                    Contrato_Id = id,
-                                    Valor = valorPagoAux,
-                                    Fecha = DateTime.Parse(form["fechaPago_" + i]),
-                                    Notas = !string.IsNullOrEmpty(form["notasPago_" + i]) ? form["notasPago_" + i] : string.Empty
-                                };
-                                db.PagosContrato.Add(pago);
+                                    int idPago = int.Parse(idPagoAux);
+                                    pagosModificados.Add(idPago);
+                                    pago = pagosActuales.Where(p => p.PagosContrato_Id == idPago).FirstOrDefault<PagosContrato>();
+                                    pago.Valor = valorPagoAux;
+                                    pago.Fecha = DateTime.Parse(form["fechaPago_" + i]);
+                                    pago.Notas = !string.IsNullOrEmpty(form["notasPago_" + i]) ? form["notasPago_" + i] : string.Empty;
+                                    db.Entry(pago).State = EntityState.Modified;
+                                }
+                                else
+                                {
+                                    pago = new PagosContrato
+                                    {
+                                        Contrato_Id = id,
+                                        Valor = valorPagoAux,
+                                        Fecha = DateTime.Parse(form["fechaPago_" + i]),
+                                        Notas = !string.IsNullOrEmpty(form["notasPago_" + i]) ? form["notasPago_" + i] : string.Empty
+                                    };
+                                    db.PagosContrato.Add(pago);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        mensaje = "No se agregaron pagos al contrato. Por favor verifique.";
-                    }
-
-                    if (pagosActuales != null && pagosActuales.Count > 0 && pagosModificados != null && pagosModificados.Count > 0)
-                    {
-                        List<PagosContrato> pagosContrato = new List<PagosContrato>();
-                        foreach (var pago in pagosActuales)
+                        else
                         {
-                            if (!pagosModificados.Contains(pago.PagosContrato_Id))
-                                db.Entry(pago).State = EntityState.Deleted;
-                            else
-                                pagosContrato.Add(pago);
+                            mensaje = "No se agregaron pagos al contrato. Por favor verifique.";
                         }
 
-                        contratos.PagosContrato = pagosContrato;
+                        if (pagosActuales != null && pagosActuales.Count > 0 && pagosModificados != null && pagosModificados.Count > 0)
+                        {
+                            List<PagosContrato> pagosContrato = new List<PagosContrato>();
+                            foreach (var pago in pagosActuales)
+                            {
+                                if (!pagosModificados.Contains(pago.PagosContrato_Id))
+                                    db.Entry(pago).State = EntityState.Deleted;
+                                else
+                                    pagosContrato.Add(pago);
+                            }
 
+                            contratos.PagosContrato = pagosContrato;
+
+                        }
                     }
 
                     // Solamente se deben guardar los cambios cuando NADA falle

@@ -451,7 +451,7 @@
     <Content Include="Views\Facturas\PartialDetalleFactura.cshtml" />
     <Content Include="Views\Facturas\Delete.cshtml" />
     <Content Include="Views\EstadosFactura\Delete.cshtml" />
-    <Content Include="Views\Graphics\PartialGraficoContratos.cshtml" />
+    <Content Include="Views\Graphics\PartialContratos.cshtml" />
     <Content Include="Views\Contratos\PartialEditarContrato.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Logout.cshtml" />
@@ -462,6 +462,9 @@
     <Content Include="Views\Usuarios\Details.cshtml" />
     <Content Include="Views\Usuarios\Edit.cshtml" />
     <Content Include="Views\Usuarios\PartialEditarUsuario.cshtml" />
+    <Content Include="Views\Graphics\PartialValorContratadoPorAnio.cshtml" />
+    <Content Include="Views\Graphics\TodosLosGraficos.cshtml" />
+    <Content Include="Views\Graphics\PartialPresupuestoMunicipio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

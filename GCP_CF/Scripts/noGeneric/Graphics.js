@@ -1,7 +1,6 @@
-﻿function CargarReporte(width, height, target, msgTarget) {
+﻿function CargarReporte(url, width, height, target, msgTarget) {
 
     var textoFallido = "No se pudo cargar la imagen";
-    var url = "/Graphics/PresupuestoPorAnio";
 
     $('<img src="' + url + '">').on("load", function () {
         $(msgTarget).fadeOut();
@@ -11,5 +10,7 @@
 }
 
 $(document).ready(function () {
-    CargarReporte(600, 400, "#imgReportePresupuesto", "#msgReportePresupuesto");
+    CargarReporte("/Graphics/PresupuestoPorAnio", 600, 400, "#imgReportePresupuesto", "#msgReportePresupuesto");
+    CargarReporte("/Graphics/ValorContratadoDirectamentePorAnio", 600, 400, "#imgReporteValorContratado", "#msgReporteValorContratado");
+    CargarReporte("/Graphics/PresupuestoPorMunicipio", 600, 400, "#imgReportePresupuestoMpio", "#msgReportePresupuestoMpio");
 })

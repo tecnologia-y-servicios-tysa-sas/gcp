@@ -178,7 +178,7 @@
                         <div>@Html.LabelFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { @class = "control-label" })</div>
                         <div>
                             @Html.Raw(porcentajeIva)%
-                            @Html.HiddenFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { id = "porcentajeIvaHonorarios", @value = porcentajeIva })
+                            @Html.HiddenFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { id = "porcentajeIvaHonorarios", Value = @porcentajeIva })
                         </div>
                     </div>
                     <div class="col-md-4">
