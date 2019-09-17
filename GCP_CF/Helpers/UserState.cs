@@ -6,6 +6,7 @@ namespace GCP_CF.Helpers
 {
     public class UserState
     {
+        public int ID = 0;
         public string Name = string.Empty;
         public string Email = string.Empty;
         public string UserId = string.Empty;
@@ -19,6 +20,7 @@ namespace GCP_CF.Helpers
         public override string ToString()
         {
             return string.Join("|", new string[] {
+                this.ID.ToString(),
                 this.UserId,
                 this.Name,
                 this.IsActive.ToString(),
@@ -35,22 +37,24 @@ namespace GCP_CF.Helpers
             if (string.IsNullOrEmpty(itemString)) return false;
 
             string[] strings = itemString.Split('|');
-            if (strings.Length < 7) return false;
+            if (strings.Length < 8) return false;
 
-            UserId = strings[0];
-            Name = strings[1];
-            IsActive = strings[2] == "True";
-            IsSuperUser = strings[3] == "True";
-            CanWrite = strings[4] == "True";
-            AllContracts = strings[5] == "True";
-            ContractIds = strings[6];
-            Role = strings[7];
+            ID = int.Parse(strings[0]);
+            UserId = strings[1];
+            Name = strings[2];
+            IsActive = strings[3] == "True";
+            IsSuperUser = strings[4] == "True";
+            CanWrite = strings[5] == "True";
+            AllContracts = strings[6] == "True";
+            ContractIds = strings[7];
+            Role = strings[8];
 
             return true;
         }
 
         public void FromUser(Usuarios usuario)
         {
+            ID = usuario.Usuario_Id;
             UserId = usuario.Usuario;
             Name = usuario.NombreCompleto;
             Email = usuario.CorreoElectronico;

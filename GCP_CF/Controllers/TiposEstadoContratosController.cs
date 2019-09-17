@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using GCP_CF.Authorization;
+using GCP_CF.Helpers;
 using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
+    [GCPAuthorize(Roles = RolHelper.SUPERUSUARIO)]
     public class TiposEstadoContratoController : Controller
     {
         private GCPContext db = new GCPContext();

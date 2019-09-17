@@ -10,6 +10,17 @@ namespace GCP_CF.Helpers
         public const char SEPARADOR_ROLES = '|';
         public const char SEPARADOR_VALORES = ',';
 
+        public const string USER_ID = "IdUsuario";
+        public const string SUPERUSUARIO = "SuperUsuario";
+        public const string LECTURA = "PuedeLeer";
+        public const string ESCRITURA = "PuedeEscribir";
+        public const string TODOS_LOS_CONTRATOS = "TodosLosContratos";
+        public const string LISTADO_CONTRATOS = "ListaContratos";
+
+        public const string TODOS = SUPERUSUARIO + "," + LECTURA + "," + ESCRITURA;
+        public const string PUEDE_LEER = SUPERUSUARIO + "," + LECTURA;
+        public const string PUEDE_ESCRIBIR = SUPERUSUARIO + "," + ESCRITURA;
+
         public static List<KeyValuePair<int, string>> ObtenerListadoRoles()
         {
             List<KeyValuePair<int, string>> listadoRoles = new List<KeyValuePair<int, string>>();

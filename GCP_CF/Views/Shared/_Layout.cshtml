@@ -1,20 +1,4 @@
-﻿@{ 
-    GCP_CF.Helpers.UserState userState = null;
-    if (Session["UserState"] == null)
-    {
-        var viewPath = ((RazorView)ViewContext.View).ViewPath;
-        if (!viewPath.Contains("Login"))
-        {
-            Response.Redirect(Url.Action("", "Login"));
-        }
-    } else
-    {
-        userState = new GCP_CF.Helpers.UserState();
-        userState.FromString(Session["UserState"].ToString());
-    }
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,13 +17,11 @@
     @{
         string leftBarStyle = "width: 100% !important";
     }
-    @if (userState != null)
+    @if (User.Identity.IsAuthenticated)
     {
         leftBarStyle = string.Empty;
     <div class="wrapper">
         <!-- Sidebar Holder -->
-        @if (userState.IsActive)
-        {
         <nav id="sidebar">
             <div class="sidebar-header">
                 <h3>
@@ -60,7 +42,10 @@
                         Contratos
                     </a>
                     <ul class="collapse list-unstyled" id="contratosSubmenu">
+                        @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+                        {
                         <li>@Html.ActionLink("Crear Contratos", "Create", "Contratos")</li>
+                        }
                         <li>@Html.ActionLink("Ver Contratos", "Index", "Contratos")</li>
                     </ul>
                 </li>
@@ -80,7 +65,10 @@
                         Facturación
                     </a>
                     <ul class="collapse list-unstyled" id="facturasSubmenu">
+                        @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+                        {
                         <li>@Html.ActionLink("Crear Factura", "Create", "Facturas")</li>
+                        }
                         <li>@Html.ActionLink("Listado de Facturas", "Index", "Facturas")</li>
 
                     </ul>
@@ -95,7 +83,7 @@
                         <li>@Html.ActionLink("Facturas", "Facturas", "Reportes")</li>
                     </ul>
                 </li>
-                @if (userState.IsSuperUser)
+                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
                 {
                 <li>
                     <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
@@ -139,8 +127,6 @@
                                 <i class="glyphicon glyphicon-calendar"></i> Actividades
                             </a>
                             <ul class="collapse list-unstyled" id="maestroActividadesSubmenu">
-                                @*<li>@Html.ActionLink("Ver Actividades", "Index", "actividades")</li>
-                        <li>@Html.ActionLink("Crear Actividad", "Index", "actividades")</li>*@
                                 <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividad")</li>
                             </ul>
                         </li>
@@ -171,12 +157,11 @@
                 <li><a href="javascript:void(0)" onclick="Logout()"><i class="glyphicon glyphicon-off"></i>Cerrar</a></li>
             </ul>
         </nav>
-        }
         <!-- Page Content Holder -->
     </div>
     }
 <div id="content" class="" style="@leftBarStyle">
-    @if (userState != null)
+    @if (User.Identity.IsAuthenticated)
     {
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -222,7 +207,7 @@
 
         function Logout() {
             if (confirm("¿Está seguro de cerrar la sesión en el sistema?")) {
-                location.href = '@Url.Action("Logout", "Login")';
+                location.href = '@Url.Action("Logout", "Account")';
             }
         }
     </script>

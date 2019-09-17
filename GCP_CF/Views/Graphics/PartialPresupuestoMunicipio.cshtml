@@ -43,6 +43,7 @@
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 var chartData = jQuery.parseJSON(result);
+                console.log(chartData);
 
                 var ctx = $("#canvas3");
                 var chart = new Chart(ctx, {

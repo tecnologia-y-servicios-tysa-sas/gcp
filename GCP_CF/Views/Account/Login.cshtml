@@ -4,7 +4,7 @@
     @Html.ValidationSummary()
 </div>
 
-@if (!ViewBag.SesionIniciada)
+@if (!User.Identity.IsAuthenticated)
 {
     <div class="login-form">
         @using (Html.BeginForm())
@@ -52,9 +52,6 @@
 }
 else
 {
-    GCP_CF.Helpers.UserState userState = new GCP_CF.Helpers.UserState();
-    userState.FromString(Session["UserState"].ToString());
-
-    <h2>¡Bienvenido, @userState.Name!</h2>
+    <h2>¡Bienvenido, @User.Identity.Name!</h2>
     @Html.Raw("Por favor utilice una de las opciones del menú principal para continuar.")
 }

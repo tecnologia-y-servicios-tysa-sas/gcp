@@ -90,18 +90,18 @@ namespace GCP_CF.Controllers
                 var contratosAnio = contratos.Where(c => c.FechaInicio.Year >= anio && c.FechaTerminacion.Year <= anio);
 
                 double valorContratos = contratosAnio
-                    .Select(c => c.TipoContrato == null || c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0)
+                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0)
                     .DefaultIfEmpty(0).Sum();
                 totalContratos += valorContratos;
 
                 double valorRecursos = contratosAnio
-                    .Select(c => c.TipoContrato == null || c.TipoContrato.Termino != tipoContratoMarco ? c.ValorAdministrar : 0)
+                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorAdministrar : 0)
                     .DefaultIfEmpty(0)
                     .Sum();
                 totalRecursos += valorRecursos;
 
                 double valorHonorarios = contratosAnio
-                    .Select(c => c.TipoContrato == null || c.TipoContrato.Termino != tipoContratoMarco ? (c.Honorarios ?? 0) : 0)
+                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? (c.Honorarios ?? 0) : 0)
                     .DefaultIfEmpty(0)
                     .Sum();
                 totalHonorarios += valorHonorarios;
@@ -151,15 +151,15 @@ namespace GCP_CF.Controllers
                     try
                     {
                         double valorContratos = db.Contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year >= anio && c.FechaTerminacion.Year <= anio)
-                            .Select(c => c.TipoContrato == null || c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0).DefaultIfEmpty(0).Sum();
+                            .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0).DefaultIfEmpty(0).Sum();
 
                         double valorRecursos = db.Contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year >= anio && c.FechaTerminacion.Year <= anio)
-                            .Select(c => c.TipoContrato == null || c.TipoContrato.Termino != tipoContratoMarco ? c.ValorAdministrar : 0).DefaultIfEmpty(0).Sum();
+                            .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorAdministrar : 0).DefaultIfEmpty(0).Sum();
 
                         valoresContratoMunicipio[labelActualContratos].Add(valorContratos);
                         valoresRecursosMunicipio[labelActualRecursos].Add(valorRecursos);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         chartData.datasets.Add(new ChartDataSet { label = "Error", data = new List<double>() });
                     }
@@ -239,7 +239,7 @@ namespace GCP_CF.Controllers
                 var contratosAnio = contratos.Where(c => c.FechaInicio.Year >= anio && c.FechaTerminacion.Year <= anio);
 
                 double valorContratos = contratosAnio
-                    .Select(c => c.TipoContrato == null || c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0)
+                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0)
                     .DefaultIfEmpty(0).Sum();
                 totalContratos += valorContratos;
 

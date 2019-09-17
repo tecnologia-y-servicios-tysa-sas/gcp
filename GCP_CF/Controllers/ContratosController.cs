@@ -5,7 +5,9 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web.Mvc;
+using GCP_CF.Authorization;
 using GCP_CF.Helpers;
 using GCP_CF.Models;
 
@@ -13,17 +15,16 @@ namespace GCP_CF.Controllers
 {
     public class ContratosController : Controller
     {
-        private GCPContext db = new GCPContext();
+        private readonly GCPContext db = new GCPContext();
         private const string CREAR = "Crear Contrato";
         private const string EDITAR = "Editar Contrato";
 
         private string tipoContratoMarco = System.Configuration.ConfigurationManager.AppSettings["tipoContratoMarco"];
 
         // GET: Contratos
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public ActionResult Index(Contratos contratos)
-        {
-            if (!UsuarioPuedeLeer(null)) return AccesoDenegado();
-            
+        {            
             if (contratos.TipoEstadoContrato_Id == null)
             {
                 contratos.TipoEstadoContrato_Id = 3;
@@ -33,13 +34,12 @@ namespace GCP_CF.Controllers
             {
                 ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion", contratos.TipoEstadoContrato_Id);
             }
-            
-            
+
             List<Contratos> list = GetContratos(Convert.ToInt16(contratos.TipoEstadoContrato_Id));
             return View(list.OrderBy(x=> x.Contrato_Id).ToList());
         }
 
-
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         private List<Contratos> GetContratos(int estadoId)
         {
             //Consulto Estados
@@ -61,25 +61,28 @@ namespace GCP_CF.Controllers
         }
 
         // GET: Contratos/Details/5
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public ActionResult Details(int? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             else
-                if (!UsuarioPuedeLeer(id)) return AccesoDenegado();
+                if (!AutorizacionContrato(id, false)) return RedirectToAction("AccessDenied", "Account");
 
-            Contratos contratos = GetContratosMarcoById(id).FirstOrDefault();//db.Contratos.Find(id);
+            Contratos contratos = GetContratosMarcoById(id).FirstOrDefault();
             if (contratos == null)
             {
                 return HttpNotFound();
             }
+
             return View(contratos);
         }
 
         // GET: Contratos/Create
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public ActionResult Create()
         {
-            if (!UsuarioPuedeEscribir(null)) return AccesoDenegado();
+            if (!AutorizacionContrato(null, true)) return RedirectToAction("AccessDenied", "Account");
 
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
@@ -97,6 +100,7 @@ namespace GCP_CF.Controllers
             return View();
         }
 
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         private ActionResult GuardarContrato(Contratos contratos, FormCollection form, bool esModificado)
         {
             bool exito = false;
@@ -106,7 +110,7 @@ namespace GCP_CF.Controllers
             {
                 if (contratos == null) return HttpNotFound();
 
-                if (!UsuarioPuedeEscribir(contratos.Contrato_Id)) return AccesoDenegado();
+                if (!AutorizacionContrato(contratos.Contrato_Id, true)) return RedirectToAction("AccessDenied", "Account");
 
                 if (ModelState.IsValid)
                 {
@@ -246,16 +250,20 @@ namespace GCP_CF.Controllers
         // POST: Contratos/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Contratos contratos, FormCollection form)
         {
+            if (!AutorizacionContrato(null, true)) return RedirectToAction("AccessDenied", "Account");
+
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
             return GuardarContrato(contratos, form, ViewBag.IsEdit);
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult GetDocumento(int id)
         {
             string termino = db.TiposContratos.Where(x => x.TipoContrato_Id == id).Select(x=> x.Termino).FirstOrDefault();
@@ -274,6 +282,7 @@ namespace GCP_CF.Controllers
         }
 
         // GET: Contratos/Edit/5
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public ActionResult Edit(int? id)
         {
             ViewBag.Accion = EDITAR;
@@ -287,7 +296,7 @@ namespace GCP_CF.Controllers
 
             if (contratos == null) return HttpNotFound();
             else
-                if (!UsuarioPuedeEscribir(contratos.Contrato_Id)) return AccesoDenegado();
+                if (!AutorizacionContrato(id, true)) return RedirectToAction("AccessDenied", "Account");
 
             var formatter = new CultureInfo("es-CO", false).NumberFormat;
             formatter.NumberGroupSeparator = ",";
@@ -317,10 +326,13 @@ namespace GCP_CF.Controllers
         // POST: Contratos/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Contratos contratos, FormCollection form)
         {
+            if (!AutorizacionContrato(contratos.Contrato_Id, true)) return RedirectToAction("AccessDenied", "Account");
+
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
@@ -328,6 +340,7 @@ namespace GCP_CF.Controllers
         }
 
         // GET: Contratos/Delete/5
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -336,24 +349,27 @@ namespace GCP_CF.Controllers
             Contratos contratos = db.Contratos.Find(id);
             if (contratos == null) return HttpNotFound();
             else
-                if (!UsuarioPuedeEscribir(contratos.Contrato_Id)) return AccesoDenegado();
+                if (!AutorizacionContrato(id, true)) return RedirectToAction("AccessDenied", "Account");
 
             return View(contratos);
         }
 
         // POST: Contratos/Delete/5
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (!AutorizacionContrato(id, true)) return RedirectToAction("AccessDenied", "Account");
+
             Contratos contratos = db.Contratos.Find(id);
-            if (!UsuarioPuedeEscribir(id)) return AccesoDenegado();
 
             db.Contratos.Remove(contratos);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         [HttpGet]
         public PartialViewResult PartialContratos(int id)
         {
@@ -361,6 +377,7 @@ namespace GCP_CF.Controllers
             return PartialView("PartialContratos", list.ToList());
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         private List<Contratos> GetContratosById(int id)
         {
             //Consulto Estados
@@ -385,6 +402,7 @@ namespace GCP_CF.Controllers
             return list;
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         private List<Contratos> GetContratosMarcoById(int? id)
         {
             //Consulto Estados
@@ -409,6 +427,7 @@ namespace GCP_CF.Controllers
             return list;
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult GetSearchNumeroContrato(string numeroContrato)
         {
             var allsearch = db.Contratos.Where(x=> x.ContratoMarco_Id == null && x.NumeroContrato.Contains(numeroContrato)).ToList();
@@ -417,6 +436,7 @@ namespace GCP_CF.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult GetSearchEntidadContratante(string entidad)
         {
             var allsearch = db.Personas.Where(x => (x.TipoPersona_Id == 3 && x.Nombres.Contains(entidad)) || (x.TipoPersona_Id == 3 && x.Apellidos.Contains(entidad))).ToList();
@@ -425,6 +445,7 @@ namespace GCP_CF.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult GetObservaciones(int id)
         {
             var datos = (from h in db.HistoriaObservaciones
@@ -437,81 +458,34 @@ namespace GCP_CF.Controllers
             return Json(datos.Select(o => new { o.Fecha, o.Observaciones }).OrderBy(o => o.Fecha), JsonRequestBehavior.AllowGet);
         }
 
-        private bool UsuarioPuedeEscribir(int? contratoId)
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
+        private bool AutorizacionContrato(int? contratoId, bool esEscritura)
         {
-            UserState userState = new UserState();
-            bool haySesion = userState.FromString(Session["UserState"].ToString());
-
-            if (haySesion)
+            bool tienePermiso = false;
+            if (User.Identity.IsAuthenticated)
             {
-                bool esActivo = userState.IsActive;
-                bool esSuperUsuario = userState.IsSuperUser;
-                bool puedeEscribir = userState.CanWrite;
-                bool todosLosContratos = userState.AllContracts;
-                bool tienePermiso = todosLosContratos;
+                var identity = (ClaimsIdentity)User.Identity;
+                bool esSuperUsuario = User.IsInRole(RolHelper.SUPERUSUARIO);
+                bool todosLosContratos = User.IsInRole(RolHelper.TODOS_LOS_CONTRATOS);
 
-                if (esActivo)
+                if (esSuperUsuario)
+                    tienePermiso = true;
+                else
                 {
-                    if (esSuperUsuario) return true;
-                    else
+                    if (!todosLosContratos)
                     {
                         if (contratoId.HasValue)
                         {
-                            if (!todosLosContratos) tienePermiso = userState.ContractIdListFromUser().Contains(contratoId.Value);
-                            return puedeEscribir && tienePermiso;
-                        }
-                        else
-                        {
-                            return puedeEscribir; // TODO: Validar si puede crear nuevos contratos cuando solamente tiene acceso a varios
+                            string idContratos = identity.Claims.Where(c => c.Type == RolHelper.LISTADO_CONTRATOS).Select(c => c.Value).FirstOrDefault();
+                            List<int> listadoIdContratos = idContratos.Split(',').Select(int.Parse).ToList();
+                            tienePermiso = listadoIdContratos.Contains(contratoId.Value);
                         }
                     }
                 }
             }
 
-            return false;
-        }
+            return tienePermiso;
 
-        private bool UsuarioPuedeLeer(int? contratoId)
-        {
-            UserState userState = new UserState();
-            bool haySesion = userState.FromString(Session["UserState"].ToString());
-
-            if (haySesion)
-            {
-                bool esActivo = userState.IsActive;
-                bool esSuperUsuario = userState.IsSuperUser;
-                bool puedeLeer = !userState.CanWrite;
-                bool todosLosContratos = userState.AllContracts;
-                bool tienePermiso = todosLosContratos;
-
-                if (esActivo)
-                {
-                    Console.WriteLine("[Contratos] Es un usuario activo");
-                    if (esSuperUsuario) return true;
-                    else
-                    {
-                        Console.WriteLine("[Contratos] No es un superusuario");
-                        if (contratoId.HasValue)
-                        {
-                            if (!todosLosContratos) tienePermiso = userState.ContractIdListFromUser().Contains(contratoId.Value);
-                            Console.WriteLine("[Contratos][1] ¿Tiene permiso de lectura? " + tienePermiso);
-                            return puedeLeer && tienePermiso;
-                        }
-                        else
-                        {
-                            Console.WriteLine("[Contratos][1] ¿Tiene permiso de lectura? " + puedeLeer);
-                            return puedeLeer;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private ActionResult AccesoDenegado()
-        {
-            return View("PartialAccesoDenegado");
         }
 
         protected override void Dispose(bool disposing)

@@ -1,4 +1,5 @@
-﻿using GCP_CF.Helpers;
+﻿using GCP_CF.Authorization;
+using GCP_CF.Helpers;
 using GCP_CF.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace GCP_CF.Controllers
 {
+    [GCPAuthorize(Roles = RolHelper.SUPERUSUARIO)]
     public class UsuariosController : Controller
     {
         private readonly GCPContext db = new GCPContext();
@@ -24,7 +26,7 @@ namespace GCP_CF.Controllers
             List<Usuarios> usuarios = db.Usuarios.ToList();
             return View(usuarios);
         }
-        
+
         // GET: Usuarios/Details/5
         public ActionResult Details(int? id)
         {

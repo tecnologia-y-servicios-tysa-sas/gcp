@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Contratos";
+    string tipoContratoMarco = System.Configuration.ConfigurationManager.AppSettings["tipoContratoMarco"];
 }
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
@@ -31,7 +32,7 @@
 <table id="example" class="table  table-bordered" style="width:100%">
     <thead>
         <tr>
-            <th class="head-table">Acciones&nbsp;Contrato</th>
+            <th class="head-table">Acciones</th>
             <th class="head-table">
                 Fecha&nbsp;Inicio
             </th>
@@ -54,7 +55,7 @@
                 @Html.DisplayNameFor(model => model.ValorContrato)
             </th>
             <th class="head-table">
-                Valor&nbsp;Administrar
+                Recursos a Administrar
             </th>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Honorarios)
@@ -116,16 +117,16 @@
             <td class="border-cell" style="font-size:9pt;width:250px">
                 @Html.DisplayFor(modelItem => item.ObjetoContractual)
             </td>
-            <td class="border-cell">
+            <td class="border-cell text-center">
                 @Html.DisplayFor(modelItem => item.Plazo)
             </td>
-            <td class="border-cell" style="width:100px">
+            <td class="border-cell text-right" style="width:100px">
                 <strong>@Html.DisplayFor(modelItem => item.ValorContrato)</strong>
             </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
+            <td class="border-cell text-right" style="font-size:9pt;width:250px">
                 @Html.DisplayFor(modelItem => item.ValorAdministrar)
             </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
+            <td class="border-cell text-right" style="font-size:9pt;width:250px">
                 @Html.DisplayFor(modelItem => item.Honorarios)
             </td>
 
@@ -166,20 +167,20 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
+            <th></th>
             <th style="font-size:10pt">
                 Totales
             </th>
             <th style="font-size:10pt">
-                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.ValorContrato))</strong>
+                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.TipoContrato != null && i.TipoContrato.Termino == tipoContratoMarco ? i.ValorContrato : 0))</strong>
             </th>
             <th>
-                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.ValorAdministrar))</strong>
+                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.TipoContrato != null && i.TipoContrato.Termino == tipoContratoMarco ? i.ValorAdministrar : 0))</strong>
             </th>
             <th>
-                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.Honorarios))</strong>
+                <strong>@String.Format("{0:N0}", @Model.Sum(i => i.TipoContrato != null && i.TipoContrato.Termino == tipoContratoMarco ? i.Honorarios : 0))</strong>
             </th>
-            <th></th>
-            <th></th>
             <th></th>
             <th></th>
             <th></th>

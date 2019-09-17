@@ -12,48 +12,44 @@ using System.Web.Routing;
 
 namespace GCP_CF.Controllers
 {
-    public class LoginController : Controller
+    public class AccountController : Controller
     {
-        private readonly GCPContext db = new GCPContext();
-
         // GET: Login
-        public ActionResult Index()
+        public ActionResult Login()
         {
-            ViewBag.SesionIniciada = (Session["UserState"] != null);
+            ViewBag.SesionIniciada = User.Identity.IsAuthenticated;
+            return View();
+        }
+
+        public ActionResult AccessDenied()
+        {
             return View();
         }
 
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(FormCollection form)
+        public ActionResult Login(FormCollection form)
         {
             string usuario = form["usuario"];
             string password = form["password"];
 
             try
             {
-                UserManager um = new UserManager();
-                Usuarios dbUser = um.EsValido(db, usuario, password);
+                using (GCPContext db = new GCPContext()) {
 
-                if (dbUser != null && dbUser.EsActivo)
-                {
-                    UserState userState = new UserState()
+                    UserManager um = new UserManager();
+                    Usuarios dbUser = um.EsValido(db, usuario, password);
+
+                    if (dbUser != null && dbUser.EsActivo)
                     {
-                        UserId = dbUser.Usuario,
-                        Name = dbUser.NombreCompleto,
-                        Email = dbUser.CorreoElectronico,
-                        IsActive = dbUser.EsActivo, 
-                        IsSuperUser = dbUser.EsSuperUsuario,
-                        CanWrite = (dbUser.EsSuperUsuario || dbUser.TipoPermisos == "W"),
-                        AllContracts = (dbUser.EsSuperUsuario || dbUser.TodosLosContratos),
-                        ContractIds = dbUser.IdContratos,
-                        Role = dbUser.IdRoles
-                    };
+                        UserState userState = new UserState();
+                        userState.FromUser(dbUser);
 
-                    IdentitySignIn(userState);
+                        IdentitySignIn(userState);
 
-                    return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
 
                 // invalid username or password
@@ -71,7 +67,7 @@ namespace GCP_CF.Controllers
         public ActionResult Logout()
         {
             IdentitySignOut();
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Login", "Account");
         }
 
         private void IdentitySignIn(UserState userState, bool isPersistent = false)
@@ -80,10 +76,14 @@ namespace GCP_CF.Controllers
                     {
                         new Claim(ClaimTypes.NameIdentifier, userState.UserId),
                         new Claim(ClaimTypes.Name, userState.Name),
-                        new Claim("SuperUsuario", userState.IsSuperUser.ToString()),
-                        new Claim("PuedeEscribir", userState.CanWrite.ToString()),
                         new Claim("UserState", userState.ToString())
                     };
+
+            if (userState.IsSuperUser) claims.Add(new Claim(ClaimTypes.Role, RolHelper.SUPERUSUARIO));
+            if (userState.IsSuperUser || userState.CanWrite) claims.Add(new Claim(ClaimTypes.Role, RolHelper.ESCRITURA));
+            if (userState.IsSuperUser || !userState.CanWrite) claims.Add(new Claim(ClaimTypes.Role, RolHelper.LECTURA));
+            if (userState.IsSuperUser || userState.AllContracts) claims.Add(new Claim(ClaimTypes.Role, RolHelper.TODOS_LOS_CONTRATOS));
+            if (!userState.IsSuperUser && !string.IsNullOrEmpty(userState.ContractIds)) claims.Add(new Claim(RolHelper.LISTADO_CONTRATOS, userState.ContractIds));
 
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
@@ -93,7 +93,6 @@ namespace GCP_CF.Controllers
                 IsPersistent = isPersistent,
                 ExpiresUtc = DateTime.UtcNow.AddHours(1)
             }, identity);
-
 
             Session["UserState"] = userState;
         }
