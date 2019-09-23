@@ -36,9 +36,13 @@
                 <td class="border-cell col-md-2 text-right text-nowrap">$ @Html.DisplayFor(modelItem => item.TotalHonorarios)</td>
                 @if (!ViewBag.IsReport) {
                 <td class="border-cell col-md-2 text-center text-nowrap">
-                    @Html.ActionLink("Editar", "Edit", new { id = item.Factura_Id }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Factura_Id }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Factura_Id })
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Factura_Id }) @Html.Raw(" | ")
+                    }
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Factura_Id })
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
+                        @Html.Raw(" | ") @Html.ActionLink("Eliminar", "Delete", new { id = item.Factura_Id })
+                    }
                 </td>
                 }
             </tr>

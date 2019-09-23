@@ -8,14 +8,17 @@ using Newtonsoft.Json;
 using System.Net;
 using PagedList;
 using System;
+using GCP_CF.Helpers;
+using GCP_CF.Authorization;
 
 namespace GCP_CF.Controllers
 {
     public class SeguimientoController : Controller
     {
-        private GCPContext db = new GCPContext();
+        private readonly GCPContext db = new GCPContext();
 
         // GET: Seguimiento
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public ViewResult Index(string sortBy, string currentFilter, string searchString, int? page)
         {
             var listadoContratos = GetListadoContratos(sortBy, currentFilter, searchString, page);
@@ -26,6 +29,7 @@ namespace GCP_CF.Controllers
         }
 
         // GET: FasesContrato
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public ActionResult FasesContrato(int? idContrato)
         {
             if (idContrato == null)
@@ -45,6 +49,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult ObtenerListadoFasesContrato(int idContrato)
         {
             // TODO: Mejorar esta respuesta construyendo objetos
@@ -99,6 +104,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult ObtenerFasesNoAsociadas(int idContrato)
         {
             List<int> listadoFasesContrato = (from fc in db.Registrofacescontratos.Include(a => a.FasesContrato)
@@ -112,6 +118,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public JsonResult GuardarFaseContrato(int idContrato, int idFase)
         {
             string mensaje = "";
@@ -147,6 +154,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public JsonResult EliminarFaseContrato(int idContrato, int idFase)
         {
             string mensaje = "";
@@ -193,6 +201,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public JsonResult GuardarActividadFase(int idActividad, int idContrato, int idFase, string item, string descripcion, 
             string diasHabiles, string fechaInicio, string fechaFin, string estadoActividad)
         {
@@ -250,6 +259,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult ObtenerListadoActividadesFase(int idContrato, int idFase)
         {
             // TODO: Mejorar esta respuesta construyendo objetos
@@ -276,6 +286,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         public JsonResult ObtenerActividadFase(int idActividad)
         {
             // TODO: Mejorar esta respuesta construyendo objetos
@@ -317,6 +328,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public JsonResult EliminarActividadFase(int idActividad)
         {
             string mensaje = "";
@@ -347,6 +359,7 @@ namespace GCP_CF.Controllers
             return Json("{ \"mensaje\": \"" + mensaje + "\", \"error\": \"" + error + "\" }");
         }
 
+        [GCPAuthorize(Roles = RolHelper.TODOS)]
         private IQueryable<Contratos> GetListadoContratos(string sortBy, string currentFilter, string searchString, int? page)
         {
             if (searchString != null)
@@ -424,6 +437,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
+        [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public JsonResult ActualizarValorEjecutado(int idContrato, double? valorEjecutado)
         {
             double porcentajeEjecucion = 0;

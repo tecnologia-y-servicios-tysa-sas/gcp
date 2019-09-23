@@ -1,4 +1,6 @@
-﻿using GCP_CF.Models;
+﻿using GCP_CF.Authorization;
+using GCP_CF.Helpers;
+using GCP_CF.Models;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Web.Mvc;
 
 namespace GCP_CF.Controllers
 {
+    [GCPAuthorize(Roles = RolHelper.SUPERUSUARIO)]
     public class EstadosFacturaController : Controller
     {
         private readonly GCPContext db = new GCPContext();

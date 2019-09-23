@@ -1,15 +1,16 @@
-﻿using GCP_CF.Helpers;
+﻿using GCP_CF.Authorization;
+using GCP_CF.Helpers;
 using GCP_CF.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace GCP_CF.Controllers
 {
+    [GCPAuthorize(Roles = RolHelper.TODOS)]
     public class GraphicsController : Controller
     {
         private readonly GCPContext db = new GCPContext();

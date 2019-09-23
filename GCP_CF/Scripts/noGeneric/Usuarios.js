@@ -73,7 +73,7 @@ function validarUsuario() {
 }
 
 function validarPassword() {
-    if ($("#idUsuario").val().trim() == "")
+    if ($.type($("#idUsuario").val()) === "undefined" || $("#idUsuario").val().trim() == "")
         return validateRequired($("#password"), "Contraseña");
 
     return true;

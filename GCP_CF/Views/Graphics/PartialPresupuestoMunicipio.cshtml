@@ -8,9 +8,10 @@
                 <div id="mensajeCarga3">
                     <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i> <span id="mensaje3">Cargando gráfico...</span>
                 </div>
-                <canvas id="canvas3" height="250" style="display: none"></canvas>
+                <div class="chart-container" style="position: relative; margin: auto; width: 96%; height: 36vw">
+                    <canvas id="canvas3" style="height: 250px; display: none"></canvas>
+                </div>
             </div>
-        </div>
     </div>
 </div>
 
@@ -20,13 +21,13 @@
 
     $(function () {
 
-        function colorizeLegend(v) {
-            var c = v == 0 ? 'rgb(255, 238, 69)'
-			    : v == 1 ? 'rgb(122, 154, 191)'
-			    : v == 2 ? 'rgb(198, 52, 52)'
-                        : 'rgb(119, 198, 183)';
-
-            return c;
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
 
         $.ajax({
@@ -51,9 +52,13 @@
                     data: chartData,
                     options: {
                         responsive: true,
+                        maintainAspectRatio: true,
                         legend: {
-                            position: "bottom",
-                            display: true
+                            position: "right",
+                            display: true,
+                            labels: {
+                                fontSize: 11
+                            }
                         },
                         title: {
                             display: true,
@@ -61,6 +66,16 @@
                             fontSize: 24,
                             fontStyle: "normal",
                             fontColor: "#333"
+                        },
+                        scales: {
+                            xAxes: [{
+                                barThickness: 6
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0
+                                }
+                            }]
                         },
                         elements: {
                             rectangle: {
@@ -71,10 +86,12 @@
                 });
 
                 for (var ds in chart.data.datasets) {
-                    chart.data.datasets[ds].backgroundColor = colorizeLegend(ds);
+                    chart.data.datasets[ds].backgroundColor = getRandomColor();
                 }
 
                 chart.update();
+
+                ctx.height = 350;
                 
                 $("#mensajeCarga3").fadeOut();
                 $("#canvas3").fadeIn();

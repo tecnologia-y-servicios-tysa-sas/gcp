@@ -481,6 +481,13 @@ namespace GCP_CF.Controllers
                             tienePermiso = listadoIdContratos.Contains(contratoId.Value);
                         }
                     }
+                    else
+                    {
+                        if (esEscritura)
+                            tienePermiso = User.IsInRole(RolHelper.ESCRITURA);
+                        else
+                            tienePermiso = User.IsInRole(RolHelper.LECTURA);
+                    }
                 }
             }
 

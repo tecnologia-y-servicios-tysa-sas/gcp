@@ -48,14 +48,21 @@
                     </div>
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.NumeroContrato, htmlAttributes: new { @class = "control-label" })</div>
-                        @if (ViewBag.IsEdit)
+                        @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
                         {
-                            @Html.HiddenFor(model => model.NumeroContrato, htmlAttributes: new { @class = "form-control", @id = "numeroContrato" })
-                            <input type="text" name="numeroContratoAux" class="form-control" id="numeroContratoAux" value="@Model.NumeroContrato" disabled="disabled" />
+                            @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato" } })
                         }
                         else
                         {
-                            @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @readonly = "true" } })
+                            if (ViewBag.IsEdit)
+                            {
+                                @Html.HiddenFor(model => model.NumeroContrato, htmlAttributes: new { @class = "form-control", @id = "numeroContrato" })
+                                <input type="text" name="numeroContratoAux" class="form-control" id="numeroContratoAux" value="@Model.NumeroContrato" disabled="disabled" />
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @readonly = "true" } })
+                            }
                         }
                         @Html.ValidationMessageFor(model => model.NumeroContrato, "", new { @class = "text-danger" })
                     </div>

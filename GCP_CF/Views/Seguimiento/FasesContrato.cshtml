@@ -72,29 +72,32 @@
             </div>
 
         </div>
+        
+        @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
         <div class="panel-footer" style="padding-bottom: 0px">
             @using (Html.BeginForm("ActualizarValorEjecutado", "Seguimiento", FormMethod.Post, new { id = "ActualizarEjecucionForm", style = "margin-bottom: 0px" }))
             {
-                <div class="clearfix">
-                    <div class="col-md-3"><b>Valor Ejecutado:</b></div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" id="valorEjecutado" name="Ejecucion" value="@((contrato.Ejecucion != null) ? contrato.Ejecucion.Value.ToString("#,###.#0", formatter) : "")" />
-                        <input type="hidden" name="idContratoValorEjecutado" id="idContratoValorEjecutado" value="@contrato.Contrato_Id" />
-                    </div>
-                    <div class="col-md-3">
-                        <div class="progress" style="height: 34px; vertical-align: central; border: 1px solid #bbb">
-                            <div id="porcentajeValorEjecutado" class="progress-bar" role="progressbar" aria-valuenow="@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: @contrato.PorcentajeValorEjecutado%">
-                                <div class="text-center" id="textoPorcentajeEjecutado" style="color: black; font-weight: bold; font-size: 11px; margin-top: 6px">@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)%</div>
-                            </div>
+            <div class="clearfix">
+                <div class="col-md-3"><b>Valor Ejecutado:</b></div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="valorEjecutado" name="Ejecucion" value="@((contrato.Ejecucion != null) ? contrato.Ejecucion.Value.ToString("#,###.#0", formatter) : "")" />
+                    <input type="hidden" name="idContratoValorEjecutado" id="idContratoValorEjecutado" value="@contrato.Contrato_Id" />
+                </div>
+                <div class="col-md-3">
+                    <div class="progress" style="height: 34px; vertical-align: central; border: 1px solid #bbb">
+                        <div id="porcentajeValorEjecutado" class="progress-bar" role="progressbar" aria-valuenow="@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)"
+                                aria-valuemin="0" aria-valuemax="100" style="width: @contrato.PorcentajeValorEjecutado%">
+                            <div class="text-center" id="textoPorcentajeEjecutado" style="color: black; font-weight: bold; font-size: 11px; margin-top: 6px">@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)%</div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-default" type="button" id="btnActualizarEjecucion">Actualizar Ejecución</button>
-                    </div>
                 </div>
+                <div class="col-md-3">
+                    <button class="btn btn-default" type="button" id="btnActualizarEjecucion">Actualizar Ejecución</button>
+                </div>
+            </div>
             }
         </div>
+        }
     </div>
 
     <div class="row" id="cargaFases">
@@ -112,7 +115,9 @@
                     </h4>
                 </div>
                 <div class="col-md-3 col-xs-3 right text-right">
-                    <button class="btn btn-sm btn-primary" onclick="AgregarFaseContrato(@contrato.Contrato_Id)">Agregar Fase</button>
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
+                        <button class="btn btn-sm btn-primary" onclick="AgregarFaseContrato(@contrato.Contrato_Id)">Agregar Fase</button>
+                    }
                 </div>
             </div>
 
@@ -122,7 +127,9 @@
                 <div class="datagrid">
                     <table class="table-striped" style="width: 100%" id="tblListadoFases"></table>
                 </div>
-
+                
+                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+                {
                 <div id="agregarFaseContrato" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -227,6 +234,7 @@
                         </div>
                     </div>
                 </div>
+                }
             </div>
         </div>
 
@@ -263,7 +271,7 @@
     <script type="text/javascript">
 
     $(function () {
-        ObtenerListadoFasesContrato(@contrato.Contrato_Id);
+        ObtenerListadoFasesContrato(@contrato.Contrato_Id, @(User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA).ToString().ToLower()));
     });
 
     </script>

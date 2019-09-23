@@ -28,11 +28,12 @@
                     <a href="@Url.Action("Index", "Home", new { area = "" }, null)">
                         <img src="~/Content/Images/Programa.png" alt="ESO" class="img-responsive" />
                     </a>
-
                 </h3>
-                <strong>VF</strong>
+                @if (User.Identity.IsAuthenticated) {
+                <div><i class="glyphicon glyphicon-user"></i>&nbsp; @User.Identity.Name</div>
+                }
             </div>
-            <ul class="list-unstyled components">
+            <ul class="list-unstyled components" style="padding-top: 0px; border-top: 1px dotted #ccc">
                 <li class="active">
                     @Html.ActionLink("Inicio", "Index", "Home")
                 </li>

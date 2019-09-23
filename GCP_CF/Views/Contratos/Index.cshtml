@@ -94,7 +94,9 @@
         {
         <tr>
             <td class="border-cell" style="width:120px">
+                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
                 @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
+                }
                 @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
                 @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
                 @if (item.HistoriaObservaciones.Count > 0)

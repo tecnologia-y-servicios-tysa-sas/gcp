@@ -13,9 +13,12 @@
 }
 
 <p class="text-center">
+    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+    {
     <a href="/Facturas/Edit/@(Model.Factura_Id)" class="btn btn-primary">
         <i class="glyphicon glyphicon-edit"></i> Editar
     </a>
+    }
     <a href="@Url.Action("Index", "Facturas")" class="btn btn-success">
         <i class="glyphicon glyphicon-list"></i> Regresar al Listado
     </a>
