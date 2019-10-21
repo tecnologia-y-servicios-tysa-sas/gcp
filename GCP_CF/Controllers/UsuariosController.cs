@@ -47,6 +47,7 @@ namespace GCP_CF.Controllers
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
             ViewBag.Contratos = contratos;
+            ViewBag.RolId = new SelectList(db.Rols, "RolId", "Descripción");
 
             return View();
         }
@@ -60,6 +61,8 @@ namespace GCP_CF.Controllers
         {
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
+            ViewBag.RolId = new SelectList(db.Rols, "RolId", "Descripción");
+
             return GuardarUsuario(usuarios, form, ViewBag.IsEdit);
         }
 

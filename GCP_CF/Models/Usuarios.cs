@@ -100,5 +100,10 @@ namespace GCP_CF.Models
                 return nombreRol + ", " + lecturaEscritura + " " + contratos;
             }
         }
+
+        [NotMapped]
+        [Display(Name = "Rol")]
+        public int? RolId { get; set; }
+
     }
 }

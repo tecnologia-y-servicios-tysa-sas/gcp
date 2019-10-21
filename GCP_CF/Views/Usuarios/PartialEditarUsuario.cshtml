@@ -78,9 +78,12 @@
                     @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-md-4">
-                    @if (!ViewBag.IsEdit) {
+                    @if (!ViewBag.IsEdit)
+                    {
                         @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @id = "usuario" } })
-                    } else {
+                    }
+                    else
+                    {
                         @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "usuario" } })
                     }
                     @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
@@ -89,13 +92,28 @@
                     @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-md-4">
-                    @if (ViewBag.IsEdit) {
+                    @if (ViewBag.IsEdit)
+                    {
                         @Html.PasswordFor(model => model.PasswordAux, new { @class = "form-control", @id = "password" })
                         @Html.HiddenFor(model => model.Password, new { @id = "originalPassword" })
-                    } else {
+                    }
+                    else
+                    {
                         @Html.PasswordFor(model => model.Password, new { @class = "form-control", @id = "password" })
                     }
                 </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.RolId, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.RolId, (SelectList)ViewBag.RolId, "Seleccionar Rol...", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RolId, "", new { @class = "text-danger" })
+                </div>
+                
+
             </div>
 
         </div>
