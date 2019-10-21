@@ -57,5 +57,11 @@ namespace GCP_CF.Models
         public DbSet<PagosContrato> PagosContrato { get; set; }
 
         public DbSet<Usuarios> Usuarios { get; set; }
+
+   
+
+        public System.Data.Entity.DbSet<GCP_CF.Models.UsuariosRoles> usuariosroles { get; set; }
+
+        public System.Data.Entity.DbSet<GCP_CF.Models.Rol> Rols { get; set; }
     }
 }

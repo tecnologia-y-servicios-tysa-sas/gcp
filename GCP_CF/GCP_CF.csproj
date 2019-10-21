@@ -198,8 +198,10 @@
     <Compile Include="Controllers\FormaPagosController.cs" />
     <Compile Include="Controllers\GraphicsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TiposDocumentosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Controllers\UsuariosRolesController.cs" />
     <Compile Include="Helpers\ContratosHelper.cs" />
     <Compile Include="Helpers\GraphicsHelper.cs" />
     <Compile Include="Helpers\RolHelper.cs" />
@@ -232,6 +234,22 @@
     <Compile Include="Migrations\201908192207135_initial6.cs" />
     <Compile Include="Migrations\201908192207135_initial6.Designer.cs">
       <DependentUpon>201908192207135_initial6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910202100510_role.cs" />
+    <Compile Include="Migrations\201910202100510_role.Designer.cs">
+      <DependentUpon>201910202100510_role.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910202109147_usuarioRole.cs" />
+    <Compile Include="Migrations\201910202109147_usuarioRole.Designer.cs">
+      <DependentUpon>201910202109147_usuarioRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910202116558_Roles2.cs" />
+    <Compile Include="Migrations\201910202116558_Roles2.Designer.cs">
+      <DependentUpon>201910202116558_Roles2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910202120559_Update-Roles.cs" />
+    <Compile Include="Migrations\201910202120559_Update-Roles.Designer.cs">
+      <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FormaPago.cs" />
@@ -267,6 +285,7 @@
     <Compile Include="Models\Personas.cs" />
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\RelacionContratoFase.cs" />
+    <Compile Include="Models\Rol.cs" />
     <Compile Include="Models\TiposContratos.cs" />
     <Compile Include="Models\TiposDocumentos.cs" />
     <Compile Include="Models\TiposEstadoContrato.cs" />
@@ -274,6 +293,7 @@
     <Compile Include="Models\TiposNaturaleza.cs" />
     <Compile Include="Models\TiposPersona.cs" />
     <Compile Include="Models\Usuarios.cs" />
+    <Compile Include="Models\UsuariosRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -468,6 +488,16 @@
     <Content Include="Views\Graphics\TodosLosGraficos.cshtml" />
     <Content Include="Views\Graphics\PartialPresupuestoMunicipio.cshtml" />
     <Content Include="Views\Account\AccessDenied.cshtml" />
+    <Content Include="Views\UsuariosRoles\Create.cshtml" />
+    <Content Include="Views\UsuariosRoles\Delete.cshtml" />
+    <Content Include="Views\UsuariosRoles\Details.cshtml" />
+    <Content Include="Views\UsuariosRoles\Edit.cshtml" />
+    <Content Include="Views\UsuariosRoles\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -504,6 +534,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908192207135_initial6.resx">
       <DependentUpon>201908192207135_initial6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910202100510_role.resx">
+      <DependentUpon>201910202100510_role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910202109147_usuarioRole.resx">
+      <DependentUpon>201910202109147_usuarioRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910202116558_Roles2.resx">
+      <DependentUpon>201910202116558_Roles2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910202120559_Update-Roles.resx">
+      <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

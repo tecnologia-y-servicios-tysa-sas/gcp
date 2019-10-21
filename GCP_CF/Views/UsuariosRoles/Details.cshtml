@@ -1,0 +1,26 @@
+﻿@model GCP_CF.Models.UsuariosRoles
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UsuariosRoles</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RolId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RolId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Usuario_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
