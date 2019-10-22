@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201910202120559_Update-Roles.Designer.cs">
       <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910221004283_RolesUsuarios.cs" />
+    <Compile Include="Migrations\201910221004283_RolesUsuarios.Designer.cs">
+      <DependentUpon>201910221004283_RolesUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FormaPago.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
@@ -483,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910202120559_Update-Roles.resx">
       <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910221004283_RolesUsuarios.resx">
+      <DependentUpon>201910221004283_RolesUsuarios.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
