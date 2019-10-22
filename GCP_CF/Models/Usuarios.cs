@@ -57,9 +57,9 @@ namespace GCP_CF.Models
         }
 
         [NotMapped]
-        public KeyValuePair<int, string> Rol
+        public string Rol
         {
-            get { return RolHelper.ObtenerRolUsuario(IdRoles); }
+            get { return RolHelper.ObtenerRolUsuario(RolId); }
         }
 
         [NotMapped]
@@ -94,16 +94,19 @@ namespace GCP_CF.Models
         [NotMapped]
         public virtual string EstadoPermisos {
             get {
-                string nombreRol = RolHelper.ObtenerRolUsuario(IdRoles).Value;
+                string nombreRol = RolHelper.ObtenerRolUsuario(RolId).ToUpper();
                 string lecturaEscritura = EsSuperUsuario ? "tiene poder" : (TipoPermisos == "W") ? "puede escribir" : "puede leer";
                 string contratos = EsSuperUsuario ? "sobre todo" : (TodosLosContratos) ? "sobre todos los contratos" : "sobre algunos contratos";
                 return nombreRol + ", " + lecturaEscritura + " " + contratos;
             }
         }
 
-        [NotMapped]
+
         [Display(Name = "Rol")]
         public int? RolId { get; set; }
+
+        [ForeignKey("RolId")]
+        public virtual Rol Roles { get; set; }
 
     }
 }

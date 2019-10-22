@@ -109,7 +109,7 @@
                     @Html.LabelFor(model => model.RolId, htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.RolId, (SelectList)ViewBag.RolId, "Seleccionar Rol...", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("RolId", null, "Seleccione Rol", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.RolId, "", new { @class = "text-danger" })
                 </div>
                 

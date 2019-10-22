@@ -63,7 +63,7 @@ namespace GCP_CF.Controllers
             ViewBag.IsEdit = false;
             ViewBag.RolId = new SelectList(db.Rols, "RolId", "Descripción");
 
-            return GuardarUsuario(usuarios, form, ViewBag.IsEdit);
+            return GuardarUsuario(usuarios, form, ViewBag.IsEdit );
         }
 
         // GET: Personas/Edit/5
@@ -77,9 +77,12 @@ namespace GCP_CF.Controllers
 
             List<Contratos> contratos = db.Contratos.OrderByDescending(c => c.NumeroContrato).ToList();
 
+            int? rolId = db.Usuarios.Where(x => x.Usuario_Id == id).Select(x=> x.RolId).FirstOrDefault();
+
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;
             ViewBag.Contratos = contratos;
+            ViewBag.RolId = new SelectList(db.Rols, "RolId", "Descripción", rolId);
 
             return View(usuario);
         }
@@ -111,6 +114,8 @@ namespace GCP_CF.Controllers
                 else
                     if (!esModificado) usuarios.Password = um.Base64Encode(usuarios.Password);
 
+                usuarios.RolId = usuarios.RolId;
+
                 if (ModelState.IsValid)
                 {
                     // Lógica para recuperar valores de contratos
@@ -121,6 +126,7 @@ namespace GCP_CF.Controllers
                     if (string.IsNullOrEmpty(esSuperUsuario))
                     {
                         usuarios.IdRoles = rolUsuarioNormal;
+                        
                         if (tipoPermiso != null && tipoPermiso == "W")
                             usuarios.TipoPermisos = "W"; // Escritura
                         else

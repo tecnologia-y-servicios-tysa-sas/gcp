@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GCP_CF.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace GCP_CF.Helpers
         public const string PUEDE_LEER = SUPERUSUARIO + "," + LECTURA;
         public const string PUEDE_ESCRIBIR = SUPERUSUARIO + "," + ESCRITURA;
 
+        private static readonly GCPContext db = new GCPContext();
+
         public static List<KeyValuePair<int, string>> ObtenerListadoRoles()
         {
             List<KeyValuePair<int, string>> listadoRoles = new List<KeyValuePair<int, string>>();
@@ -42,22 +45,24 @@ namespace GCP_CF.Helpers
             return false;
         }
 
-        public static KeyValuePair<int, string> ObtenerRolUsuario(string rolesUsuario)
+        //public static KeyValuePair<int, string> ObtenerRolUsuario(string rolesUsuario)
+        public static string ObtenerRolUsuario(int? rolId)
         {
-            KeyValuePair<int, string> rolUsuario = new KeyValuePair<int, string>();
+            //KeyValuePair<int, string> rolUsuario = new KeyValuePair<int, string>();
 
-            if (!string.IsNullOrEmpty(rolesUsuario))
-            {
-                int rolActualUsuario = int.Parse(rolesUsuario);
-                List<KeyValuePair<int, string>> listadoRoles = ObtenerListadoRoles();
+            //if (!string.IsNullOrEmpty(rolesUsuario))
+            //{
+            //    int rolActualUsuario = int.Parse(rolesUsuario);
+            //    List<KeyValuePair<int, string>> listadoRoles = ObtenerListadoRoles();
 
-                foreach (KeyValuePair<int, string> parValor in listadoRoles)
-                {
-                    if (parValor.Key == rolActualUsuario)
-                        rolUsuario = parValor;
-                }
-            }
+            //    foreach (KeyValuePair<int, string> parValor in listadoRoles)
+            //    {
+            //        if (parValor.Key == rolActualUsuario)
+            //            rolUsuario = parValor;
+            //    }
+            //}
 
+            string rolUsuario = db.Rols.Where(x => x.RolId == rolId).Select(x=> x.Descripción).FirstOrDefault();
             return rolUsuario;
         }
 

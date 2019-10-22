@@ -207,34 +207,6 @@
     <Compile Include="Helpers\RolHelper.cs" />
     <Compile Include="Helpers\UserManager.cs" />
     <Compile Include="Helpers\UserState.cs" />
-    <Compile Include="Migrations\201906271751003_initial1.cs" />
-    <Compile Include="Migrations\201906271751003_initial1.Designer.cs">
-      <DependentUpon>201906271751003_initial1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907030541166_AddFacturas.cs" />
-    <Compile Include="Migrations\201907030541166_AddFacturas.Designer.cs">
-      <DependentUpon>201907030541166_AddFacturas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907060358430_initial2.cs" />
-    <Compile Include="Migrations\201907060358430_initial2.Designer.cs">
-      <DependentUpon>201907060358430_initial2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907110355355_initial3.cs" />
-    <Compile Include="Migrations\201907110355355_initial3.Designer.cs">
-      <DependentUpon>201907110355355_initial3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201907220702319_initial4.cs" />
-    <Compile Include="Migrations\201907220702319_initial4.Designer.cs">
-      <DependentUpon>201907220702319_initial4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908120214393_initial5.cs" />
-    <Compile Include="Migrations\201908120214393_initial5.Designer.cs">
-      <DependentUpon>201908120214393_initial5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201908192207135_initial6.cs" />
-    <Compile Include="Migrations\201908192207135_initial6.Designer.cs">
-      <DependentUpon>201908192207135_initial6.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201910202100510_role.cs" />
     <Compile Include="Migrations\201910202100510_role.Designer.cs">
       <DependentUpon>201910202100510_role.cs</DependentUpon>
@@ -265,14 +237,6 @@
     <Compile Include="Controllers\TiposTercerosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906121131371_initial.cs" />
-    <Compile Include="Migrations\201906121131371_initial.Designer.cs">
-      <DependentUpon>201906121131371_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201906140033223_Subir.cs" />
-    <Compile Include="Migrations\201906140033223_Subir.Designer.cs">
-      <DependentUpon>201906140033223_Subir.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Actividades.cs" />
@@ -508,33 +472,6 @@
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906121131371_initial.resx">
-      <DependentUpon>201906121131371_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906140033223_Subir.resx">
-      <DependentUpon>201906140033223_Subir.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906271751003_initial1.resx">
-      <DependentUpon>201906271751003_initial1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907030541166_AddFacturas.resx">
-      <DependentUpon>201907030541166_AddFacturas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907060358430_initial2.resx">
-      <DependentUpon>201907060358430_initial2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907110355355_initial3.resx">
-      <DependentUpon>201907110355355_initial3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201907220702319_initial4.resx">
-      <DependentUpon>201907220702319_initial4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908120214393_initial5.resx">
-      <DependentUpon>201908120214393_initial5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201908192207135_initial6.resx">
-      <DependentUpon>201908192207135_initial6.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910202100510_role.resx">
       <DependentUpon>201910202100510_role.cs</DependentUpon>
     </EmbeddedResource>
