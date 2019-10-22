@@ -1,56 +1,53 @@
-﻿@model IEnumerable<GCP_CF.Models.Usuarios>
+﻿@model IEnumerable<GCP_CF.Models.Permisos>
 
 @{
-    ViewBag.Title = "Listado de Usuarios";
+    ViewBag.Title = "Permisos";
 }
-
-@if (TempData["error"] != null)
-{
-    <script>alert('@TempData["error"]');</script>
-}
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
 
-<h2 class="text-left">Usuarios</h2>
-
+<p>
+    @Html.ActionLink("Crear Permisos", "Create", null, new { @class = "btn btn-default btn-large" })
+</p>
 <table id="tblUsuarios" class="table table-bordered" style="width: 100%">
     <thead>
         <tr>
-            <th class="head-table">@Html.DisplayNameFor(model => model.NombreCompleto)</th>
-            <th class="head-table">@Html.DisplayNameFor(model => model.Usuario)</th>
-            <th class="head-table">@Html.DisplayNameFor(model => model.CorreoElectronico)</th>
-            <th class="head-table">@Html.DisplayNameFor(model => model.IdRoles)</th>
-            <th class="head-table">Activo</th>
-            <th class="head-table">Acciones</th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Descripción)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Detalle)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th class="head-table">Editar</th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
         <tr>
-            <td class="border-cell">@Html.DisplayFor(modelItem => item.NombreCompleto)</td>
-            <td class="border-cell">@Html.DisplayFor(modelItem => item.Usuario)</td>
-            <td class="border-cell">@Html.DisplayFor(modelItem => item.CorreoElectronico)</td>
-            <td class="border-cell"><div class="text text-uppercase"> @Html.DisplayFor(modelItem => item.Roles.Descripción), &nbsp  </div>   @Html.DisplayFor(modelItem => item.Roles.Detalle)</td>
-            <td class="border-cell col-md-1 text-center">@(item.EsActivo ? "SI" : "NO")</td>
-            <td class="border-cell col-md-2 text-center text-nowrap">
-                @Html.ActionLink("Editar", "Edit", new { id = item.Usuario_Id })
-                | @Html.ActionLink("Detalles", "Details", new { id = item.Usuario_Id })
-                @{
-                    if (!item.EsSuperUsuario)
-                    {
-                        @Html.Raw("| ") @Html.ActionLink("Eliminar", "Delete", new { id = item.Usuario_Id })
-                    }
-                }
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Descripción)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Detalle)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.PermisoId })
             </td>
         </tr>
         }
     </tbody>
-</table>
 
+</table>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

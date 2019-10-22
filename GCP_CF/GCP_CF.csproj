@@ -198,6 +198,7 @@
     <Compile Include="Controllers\FormaPagosController.cs" />
     <Compile Include="Controllers\GraphicsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PermisosController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TiposDocumentosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
@@ -223,9 +224,21 @@
     <Compile Include="Migrations\201910202120559_Update-Roles.Designer.cs">
       <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910221004283_RolesUsuarios.cs" />
-    <Compile Include="Migrations\201910221004283_RolesUsuarios.Designer.cs">
-      <DependentUpon>201910221004283_RolesUsuarios.cs</DependentUpon>
+    <Compile Include="Migrations\201910221521052_Permisos.cs" />
+    <Compile Include="Migrations\201910221521052_Permisos.Designer.cs">
+      <DependentUpon>201910221521052_Permisos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910221527103_PermisosEstado.cs" />
+    <Compile Include="Migrations\201910221527103_PermisosEstado.Designer.cs">
+      <DependentUpon>201910221527103_PermisosEstado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910221550477_PermisosRolesDetalle.cs" />
+    <Compile Include="Migrations\201910221550477_PermisosRolesDetalle.Designer.cs">
+      <DependentUpon>201910221550477_PermisosRolesDetalle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910221601546_PermisosRoles.cs" />
+    <Compile Include="Migrations\201910221601546_PermisosRoles.Designer.cs">
+      <DependentUpon>201910221601546_PermisosRoles.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FormaPago.cs" />
@@ -250,6 +263,8 @@
     <Compile Include="Models\FasesContrato.cs" />
     <Compile Include="Data\GCPContext.cs" />
     <Compile Include="Models\PagosContrato.cs" />
+    <Compile Include="Models\Permisos.cs" />
+    <Compile Include="Models\PermisosRoles.cs" />
     <Compile Include="Models\Personas.cs" />
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\RelacionContratoFase.cs" />
@@ -273,6 +288,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapCustom.css" />
+    <Content Include="Content\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen-sprite.png" />
+    <Content Include="Content\chosen.css" />
+    <Content Include="Content\chosen.min.css" />
     <Content Include="Content\Graphics.css" />
     <Content Include="Content\Images\Alcaldia.png" />
     <Content Include="Content\Images\back.png" />
@@ -307,6 +326,10 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Chart.utils.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\chosen.proto.js" />
+    <Content Include="Scripts\chosen.proto.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -350,6 +373,7 @@
     <Content Include="Scripts\Nueva carpeta\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Nueva carpeta\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Nueva carpeta\modernizr-2.8.3.js" />
+    <Content Include="Scripts\prototype.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -466,6 +490,13 @@
     <Content Include="Views\Roles\Details.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Permisos\Create.cshtml" />
+    <Content Include="Views\Permisos\Delete.cshtml" />
+    <Content Include="Views\Permisos\Details.cshtml" />
+    <Content Include="Views\Permisos\Edit.cshtml" />
+    <Content Include="Views\Permisos\Index.cshtml" />
+    <Content Include="Views\Roles\PermisoRoles.cshtml" />
+    <Content Include="Views\Roles\EditPermisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -488,8 +519,17 @@
     <EmbeddedResource Include="Migrations\201910202120559_Update-Roles.resx">
       <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221004283_RolesUsuarios.resx">
-      <DependentUpon>201910221004283_RolesUsuarios.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910221521052_Permisos.resx">
+      <DependentUpon>201910221521052_Permisos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910221527103_PermisosEstado.resx">
+      <DependentUpon>201910221527103_PermisosEstado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910221550477_PermisosRolesDetalle.resx">
+      <DependentUpon>201910221550477_PermisosRolesDetalle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910221601546_PermisosRoles.resx">
+      <DependentUpon>201910221601546_PermisosRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

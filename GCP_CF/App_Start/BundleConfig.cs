@@ -24,12 +24,14 @@ namespace GCP_CF
                       "~/Scripts/moment-with-locales.js",
                       "~/Scripts/bootstrap-datetimepicker.js",
                       "~/Scripts/moment-es.js",
+                       "~/Scripts/chosen.jquery.js",
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/non-Generic-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrapCustom.css",
                       "~/Content/site.css",
+                       "~/Content/chosen.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/StyleTable.css"
                      ));

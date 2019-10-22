@@ -1,21 +1,22 @@
-﻿@model GCP_CF.Models.Rol
+﻿@model GCP_CF.Models.Permisos
 
 @{
-    ViewBag.Title = "Editar Roles";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Editar Roles</h2>
+<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">      
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.RolId)                
-    </div>
+    <div class="form-horizontal">
 
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PermisoId)
+
+    </div>
     <div class="panel">
         <div class="panel-heading">
             <h3>
@@ -48,11 +49,20 @@
                         @Html.ValidationMessageFor(model => model.Detalle, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-right">
+                        @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control", @id = "nombres" } })
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="btn-block text-center">
-        <input type="submit" value="Editar Rol" class="btn btn-default" />
+        <input type="submit" value="Editar Permiso" class="btn btn-default" />
         <a href="@Url.Action("Index", "Roles")" class="btn btn-success">
             <i class="glyphicon glyphicon-list"></i> Regresar al Listado
         </a>
@@ -60,8 +70,6 @@
 
 
 }
-
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

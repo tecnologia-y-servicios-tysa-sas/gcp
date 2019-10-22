@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<GCP_CF.Models.Rol>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Roles";
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
@@ -14,7 +14,7 @@
 
 
 <p>
-    @Html.ActionLink("Crear Rol", "Create",null, new { @class = "btn btn-default btn-large" })
+    @Html.ActionLink("Crear Rol", "Create", null, new { @class = "btn btn-default btn-large" })
 </p>
 
 <table id="tblUsuarios" class="table table-bordered" style="width: 100%">
@@ -22,6 +22,9 @@
         <tr>
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Descripción)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Detalle)
             </th>
             <th class="head-table">Editar</th>
         </tr>
@@ -34,13 +37,36 @@
                     @Html.DisplayFor(modelItem => item.Descripción)
                 </td>
                 <td class="border-cell">
-                    @Html.ActionLink("Editar", "Edit", new { id = item.RolId })
+                    @Html.DisplayFor(modelItem => item.Detalle)
+                </td>
+                <td class="border-cell">
+                    @Html.ActionLink("Editar", "Edit", new { id = item.RolId }) |
+                    @Html.ActionLink("Detalles", "PermisoRoles", new { id = item.RolId }, new { @class = "dialog-window" })
                 </td>
             </tr>
         }
     </tbody>
 
 </table>
+
+
+<div class="modal fade" id="PermisoRoles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width:70%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn2 btn-secondary" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -53,6 +79,28 @@
 <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("body").on("click", "a.dialog-window", null, function (e) {
+            e.preventDefault();
+            var $link = $(this);
+            var title = $link.text();
+            $('#PermisoRoles .modal-title').html(title);
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#PermisoRoles').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#PermisoRoles .te').html(data);
+                    $('#PermisoRoles').modal();
+                }).success(function () { $('input:text:visible:first').focus(); });
+
+            }
+        });
+    });
+
+
 
     $(document).ready(function () {
 

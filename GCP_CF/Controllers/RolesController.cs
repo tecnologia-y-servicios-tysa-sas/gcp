@@ -38,23 +38,51 @@ namespace GCP_CF.Controllers
         // GET: Roles/Create
         public ActionResult Create()
         {
+            ViewBag.PermisosId = new SelectList(db.Permisos.OrderBy(x => x.Descripción), "PermisoId", "Descripción");
             return View();
         }
 
-        // POST: Roles/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RolId,Descripción")] Rol rol)
+        public ActionResult Create( Rol rol, String[] PermisosId)
         {
             if (ModelState.IsValid)
             {
-                db.Rols.Add(rol);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (var transacction = db.Database.BeginTransaction())
+                {
+
+                    try
+                    {
+                        db.Rols.Add(rol);
+                        
+
+                        if (PermisosId != null)
+                        {
+                            foreach (var item in PermisosId)
+                            {
+                                db.PermisosRoles.Add(new PermisosRoles { RolId = rol.RolId, PermisoId = Convert.ToInt32(item), Estado = true });
+                            }
+
+                        }
+
+                        db.SaveChanges();
+                        transacction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+
+                        transacction.Rollback();
+                       ModelState.AddModelError("", "Error " +  ex + " " + "Favor validar información o comunicarse con el administrador del sistema");
+                        return View();
+                    }
+                }
+
+
             }
 
+            ViewBag.PermisosId = new SelectList(db.Permisos.OrderBy(x => x.Descripción), "PermisoId", "Descripción");
             return View(rol);
         }
 
@@ -73,12 +101,10 @@ namespace GCP_CF.Controllers
             return View(rol);
         }
 
-        // POST: Roles/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RolId,Descripción")] Rol rol)
+        public ActionResult Edit(Rol rol)
         {
             if (ModelState.IsValid)
             {
@@ -114,6 +140,40 @@ namespace GCP_CF.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult PermisoRoles(int? id)
+        {
+            return PartialView(db.PermisosRoles.Where(x => x.RolId == id).ToList());
+        }
+
+        public ActionResult EditPermisos(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            PermisosRoles rol = db.PermisosRoles.Find(id);
+            if (rol == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(rol);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPermisos(PermisosRoles rol)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(rol).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(rol);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

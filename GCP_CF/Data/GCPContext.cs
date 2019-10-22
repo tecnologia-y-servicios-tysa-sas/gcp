@@ -63,5 +63,8 @@ namespace GCP_CF.Models
         public System.Data.Entity.DbSet<GCP_CF.Models.UsuariosRoles> usuariosroles { get; set; }
 
         public System.Data.Entity.DbSet<GCP_CF.Models.Rol> Rols { get; set; }
+
+        public System.Data.Entity.DbSet<GCP_CF.Models.Permisos> Permisos { get; set; }
+        public System.Data.Entity.DbSet<GCP_CF.Models.PermisosRoles> PermisosRoles { get; set; }
     }
 }

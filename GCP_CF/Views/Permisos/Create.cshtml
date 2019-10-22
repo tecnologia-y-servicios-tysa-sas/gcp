@@ -1,20 +1,18 @@
-﻿@model GCP_CF.Models.Rol
+﻿@model GCP_CF.Models.Permisos
 
 @{
-    ViewBag.Title = "Editar Roles";
+                /**/
+
+                ViewBag.Title = "Crear Permisos";
 }
 
-<h2>Editar Roles</h2>
+<h2>Crear Pemisos</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">      
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.RolId)                
-    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="panel">
         <div class="panel-heading">
@@ -36,30 +34,38 @@
                         @Html.ValidationMessageFor(model => model.Descripción, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
-            <div class="form-horizontal">
-
                 <div class="form-group">
                     <div class="col-md-2 text-right">
                         @Html.LabelFor(model => model.Detalle, htmlAttributes: new { @class = "control-label" })
                     </div>
                     <div class="col-md-4">
                         @Html.EditorFor(model => model.Detalle, new { htmlAttributes = new { @class = "form-control", @id = "nombres" } })
-                        @Html.ValidationMessageFor(model => model.Detalle, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Descripción, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-right">
+                        @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control", @id = "nombres" } })
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="btn-block text-center">
-        <input type="submit" value="Editar Rol" class="btn btn-default" />
-        <a href="@Url.Action("Index", "Roles")" class="btn btn-success">
+        <input type="submit" value="Crear Permiso" class="btn btn-default" />
+        <a href="@Url.Action("Index", "Permisos")" class="btn btn-success">
             <i class="glyphicon glyphicon-list"></i> Regresar al Listado
         </a>
     </div>
 
 
+    
 }
+
 
 
 @section Scripts {
