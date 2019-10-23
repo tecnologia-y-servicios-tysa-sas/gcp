@@ -8,10 +8,10 @@ namespace GCP_CF.Helpers
 {
     public class UserManager
     {
-        public Usuarios EsValido(GCPContext db, string usuario, string password)
+        public Usuarios EsValido(GCPContext db, string correoElectronico, string password)
         {
             string decodedPassword = Base64Encode(password);
-            return db.Usuarios.Where(u => u.Usuario == usuario && u.Password == decodedPassword && u.EsActivo).FirstOrDefault();
+            return db.Usuarios.Where(u => u.CorreoElectronico == correoElectronico && u.Password == decodedPassword && u.EsActivo).FirstOrDefault();
         }
 
         public string Base64Encode(string sData) // Encode

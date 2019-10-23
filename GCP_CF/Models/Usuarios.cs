@@ -12,10 +12,10 @@ namespace GCP_CF.Models
         [Key]
         public int Usuario_Id { get; set; }
 
-        [MaxLength(20, ErrorMessage = "El {0} ingresado no puede contener más de {1} caracteres.")]
-        [Required(ErrorMessage = "Debe ingresar el nombre de usuario")]
-        [Display(Name = "Usuario")]
-        public string Usuario { get; set; }
+        //[MaxLength(20, ErrorMessage = "El {0} ingresado no puede contener más de {1} caracteres.")]
+        //[Required(ErrorMessage = "Debe ingresar el nombre de usuario")]
+        //[Display(Name = "Usuario")]
+        //public string Usuario { get; set; }
 
         [MaxLength(20, ErrorMessage = "La {0} ingresada no puede contener más de {1} caracteres.")]
         [Required(ErrorMessage = "Debe ingresar la contraseña")]
@@ -86,6 +86,7 @@ namespace GCP_CF.Models
         [Required(ErrorMessage = "Debe ingresar el correo electrónico del usuario")]
         [Display(Name = "Correo Electrónico")]
         [RegularExpression(@"\b[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b", ErrorMessage = "Correo electrónico no es valido")]
+        [Index(IsUnique = true)]
         public string CorreoElectronico { get; set; }
 
         [Display(Name = "Activar Usuario")]

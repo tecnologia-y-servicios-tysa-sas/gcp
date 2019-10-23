@@ -42,14 +42,8 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-2 text-right">
-                    @Html.LabelFor(model => model.CorreoElectronico, htmlAttributes: new { @class = "control-label" })
-                </div>
-                <div class="col-md-4">
-                    @Html.EditorFor(model => model.CorreoElectronico, new { htmlAttributes = new { @class = "form-control", @id = "correo" } })
-                    @Html.ValidationMessageFor(model => model.CorreoElectronico, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-2 text-right">
+               
+                <div class="col-md-4 text-right">
                     @Html.LabelFor(model => model.EsActivo, htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-md-4">
@@ -74,19 +68,35 @@
         <div class="form-horizontal">
 
             <div class="form-group">
-                <div class="col-md-2 text-right">
+                @*<div class="col-md-2 text-right">
                     @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-4">
+            @if (!ViewBag.IsEdit)
+            {
+                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @id = "usuario" } })
+            }
+            else
+            {
+                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "usuario" } })
+            }
+            @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+        </div>*@
+
+                <div class="col-md-2 text-right">
+                    @Html.LabelFor(model => model.CorreoElectronico, htmlAttributes: new { @class = "control-label" })
                 </div>
                 <div class="col-md-4">
                     @if (!ViewBag.IsEdit)
                     {
-                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @id = "usuario" } })
+                        @Html.EditorFor(model => model.CorreoElectronico, new { htmlAttributes = new { @class = "form-control", @id = "correo" } })
+                        @Html.ValidationMessageFor(model => model.CorreoElectronico, "", new { @class = "text-danger" })
                     }
                     else
                     {
-                        @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "usuario" } })
+                        @Html.EditorFor(model => model.CorreoElectronico, new { htmlAttributes = new { @class = "form-control",@readonly = "readonly", @id = "correo" } })
+                        @Html.ValidationMessageFor(model => model.CorreoElectronico, "", new { @class = "text-danger" })
                     }
-                    @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-2 text-right">
                     @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
@@ -94,7 +104,7 @@
                 <div class="col-md-4">
                     @if (ViewBag.IsEdit)
                     {
-                        @Html.PasswordFor(model => model.PasswordAux, new { @class = "form-control", @id = "password" })
+                        @Html.PasswordFor(model => model.PasswordAux, new { @class = "form-control",@readonly = "readonly", @id = "password" })
                         @Html.HiddenFor(model => model.Password, new { @id = "originalPassword" })
                     }
                     else

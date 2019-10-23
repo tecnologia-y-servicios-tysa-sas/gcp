@@ -31,7 +31,7 @@ namespace GCP_CF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(FormCollection form)
         {
-            string usuario = form["usuario"];
+            string correoElectronico = form["correoElectronico"];
             string password = form["password"];
 
             try
@@ -39,7 +39,7 @@ namespace GCP_CF.Controllers
                 using (GCPContext db = new GCPContext()) {
 
                     UserManager um = new UserManager();
-                    Usuarios dbUser = um.EsValido(db, usuario, password);
+                    Usuarios dbUser = um.EsValido(db, correoElectronico, password);
 
                     if (dbUser != null && dbUser.EsActivo)
                     {
@@ -73,17 +73,32 @@ namespace GCP_CF.Controllers
         private void IdentitySignIn(UserState userState, bool isPersistent = false)
         {
             var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, userState.UserId),
-                        new Claim(ClaimTypes.Name, userState.Name),
-                        new Claim("UserState", userState.ToString())
-                    };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userState.Email),
+                    new Claim(ClaimTypes.Name, userState.Name),
+                    new Claim("UserState", userState.ToString())
+                };
 
-            if (userState.IsSuperUser) claims.Add(new Claim(ClaimTypes.Role, RolHelper.SUPERUSUARIO));
-            if (userState.IsSuperUser || userState.CanWrite) claims.Add(new Claim(ClaimTypes.Role, RolHelper.ESCRITURA));
-            if (userState.IsSuperUser || !userState.CanWrite) claims.Add(new Claim(ClaimTypes.Role, RolHelper.LECTURA));
-            if (userState.IsSuperUser || userState.AllContracts) claims.Add(new Claim(ClaimTypes.Role, RolHelper.TODOS_LOS_CONTRATOS));
-            if (!userState.IsSuperUser && !string.IsNullOrEmpty(userState.ContractIds)) claims.Add(new Claim(RolHelper.LISTADO_CONTRATOS, userState.ContractIds));
+            if (userState.IsSuperUser)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, RolHelper.SUPERUSUARIO));
+            }
+            if (userState.IsSuperUser || userState.CanWrite)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, RolHelper.ESCRITURA));
+            }
+            if (userState.IsSuperUser || !userState.CanWrite)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, RolHelper.LECTURA));
+            }
+            if (userState.IsSuperUser || userState.AllContracts)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, RolHelper.TODOS_LOS_CONTRATOS));
+            }
+            if (!userState.IsSuperUser && !string.IsNullOrEmpty(userState.ContractIds))
+            {
+                claims.Add(new Claim(RolHelper.LISTADO_CONTRATOS, userState.ContractIds));
+            }
 
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 

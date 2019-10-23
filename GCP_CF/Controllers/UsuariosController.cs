@@ -62,7 +62,6 @@ namespace GCP_CF.Controllers
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
             ViewBag.RolId = new SelectList(db.Rols.OrderBy(x=>x.Descripción), "RolId", "Descripción");
-
             return GuardarUsuario(usuarios, form, ViewBag.IsEdit );
         }
 
@@ -96,6 +95,8 @@ namespace GCP_CF.Controllers
         {
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;
+            int? rolId = db.Usuarios.Where(x => x.Usuario_Id == usuarios.Usuario_Id).Select(x => x.RolId).FirstOrDefault();
+            ViewBag.RolId = new SelectList(db.Rols, "RolId", "Descripción", rolId);
             return GuardarUsuario(usuarios, form, ViewBag.IsEdit);
         }
 
@@ -107,6 +108,17 @@ namespace GCP_CF.Controllers
             try
             {
                 if (usuarios == null) return HttpNotFound();
+
+                string email = string.Empty;
+                email = db.Usuarios.Where(x => x.CorreoElectronico == usuarios.CorreoElectronico).FirstOrDefault().CorreoElectronico;
+                if (!string.IsNullOrEmpty(email))
+                {
+                    List<Contratos> contratos = db.Contratos.OrderByDescending(c => c.NumeroContrato).ToList();
+                    ViewBag.Contratos = contratos;
+                    ViewBag.MensajeError = "El correo electrónico ya se encuentra en uso.";
+                    return View(usuarios);
+                }
+
                 UserManager um = new UserManager();
                 
                 if (!string.IsNullOrEmpty(usuarios.PasswordAux))
