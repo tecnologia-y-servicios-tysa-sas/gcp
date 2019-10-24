@@ -4,21 +4,21 @@
 }
 
 <h2>Editar Permisos Roles</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditPermisos", "Roles", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.PermisosRolesId)
-    @Html.HiddenFor(model => model.RolId)
-    @Html.HiddenFor(model => model.PermisoId)
-</div>
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PermisosRolesId)
+        @Html.HiddenFor(model => model.RolId)
+        @Html.HiddenFor(model => model.PermisoId)
+    </div>
 
     <div class="panel">
         <div class="panel-heading">
             <h3>
-                <i class="glyphicon glyphicon-cog"></i> Detalle
+                <i class="glyphicon glyphicon-cog"></i> Detalles
             </h3>
         </div>
 
@@ -36,12 +36,11 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <div class="btn-block text-center">
-        <input type="submit" value="Editar Permiso" class="btn btn-default" />
-       
+        <input type="submit" value="Activar Permiso" class="btn btn-default" />
     </div>
 
 }

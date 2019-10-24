@@ -14,6 +14,8 @@ namespace GCP_CF.Controllers
 {
     public class AccountController : Controller
     {
+
+        private GCPContext db = new GCPContext();
         // GET: Login
         public ActionResult Login()
         {
@@ -100,6 +102,56 @@ namespace GCP_CF.Controllers
                 claims.Add(new Claim(RolHelper.LISTADO_CONTRATOS, userState.ContractIds));
             }
 
+
+            if (userState.RolId != 0)
+            {
+
+                var Permisos = db.PermisosRoles.Where(x => x.RolId == userState.RolId).ToList();
+
+                if (Permisos != null || Permisos.Count() != 0)
+                {
+                    foreach (var item in Permisos)
+                    {   // Dinamico                   
+                        //if (item.Estado == true)
+                        //{   string DescripcionPermiso = String.Format("RolHelper.{0}", item.Permisos.Descripción);
+                        //    claims.Add(new Claim(ClaimTypes.Role, DescripcionPermiso));
+                        //}
+                        if (item.Permisos.Descripción == "Contratos" && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Contratos));
+                        }
+                        if (item.Permisos.Descripción == "Seguimiento" && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Seguimientos));
+                        }
+                        if (item.Permisos.Descripción == "Facturación" && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Facturacion));
+                        }
+                        if (item.Permisos.Descripción == "Reportes" && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Reportes));
+                        }
+                        if (item.Permisos.Descripción == "Terceros" && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Terceros));
+                        }
+                        if (item.Permisos.Descripción == "Maestros" && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Maestros));
+                        }
+                        if (item.Permisos.Descripción == "Usuarios" && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Usuarios));
+                        }
+                    }
+
+                }
+
+            }
+
+
+
             var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
             AuthenticationManager.SignIn(new AuthenticationProperties
@@ -146,6 +198,15 @@ namespace GCP_CF.Controllers
         {
             Claim claim = claims.Where(c => c.Type == item).FirstOrDefault();
             return claim != null ? claim.Value : string.Empty;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

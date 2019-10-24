@@ -68,6 +68,7 @@ namespace GCP_CF.Models
             get { return RolHelper.EsSuperUsuario(IdRoles); }
         }
 
+
         [MaxLength(30, ErrorMessage = "El campo {0} no puede contener más de {1} caracteres.")]
         [Required(ErrorMessage = "Debe ingresar el nombre del usuario")]
         [Display(Name = "Nombres")]

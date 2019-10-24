@@ -16,6 +16,7 @@ namespace GCP_CF.Helpers
         public string Role = string.Empty;
         public bool AllContracts = false;
         public string ContractIds = string.Empty;
+        public int RolId = 0;
 
         public override string ToString()
         {
@@ -51,7 +52,7 @@ namespace GCP_CF.Helpers
 
             return true;
         }
-
+        
         public void FromUser(Usuarios usuario)
         {
             ID = usuario.Usuario_Id;
@@ -59,11 +60,13 @@ namespace GCP_CF.Helpers
             Name = usuario.NombreCompleto;
             Email = usuario.CorreoElectronico;
             IsActive = usuario.EsActivo;
+            RolId = usuario.RolId.Value;
             IsSuperUser = usuario.EsSuperUsuario;
             CanWrite = usuario.TipoPermisos == "W";
             AllContracts = usuario.TodosLosContratos;
             ContractIds = usuario.IdContratos;
             Role = usuario.IdRoles;
+           
         }
 
         public List<int> ContractIdListFromUser()

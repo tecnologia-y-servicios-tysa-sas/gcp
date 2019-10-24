@@ -41,7 +41,8 @@
                 </td>
                 <td class="border-cell">
                     @Html.ActionLink("Editar", "Edit", new { id = item.RolId }) |
-                    @Html.ActionLink("Detalles", "PermisoRoles", new { id = item.RolId }, new { @class = "dialog-window" })
+                    @Html.ActionLink("Detalles", "PermisoRoles", new { id = item.RolId }, new { @class = "dialog-window" }) |
+                    @Html.ActionLink("Add Permisos", "AddPermisosRol", new { id = item.RolId })
                 </td>
             </tr>
         }

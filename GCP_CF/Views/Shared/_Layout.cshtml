@@ -38,125 +38,149 @@
                     <li class="active">
                         @Html.ActionLink("Inicio", "Index", "Home")
                     </li>
-                    <li>
-                        <a href="#contratosSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="glyphicon glyphicon-blackboard"></i>
-                            Contratos
-                        </a>
-                        <ul class="collapse list-unstyled" id="contratosSubmenu">
-                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
-                            {
-                                <li>@Html.ActionLink("Crear Contratos", "Create", "Contratos")</li>
-                            }
-                            <li>@Html.ActionLink("Ver Contratos", "Index", "Contratos")</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#seguimientoSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="glyphicon glyphicon-dashboard"></i>
-                            Seguimiento
-                        </a>
-                        <ul class="collapse list-unstyled" id="seguimientoSubmenu">
-                            <li>@Html.ActionLink("Fases por Contrato", "Index", "Seguimiento")</li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#facturasSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="glyphicon glyphicon-list-alt"></i>
-                            Facturación
-                        </a>
-                        <ul class="collapse list-unstyled" id="facturasSubmenu">
-                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
-                            {
-                                <li>@Html.ActionLink("Crear Factura", "Create", "Facturas")</li>
-                            }
-                            <li>@Html.ActionLink("Listado de Facturas", "Index", "Facturas")</li>
-
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#reportesSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="glyphicon glyphicon-book"></i>
-                            Reportes
-                        </a>
-                        <ul class="collapse list-unstyled" id="reportesSubmenu">
-                            <li>@Html.ActionLink("Contratos", "Contratos", "Reportes")</li>
-                            <li>@Html.ActionLink("Facturas", "Facturas", "Reportes")</li>
-                        </ul>
-                    </li>
-                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.Contratos))
                     {
                         <li>
-                            <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
-                                <i class="glyphicon glyphicon-certificate"></i>
-                                Terceros
+                            <a href="#contratosSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-blackboard"></i>
+                                Contratos
                             </a>
-                            <ul class="collapse list-unstyled" id="personasSubmenu">
-                                <li>@Html.ActionLink("Crear Tercero", "Create", "Terceros")</li>
-                                <li>@Html.ActionLink("Ver Terceros", "Index", "Terceros")</li>
-                                <li>@Html.ActionLink("Tipos de Terceros", "Index", "TiposTerceros")</li>
-                                <li>@Html.ActionLink("Naturaleza", "Index", "TiposNaturaleza")</li>
-                                <li>@Html.ActionLink("Tipos Documentos", "Index", "TiposDocumentos")</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#maestrosSubmenu" data-toggle="collapse" aria-expanded="false">
-                                <i class="glyphicon glyphicon-edit"></i>
-                                Maestros
-                            </a>
-                            <ul class="collapse list-unstyled" id="maestrosSubmenu">
-                                <li>
-                                    <a href="#maestroContratos" data-toggle="collapse" aria-expanded="false">
-                                        <i class="glyphicon glyphicon-blackboard"></i> Contratos
-                                    </a>
-                                    <ul class="collapse list-unstyled" id="maestroContratos">
-                                        <li>@Html.ActionLink("Tipos de Contratos", "Index", "TiposContratos")</li>
-                                        <li>@Html.ActionLink("Estados Contratos", "Index", "TiposEstadoContrato")</li>
-                                        <li>@Html.ActionLink("Formas de Pago", "Index", "FormaPagos")</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#maestroFasesSubmenu" data-toggle="collapse" aria-expanded="false">
-                                        <i class="glyphicon glyphicon-list"></i> Fases
-                                    </a>
-                                    <ul class="collapse list-unstyled" id="maestroFasesSubmenu">
-                                        <li>@Html.ActionLink("Fases", "Index", "FasesContrato")</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#maestroActividadesSubmenu" data-toggle="collapse" aria-expanded="false">
-                                        <i class="glyphicon glyphicon-calendar"></i> Actividades
-                                    </a>
-                                    <ul class="collapse list-unstyled" id="maestroActividadesSubmenu">
-                                        <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividad")</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#maestroFacturasSubmenu" data-toggle="collapse" aria-expanded="false">
-                                        <i class="glyphicon glyphicon-list-alt"></i> Facturas
-                                    </a>
-                                    <ul class="collapse list-unstyled" id="maestroFacturasSubmenu">
-                                        <li>@Html.ActionLink("Nuevo Estado de Factura", "Create", "EstadosFactura")</li>
-                                        <li>@Html.ActionLink("Listar Estados de Factura", "Index", "EstadosFactura")</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Usuarios
-                            </a>
-                            <ul class="collapse list-unstyled" id="userSubmenu">
-                                <li>@Html.ActionLink("Listado de Usuarios", "Index", "Usuarios")</li>
-                                <li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>
-                                <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
-                                <li>@Html.ActionLink("Permisos", "Index", "Permisos")</li>
+                            <ul class="collapse list-unstyled" id="contratosSubmenu">
+                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+                                {
+                                    <li>@Html.ActionLink("Crear Contratos", "Create", "Contratos")</li>
+                                }
+                                <li>@Html.ActionLink("Ver Contratos", "Index", "Contratos")</li>
                             </ul>
                         </li>
                     }
-                </ul>
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.Seguimientos))
+                    {
+                        <li>
+                            <a href="#seguimientoSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-dashboard"></i>
+                                Seguimiento
+                            </a>
+                            <ul class="collapse list-unstyled" id="seguimientoSubmenu">
+                                <li>@Html.ActionLink("Fases por Contrato", "Index", "Seguimiento")</li>
+
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.Facturacion))
+                    {
+                        <li>
+                            <a href="#facturasSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                Facturación
+                            </a>
+                            <ul class="collapse list-unstyled" id="facturasSubmenu">
+
+                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+                                {
+                                    <li>@Html.ActionLink("Crear Factura", "Create", "Facturas")</li>
+                                }
+                                <li>@Html.ActionLink("Listado de Facturas", "Index", "Facturas")</li>
+
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.Reportes))
+                    {
+                        <li>
+                            <a href="#reportesSubmenu" data-toggle="collapse" aria-expanded="false">
+                                <i class="glyphicon glyphicon-book"></i>
+                                Reportes
+                            </a>
+                            <ul class="collapse list-unstyled" id="reportesSubmenu">
+                                <li>@Html.ActionLink("Contratos", "Contratos", "Reportes")</li>
+                                <li>@Html.ActionLink("Facturas", "Facturas", "Reportes")</li>
+                            </ul>
+                        </li>
+                    }
+
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
+                    {
+                        if (User.IsInRole(GCP_CF.Helpers.RolHelper.Terceros))
+                        {
+                            <li>
+                                <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-certificate"></i>
+                                    Terceros
+                                </a>
+                                <ul class="collapse list-unstyled" id="personasSubmenu">
+                                    <li>@Html.ActionLink("Crear Tercero", "Create", "Terceros")</li>
+                                    <li>@Html.ActionLink("Ver Terceros", "Index", "Terceros")</li>
+                                    <li>@Html.ActionLink("Tipos de Terceros", "Index", "TiposTerceros")</li>
+                                    <li>@Html.ActionLink("Naturaleza", "Index", "TiposNaturaleza")</li>
+                                    <li>@Html.ActionLink("Tipos Documentos", "Index", "TiposDocumentos")</li>
+                                </ul>
+                            </li>
+                        }
+                        if (User.IsInRole(GCP_CF.Helpers.RolHelper.Maestros))
+                        {
+                            <li>
+                                <a href="#maestrosSubmenu" data-toggle="collapse" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                    Maestros
+                                </a>
+                                <ul class="collapse list-unstyled" id="maestrosSubmenu">
+                                    <li>
+                                        <a href="#maestroContratos" data-toggle="collapse" aria-expanded="false">
+                                            <i class="glyphicon glyphicon-blackboard"></i> Contratos
+                                        </a>
+                                        <ul class="collapse list-unstyled" id="maestroContratos">
+                                            <li>@Html.ActionLink("Tipos de Contratos", "Index", "TiposContratos")</li>
+                                            <li>@Html.ActionLink("Estados Contratos", "Index", "TiposEstadoContrato")</li>
+                                            <li>@Html.ActionLink("Formas de Pago", "Index", "FormaPagos")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#maestroFasesSubmenu" data-toggle="collapse" aria-expanded="false">
+                                            <i class="glyphicon glyphicon-list"></i> Fases
+                                        </a>
+                                        <ul class="collapse list-unstyled" id="maestroFasesSubmenu">
+                                            <li>@Html.ActionLink("Fases", "Index", "FasesContrato")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#maestroActividadesSubmenu" data-toggle="collapse" aria-expanded="false">
+                                            <i class="glyphicon glyphicon-calendar"></i> Actividades
+                                        </a>
+                                        <ul class="collapse list-unstyled" id="maestroActividadesSubmenu">
+                                            <li>@Html.ActionLink("Estados Actividades", "Index", "EstadosActividad")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#maestroFacturasSubmenu" data-toggle="collapse" aria-expanded="false">
+                                            <i class="glyphicon glyphicon-list-alt"></i> Facturas
+                                        </a>
+                                        <ul class="collapse list-unstyled" id="maestroFacturasSubmenu">
+                                            <li>@Html.ActionLink("Nuevo Estado de Factura", "Create", "EstadosFactura")</li>
+                                            <li>@Html.ActionLink("Listar Estados de Factura", "Index", "EstadosFactura")</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
+                        if (User.IsInRole(GCP_CF.Helpers.RolHelper.Terceros))
+                        {
+                            <li>
+                                <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    Usuarios
+                                </a>
+                                <ul class="collapse list-unstyled" id="userSubmenu">
+                                    <li>@Html.ActionLink("Listado de Usuarios", "Index", "Usuarios")</li>
+                                    <li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>
+                                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                                    <li>@Html.ActionLink("Permisos", "Index", "Permisos")</li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                    </ul>
                 <ul class="list-unstyled btn-close">
                     <li><a href="javascript:void(0)" onclick="Logout()"><i class="glyphicon glyphicon-off"></i>Cerrar</a></li>
                 </ul>

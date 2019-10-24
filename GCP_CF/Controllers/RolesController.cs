@@ -157,21 +157,87 @@ namespace GCP_CF.Controllers
             {
                 return HttpNotFound();
             }
-            return PartialView(rol);
+            //return PartialView(rol);
+
+            return View(rol);
         }
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         public ActionResult EditPermisos(PermisosRoles rol)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(rol).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AddPermisosRol","Roles",new { id = rol.RolId });
             }
             return View(rol);
+        }
+
+        public ActionResult AddPermisosRol(int id)
+        {
+
+            var permisos = db.PermisosRoles.Where(x => x.RolId == id).ToList().OrderBy(x => x.Permisos.Descripción);
+
+            List<int> Npermisos = new List<int>();
+
+            foreach (var item in permisos)
+            {
+                Npermisos.Add(item.PermisoId);
+
+            }
+
+           
+
+            ViewBag.NombreRol = db.Rols.Where(x => x.RolId == id).FirstOrDefault().Descripción;
+            ViewBag.PermisosId = new SelectList(db.Permisos.Where(x=> !(Npermisos.Contains(x.PermisoId))).OrderBy(x => x.Descripción), "PermisoId", "Descripción");
+
+            return View(permisos.ToList());
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddPermisosRol( PermisosRoles permisosRoles,  string[] PermisosId)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var transacction = db.Database.BeginTransaction())
+                {
+
+                    try
+                    {
+                       
+                        if (PermisosId != null)
+                        {
+                            foreach (var item in PermisosId)
+                            {
+                                db.PermisosRoles.Add(new PermisosRoles { RolId = permisosRoles.RolId, PermisoId = Convert.ToInt32(item), Estado = true });
+                            }
+
+                        }
+
+                        db.SaveChanges();
+                        transacction.Commit();
+                        //return RedirectToAction("Index");
+                        return RedirectToAction("AddPermisosRol", "Roles", new { id = permisosRoles.RolId });
+                    }
+                    catch (Exception ex)
+                    {
+
+                        transacction.Rollback();
+                        ModelState.AddModelError("", "Error " + ex + " " + "Favor validar información o comunicarse con el administrador del sistema");
+                        return View();
+                    }
+                }
+
+
+            }
+
+            ViewBag.PermisosId = new SelectList(db.Permisos.OrderBy(x => x.Descripción), "PermisoId", "Descripción");
+            return View();
         }
 
 

@@ -22,6 +22,17 @@ namespace GCP_CF.Helpers
         public const string PUEDE_LEER = SUPERUSUARIO + "," + LECTURA;
         public const string PUEDE_ESCRIBIR = SUPERUSUARIO + "," + ESCRITURA;
 
+        // Constantes de Menu
+        public const string Contratos = "Contratos";
+        public const string Seguimientos = "Seguimientos";
+        public const string Facturacion  = "Facturacion";
+        public const string Reportes = "Reportes";
+        public const string Terceros = "Terceros";
+        public const string Maestros = "Maestros";
+        public const string Usuarios = "Usuarios";
+
+
+
         private static readonly GCPContext db = new GCPContext();
 
         public static List<KeyValuePair<int, string>> ObtenerListadoRoles()
@@ -40,7 +51,8 @@ namespace GCP_CF.Helpers
         public static bool EsSuperUsuario(string rolUsuario)
         {
             string rolSuperUsuario = ConfigurationManager.AppSettings["rolSuperUsuario"];
-            if (!string.IsNullOrEmpty(rolSuperUsuario)) return rolSuperUsuario == rolUsuario;
+            if (!string.IsNullOrEmpty(rolSuperUsuario))
+                return rolSuperUsuario == rolUsuario;
 
             return false;
         }

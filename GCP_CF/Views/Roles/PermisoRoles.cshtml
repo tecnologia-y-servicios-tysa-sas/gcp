@@ -8,6 +8,7 @@
 
 <h2 class="text-left">Permisos Rol @Html.DisplayFor(model => model.FirstOrDefault().Rol.Descripción)</h2>
 
+
 <td style="width: 100%;" class="text text-uppercase" align="center"></td>
 <table class="table table-bordered" style="width: 100%">
     <thead>
@@ -18,7 +19,7 @@
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            <th class="head-table">Editar</th>
+           
         </tr>
     </thead>
     <tbody>
@@ -31,9 +32,9 @@
                 <td class="border-cell">
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
-                <td class="border-cell">
+                @*<td class="border-cell">
                     @Html.ActionLink("Editar", "EditPermisos", new { id = item.PermisosRolesId }, new { @class = "dialog-window", @Id = "EditPermisos" })
-                </td>
+                </td>*@
             </tr>
         }
     </tbody>
