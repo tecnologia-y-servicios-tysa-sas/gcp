@@ -191,6 +191,7 @@ namespace GCP_CF.Controllers
 
            
 
+            ViewBag.RolId = id;
             ViewBag.NombreRol = db.Rols.Where(x => x.RolId == id).FirstOrDefault().Descripción;
             ViewBag.PermisosId = new SelectList(db.Permisos.Where(x=> !(Npermisos.Contains(x.PermisoId))).OrderBy(x => x.Descripción), "PermisoId", "Descripción");
 
@@ -200,7 +201,7 @@ namespace GCP_CF.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddPermisosRol( PermisosRoles permisosRoles,  string[] PermisosId)
+        public ActionResult AddPermisosRol( PermisosRoles permisosRoles,  string[] PermisosId, int? rolesId)
         {
             if (ModelState.IsValid)
             {
@@ -214,7 +215,7 @@ namespace GCP_CF.Controllers
                         {
                             foreach (var item in PermisosId)
                             {
-                                db.PermisosRoles.Add(new PermisosRoles { RolId = permisosRoles.RolId, PermisoId = Convert.ToInt32(item), Estado = true });
+                                db.PermisosRoles.Add(new PermisosRoles { RolId = rolesId.Value, PermisoId = Convert.ToInt32(item), Estado = true });
                             }
 
                         }
@@ -222,7 +223,7 @@ namespace GCP_CF.Controllers
                         db.SaveChanges();
                         transacction.Commit();
                         //return RedirectToAction("Index");
-                        return RedirectToAction("AddPermisosRol", "Roles", new { id = permisosRoles.RolId });
+                        return RedirectToAction("AddPermisosRol", "Roles", new { id = rolesId });
                     }
                     catch (Exception ex)
                     {
