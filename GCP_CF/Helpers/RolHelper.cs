@@ -22,14 +22,32 @@ namespace GCP_CF.Helpers
         public const string PUEDE_LEER = SUPERUSUARIO + "," + LECTURA;
         public const string PUEDE_ESCRIBIR = SUPERUSUARIO + "," + ESCRITURA;
 
-        // Constantes de Menu
-        public const string Contratos = "Contratos";
-        public const string Seguimientos = "Seguimientos";
-        public const string Facturacion  = "Facturacion";
-        public const string Reportes = "Reportes";
-        public const string Terceros = "Terceros";
-        public const string Maestros = "Maestros";
-        public const string Usuarios = "Usuarios";
+        // Listado de Menu Id
+        #region Lista de propiedades de Menu
+
+        public const string M1 = "M1";
+        public const string M2 = "M2";
+        public const string M3  = "M3";
+        public const string M4 = "M4";
+        public const string M5 = "M5";
+        public const string M6 = "M6";
+        public const string M7 = "M7";
+        public const string M8 = "M8";
+        public const string M9 = "M9";
+        public const string M10 = "M10";
+        public const string M11 = "M11";
+        public const string M12 = "M12";
+        public const string M13 = "M13";
+        public const string M14 = "M14";
+        public const string M15 = "M15";
+        public const string M16 = "M16";
+        public const string M17 = "M17";
+        public const string M18 = "M18";
+        public const string M19 = "M19";
+        public const string M20 = "M20";
+        public const string M21 = "M21";
+
+        #endregion
 
 
 

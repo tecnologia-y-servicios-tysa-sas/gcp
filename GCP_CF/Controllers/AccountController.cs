@@ -116,34 +116,97 @@ namespace GCP_CF.Controllers
                         //{   string DescripcionPermiso = String.Format("RolHelper.{0}", item.Permisos.Descripción);
                         //    claims.Add(new Claim(ClaimTypes.Role, DescripcionPermiso));
                         //}
-                        if (item.Permisos.Descripción == "Contratos" && item.Estado == true)
+                        #region Controles de Menu (Permisos)
+
+                        if (item.Permisos.PermisoId == 1 && item.Estado == true)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Contratos));
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M1));
                         }
-                        if (item.Permisos.Descripción == "Seguimiento" && item.Estado == true)
+                        if (item.Permisos.PermisoId == 2 && item.Estado == true)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Seguimientos));
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M2));
                         }
-                        if (item.Permisos.Descripción == "Facturación" && item.Estado == true)
+                        if (item.Permisos.PermisoId == 3 && item.Estado == true)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Facturacion));
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M3));
                         }
-                        if (item.Permisos.Descripción == "Reportes" && item.Estado == true)
+                        if (item.Permisos.PermisoId == 4 && item.Estado == true)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Reportes));
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M4));
                         }
-                        if (item.Permisos.Descripción == "Terceros" && item.Estado == true)
+                        if (item.Permisos.PermisoId == 5 && item.Estado == true)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Terceros));
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M5));
                         }
-                        if (item.Permisos.Descripción == "Maestros" && item.Estado == true)
+                        if (item.Permisos.PermisoId == 6 && item.Estado == true)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Maestros));
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M6));
                         }
-                        if (item.Permisos.Descripción == "Usuarios" && item.Estado == true)
+                        if (item.Permisos.PermisoId == 7 && item.Estado == true)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.Usuarios));
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M7));
                         }
+                        if (item.Permisos.PermisoId == 8 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M8));
+                        }
+                        if (item.Permisos.PermisoId == 9 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M9));
+                        }
+                        if (item.Permisos.PermisoId == 10 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M10));
+                        }
+                        if (item.Permisos.PermisoId == 11 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M11));
+                        }
+                        if (item.Permisos.PermisoId == 12 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M12));
+                        }
+                        if (item.Permisos.PermisoId == 13 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M13));
+                        }
+                        if (item.Permisos.PermisoId == 14 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M14));
+                        }
+                        if (item.Permisos.PermisoId == 15 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M15));
+                        }
+                        if (item.Permisos.PermisoId == 16 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M16));
+                        }
+                        if (item.Permisos.PermisoId == 17 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M17));
+                        }
+                        if (item.Permisos.PermisoId == 18 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M18));
+                        }
+                        if (item.Permisos.PermisoId == 19 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M19));
+                        }
+                        if (item.Permisos.PermisoId == 20 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M20));
+                        }
+                        if (item.Permisos.PermisoId == 20 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M20));
+                        }
+                        if (item.Permisos.PermisoId == 21 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M21));
+                        }
+                        #endregion
                     }
 
                 }

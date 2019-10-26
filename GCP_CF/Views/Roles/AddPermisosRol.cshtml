@@ -67,6 +67,9 @@
                                 Permiso
                             </th>
                             <th class="head-table">
+                                Modulo
+                            </th>
+                            <th class="head-table">
                                 @Html.DisplayNameFor(model => model.Estado)
                             </th>
                             <th class="head-table">Editar</th>
@@ -75,17 +78,20 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td class="border-cell">
-                                    @Html.DisplayFor(modelItem => item.Permisos.Descripción)
-                                </td>
-                                <td class="border-cell">
-                                    @Html.DisplayFor(modelItem => item.Estado)
-                                </td>
-                                <td class="border-cell">
-                                    @Html.ActionLink("Editar", "EditPermisos", new { id = item.PermisosRolesId })
-                                </td>
-                            </tr>
+                        <tr>
+                            <td class="border-cell">
+                                @Html.DisplayFor(modelItem => item.Permisos.Descripción)
+                            </td>
+                            <td class="border-cell">
+                                @Html.DisplayFor(modelItem => item.Permisos.Modulos.Descripción)
+                            </td>
+                            <td class="border-cell">
+                                @Html.DisplayFor(modelItem => item.Estado)
+                            </td>
+                            <td class="border-cell">
+                                @Html.ActionLink("Editar", "EditPermisos", new { id = item.PermisosRolesId })
+                            </td>
+                        </tr>
                         }
                     </tbody>
 

@@ -198,6 +198,7 @@
     <Compile Include="Controllers\FormaPagosController.cs" />
     <Compile Include="Controllers\GraphicsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ModulosController.cs" />
     <Compile Include="Controllers\PermisosController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TiposDocumentosController.cs" />
@@ -240,6 +241,14 @@
     <Compile Include="Migrations\201910221601546_PermisosRoles.Designer.cs">
       <DependentUpon>201910221601546_PermisosRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910261356179_Modulos.cs" />
+    <Compile Include="Migrations\201910261356179_Modulos.Designer.cs">
+      <DependentUpon>201910261356179_Modulos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910261422524_ModuloPermiso.cs" />
+    <Compile Include="Migrations\201910261422524_ModuloPermiso.Designer.cs">
+      <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FormaPago.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
@@ -262,6 +271,7 @@
     <Compile Include="Models\EstadosActividad.cs" />
     <Compile Include="Models\FasesContrato.cs" />
     <Compile Include="Data\GCPContext.cs" />
+    <Compile Include="Models\Modulos.cs" />
     <Compile Include="Models\PagosContrato.cs" />
     <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PermisosRoles.cs" />
@@ -498,6 +508,11 @@
     <Content Include="Views\Roles\PermisoRoles.cshtml" />
     <Content Include="Views\Roles\EditPermisos.cshtml" />
     <Content Include="Views\Roles\AddPermisosRol.cshtml" />
+    <Content Include="Views\Modulos\Create.cshtml" />
+    <Content Include="Views\Modulos\Delete.cshtml" />
+    <Content Include="Views\Modulos\Details.cshtml" />
+    <Content Include="Views\Modulos\Edit.cshtml" />
+    <Content Include="Views\Modulos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -531,6 +546,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910221601546_PermisosRoles.resx">
       <DependentUpon>201910221601546_PermisosRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910261356179_Modulos.resx">
+      <DependentUpon>201910261356179_Modulos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910261422524_ModuloPermiso.resx">
+      <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

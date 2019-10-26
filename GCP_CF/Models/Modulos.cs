@@ -6,13 +6,14 @@ using System.Web;
 
 namespace GCP_CF.Models
 {
-    public class Permisos
+    public class Modulos
     {
-        [Key]
-        public int PermisoId { get; set; }
 
-        [Required(ErrorMessage = "Debe Ingrsar la Descripción del Permiso ")]
-        [Display(Name = "Descripción ")]
+        [Key]
+        public int ModuloId { get; set; }
+
+        [Required(ErrorMessage = "Debe Ingrsar la Descripción del Modulo")]
+        [Display(Name = "Modulo")]
         [MaxLength(100, ErrorMessage = "El {0} no puede contener más de {1} caracteres.")]
         public string Descripción { get; set; }
 
@@ -23,10 +24,8 @@ namespace GCP_CF.Models
 
         public bool Estado { get; set; }
 
-        public int? ModuloId { get; set; }
+        public virtual ICollection<Permisos> Permisos { get; set; }
 
-        public virtual ICollection<PermisosRoles> PermisosRoles { get; set; }
 
-        public virtual Modulos Modulos { get; set; }
     }
 }

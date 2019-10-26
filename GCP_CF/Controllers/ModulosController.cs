@@ -10,110 +10,107 @@ using GCP_CF.Models;
 
 namespace GCP_CF.Controllers
 {
-    public class PermisosController : Controller
+    public class ModulosController : Controller
     {
         private GCPContext db = new GCPContext();
 
-        // GET: Permisos
+        // GET: Modulos
         public ActionResult Index()
         {
-            return View(db.Permisos.OrderBy(x=>x.Descripción).ToList());
+            return View(db.Modulos.ToList());
         }
 
-        // GET: Permisos/Details/5
+        // GET: Modulos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Permisos permisos = db.Permisos.Find(id);
-            if (permisos == null)
+            Modulos modulos = db.Modulos.Find(id);
+            if (modulos == null)
             {
                 return HttpNotFound();
             }
-            return View(permisos);
+            return View(modulos);
         }
 
-        // GET: Permisos/Create
+        // GET: Modulos/Create
         public ActionResult Create()
         {
-            ViewBag.ModuloId = new SelectList(db.Modulos.OrderBy(x => x.Descripción), "ModuloId", "Descripción");
             return View();
         }
 
-        // POST: Permisos/Create
+        // POST: Modulos/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( Permisos permisos)
+        public ActionResult Create(Modulos modulos)
         {
             if (ModelState.IsValid)
             {
-                db.Permisos.Add(permisos);
+                db.Modulos.Add(modulos);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ModuloId = new SelectList(db.Modulos.OrderBy(x => x.Descripción), "ModuloId", "Descripción");
-            return View(permisos);
+
+            return View(modulos);
         }
 
-        // GET: Permisos/Edit/5
+        // GET: Modulos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Permisos permisos = db.Permisos.Find(id);
-            if (permisos == null)
+            Modulos modulos = db.Modulos.Find(id);
+            if (modulos == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ModuloId = new SelectList(db.Modulos.OrderBy(x => x.Descripción), "ModuloId", "Descripción",permisos.ModuloId);
-            return View(permisos);
+            return View(modulos);
         }
 
-        // POST: Permisos/Edit/5
+        // POST: Modulos/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Permisos permisos)
+        public ActionResult Edit(Modulos modulos)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(permisos).State = EntityState.Modified;
+                db.Entry(modulos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ModuloId = new SelectList(db.Modulos.OrderBy(x => x.Descripción), "ModuloId", "Descripción",permisos.ModuloId);
-            return View(permisos);
+            return View(modulos);
         }
 
-        // GET: Permisos/Delete/5
+        // GET: Modulos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Permisos permisos = db.Permisos.Find(id);
-            if (permisos == null)
+            Modulos modulos = db.Modulos.Find(id);
+            if (modulos == null)
             {
                 return HttpNotFound();
             }
-            return View(permisos);
+            return View(modulos);
         }
 
-        // POST: Permisos/Delete/5
+        // POST: Modulos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Permisos permisos = db.Permisos.Find(id);
-            db.Permisos.Remove(permisos);
+            Modulos modulos = db.Modulos.Find(id);
+            db.Modulos.Remove(modulos);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

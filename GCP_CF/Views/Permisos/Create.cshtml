@@ -45,6 +45,17 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-2 text-right">
+                        @Html.LabelFor(model => model.Modulos.Descripción, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("ModuloId", null, "Seleccione Modulo", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ModuloId, "", new { @class = "text-danger" })
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 text-right">
                         @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label" })
                     </div>
                     <div class="col-md-4">

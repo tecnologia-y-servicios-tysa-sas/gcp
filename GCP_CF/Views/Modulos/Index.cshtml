@@ -1,16 +1,17 @@
-﻿@model IEnumerable<GCP_CF.Models.Permisos>
+﻿@model IEnumerable<GCP_CF.Models.Modulos>
 
 @{
-    ViewBag.Title = "Permisos";
+    ViewBag.Title = "Modulos";
 }
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
-
 <p>
-    @Html.ActionLink("Crear Permisos", "Create", null, new { @class = "btn btn-default btn-large" })
+    @Html.ActionLink("Crear Modulo", "Create", null, new { @class = "btn btn-default btn-large" })
 </p>
+
 <table id="tblUsuarios" class="table table-bordered" style="width: 100%">
     <thead>
         <tr>
@@ -24,9 +25,6 @@
                 @Html.DisplayNameFor(model => model.Detalle)
             </th>
             <th class="head-table">
-               Modulo
-            </th>
-            <th class="head-table">
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th class="head-table">Editar</th>
@@ -36,26 +34,23 @@
 
         @foreach (var item in Model)
         {
-        <tr>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.PermisoId)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Descripción)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Detalle)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Modulos.Descripción)
-            </td>
-            <td class="border-cell">
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.PermisoId })
-            </td>
-        </tr>
+            <tr>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.ModuloId)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Descripción)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Detalle)
+                </td>
+                <td class="border-cell">
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ModuloId })
+                </td>
+            </tr>
         }
     </tbody>
 
@@ -113,3 +108,4 @@
     });
 
 </script>
+
