@@ -106,5 +106,8 @@ namespace GCP_CF.Models
 
         [NotMapped]
         public string ValorCanceladoAux { get; set; }
+
+        [NotMapped]
+        public string NumeroContrato { get; set; }
     }
 }

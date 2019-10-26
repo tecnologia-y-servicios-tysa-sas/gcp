@@ -24,6 +24,17 @@ namespace GCP_CF.Controllers
             return View(facturas);
         }
 
+        //
+        [HttpPost]
+        public JsonResult GetContracts(string contract)
+        {
+            //Searching records from list using LINQ query  
+            var ContractList = (from N in db.Contratos
+                            where N.NumeroContrato.Contains(contract)
+                            select new { N.NumeroContrato }).ToList();
+            return Json(ContractList, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult ConsultarIdContrato(string numeroContrato)
         {
