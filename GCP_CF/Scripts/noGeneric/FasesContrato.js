@@ -41,7 +41,8 @@ function ObtenerListadoFasesContrato(idContrato, puedeEscribir) {
                 var tblHeader = "<thead><tr>"
                     + "<th class=\"col-md-1 col-sm-1 col-xs-1\">No.</th>"
                     + "<th class=\"col-md-10 col-sm-10 col-xs-10\">Fase</th>"
-                    + (puedeEscribir ? "<th class=\"col-md-1 col-sm-1 col-xs-1 text-center\">Acciones</th>" : "")
+                    //+ (puedeEscribir ? "<th class=\"col-md-1 col-sm-1 col-xs-1 text-center\">Acciones</th>" : "")
+                    + "<th class=\"col-md-1 col-sm-1 col-xs-1 text-center\">Acciones</th>"
                     + "</tr></thead>"
                     + "<tbody>";
                 $("#tblListadoFases").append(tblHeader);
@@ -70,12 +71,12 @@ function ObtenerListadoFasesContrato(idContrato, puedeEscribir) {
                     tblRow += "</div>"
                         + "</td>";
 
-                    if (puedeEscribir) {
+                    //if (puedeEscribir) {
                         tblRow += "<td class=\"col-md-1 col-sm-1 col-xs-1 text-center\">"
                             + "<a class=\"btn-details\" href=\"javascript:void(0)\" title=\"Agregar una actividad\" onclick=\"AgregarActividadFase(" + idContrato + ", " + entry.Id + ")\">Actividades</a>"
                             + "<a class=\"btn-delete\" href=\"javascript:void(0)\" title=\"Eliminar\" onclick=\"EliminarFaseContrato(" + idContrato + ", " + entry.Id + ")\">Eliminar</a>"
                             + "</td>";
-                    }
+                   // }
 
                     tblRow += "</tr>";
                     $(tblListadoFases).append(tblRow);

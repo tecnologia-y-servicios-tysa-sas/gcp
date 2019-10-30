@@ -7,7 +7,7 @@
     formatter.NumberDecimalSeparator = ".";
     formatter.NumberDecimalDigits = 2;
 }
-
+<script src="~/Scripts/noGeneric/FasesContrato.js"></script>
 <style type="text/css">
     .error {
         font-weight: normal;
@@ -72,31 +72,32 @@
             </div>
 
         </div>
-        
-        @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
-        <div class="panel-footer" style="padding-bottom: 0px">
-            @using (Html.BeginForm("ActualizarValorEjecutado", "Seguimiento", FormMethod.Post, new { id = "ActualizarEjecucionForm", style = "margin-bottom: 0px" }))
-            {
-            <div class="clearfix">
-                <div class="col-md-3"><b>Valor Ejecutado:</b></div>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" id="valorEjecutado" name="Ejecucion" value="@((contrato.Ejecucion != null) ? contrato.Ejecucion.Value.ToString("#,###.#0", formatter) : "")" />
-                    <input type="hidden" name="idContratoValorEjecutado" id="idContratoValorEjecutado" value="@contrato.Contrato_Id" />
-                </div>
-                <div class="col-md-3">
-                    <div class="progress" style="height: 34px; vertical-align: central; border: 1px solid #bbb">
-                        <div id="porcentajeValorEjecutado" class="progress-bar" role="progressbar" aria-valuenow="@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)"
-                                aria-valuemin="0" aria-valuemax="100" style="width: @contrato.PorcentajeValorEjecutado%">
-                            <div class="text-center" id="textoPorcentajeEjecutado" style="color: black; font-weight: bold; font-size: 11px; margin-top: 6px">@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)%</div>
+
+        @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+        {
+            <div class="panel-footer" style="padding-bottom: 0px">
+                @using (Html.BeginForm("ActualizarValorEjecutado", "Seguimiento", FormMethod.Post, new { id = "ActualizarEjecucionForm", style = "margin-bottom: 0px" }))
+                {
+                    <div class="clearfix">
+                        <div class="col-md-3"><b>Valor Ejecutado:</b></div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="valorEjecutado" name="Ejecucion" value="@((contrato.Ejecucion != null) ? contrato.Ejecucion.Value.ToString("#,###.#0", formatter) : "")" />
+                            <input type="hidden" name="idContratoValorEjecutado" id="idContratoValorEjecutado" value="@contrato.Contrato_Id" />
+                        </div>
+                        <div class="col-md-3">
+                            <div class="progress" style="height: 34px; vertical-align: central; border: 1px solid #bbb">
+                                <div id="porcentajeValorEjecutado" class="progress-bar" role="progressbar" aria-valuenow="@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: @contrato.PorcentajeValorEjecutado%">
+                                    <div class="text-center" id="textoPorcentajeEjecutado" style="color: black; font-weight: bold; font-size: 11px; margin-top: 6px">@Html.DisplayFor(model => contrato.PorcentajeValorEjecutado)%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-default" type="button" id="btnActualizarEjecucion">Actualizar Ejecución</button>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-default" type="button" id="btnActualizarEjecucion">Actualizar Ejecución</button>
-                </div>
+                }
             </div>
-            }
-        </div>
         }
     </div>
 
@@ -115,7 +116,8 @@
                     </h4>
                 </div>
                 <div class="col-md-3 col-xs-3 right text-right">
-                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
+                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+                    {
                         <button class="btn btn-sm btn-primary" onclick="AgregarFaseContrato(@contrato.Contrato_Id)">Agregar Fase</button>
                     }
                 </div>
@@ -127,113 +129,113 @@
                 <div class="datagrid">
                     <table class="table-striped" style="width: 100%" id="tblListadoFases"></table>
                 </div>
-                
+
                 @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
                 {
-                <div id="agregarFaseContrato" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" onclick="CerrarModalFaseContrato()">&times;</button>
-                                <h4><i class="glyphicon glyphicon-list"></i> Agregar Fase</h4>
+                    <div id="agregarFaseContrato" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" onclick="CerrarModalFaseContrato()">&times;</button>
+                                    <h4><i class="glyphicon glyphicon-list"></i> Agregar Fase</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @using (Html.BeginForm("AgregarContratoFase", "FasesContrato", FormMethod.Post, new { id = "AgregarContratoFaseForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div id="selectGroup" class="text-center">
+                                            <div class="form-group">
+                                                <label for="idFaseDisponible">Por favor seleccione una fase de la lista:</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <select name="idFaseDisponible" class="form-control" id="idFaseDisponible"></select>
+                                                <button class="btn btn-default" type="button" onclick="AgregarFaseSeleccionada(@contrato.Contrato_Id)">Agregar</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div id="mensajeError" class="alert-danger" style="padding: 5px"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModalFaseContrato()">Cerrar</button>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                @using (Html.BeginForm("AgregarContratoFase", "FasesContrato", FormMethod.Post, new { id = "AgregarContratoFaseForm" }))
+                        </div>
+                    </div>
+
+                    <div id="agregarActividadFase" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" onclick="CerrarModalActividadFase()">&times;</button>
+                                    <h4><i class="glyphicon glyphicon-list"></i> Agregar Actividad</h4>
+                                </div>
+                                @{
+                                    GCP_CF.Models.ActividadesFases actividadFase = new GCP_CF.Models.ActividadesFases();
+                                }
+
+                                @using (Html.BeginForm("GuardarActividadFase", "FasesContrato", FormMethod.Post, new { id = "AgregarActividadFaseForm" }))
                                 {
-                                    @Html.AntiForgeryToken()
-                                    <div id="selectGroup" class="text-center">
+                                    <div class="modal-body">
                                         <div class="form-group">
-                                            <label for="idFaseDisponible">Por favor seleccione una fase de la lista:</label>
+                                            <div class="col-md-6">
+                                                <div>@Html.LabelFor(af => actividadFase.Item, htmlAttributes: new { @class = "control-label" })</div>
+                                                @Html.EditorFor(af => actividadFase.Item, new { htmlAttributes = new { @class = "form-control", @id = "item" } })
+                                                @Html.ValidationMessageFor(af => actividadFase.Item, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>@Html.LabelFor(af => actividadFase.Descripción, htmlAttributes: new { @class = "control-label" })</div>
+                                                @Html.EditorFor(af => actividadFase.Descripción, new { htmlAttributes = new { @class = "form-control", @id = "descripcion" } })
+                                                @Html.ValidationMessageFor(af => actividadFase.Descripción, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                            <select name="idFaseDisponible" class="form-control" id="idFaseDisponible"></select>
-                                            <button class="btn btn-default" type="button" onclick="AgregarFaseSeleccionada(@contrato.Contrato_Id)">Agregar</button>
+                                            <div class="col-md-6">
+                                                <div>@Html.LabelFor(af => actividadFase.FechaInicio, htmlAttributes: new { @class = "control-label" })</div>
+                                                <div class='input-group date text-center' id='datetimeFechaInicio'>
+                                                    @Html.EditorFor(af => actividadFase.FechaInicio, new { htmlAttributes = new { @class = "form-control", @id = "fechaInicio", @autocomplete = "off" } })
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar">
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                @Html.ValidationMessageFor(af => actividadFase.FechaInicio, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>@Html.LabelFor(af => actividadFase.FechaFinal, htmlAttributes: new { @class = "control-label" })</div>
+                                                <div class="input-group date text-center" id="datetimeFechaFinal">
+                                                    @Html.EditorFor(af => actividadFase.FechaFinal, new { htmlAttributes = new { @class = "form-control", @id = "fechaFinal", @autocomplete = "off" } })
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar">
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                @Html.ValidationMessageFor(af => actividadFase.FechaFinal, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <div>@Html.LabelFor(af => actividadFase.DiasHabiles, htmlAttributes: new { @class = "control-label" })</div>
+                                                @Html.EditorFor(af => actividadFase.DiasHabiles, new { htmlAttributes = new { @class = "form-control", @id = "diasHabiles", @readonly = "true" } })
+                                                @Html.ValidationMessageFor(af => actividadFase.Item, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div>@Html.LabelFor(af => actividadFase.EstadoActividad_Id, htmlAttributes: new { @class = "control-label" })</div>
+                                                @Html.DropDownList("EstadoActividad_Id", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "estadoActividad" })
+                                                @Html.ValidationMessageFor(af => actividadFase.EstadoActividad_Id, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="addAct_IdActividad" name="addAct_IdActividad" />
+                                    <input type="hidden" id="addAct_IdContrato" name="addAct_IdContrato" />
+                                    <input type="hidden" id="addAct_IdFase" name="addAct_IdFase" />
+                                    <div class="modal-footer">
+                                        <button type="button" onclick="GuardarActividadFase()" class="btn btn-default">Guardar</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModalActividadFase()">Cerrar</button>
                                     </div>
                                 }
-                                <div id="mensajeError" class="alert-danger" style="padding: 5px"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModalFaseContrato()">Cerrar</button>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div id="agregarActividadFase" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" onclick="CerrarModalActividadFase()">&times;</button>
-                                <h4><i class="glyphicon glyphicon-list"></i> Agregar Actividad</h4>
-                            </div>
-                            @{
-                                GCP_CF.Models.ActividadesFases actividadFase = new GCP_CF.Models.ActividadesFases();
-                            }
-
-                            @using (Html.BeginForm("GuardarActividadFase", "FasesContrato", FormMethod.Post, new { id = "AgregarActividadFaseForm" }))
-                            {
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <div>@Html.LabelFor(af => actividadFase.Item, htmlAttributes: new { @class = "control-label" })</div>
-                                            @Html.EditorFor(af => actividadFase.Item, new { htmlAttributes = new { @class = "form-control", @id = "item" } })
-                                            @Html.ValidationMessageFor(af => actividadFase.Item, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div>@Html.LabelFor(af => actividadFase.Descripción, htmlAttributes: new { @class = "control-label" })</div>
-                                            @Html.EditorFor(af => actividadFase.Descripción, new { htmlAttributes = new { @class = "form-control", @id = "descripcion" } })
-                                            @Html.ValidationMessageFor(af => actividadFase.Descripción, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <div>@Html.LabelFor(af => actividadFase.FechaInicio, htmlAttributes: new { @class = "control-label" })</div>
-                                            <div class='input-group date text-center' id='datetimeFechaInicio'>
-                                                @Html.EditorFor(af => actividadFase.FechaInicio, new { htmlAttributes = new { @class = "form-control", @id = "fechaInicio", @autocomplete = "off" } })
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar">
-                                                    </span>
-                                                </span>
-                                            </div>
-                                            @Html.ValidationMessageFor(af => actividadFase.FechaInicio, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div>@Html.LabelFor(af => actividadFase.FechaFinal, htmlAttributes: new { @class = "control-label" })</div>
-                                            <div class="input-group date text-center" id="datetimeFechaFinal">
-                                                @Html.EditorFor(af => actividadFase.FechaFinal, new { htmlAttributes = new { @class = "form-control", @id = "fechaFinal", @autocomplete = "off" } })
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar">
-                                                    </span>
-                                                </span>
-                                            </div>
-                                            @Html.ValidationMessageFor(af => actividadFase.FechaFinal, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <div>@Html.LabelFor(af => actividadFase.DiasHabiles, htmlAttributes: new { @class = "control-label" })</div>
-                                            @Html.EditorFor(af => actividadFase.DiasHabiles, new { htmlAttributes = new { @class = "form-control", @id = "diasHabiles", @readonly = "true" } })
-                                            @Html.ValidationMessageFor(af => actividadFase.Item, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div>@Html.LabelFor(af => actividadFase.EstadoActividad_Id, htmlAttributes: new { @class = "control-label" })</div>
-                                            @Html.DropDownList("EstadoActividad_Id", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "estadoActividad" })
-                                            @Html.ValidationMessageFor(af => actividadFase.EstadoActividad_Id, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="addAct_IdActividad" name="addAct_IdActividad" />
-                                <input type="hidden" id="addAct_IdContrato" name="addAct_IdContrato" />
-                                <input type="hidden" id="addAct_IdFase" name="addAct_IdFase" />
-                                <div class="modal-footer">
-                                    <button type="button" onclick="GuardarActividadFase()" class="btn btn-default">Guardar</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModalActividadFase()">Cerrar</button>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
                 }
             </div>
         </div>
