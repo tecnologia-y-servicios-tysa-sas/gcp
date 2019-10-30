@@ -47,11 +47,11 @@
                             <ul class="collapse list-unstyled" id="contratosSubmenu">
                                 @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
                                 {
-                                    <li>@Html.ActionLink("Crear Contratos", "Create", "Contratos", new { isInterAdmin= true}, htmlAttributes:null)</li>
+                                    <li>@Html.ActionLink("Crear Interadministrativo", "Create", "Contratos", new { isInterAdmin= true}, htmlAttributes:null)</li>
                                 }
                                 @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA) && User.IsInRole(GCP_CF.Helpers.RolHelper.M1))
                                 {
-                                    <li>@Html.ActionLink("Crear Interadministrativo", "Create", "Contratos", new {isInterAdmin= false }, htmlAttributes:null)</li>
+                                    <li>@Html.ActionLink("Crear Contratos", "Create", "Contratos", new {isInterAdmin= false }, htmlAttributes:null)</li>
                                 }
                                 @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M2))
                                 {

@@ -5,8 +5,15 @@
 }
 
 @Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back", @title = "Regresar al listado" })
+@if (!ViewBag.IsInterAdmin)
+{
+    <h2>Crear Contrato</h2>
+}
+else
+{
+    <h2>Crear Contrato Interadministrativo</h2>
+}
 
-<h2>Crear Contrato</h2>
 
 @{
     Html.RenderPartial("PartialEditarContrato", Model);
