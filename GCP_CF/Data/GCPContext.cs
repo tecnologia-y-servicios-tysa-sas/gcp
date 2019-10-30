@@ -68,5 +68,9 @@ namespace GCP_CF.Models
         public System.Data.Entity.DbSet<GCP_CF.Models.PermisosRoles> PermisosRoles { get; set; }
 
         public System.Data.Entity.DbSet<GCP_CF.Models.Modulos> Modulos { get; set; }
+
+        public System.Data.Entity.DbSet<GCP_CF.Models.ActividadesEtapas> ActividadesEtapas { get; set; }
+
+        public System.Data.Entity.DbSet<GCP_CF.Models.FasesContratosAcividades> FasesContratosAcividades { get; set; }
     }
 }

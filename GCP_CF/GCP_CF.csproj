@@ -190,6 +190,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Authorization\GCPAuthorizeAttribute.cs" />
     <Compile Include="Controllers\actividadesController.cs" />
+    <Compile Include="Controllers\ActividadesEtapasController.cs" />
     <Compile Include="Controllers\ContratosController.cs" />
     <Compile Include="Controllers\EstadosActividadController.cs" />
     <Compile Include="Controllers\EstadosFacturaController.cs" />
@@ -249,7 +250,21 @@
     <Compile Include="Migrations\201910261422524_ModuloPermiso.Designer.cs">
       <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910301343192_ActividadesEtapas.cs" />
+    <Compile Include="Migrations\201910301343192_ActividadesEtapas.Designer.cs">
+      <DependentUpon>201910301343192_ActividadesEtapas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301352171_ActividadesEtapas1.cs" />
+    <Compile Include="Migrations\201910301352171_ActividadesEtapas1.Designer.cs">
+      <DependentUpon>201910301352171_ActividadesEtapas1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301412180_FasesContratosAcividades.cs" />
+    <Compile Include="Migrations\201910301412180_FasesContratosAcividades.Designer.cs">
+      <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ActividadesEtapas.cs" />
     <Compile Include="Models\Facturas.cs" />
+    <Compile Include="Models\FasesContratosAcividades.cs" />
     <Compile Include="Models\FormaPago.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Authorization\GCPAuthenticationFilter.cs" />
@@ -512,6 +527,13 @@
     <Content Include="Views\Modulos\Details.cshtml" />
     <Content Include="Views\Modulos\Edit.cshtml" />
     <Content Include="Views\Modulos\Index.cshtml" />
+    <Content Include="Views\ActividadesEtapas\Create.cshtml" />
+    <Content Include="Views\ActividadesEtapas\Delete.cshtml" />
+    <Content Include="Views\ActividadesEtapas\Details.cshtml" />
+    <Content Include="Views\ActividadesEtapas\Edit.cshtml" />
+    <Content Include="Views\ActividadesEtapas\Index.cshtml" />
+    <Content Include="Views\FasesContrato\CreateEtapasActividades.cshtml" />
+    <Content Include="Views\FasesContrato\DetalleActividadEtapa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -551,6 +573,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910261422524_ModuloPermiso.resx">
       <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301343192_ActividadesEtapas.resx">
+      <DependentUpon>201910301343192_ActividadesEtapas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301352171_ActividadesEtapas1.resx">
+      <DependentUpon>201910301352171_ActividadesEtapas1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301412180_FasesContratosAcividades.resx">
+      <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

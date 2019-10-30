@@ -18,10 +18,9 @@ namespace GCP_CF.Controllers
         public ActionResult Index()
         {
 
-            return View(db.FasesContrato.ToList());
+            return View(db.FasesContrato.OrderBy(x=>x.Descripcion).ToList());
         }
 
-        // GET: FasesContrato/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,15 +35,13 @@ namespace GCP_CF.Controllers
             return View(fasesContrato);
         }
 
-        // GET: FasesContrato/Create
+     
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: FasesContrato/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+    
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "fase_Id,Descripcion")] FasesContrato fasesContrato)
@@ -59,7 +56,41 @@ namespace GCP_CF.Controllers
             return View(fasesContrato);
         }
 
-        // GET: FasesContrato/Edit/5
+
+
+        public ActionResult CreateEtapasActividades(int? id)
+        {
+
+            ViewBag.ActividadesEtapasId = new SelectList(db.ActividadesEtapas, "ActividadesEtapasId", "Descripción");
+            ViewBag.fase_Id = new SelectList(db.FasesContrato, "fase_Id", "Descripcion", id);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEtapasActividades(FasesContratosAcividades fasesContratosAcividades)
+        {
+            if (ModelState.IsValid)
+            {
+                db.FasesContratosAcividades.Add(fasesContratosAcividades);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ActividadesEtapasId = new SelectList(db.ActividadesEtapas, "ActividadesEtapasId", "Descripción", fasesContratosAcividades.ActividadesEtapasId);
+            ViewBag.fase_Id = new SelectList(db.FasesContrato, "fase_Id", "Descripcion", fasesContratosAcividades.fase_Id);
+            return View(fasesContratosAcividades);
+        }
+
+
+        public ActionResult DetalleActividadEtapa( int? id)
+        {
+            var fasesContratosAcividades = db.FasesContratosAcividades.Where(x=>x.fase_Id == id).Include(f => f.ActividadesEtapas).Include(f => f.FasesContrato);
+           return PartialView (fasesContratosAcividades.ToList());
+        }
+
+
+
         public ActionResult Edit(int? id)
         {
             if (id == null)

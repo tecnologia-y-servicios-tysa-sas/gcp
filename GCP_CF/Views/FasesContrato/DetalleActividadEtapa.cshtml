@@ -1,0 +1,44 @@
+﻿@model IEnumerable<GCP_CF.Models.FasesContratosAcividades>
+
+@{
+    ViewBag.Title = "Etapa Actividad";
+}
+
+<table  class="table table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th class="head-table">
+    @Html.DisplayNameFor(model => model.FasesContrato.Descripcion)
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ActividadesEtapas.Descripción)
+            </th>
+            
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+        <tr>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.FasesContrato.Descripcion)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.ActividadesEtapas.Descripción)
+            </td>
+
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+
+        </tr>
+
+        }
+    </tbody>
+</table>
+

@@ -12,7 +12,7 @@ namespace GCP_CF.Models
         [Key]
         public int ModuloId { get; set; }
 
-        [Required(ErrorMessage = "Debe Ingrsar la Descripción del Modulo")]
+        [Required(ErrorMessage = "Debe Ingresar la Descripción del Modulo")]
         [Display(Name = "Modulo")]
         [MaxLength(100, ErrorMessage = "El {0} no puede contener más de {1} caracteres.")]
         public string Descripción { get; set; }

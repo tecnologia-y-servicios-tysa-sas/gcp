@@ -14,6 +14,7 @@ namespace GCP_CF.Models
 
         
         public virtual ICollection<Registrofacescontratos> Registrofacescontratos { get; set; }
+        public virtual ICollection<FasesContratosAcividades> GetFasesContratosAcividades { get; set; }
 
         public List<FasesContrato> Listar()
         {

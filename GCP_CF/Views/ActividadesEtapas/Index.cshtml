@@ -1,0 +1,40 @@
+﻿@model IEnumerable<GCP_CF.Models.ActividadesEtapas>
+
+@{
+    ViewBag.Title = "Actividades Etapas";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+<p>
+    @Html.ActionLink("Crear Actividad", "Create", null, new { @class = "btn btn-default btn-large" })
+</p>
+
+
+<table id="tblUsuarios" class="table table-bordered" style="width: 100%">
+    <thead>
+        <tr>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.Descripción)
+            </th>
+            <th class="head-table"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.Descripción)
+            </td>
+            <td class="border-cell">
+                @Html.ActionLink("Editar", "Edit", new { id = item.ActividadesEtapasId }) 
+            </td>
+        </tr>
+        }
+    </tbody>
+
+</table>

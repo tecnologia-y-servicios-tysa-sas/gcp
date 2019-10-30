@@ -1,0 +1,77 @@
+﻿@model GCP_CF.Models.FasesContratosAcividades
+@{
+    ViewBag.Title = "Fases actividades";
+}
+
+<h2>Fases Actividad </h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>
+                <i class="glyphicon glyphicon-cog"></i> Detalle
+            </h3>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <div class="col-md-2 text-right">
+                        @Html.LabelFor(model => model.fase_Id, "fase_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("fase_Id", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.fase_Id, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <div class="col-md-2 text-right">
+                        @Html.LabelFor(model => model.ActividadesEtapasId, "ActividadesEtapasId", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownList("ActividadesEtapasId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ActividadesEtapasId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <div class="col-md-2 text-right">
+                        @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.Estado)
+                        @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-block text-center">
+        <input type="submit" value="Crear Actividades" class="btn btn-default" />
+        <a href="@Url.Action("Index", "ActividadesEtapas")" class="btn btn-success">
+            <i class="glyphicon glyphicon-list"></i> Regresar al Listado
+        </a>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
