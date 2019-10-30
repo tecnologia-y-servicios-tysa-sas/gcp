@@ -27,70 +27,111 @@
             <div class="panel-body">
 
                 <div class="form-group">
-                    <div class="col-md-4">
-                        <div> @Html.LabelFor(model => model.ContratoMarco_Id, "Contrato Interadministrativo", htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.DropDownList("ContratoMarco_Id", null, "Seleccione Contrato Interadministrativo", htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ContratoMarco_Id, "", new { @class = "text-danger" })
-                        <input type="hidden" name="tipoContratoCIAD" id="tipoContratoCiad" value="@tipoContratoCIAD" />
-                    </div>
-                    <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.TipoContrato_Id, "Tipo Contrato", htmlAttributes: new { @class = "control-label" })*</div>
-                        @if (ViewBag.IsEdit)
-                        {
-                            @Html.HiddenFor(model => model.TipoContrato_Id, htmlAttributes: new { @id = "tipoContrato" })
-                            @Html.DropDownList("TipoContrato_Id_Aux", null, "Seleccione Tipo Contrato", htmlAttributes: new { @class = "form-control", @id = "tipoContrato", @disabled = "true" })
-                        }
-                        else
-                        {
-                            @Html.DropDownList("TipoContrato_Id", null, "Seleccione Tipo Contrato", htmlAttributes: new { @class = "form-control", @id = "tipoContrato" })
-                        }
-                        @Html.ValidationMessageFor(model => model.TipoContrato_Id, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.NumeroContrato, htmlAttributes: new { @class = "control-label" })</div>
-                        @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
-                        {
-                            @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato" } })
-                        }
-                        else
-                        {
-                            if (ViewBag.IsEdit)
+                    @if (ViewBag.IsInterAdmin)
+                    {
+                        <div class="col-md-4">
+                            <div> @Html.LabelFor(model => model.ContratoMarco_Id, "Contrato Interadministrativo", htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.DropDownList("ContratoMarco_Id", null, "Seleccione Contrato Interadministrativo", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ContratoMarco_Id, "", new { @class = "text-danger" })
+                            <input type="hidden" name="tipoContratoCIAD" id="tipoContratoCiad" value="@tipoContratoCIAD" />
+                        </div>
+                        <div class="col-md-4">
+                            <div>@Html.LabelFor(model => model.TipoContrato_Id, "Tipo Contrato", htmlAttributes: new { @class = "control-label" })*</div>
+                            @if (ViewBag.IsEdit)
                             {
-                                @Html.HiddenFor(model => model.NumeroContrato, htmlAttributes: new { @class = "form-control", @id = "numeroContrato" })
-                                <input type="text" name="numeroContratoAux" class="form-control" id="numeroContratoAux" value="@Model.NumeroContrato" disabled="disabled" />
+                                @Html.HiddenFor(model => model.TipoContrato_Id, htmlAttributes: new { @id = "tipoContrato" })
+                                @Html.DropDownList("TipoContrato_Id_Aux", null, "Seleccione Tipo Contrato", htmlAttributes: new { @class = "form-control", @id = "tipoContrato", @disabled = "true" })
                             }
                             else
                             {
-                                @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @readonly = "true" } })
+                                @Html.DropDownList("TipoContrato_Id", null, "Seleccione Tipo Contrato", htmlAttributes: new { @class = "form-control", @id = "tipoContrato" })
                             }
-                        }
-                        @Html.ValidationMessageFor(model => model.NumeroContrato, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            @Html.ValidationMessageFor(model => model.TipoContrato_Id, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            <div>@Html.LabelFor(model => model.NumeroContrato, htmlAttributes: new { @class = "control-label" })</div>
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
+                            {
+                                @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato" } })
+                            }
+                            else
+                            {
+                                if (ViewBag.IsEdit)
+                                {
+                                    @Html.HiddenFor(model => model.NumeroContrato, htmlAttributes: new { @class = "form-control", @id = "numeroContrato" })
+                                    <input type="text" name="numeroContratoAux" class="form-control" id="numeroContratoAux" value="@Model.NumeroContrato" disabled="disabled" />
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @readonly = "true" } })
+                                }
+                            }
+                            @Html.ValidationMessageFor(model => model.NumeroContrato, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4">
+                            <div>@Html.LabelFor(model => model.TipoContrato_Id, "Tipo Contrato", htmlAttributes: new { @class = "control-label" })*</div>
+                            @if (ViewBag.IsEdit)
+                            {
+                                @Html.HiddenFor(model => model.TipoContrato_Id, htmlAttributes: new { @id = "tipoContrato" })
+                                @Html.DropDownList("TipoContrato_Id_Aux", null, "Seleccione Tipo Contrato", htmlAttributes: new { @class = "form-control", @id = "tipoContrato", @disabled = "true" })
+                            }
+                            else
+                            {
+                                @Html.DropDownList("TipoContrato_Id", null, "Seleccione Tipo Contrato", htmlAttributes: new { @class = "form-control", @id = "tipoContrato" })
+                            }
+                            @Html.ValidationMessageFor(model => model.TipoContrato_Id, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            <div>@Html.LabelFor(model => model.NumeroContrato, htmlAttributes: new { @class = "control-label" })</div>
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
+                            {
+                                @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato" } })
+                            }
+                            else
+                            {
+                                if (ViewBag.IsEdit)
+                                {
+                                    @Html.HiddenFor(model => model.NumeroContrato, htmlAttributes: new { @class = "form-control", @id = "numeroContrato" })
+                                    <input type="text" name="numeroContratoAux" class="form-control" id="numeroContratoAux" value="@Model.NumeroContrato" disabled="disabled" />
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @readonly = "true" } })
+                                }
+                            }
+                            @Html.ValidationMessageFor(model => model.NumeroContrato, "", new { @class = "text-danger" })
+                        </div> 
+                        <div class="col-md-4"></div>
+                            }
 
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <div> @Html.LabelFor(model => model.Persona_Id, htmlAttributes: new { @class = "control-label" })*</div>
-                        @Html.DropDownList("Persona_Id", null, "Seleccione Entidad", htmlAttributes: new { @class = "form-control", @id = "entidadContratante" })
-                        @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4">
-                        <div> @Html.LabelFor(model => model.TipoEstadoContrato_Id, "Estado Contrato", htmlAttributes: new { @class = "control-label" })*</div>
-                        @Html.DropDownList("TipoEstadoContrato_Id", null, "Seleccione Estado Contrato", htmlAttributes: new { @class = "form-control", @id = "estadoContrato" })
-                        @Html.ValidationMessageFor(model => model.TipoEstadoContrato_Id, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-4"></div>
-                </div>
+                        </div>
 
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <div>@Html.LabelFor(model => model.ObjetoContractual, htmlAttributes: new { @class = "control-label" })*</div>
-                        @Html.EditorFor(model => model.ObjetoContractual, new { htmlAttributes = new { @class = "form-control", @id = "objeto", @style = "max-width:500px" } })
-                        @Html.ValidationMessageFor(model => model.ObjetoContractual, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <div> @Html.LabelFor(model => model.Persona_Id, htmlAttributes: new { @class = "control-label" })*</div>
+                                @Html.DropDownList("Persona_Id", null, "Seleccione Entidad", htmlAttributes: new { @class = "form-control", @id = "entidadContratante" })
+                                @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4">
+                                <div> @Html.LabelFor(model => model.TipoEstadoContrato_Id, "Estado Contrato", htmlAttributes: new { @class = "control-label" })*</div>
+                                @Html.DropDownList("TipoEstadoContrato_Id", null, "Seleccione Estado Contrato", htmlAttributes: new { @class = "form-control", @id = "estadoContrato" })
+                                @Html.ValidationMessageFor(model => model.TipoEstadoContrato_Id, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
 
-            </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div>@Html.LabelFor(model => model.ObjetoContractual, htmlAttributes: new { @class = "control-label" })*</div>
+                                @Html.EditorFor(model => model.ObjetoContractual, new { htmlAttributes = new { @class = "form-control", @id = "objeto", @style = "max-width:500px" } })
+                                @Html.ValidationMessageFor(model => model.ObjetoContractual, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
         </div>
 
         <div class="panel">
@@ -147,10 +188,14 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.Plazo, htmlAttributes: new { @class = "control-label" })*</div>
-                        @Html.EditorFor(model => model.Plazo, new { htmlAttributes = new { @class = "form-control", @id = "plazo", @readonly = "true" } })
-                        @Html.HiddenFor(model => model.Plazo)
-                    </div>
+                        @if (ViewBag.IsInterAdmin)
+                        {
+
+                            <div>@Html.LabelFor(model => model.Plazo, htmlAttributes: new { @class = "control-label" })*</div>
+                            @Html.EditorFor(model => model.Plazo, new { htmlAttributes = new { @class = "form-control", @id = "plazo", @readonly = "true" } })
+                            @Html.HiddenFor(model => model.Plazo)
+                        }
+                        </div>
                 </div>
 
             </div>
@@ -178,9 +223,12 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.Honorarios, htmlAttributes: new { @class = "control-label" })*</div>
-                        @Html.EditorFor(model => model.HonorariosAux, new { htmlAttributes = new { @class = "form-control", @id = "honorarios" } })
-                    </div>
+                        @if (ViewBag.IsInterAdmin)
+                        {
+                            <div>@Html.LabelFor(model => model.Honorarios, htmlAttributes: new { @class = "control-label" })*</div>
+                            @Html.EditorFor(model => model.HonorariosAux, new { htmlAttributes = new { @class = "form-control", @id = "honorarios" } })
+                        }
+                        </div>
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { @class = "control-label" })</div>
                         <div>
@@ -189,9 +237,12 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.ValorNetoHonorarios, htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.EditorFor(model => model.ValorNetoHonorarios, new { htmlAttributes = new { @class = "form-control", @id = "valorNetoHonorarios", @readonly = true } })
-                    </div>
+                        @if (ViewBag.IsInterAdmin)
+                        {
+                            <div>@Html.LabelFor(model => model.ValorNetoHonorarios, htmlAttributes: new { @class = "control-label" })</div>
+                            @Html.EditorFor(model => model.ValorNetoHonorarios, new { htmlAttributes = new { @class = "form-control", @id = "valorNetoHonorarios", @readonly = true } })
+                        }
+                        </div>
                 </div>
 
                 @Html.HiddenFor(model => model.Ejecucion, htmlAttributes: new { @id = "valorEjecutado" })

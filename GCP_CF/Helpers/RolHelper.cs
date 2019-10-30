@@ -46,6 +46,7 @@ namespace GCP_CF.Helpers
         public const string M19 = "M19";
         public const string M20 = "M20";
         public const string M21 = "M21";
+        public const string M22 = "M22";
 
         #endregion
 

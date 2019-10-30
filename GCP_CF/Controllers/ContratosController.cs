@@ -80,10 +80,10 @@ namespace GCP_CF.Controllers
 
         // GET: Contratos/Create
         [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
-        public ActionResult Create()
+        public ActionResult Create(bool isInterAdmin)
         {
             if (!AutorizacionContrato(null, true)) return RedirectToAction("AccessDenied", "Account");
-
+            ViewBag.IsInterAdmin = isInterAdmin;
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
