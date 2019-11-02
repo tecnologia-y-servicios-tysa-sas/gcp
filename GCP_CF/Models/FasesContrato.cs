@@ -12,7 +12,7 @@ namespace GCP_CF.Models
         public int fase_Id { get; set; }
         public string Descripcion { get; set; }
 
-        
+         
         public virtual ICollection<Registrofacescontratos> Registrofacescontratos { get; set; }
         public virtual ICollection<FasesContratosAcividades> GetFasesContratosAcividades { get; set; }
 

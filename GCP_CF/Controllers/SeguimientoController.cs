@@ -28,6 +28,49 @@ namespace GCP_CF.Controllers
             return View(listadoContratos.ToPagedList<Contratos>(pageNumber, pageSize));
         }
 
+        public JsonResult GetActividades(int? Fase)
+        {
+
+            if ( Fase != null)
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                //var Actividades = db.FasesContratosAcividades.Include(x=>x.ActividadesEtapas).Where(x => x.fase_Id == Fase.Value).Select(s=> new { s.ActividadesEtapas.ActividadesEtapasId, Descripcion = s.ActividadesEtapas.Descripción   });
+                //return Json(Actividades.OrderBy(c => c.Descripcion));
+                var Act = (from ae in db.ActividadesEtapas
+                           join fca in db.FasesContratosAcividades on ae.ActividadesEtapasId equals fca.ActividadesEtapasId
+                           where fca.fase_Id == Fase && fca.Estado == true
+                           select new
+                           {
+                               ae.ActividadesEtapasId,
+                               ae.Descripción
+
+
+                           }).ToList();
+
+                return Json(Act);
+
+
+
+            }
+
+
+            string ok = "ok";
+            return Json(ok);
+            //if (!string.IsNullOrEmpty(Cod_Departamento))
+            //{
+            //    db.Configuration.ProxyCreationEnabled = false;
+            //    var ciudades = db.Ciudades.Where(c => c.Cod_Pais == Cod_Pais && c.Cod_Departamento == Cod_Departamento);
+            //    return Json(ciudades.OrderBy(c => c.Descripcion));
+            //}
+            //else
+            //{
+            //    db.Configuration.ProxyCreationEnabled = false;
+            //    var ciudades = db.Ciudades.Where(c => c.Cod_Pais == "" && c.Cod_Departamento == "");
+            //    return Json(ciudades.OrderBy(c => c.Descripcion));
+            //}
+        }
+
+
         // GET: FasesContrato
         [GCPAuthorize(Roles = RolHelper.TODOS)]
         public ActionResult FasesContrato(int? idContrato)
@@ -39,6 +82,7 @@ namespace GCP_CF.Controllers
             ViewBag.Contrato = contrato;
 
             ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividad.OrderBy(e => e.Descripcion), "EstadoActividad_Id", "Descripcion");
+            ViewBag.ActividadesEtapasId = new SelectList(db.ActividadesEtapas.Where(e => e.ActividadesEtapasId ==0), "ActividadesEtapasId", "Descripción");
 
             List<Registrofacescontratos> listadoFasesContrato = (from e in db.Registrofacescontratos.Include(a => a.FasesContrato)
                                                                  where e.Contrato_Id == idContrato
@@ -203,8 +247,10 @@ namespace GCP_CF.Controllers
         [HttpPost]
         [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         public JsonResult GuardarActividadFase(int idActividad, int idContrato, int idFase, string item, string descripcion, 
-            string diasHabiles, string fechaInicio, string fechaFin, string estadoActividad)
+            string diasHabiles, string fechaInicio, string fechaFin, string estadoActividad, int ActividadesEtapasId)
         {
+
+            //int ac = ActividadesEtapasId;
             string accionVerbo = idActividad > 1 ? "actualizar" : "agregar";
             string accionEjecutada = idActividad > 1 ? "actualizada" : "agregada";
 
@@ -230,12 +276,14 @@ namespace GCP_CF.Controllers
                 }                    
                 else
                 {
+
+                    var actividadesEtapas = db.ActividadesEtapas.Where(x => x.ActividadesEtapasId == ActividadesEtapasId).FirstOrDefault();
                     actividad = new ActividadesFases
                     {
                         Contratos_Contrato_Id1 = idContrato,
                         FasesContrato_fase_Id1 = idFase,
-                        Item = item,
-                        Descripción = descripcion,
+                        Item = ActividadesEtapasId.ToString(),//item,
+                        Descripción = actividadesEtapas.Descripción, //descripcion,
                         DiasHabiles = Convert.ToInt32(diasHabiles),
                         FechaInicio = Convert.ToDateTime(fechaInicio),
                         FechaFinal = Convert.ToDateTime(fechaFin),
