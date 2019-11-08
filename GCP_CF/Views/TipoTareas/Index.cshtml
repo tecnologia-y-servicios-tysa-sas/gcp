@@ -1,0 +1,37 @@
+﻿@model IEnumerable<GCP_CF.Models.TipoTareas>
+
+@{
+    ViewBag.Title = "Tipo Tarea";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+<p>
+    @Html.ActionLink("Crear Tipo Tarea", "Create", null, new { @class = "btn btn-default btn-large" })
+</p>
+
+<table id="tblUsuarios" class="table table-bordered" style="width: 100%">
+    <tr>
+        <th class="head-table">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th class="head-table">Opciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.TipoTareasId }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.TipoTareasId }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.TipoTareasId })
+            </td>
+        </tr>
+    }
+
+</table>

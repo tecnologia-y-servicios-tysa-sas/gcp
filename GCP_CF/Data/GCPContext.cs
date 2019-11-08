@@ -58,8 +58,6 @@ namespace GCP_CF.Models
 
         public DbSet<Usuarios> Usuarios { get; set; }
 
-   
-
         public System.Data.Entity.DbSet<GCP_CF.Models.UsuariosRoles> usuariosroles { get; set; }
 
         public System.Data.Entity.DbSet<GCP_CF.Models.Rol> Rols { get; set; }
@@ -72,5 +70,6 @@ namespace GCP_CF.Models
         public System.Data.Entity.DbSet<GCP_CF.Models.ActividadesEtapas> ActividadesEtapas { get; set; }
 
         public System.Data.Entity.DbSet<GCP_CF.Models.FasesContratosAcividades> FasesContratosAcividades { get; set; }
+
     }
 }
