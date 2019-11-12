@@ -262,6 +262,10 @@
     <Compile Include="Migrations\201910301412180_FasesContratosAcividades.Designer.cs">
       <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911120141390_salgado.cs" />
+    <Compile Include="Migrations\201911120141390_salgado.Designer.cs">
+      <DependentUpon>201911120141390_salgado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ActividadesEtapas.cs" />
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FasesContratosAcividades.cs" />
@@ -582,6 +586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910301412180_FasesContratosAcividades.resx">
       <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911120141390_salgado.resx">
+      <DependentUpon>201911120141390_salgado.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
