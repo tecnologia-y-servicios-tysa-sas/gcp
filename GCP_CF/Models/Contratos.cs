@@ -178,5 +178,7 @@ namespace GCP_CF.Models
         public virtual ICollection<Facturas> Facturas { get; set; }
 
         public virtual ICollection<PagosContrato> PagosContrato { get; set; }
+
+        public virtual ICollection<Notificaciones> Notificaciones { get; set; }
     }
 }

@@ -44,6 +44,17 @@ namespace GCP_CF.Models
         [Required(ErrorMessage = "Debe especificar la fecha del pago de la factura")]
         public DateTime FechaPago { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Fecha de Vencimiento")]
+        [Required(ErrorMessage = "Debe especificar la fecha de vencimiento de la factura")]
+        public DateTime FechaVencimiento { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Fecha de Entrega")]
+        [Required(ErrorMessage = "Debe especificar la fecha de entrega de la factura")]
+        public DateTime FechaEntrega { get; set; }
+
+
         [Display(Name = "Municipio o Entidad")]
         [Required(ErrorMessage = "Debe seleccionar el Municipio o Entidad")]
         public int Municipio_Id { get; set; }

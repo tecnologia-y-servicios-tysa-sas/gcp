@@ -214,6 +214,18 @@
     <Compile Include="Migrations\201911080105435_NewMigration.Designer.cs">
       <DependentUpon>201911080105435_NewMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911101609531_initial.cs" />
+    <Compile Include="Migrations\201911101609531_initial.Designer.cs">
+      <DependentUpon>201911101609531_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911101628116_initial1.cs" />
+    <Compile Include="Migrations\201911101628116_initial1.Designer.cs">
+      <DependentUpon>201911101628116_initial1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911101639110_initial2.cs" />
+    <Compile Include="Migrations\201911101639110_initial2.Designer.cs">
+      <DependentUpon>201911101639110_initial2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ActividadesEtapas.cs" />
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FasesContratosAcividades.cs" />
@@ -239,6 +251,7 @@
     <Compile Include="Models\FasesContrato.cs" />
     <Compile Include="Data\GCPContext.cs" />
     <Compile Include="Models\Modulos.cs" />
+    <Compile Include="Models\Notificaciones.cs" />
     <Compile Include="Models\PagosContrato.cs" />
     <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PermisosRoles.cs" />
@@ -503,6 +516,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911080105435_NewMigration.resx">
       <DependentUpon>201911080105435_NewMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101609531_initial.resx">
+      <DependentUpon>201911101609531_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101628116_initial1.resx">
+      <DependentUpon>201911101628116_initial1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101639110_initial2.resx">
+      <DependentUpon>201911101639110_initial2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

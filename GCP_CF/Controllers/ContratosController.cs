@@ -94,7 +94,9 @@ namespace GCP_CF.Controllers
             ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
             ViewBag.TipoEstadoContrato_Id = new SelectList(db.TiposEstadoContrato, "TiposEstadoContrato_Id", "Descripcion");
             ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.TipoContrato.Termino == tipoContratoMarco), "Contrato_Id", "NumeroContrato");
-            if(isInterAdmin)
+            ViewBag.PersonaNotificar_Id = new SelectList(db.Personas, "Persona_Id", "NombreCompleto");
+
+            if (isInterAdmin)
             {
                 ViewBag.TipoContrato_Id = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion",3);
             }
@@ -108,7 +110,7 @@ namespace GCP_CF.Controllers
         }
 
         [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
-        private ActionResult GuardarContrato(Contratos contratos, FormCollection form, bool esModificado)
+        private ActionResult GuardarContrato(Contratos contratos, FormCollection form, bool esModificado, String[] PersonaNotificar_Id)
         {
             bool exito = false;
             string mensaje = string.Empty;
@@ -140,11 +142,17 @@ namespace GCP_CF.Controllers
                     }
 
                     if (esModificado)
-                        db.Entry(contratos).State = EntityState.Modified;
+                    { 
+                        db.Entry(contratos).State = EntityState.Modified; 
+                    }
                     else
+                    {
                         db.Contratos.Add(contratos);
+                        db.SaveChanges();
+                    }
 
                     int id = contratos.Contrato_Id;
+
                     if (!string.IsNullOrEmpty(contratos.Observaciones))
                     {
                         //Almaceno la observacion en la tabla historiaobservaciones
@@ -155,6 +163,20 @@ namespace GCP_CF.Controllers
                             ContratoId = id,
                         };
                         db.HistoriaObservaciones.Add(historiaObs);
+                    }
+
+                    //Almaceno las personas a notificar
+                    if (PersonaNotificar_Id != null)
+                    {
+                        foreach (var item in PersonaNotificar_Id)
+                        {
+                            Notificaciones notificacion = new Notificaciones()
+                            {
+                                ContractId = id,
+                                PersonId = Convert.ToInt32(item)  
+                            };
+                            db.Notificaciones.Add(notificacion);
+                        }
                     }
 
                     // Revisión de pagos - No aplican para los contratos que sean CIAD
@@ -247,6 +269,7 @@ namespace GCP_CF.Controllers
                 ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato", contratos.ContratoMarco_Id);
                 ViewBag.TipoContrato_Id_Aux = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion", contratos.TipoContrato_Id);
                 ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
+                ViewBag.PersonaNotificar_Id = new SelectList(db.Personas, "Persona_Id", "NombreCompleto");
 
                 ViewBag.MensajeError = mensaje;
 
@@ -260,14 +283,14 @@ namespace GCP_CF.Controllers
         [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Contratos contratos, FormCollection form)
+        public ActionResult Create(Contratos contratos, FormCollection form, String[] PersonaNotificar_Id)
         {
             if (!AutorizacionContrato(null, true)) return RedirectToAction("AccessDenied", "Account");
 
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
-            return GuardarContrato(contratos, form, ViewBag.IsEdit);
+            return GuardarContrato(contratos, form, ViewBag.IsEdit, PersonaNotificar_Id);
         }
 
         [GCPAuthorize(Roles = RolHelper.TODOS)]
@@ -336,14 +359,14 @@ namespace GCP_CF.Controllers
         [GCPAuthorize(Roles = RolHelper.PUEDE_ESCRIBIR)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Contratos contratos, FormCollection form)
+        public ActionResult Edit(Contratos contratos, FormCollection form, String[]  PersonaNotificar_Id)
         {
             if (!AutorizacionContrato(contratos.Contrato_Id, true)) return RedirectToAction("AccessDenied", "Account");
 
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
-            return GuardarContrato(contratos, form, ViewBag.IsEdit);
+            return GuardarContrato(contratos, form, ViewBag.IsEdit, PersonaNotificar_Id);
         }
 
         // GET: Contratos/Delete/5
