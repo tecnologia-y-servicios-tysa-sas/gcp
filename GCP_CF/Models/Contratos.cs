@@ -82,6 +82,14 @@ namespace GCP_CF.Models
         [Display(Name = "Porcentaje IVA Honorarios")]
         public Nullable<double> PorcentajeIvaHonorarios { get; set; }
 
+        //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        //[Display(Name = "Valor CRP")]
+        //public double? ValorCRP { get; set; }
+
+        //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        //[Display(Name = "Valor CDP")]
+        //public double? ValorCDP { get; set; }
+
         [NotMapped]
         [Display(Name = "Valor Neto Honorarios")]
         public double ValorNetoHonorarios

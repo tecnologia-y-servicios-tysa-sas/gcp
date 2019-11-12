@@ -13,6 +13,18 @@ $(function () {
         useCurrent: false
     });
 
+    $('#datetimeFechaEntrega').datetimepicker({
+        locale: 'es',
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+
+    $('#datetimeFechaVencimiento').datetimepicker({
+        locale: 'es',
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+
     /*$("#numeroContrato").blur(function () {
         var numeroContrato = $("#numeroContrato").val();
         $("#idContrato").val("");
