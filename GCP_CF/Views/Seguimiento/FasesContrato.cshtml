@@ -175,53 +175,50 @@
 
                                 @using (Html.BeginForm("GuardarActividadFase", "FasesContrato", FormMethod.Post, new { id = "AgregarActividadFaseForm" }))
                                 {
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <div class="col-md-6">   </div>
-                                            <div class="col-md-6">
-                                                <div>@Html.Label("Actividad", htmlAttributes: new { @class = "control-label" })</div>
-                                                @Html.DropDownList("ActividadesEtapasId", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "ActividadesEtapasId" })
-                                                @*@Html.ValidationMessageFor(af => , "", new { @class = "text-danger" })*@
-                                            </div>
-                                           
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="col-md-12 text-center">
+                                        <div>@Html.Label("Actividad", htmlAttributes: new { @class = "control-label" })</div>
+                                        @Html.DropDownList("ActividadesEtapasId", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "ActividadesEtapasId" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div>@Html.LabelFor(af => actividadFase.FechaInicio, htmlAttributes: new { @class = "control-label" })</div>
+                                        <div class='input-group date text-center' id='datetimeFechaInicio'>
+                                            @Html.EditorFor(af => actividadFase.FechaInicio, new { htmlAttributes = new { @class = "form-control", @id = "fechaInicio", @autocomplete = "off" } })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar">
+                                                </span>
+                                            </span>
                                         </div>
-                                            <div class="form-group">
-                                                <div class="col-md-6">
-                                                    <div>@Html.LabelFor(af => actividadFase.FechaInicio, htmlAttributes: new { @class = "control-label" })</div>
-                                                    <div class='input-group date text-center' id='datetimeFechaInicio'>
-                                                        @Html.EditorFor(af => actividadFase.FechaInicio, new { htmlAttributes = new { @class = "form-control", @id = "fechaInicio", @autocomplete = "off" } })
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar">
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    @Html.ValidationMessageFor(af => actividadFase.FechaInicio, "", new { @class = "text-danger" })
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div>@Html.LabelFor(af => actividadFase.FechaFinal, htmlAttributes: new { @class = "control-label" })</div>
-                                                    <div class="input-group date text-center" id="datetimeFechaFinal">
-                                                        @Html.EditorFor(af => actividadFase.FechaFinal, new { htmlAttributes = new { @class = "form-control", @id = "fechaFinal", @autocomplete = "off" } })
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar">
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    @Html.ValidationMessageFor(af => actividadFase.FechaFinal, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-6">
-                                                    <div>@Html.LabelFor(af => actividadFase.DiasHabiles, htmlAttributes: new { @class = "control-label" })</div>
-                                                    @Html.EditorFor(af => actividadFase.DiasHabiles, new { htmlAttributes = new { @class = "form-control", @id = "diasHabiles", @readonly = "true" } })
-                                                    @Html.ValidationMessageFor(af => actividadFase.Item, "", new { @class = "text-danger" })
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div>@Html.LabelFor(af => actividadFase.EstadoActividad_Id, htmlAttributes: new { @class = "control-label" })</div>
-                                                    @Html.DropDownList("EstadoActividad_Id", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "estadoActividad" })
-                                                    @Html.ValidationMessageFor(af => actividadFase.EstadoActividad_Id, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
+                                        @Html.ValidationMessageFor(af => actividadFase.FechaInicio, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div>@Html.LabelFor(af => actividadFase.FechaFinal, htmlAttributes: new { @class = "control-label" })</div>
+                                        <div class="input-group date text-center" id="datetimeFechaFinal">
+                                            @Html.EditorFor(af => actividadFase.FechaFinal, new { htmlAttributes = new { @class = "form-control", @id = "fechaFinal", @autocomplete = "off" } })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar">
+                                                </span>
+                                            </span>
                                         </div>
+                                        @Html.ValidationMessageFor(af => actividadFase.FechaFinal, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div>@Html.LabelFor(af => actividadFase.DiasHabiles, htmlAttributes: new { @class = "control-label" })</div>
+                                        @Html.EditorFor(af => actividadFase.DiasHabiles, new { htmlAttributes = new { @class = "form-control", @id = "diasHabiles", @readonly = "true" } })
+                                        @Html.ValidationMessageFor(af => actividadFase.Item, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div>@Html.LabelFor(af => actividadFase.EstadoActividad_Id, htmlAttributes: new { @class = "control-label" })</div>
+                                        @Html.DropDownList("EstadoActividad_Id", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "estadoActividad" })
+                                        @Html.ValidationMessageFor(af => actividadFase.EstadoActividad_Id, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
                                     <input type="hidden" id="addAct_IdActividad" name="addAct_IdActividad" />
                                     <input type="hidden" id="addAct_IdContrato" name="addAct_IdContrato" />
                                     <input type="hidden" id="addAct_IdFase" name="addAct_IdFase" />
@@ -262,6 +259,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/noGeneric/Utilidades.js"></script>

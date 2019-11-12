@@ -84,6 +84,7 @@ namespace GCP_CF.Controllers
             ViewBag.EstadoActividad_Id = new SelectList(db.EstadosActividad.OrderBy(e => e.Descripcion), "EstadoActividad_Id", "Descripcion");
             ViewBag.ActividadesEtapasId = new SelectList(db.ActividadesEtapas.Where(e => e.ActividadesEtapasId ==0), "ActividadesEtapasId", "Descripción");
 
+
             List<Registrofacescontratos> listadoFasesContrato = (from e in db.Registrofacescontratos.Include(a => a.FasesContrato)
                                                                  where e.Contrato_Id == idContrato
                                                                  select e).ToList();

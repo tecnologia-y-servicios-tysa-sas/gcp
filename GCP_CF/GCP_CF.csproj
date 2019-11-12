@@ -210,57 +210,9 @@
     <Compile Include="Helpers\RolHelper.cs" />
     <Compile Include="Helpers\UserManager.cs" />
     <Compile Include="Helpers\UserState.cs" />
-    <Compile Include="Migrations\201910202100510_role.cs" />
-    <Compile Include="Migrations\201910202100510_role.Designer.cs">
-      <DependentUpon>201910202100510_role.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910202109147_usuarioRole.cs" />
-    <Compile Include="Migrations\201910202109147_usuarioRole.Designer.cs">
-      <DependentUpon>201910202109147_usuarioRole.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910202116558_Roles2.cs" />
-    <Compile Include="Migrations\201910202116558_Roles2.Designer.cs">
-      <DependentUpon>201910202116558_Roles2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910202120559_Update-Roles.cs" />
-    <Compile Include="Migrations\201910202120559_Update-Roles.Designer.cs">
-      <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910221521052_Permisos.cs" />
-    <Compile Include="Migrations\201910221521052_Permisos.Designer.cs">
-      <DependentUpon>201910221521052_Permisos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910221527103_PermisosEstado.cs" />
-    <Compile Include="Migrations\201910221527103_PermisosEstado.Designer.cs">
-      <DependentUpon>201910221527103_PermisosEstado.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910221550477_PermisosRolesDetalle.cs" />
-    <Compile Include="Migrations\201910221550477_PermisosRolesDetalle.Designer.cs">
-      <DependentUpon>201910221550477_PermisosRolesDetalle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910221601546_PermisosRoles.cs" />
-    <Compile Include="Migrations\201910221601546_PermisosRoles.Designer.cs">
-      <DependentUpon>201910221601546_PermisosRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910261356179_Modulos.cs" />
-    <Compile Include="Migrations\201910261356179_Modulos.Designer.cs">
-      <DependentUpon>201910261356179_Modulos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910261422524_ModuloPermiso.cs" />
-    <Compile Include="Migrations\201910261422524_ModuloPermiso.Designer.cs">
-      <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910301343192_ActividadesEtapas.cs" />
-    <Compile Include="Migrations\201910301343192_ActividadesEtapas.Designer.cs">
-      <DependentUpon>201910301343192_ActividadesEtapas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910301352171_ActividadesEtapas1.cs" />
-    <Compile Include="Migrations\201910301352171_ActividadesEtapas1.Designer.cs">
-      <DependentUpon>201910301352171_ActividadesEtapas1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910301412180_FasesContratosAcividades.cs" />
-    <Compile Include="Migrations\201910301412180_FasesContratosAcividades.Designer.cs">
-      <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
+    <Compile Include="Migrations\201911080105435_NewMigration.cs" />
+    <Compile Include="Migrations\201911080105435_NewMigration.Designer.cs">
+      <DependentUpon>201911080105435_NewMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201911120141390_salgado.cs" />
     <Compile Include="Migrations\201911120141390_salgado.Designer.cs">
@@ -538,6 +490,11 @@
     <Content Include="Views\ActividadesEtapas\Index.cshtml" />
     <Content Include="Views\FasesContrato\CreateEtapasActividades.cshtml" />
     <Content Include="Views\FasesContrato\DetalleActividadEtapa.cshtml" />
+    <Content Include="Views\TipoTareas\Create.cshtml" />
+    <Content Include="Views\TipoTareas\Delete.cshtml" />
+    <Content Include="Views\TipoTareas\Details.cshtml" />
+    <Content Include="Views\TipoTareas\Edit.cshtml" />
+    <Content Include="Views\TipoTareas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -548,44 +505,8 @@
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910202100510_role.resx">
-      <DependentUpon>201910202100510_role.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910202109147_usuarioRole.resx">
-      <DependentUpon>201910202109147_usuarioRole.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910202116558_Roles2.resx">
-      <DependentUpon>201910202116558_Roles2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910202120559_Update-Roles.resx">
-      <DependentUpon>201910202120559_Update-Roles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221521052_Permisos.resx">
-      <DependentUpon>201910221521052_Permisos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221527103_PermisosEstado.resx">
-      <DependentUpon>201910221527103_PermisosEstado.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221550477_PermisosRolesDetalle.resx">
-      <DependentUpon>201910221550477_PermisosRolesDetalle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910221601546_PermisosRoles.resx">
-      <DependentUpon>201910221601546_PermisosRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910261356179_Modulos.resx">
-      <DependentUpon>201910261356179_Modulos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910261422524_ModuloPermiso.resx">
-      <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910301343192_ActividadesEtapas.resx">
-      <DependentUpon>201910301343192_ActividadesEtapas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910301352171_ActividadesEtapas1.resx">
-      <DependentUpon>201910301352171_ActividadesEtapas1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910301412180_FasesContratosAcividades.resx">
-      <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911080105435_NewMigration.resx">
+      <DependentUpon>201911080105435_NewMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911120141390_salgado.resx">
       <DependentUpon>201911120141390_salgado.cs</DependentUpon>
