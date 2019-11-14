@@ -210,14 +210,6 @@
     <Compile Include="Helpers\RolHelper.cs" />
     <Compile Include="Helpers\UserManager.cs" />
     <Compile Include="Helpers\UserState.cs" />
-    <Compile Include="Migrations\201911080105435_NewMigration.cs" />
-    <Compile Include="Migrations\201911080105435_NewMigration.Designer.cs">
-      <DependentUpon>201911080105435_NewMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911120141390_salgado.cs" />
-    <Compile Include="Migrations\201911120141390_salgado.Designer.cs">
-      <DependentUpon>201911120141390_salgado.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\ActividadesEtapas.cs" />
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FasesContratosAcividades.cs" />
@@ -304,7 +296,10 @@
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Chart.utils.js" />
@@ -506,9 +501,7 @@
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911080105435_NewMigration.resx">
-      <DependentUpon>201911080105435_NewMigration.cs</DependentUpon>
-    </EmbeddedResource>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
