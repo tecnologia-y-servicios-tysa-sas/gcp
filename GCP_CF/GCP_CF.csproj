@@ -501,6 +501,7 @@
     <Content Include="Views\TipoTareas\Details.cshtml" />
     <Content Include="Views\TipoTareas\Edit.cshtml" />
     <Content Include="Views\TipoTareas\Index.cshtml" />
+    <Content Include="Views\Graphics\PartialCIADS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

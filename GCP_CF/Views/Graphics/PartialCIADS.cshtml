@@ -5,10 +5,10 @@
     <div class="col-md-12">
         <div class="panel">
             <div class="panel-body">
-                <div id="mensajeCarga2">
-                    <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i> <span id="mensaje2">Cargando gráfico...</span>
+                <div id="mensajeCarga4">
+                    <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i> <span id="mensaje4">Cargando gráfico...</span>
                 </div>
-                <canvas id="canvas2" height="150" style="display: none"></canvas>
+                <canvas id="canvas4" height="250" style="display: none"></canvas>
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
 
         $.ajax({
             async: false,
-            url: "/Graphics/ValorContratadoDirectamentePorAnio",
+            url: "/Graphics/ValorCIADS",
             type: "POST",
             data: JSON.stringify({
                 anioSeleccionado: @(ViewBag.AnioSeleccionado > 0 ? ViewBag.AnioSeleccionado : "-1"),
@@ -45,11 +45,11 @@
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 var chartData = jQuery.parseJSON(result);
-                chartData.datasets[0].backgroundColor = color(window.chartColors.blue).alpha(0.5).rgbString();
+                chartData.datasets[0].backgroundColor = color(window.chartColors.blue).alpha(1).rgbString();
                 chartData.datasets[0].borderColor = window.chartColors.blue;
                 chartData.datasets[0].borderWidth = 1;
 
-                var ctx = $("#canvas2");
+                var ctx = $("#canvas4");
                 var chart = new Chart(ctx, {
                     type: "bar",
                     data: chartData,
@@ -61,7 +61,7 @@
                         },
                         title: {
                             display: true,
-                            text: "Valor contratado directamente por año",
+                            text: "Valor CIADS",
                             fontSize: 24,
                             fontStyle: "normal",
                             fontColor: "#333"
@@ -76,13 +76,13 @@
 
                 chart.update();
                 
-                $("#mensajeCarga2").fadeOut();
-                $("#canvas2").fadeIn();
+                $("#mensajeCarga4").fadeOut();
+                $("#canvas4").fadeIn();
             }, 
             error: function () {
-                $("#mensajeCarga2").fadeIn();
-                $("#canvas2").fadeOut();
-                $("#mensaje2").text("No se pudo cargar el gráfico");
+                $("#mensajeCarga4").fadeIn();
+                $("#canvas4").fadeOut();
+                $("#mensaje4").text("No se pudo cargar el gráfico");
             }
         });
         

@@ -12,6 +12,7 @@
                     <canvas id="canvas3" style="height: 250px; display: none"></canvas>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 
@@ -54,7 +55,7 @@
                         responsive: true,
                         maintainAspectRatio: true,
                         legend: {
-                            position: "right",
+                            position: "bottom",
                             display: true,
                             labels: {
                                 fontSize: 11
@@ -72,9 +73,22 @@
                                 barThickness: 6
                             }],
                             yAxes: [{
+                                id : 'y-axis 1',
                                 ticks: {
                                     min: 0
                                 }
+                            },
+                            {
+                                type: 'linear',
+                                id : 'y-axis 2',
+                                position: 'right',
+                                ticks: {
+                                    min: 0
+                                },
+                                gridLines: {
+								    drawOnChartArea: false
+							    },
+                                data: chartData[2],
                             }]
                         },
                         elements: {
