@@ -293,7 +293,11 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div>@Html.LabelFor(model => model.ValorCDP, htmlAttributes: new { @class = "control-label" })</div>
+                        @Html.EditorFor(model => model.ValorCDP, new { htmlAttributes = new { @class = "form-control", @id = "valorcdp" } })
+                        @Html.ValidationMessageFor(model => model.ValorCDP, "", new { @class = "text-danger" })
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -312,7 +316,11 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div>@Html.LabelFor(model => model.ValorCRP, htmlAttributes: new { @class = "control-label" })</div>
+                        @Html.EditorFor(model => model.ValorCRP, new { htmlAttributes = new { @class = "form-control", @id = "valorcrp" } })
+                        @Html.ValidationMessageFor(model => model.ValorCRP, "", new { @class = "text-danger" })
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -381,7 +389,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+                        @if (Model != null && Model.PagoContrato != null && Model.PagoContrato.Count > 0)
                         {
                             var formatter = new System.Globalization.CultureInfo("es-CO", false).NumberFormat;
                             formatter.NumberGroupSeparator = ",";
@@ -389,7 +397,7 @@
                             formatter.NumberDecimalDigits = 2;
 
                             int i = 0;
-                            foreach (var pago in Model.PagosContrato)
+                            foreach (var pago in Model.PagoContrato)
                             {
                                 <tr id="pago_@i">
                                     <td class="border-cell col-md-1 text-right" style="font-weight: bold; font-size: 1.3em; padding-top: 10px; width: 70px">@(i + 1)</td>
@@ -441,9 +449,9 @@
                         }
                     </tbody>
                 </table>
-                @if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+                @if (Model != null && Model.PagoContrato != null && Model.PagoContrato.Count > 0)
                 {
-                    <input type="hidden" name="numeroPagos" id="numeroPagos" value="@Model.PagosContrato.Count" />
+                    <input type="hidden" name="numeroPagos" id="numeroPagos" value="@Model.PagoContrato.Count" />
                 }
                 else
                 {

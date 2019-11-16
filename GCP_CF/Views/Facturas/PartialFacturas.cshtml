@@ -1,4 +1,4 @@
-﻿@model GCP_CF.Models.Facturas
+﻿@model GCP_CF.Models.Factura
 
 @{
     double porcentajeIva = double.Parse(System.Configuration.ConfigurationManager.AppSettings["porcentajeIva"]);
@@ -114,7 +114,7 @@
                 @{
                     string mostrarRegionPagos = "none";
                     string mostrarRegionMensaje = "block";
-                    if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+                    if (Model != null && Model.PagoContrato != null && Model.PagoContrato.Count > 0)
                     {
                         mostrarRegionPagos = "block";
                         mostrarRegionMensaje = "none";
@@ -145,10 +145,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+                                    @if (Model != null && Model.PagoContrato != null && Model.PagoContrato.Count > 0)
                                     {
-                                        var pagos = Model.PagosContrato;
-                                        for (int i = 0; i < Model.PagosContrato.Count; i++)
+                                        var pagos = Model.PagoContrato;
+                                        for (int i = 0; i < Model.PagoContrato.Count; i++)
                                         {
                                             <tr class="filaPago" id="filaPago_@pagos[i].PagosContrato_Id">
                                                 <td class="border-cell col-md-1 text-center" style="width: 75px">

@@ -1,4 +1,4 @@
-﻿@model GCP_CF.Models.Facturas
+﻿@model GCP_CF.Models.Factura
 
 @{
     var formatter = new System.Globalization.CultureInfo("es-CO", false).NumberFormat;
@@ -155,9 +155,9 @@
         </div>
     </div>
 </div>
-@if (Model != null && Model.PagosContrato != null && Model.PagosContrato.Count > 0)
+@if (Model != null && Model.PagoContrato != null && Model.PagoContrato.Count > 0)
 {
-    var pagos = Model.PagosContrato;
+    var pagos = Model.PagoContrato;
 <div class="col-md-12">
     <div class="panel">
         <div class="panel-heading text-center">

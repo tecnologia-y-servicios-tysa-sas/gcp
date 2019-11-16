@@ -72,6 +72,9 @@ namespace GCP_CF.Models
         public System.Data.Entity.DbSet<GCP_CF.Models.FasesContratosAcividades> FasesContratosAcividades { get; set; }
 
         public DbSet<GCP_CF.Models.Notificaciones> Notificaciones { get; set; }
+        public DbSet<Factura> Factura { get; set; }
+
+        public DbSet<PagoContrato> PagoContrato { get; set; }
 
     }
 }

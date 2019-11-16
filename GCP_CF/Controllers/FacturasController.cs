@@ -20,7 +20,7 @@ namespace GCP_CF.Controllers
         // GET: Facturas
         public ActionResult Index()
         {
-            List<Facturas> facturas = db.Facturas.OrderByDescending(f => f.Factura_Id).ToList<Facturas>();
+            List<Factura> facturas = db.Factura.OrderByDescending(f => f.Factura_Id).ToList();
             return View(facturas);
         }
 
@@ -51,13 +51,13 @@ namespace GCP_CF.Controllers
                 if (contrato != null) {
                     idContrato = contrato.Contrato_Id.ToString();
 
-                    List<PagosContrato> pagosContrato = contrato.PagosContrato.Select(p => p).ToList<PagosContrato>();
+                    List<PagoContrato> pagosContrato = contrato.PagoContrato.Select(p => p).ToList<PagoContrato>();
                     if (pagosContrato == null || pagosContrato.Count == 0)
                         mensaje = "No existen pagos asociados al contrato " + numeroContrato + ".";
                     else
                     {
                         // Deben llegar los pagos que no estén asociados a una factura
-                        pagosContrato = pagosContrato.Where(p => p.Factura_Id == null).ToList<PagosContrato>();
+                        pagosContrato = pagosContrato.Where(p => p.Factura_Id == null).ToList<PagoContrato>();
 
                         if (pagosContrato == null || pagosContrato.Count == 0)
                             mensaje = "Todos los pagos asociados al contrato " + numeroContrato + " han sido facturados.";
@@ -87,7 +87,7 @@ namespace GCP_CF.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Facturas factura = db.Facturas.Where(f => f.Factura_Id == id.Value).Include(f => f.PagosContrato).FirstOrDefault();
+            Factura factura = db.Factura.Where(f => f.Factura_Id == id.Value).Include(f => f.PagoContrato).FirstOrDefault();
             if (factura == null)
                 return HttpNotFound();
 
@@ -125,7 +125,7 @@ namespace GCP_CF.Controllers
         // POST: Facturas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Facturas factura, FormCollection collection)
+        public ActionResult Create(Factura factura, FormCollection collection)
         {
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
@@ -138,7 +138,7 @@ namespace GCP_CF.Controllers
                     throw new Exception("Debe seleccionar al menos un pago del contrato " + factura.Contrato.NumeroContrato);
 
                 // Validar si la factura tiene pagos asociados
-                List<PagosContrato> pagosContrato = db.PagosContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
+                List<PagoContrato> pagosContrato = db.PagoContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
                 if (pagosContrato == null || pagosContrato.Count == 0)
                     throw new Exception("El contrato " + factura.Contrato.NumeroContrato + " no tiene pagos asociados.");
 
@@ -167,10 +167,10 @@ namespace GCP_CF.Controllers
                     factura.ValorCancelado = 0;
 
                 // Se asocian los pagos a la factura
-                if (factura.PagosContrato == null) factura.PagosContrato = new List<PagosContrato>();
-                factura.PagosContrato.AddRange(pagosContrato);
+                if (factura.PagoContrato == null) factura.PagoContrato = new List<PagoContrato>();
+                factura.PagoContrato.AddRange(pagosContrato);
 
-                db.Facturas.Add(factura);
+                db.Factura.Add(factura);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -199,7 +199,7 @@ namespace GCP_CF.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Facturas factura = db.Facturas.Where(f => f.Factura_Id == id.Value).Include(f => f.PagosContrato).FirstOrDefault();
+            Factura factura = db.Factura.Where(f => f.Factura_Id == id.Value).Include(f => f.PagoContrato).FirstOrDefault();
             if (factura == null) return HttpNotFound();
 
             CargarListados(factura.Estado_Id.ToString(), factura.Municipio_Id.ToString(), factura.Mes.ToString());
@@ -225,7 +225,7 @@ namespace GCP_CF.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Facturas factura, FormCollection form)
+        public ActionResult Edit(Factura factura, FormCollection form)
         {
             bool exito = false;
             ViewBag.Accion = EDITAR;
@@ -243,7 +243,7 @@ namespace GCP_CF.Controllers
                         throw new Exception("Debe seleccionar al menos un pago del contrato " + factura.Contrato.NumeroContrato);
 
                     // Validar si la factura tiene pagos asociados
-                    List<PagosContrato> pagosContrato = db.PagosContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
+                    List<PagoContrato> pagosContrato = db.PagoContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
                     if (pagosContrato == null || pagosContrato.Count == 0)
                         throw new Exception("El contrato " + factura.Contrato.NumeroContrato + " no tiene pagos asociados.");
 
@@ -272,8 +272,8 @@ namespace GCP_CF.Controllers
                         factura.ValorCancelado = 0;
 
                     // Se asocian los nuevos pagos a la factura
-                    factura.PagosContrato = new List<PagosContrato>();
-                    factura.PagosContrato.AddRange(pagosContrato);
+                    factura.PagoContrato = new List<PagoContrato>();
+                    factura.PagoContrato.AddRange(pagosContrato);
 
                     db.Entry(factura).State = EntityState.Modified;
 
@@ -303,7 +303,7 @@ namespace GCP_CF.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Facturas factura = db.Facturas.Find(id);
+            Factura factura = db.Factura.Find(id);
 
             if (factura == null)
                 return HttpNotFound();
@@ -318,12 +318,12 @@ namespace GCP_CF.Controllers
         {
             bool exito = false;
 
-            Facturas factura = db.Facturas.Find(id);
+            Factura factura = db.Factura.Find(id);
             if (factura == null) return HttpNotFound();
 
             try
             {
-                db.Facturas.Remove(factura);
+                db.Factura.Remove(factura);
                 exito = db.SaveChanges() > 0;
             }
             catch (Exception e)

@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace GCP_CF.Models
 {
-    public class Facturas
+    public class Factura
     {
         [Key]
         public int Factura_Id { get; set; }
@@ -105,8 +105,7 @@ namespace GCP_CF.Models
         public string Observaciones { get; set; }
 
         public List<PagosContrato> PagosContrato { get; set; }
-
-        //public List<PagoContrato> PagoContrato { get; set; }
+        public List<PagoContrato> PagoContrato { get; set; }
 
         [NotMapped]
         public string TotalHonorariosAux { get; set; }

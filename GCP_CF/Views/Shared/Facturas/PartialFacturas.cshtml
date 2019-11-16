@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GCP_CF.Models.Facturas>
+﻿@model IEnumerable<GCP_CF.Models.Factura>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
@@ -64,7 +64,7 @@
 <script type="text/javascript">
 
     function VerFactura(IdFactura) {
-        $(location).attr("href", "/Facturas/Details/" + IdFactura);
+        $(location).attr("href", "/Factura/Details/" + IdFactura);
     }
 
     $(document).ready(function () {

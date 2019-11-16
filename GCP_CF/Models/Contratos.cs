@@ -82,13 +82,13 @@ namespace GCP_CF.Models
         [Display(Name = "Porcentaje IVA Honorarios")]
         public Nullable<double> PorcentajeIvaHonorarios { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-        //[Display(Name = "Valor CRP")]
-        //public double? ValorCRP { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Valor CRP")]
+        public double? ValorCRP { get; set; }
 
-        //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-        //[Display(Name = "Valor CDP")]
-        //public double? ValorCDP { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Valor CDP")]
+        public double? ValorCDP { get; set; }
 
         [NotMapped]
         [Display(Name = "Valor Neto Honorarios")]
@@ -188,5 +188,10 @@ namespace GCP_CF.Models
         public virtual ICollection<PagosContrato> PagosContrato { get; set; }
 
         public virtual ICollection<Notificaciones> Notificaciones { get; set; }
+
+        public virtual ICollection<Factura> Factura { get; set; }
+
+        public virtual ICollection<PagoContrato> PagoContrato { get; set; }
+
     }
 }

@@ -183,9 +183,9 @@ namespace GCP_CF.Controllers
                     int idTipoContratoCIAD = (new ContratosHelper()).ObtenerIdCIAD();
                     if (contratos.TipoContrato_Id != idTipoContratoCIAD)
                     {
-                        List<PagosContrato> pagosActuales = null;
+                        List<PagoContrato> pagosActuales = null;
                         List<int> pagosModificados = new List<int>();
-                        if (esModificado) pagosActuales = db.PagosContrato.Where(p => p.Contrato_Id == id).ToList<PagosContrato>();
+                        if (esModificado) pagosActuales = db.PagoContrato.Where(p => p.Contrato_Id == id).ToList<PagoContrato>();
 
                         string strNumeroPagos = form["numeroPagos"];
 
@@ -198,12 +198,12 @@ namespace GCP_CF.Controllers
 
                                 double valorPagoAux = Convert.ToDouble(form["valorPago_" + i].Replace(",", "").Replace(".00", ""));
 
-                                PagosContrato pago = null;
+                                PagoContrato pago = null;
                                 if (esModificado && !string.IsNullOrEmpty(idPagoAux))
                                 {
                                     int idPago = int.Parse(idPagoAux);
                                     pagosModificados.Add(idPago);
-                                    pago = pagosActuales.Where(p => p.PagosContrato_Id == idPago).FirstOrDefault<PagosContrato>();
+                                    pago = pagosActuales.Where(p => p.PagosContrato_Id == idPago).FirstOrDefault<PagoContrato>();
                                     pago.Valor = valorPagoAux;
                                     pago.Fecha = DateTime.Parse(form["fechaPago_" + i]);
                                     pago.Notas = !string.IsNullOrEmpty(form["notasPago_" + i]) ? form["notasPago_" + i] : string.Empty;
@@ -211,14 +211,14 @@ namespace GCP_CF.Controllers
                                 }
                                 else
                                 {
-                                    pago = new PagosContrato
+                                    pago = new PagoContrato
                                     {
                                         Contrato_Id = id,
                                         Valor = valorPagoAux,
                                         Fecha = DateTime.Parse(form["fechaPago_" + i]),
                                         Notas = !string.IsNullOrEmpty(form["notasPago_" + i]) ? form["notasPago_" + i] : string.Empty
                                     };
-                                    db.PagosContrato.Add(pago);
+                                    db.PagoContrato.Add(pago);
                                 }
                             }
                         }
@@ -229,7 +229,7 @@ namespace GCP_CF.Controllers
 
                         if (pagosActuales != null && pagosActuales.Count > 0 && pagosModificados != null && pagosModificados.Count > 0)
                         {
-                            List<PagosContrato> pagosContrato = new List<PagosContrato>();
+                            List<PagoContrato> pagosContrato = new List<PagoContrato>();
                             foreach (var pago in pagosActuales)
                             {
                                 if (!pagosModificados.Contains(pago.PagosContrato_Id))
@@ -238,7 +238,7 @@ namespace GCP_CF.Controllers
                                     pagosContrato.Add(pago);
                             }
 
-                            contratos.PagosContrato = pagosContrato;
+                            contratos.PagoContrato = pagosContrato;
 
                         }
                     }
@@ -319,6 +319,16 @@ namespace GCP_CF.Controllers
             ViewBag.IsEdit = true;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
 
+            int? TipoContrato_Id = db.Contratos.Where(x => x.Contrato_Id == id).Select(y => y.TipoContrato_Id).FirstOrDefault();
+            if (TipoContrato_Id == 3)
+            {
+                ViewBag.IsInterAdmin = true;
+            }
+            else
+            {
+                ViewBag.IsInterAdmin = false;
+            }
+
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -338,8 +348,8 @@ namespace GCP_CF.Controllers
             contratos.HonorariosAux = contratos.Honorarios.HasValue ? contratos.Honorarios.Value.ToString("#,###.#0", formatter) : "";
             contratos.ValorPolizaAux = contratos.ValorPoliza.HasValue ? contratos.ValorPoliza.Value.ToString("#,###.#0", formatter) : "";
 
-            List<PagosContrato> pagosContrato = db.PagosContrato.Where(p => p.Contrato_Id == id).ToList<PagosContrato>();
-            contratos.PagosContrato = pagosContrato;
+            List<PagoContrato> pagosContrato = db.PagoContrato.Where(p => p.Contrato_Id == id).ToList<PagoContrato>();
+            contratos.PagoContrato = pagosContrato;
 
             ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto", contratos.Persona_Id);
             ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto",contratos.PersonaAbogado_Id);
@@ -349,6 +359,7 @@ namespace GCP_CF.Controllers
             ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato",contratos.ContratoMarco_Id);
             ViewBag.TipoContrato_Id_Aux = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion", contratos.TipoContrato_Id);
             ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
+            ViewBag.PersonaNotificar_Id = new SelectList(db.Personas, "Persona_Id", "NombreCompleto");
 
             return View(contratos);
         }
@@ -362,6 +373,15 @@ namespace GCP_CF.Controllers
         public ActionResult Edit(Contratos contratos, FormCollection form, String[]  PersonaNotificar_Id)
         {
             if (!AutorizacionContrato(contratos.Contrato_Id, true)) return RedirectToAction("AccessDenied", "Account");
+            int? TipoContrato_Id = db.Contratos.Where(x=> x.Contrato_Id == contratos.Contrato_Id).Select(y=> y.TipoContrato_Id).FirstOrDefault();
+            if(TipoContrato_Id ==3)
+            {
+                ViewBag.IsInterAdmin = true;
+            }
+            else
+            {
+                ViewBag.IsInterAdmin = false;
+            }
 
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;

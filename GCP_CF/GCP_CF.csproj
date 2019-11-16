@@ -210,7 +210,16 @@
     <Compile Include="Helpers\RolHelper.cs" />
     <Compile Include="Helpers\UserManager.cs" />
     <Compile Include="Helpers\UserState.cs" />
+    <Compile Include="Migrations\201911151038304_createTables.cs" />
+    <Compile Include="Migrations\201911151038304_createTables.Designer.cs">
+      <DependentUpon>201911151038304_createTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911161300306_initial3.cs" />
+    <Compile Include="Migrations\201911161300306_initial3.Designer.cs">
+      <DependentUpon>201911161300306_initial3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ActividadesEtapas.cs" />
+    <Compile Include="Models\Factura.cs" />
     <Compile Include="Models\Facturas.cs" />
     <Compile Include="Models\FasesContratosAcividades.cs" />
     <Compile Include="Models\FormaPago.cs" />
@@ -236,6 +245,7 @@
     <Compile Include="Data\GCPContext.cs" />
     <Compile Include="Models\Modulos.cs" />
     <Compile Include="Models\Notificaciones.cs" />
+    <Compile Include="Models\PagoContrato.cs" />
     <Compile Include="Models\PagosContrato.cs" />
     <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PermisosRoles.cs" />
@@ -494,6 +504,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Factura\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -502,6 +513,14 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201911151038304_createTables.resx">
+      <DependentUpon>201911151038304_createTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911161300306_initial3.resx">
+      <DependentUpon>201911161300306_initial3.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

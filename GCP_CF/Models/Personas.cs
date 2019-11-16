@@ -49,5 +49,6 @@ namespace GCP_CF.Models
 
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Facturas> Facturas { get; set; }
+        public virtual ICollection<Factura> Factura { get; set; }
     }
 }

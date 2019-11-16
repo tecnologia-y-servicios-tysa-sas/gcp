@@ -63,6 +63,18 @@ $(function () {
         }
     });
 
+    $("#valorcdp").blur(function () {
+        if ($(this).val() != "" && !isNaN($(this).val())) {
+            cambiarFormatoNumerico($("#valorcdp"));
+        }
+    });
+
+    $("#fechaCrp").blur(function () {
+        if ($(this).val() != "" && !isNaN($(this).val())) {
+            cambiarFormatoNumerico($("#fechaCrp"));
+        }
+    });
+
     $("#valorAdministrar").blur(function () {
         if ($(this).val() != "" && !isNaN($(this).val())) {
             cambiarFormatoNumerico($("#valorAdministrar"));
@@ -246,6 +258,14 @@ $("#fechaCdp").blur(function () {
 
 $("#valorContrato").blur(function () {
     validateValorContrato();
+});
+
+$("#valorcdp").blur(function () {
+    validateValorCdp();
+});
+
+$("#valorcrp").blur(function () {
+    validateValorCrp();
 });
 
 $("#valorAdministrar").blur(function () {
@@ -486,6 +506,14 @@ function validateFechaCdp() {
 
 function validateValorContrato() {    
     return validateNumeric($("#valorContrato"), "Valor Contrato");
+}
+
+function validateValorCdp() {
+    return validateNumeric($("#valorcdp"), "Valor Cdp");
+}
+
+function validateValorCrp() {
+    return validateNumeric($("#valorcrp"), "Valor Crp");
 }
 
 function validateValorAdministrar() {

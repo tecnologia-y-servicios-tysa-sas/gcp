@@ -66,14 +66,14 @@ namespace GCP_CF.Controllers
             return CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(dtinfo.GetMonthName(mes));
         }
 
-        private List<Facturas> ListarFacturas(FormCollection filterForm)
+        private List<Factura> ListarFacturas(FormCollection filterForm)
         {
             int idEntidad = !string.IsNullOrEmpty(filterForm["IdMunicipio"]) ? int.Parse(filterForm["IdMunicipio"]) : 0;
             int mes = !string.IsNullOrEmpty(filterForm["Mes"]) ? int.Parse(filterForm["Mes"]) : 0;
             int anio = !string.IsNullOrEmpty(filterForm["Anio"]) ? int.Parse(filterForm["Anio"]) : 0;
 
             ViewBag.IdMunicipio = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto", idEntidad);
-            var mesesFacturas = db.Facturas.Select(f => f.Mes).Distinct();
+            var mesesFacturas = db.Factura.Select(f => f.Mes).Distinct();
 
             List<object> listadoMeses = new List<object>();
             foreach (var m in mesesFacturas)
@@ -81,11 +81,11 @@ namespace GCP_CF.Controllers
 
             ViewBag.Mes = new SelectList(listadoMeses, "id", "nombre", mes);
 
-            List<int> aniosFacturas = db.Facturas.Select(f => f.Anio).Distinct().ToList<int>();
+            List<int> aniosFacturas = db.Factura.Select(f => f.Anio).Distinct().ToList<int>();
             ViewBag.Anio = new SelectList(aniosFacturas.Where(x => x > 0).OrderByDescending(x => x), anio);
 
-            List<Facturas> list = ObtenerFacturas(idEntidad, mes, anio);
-            return list != null ? list.OrderBy(x => x.Factura_Id).ToList() : new List<Facturas>();
+            List<Factura> list = ObtenerFacturas(idEntidad, mes, anio);
+            return list != null ? list.OrderBy(x => x.Factura_Id).ToList() : new List<Factura>();
         }
 
         private List<Contratos> ObtenerContratos(int anio, int idEntidadContratante, string numeroContrato, int idEstadoContrato)
@@ -146,13 +146,13 @@ namespace GCP_CF.Controllers
             return null;
         }
 
-        private List<Facturas> ObtenerFacturas(int idEntidad, int mes, int anio)
+        private List<Factura> ObtenerFacturas(int idEntidad, int mes, int anio)
         {
             bool hayMes = mes > 0;
             bool hayAnio = anio > 0;
             bool hayEntidad = idEntidad > 0;
 
-            var facturas = (from f in db.Facturas select f).Include(f => f.Contrato);
+            var facturas = (from f in db.Factura select f).Include(f => f.Contrato);
             
             if (hayEntidad)
                 facturas = facturas.Where(f => f.Municipio_Id == idEntidad);
@@ -164,7 +164,7 @@ namespace GCP_CF.Controllers
                 facturas = facturas.Where(c => c.Anio == anio);
 
             if (facturas != null)
-                return facturas.ToList<Facturas>();
+                return facturas.ToList<Factura>();
 
             return null;
         }
@@ -220,7 +220,7 @@ namespace GCP_CF.Controllers
         [HttpPost]
         public FileResult ExportarReporteFacturas(FormCollection filterForm)
         {
-            List<Facturas> facturas = ListarFacturas(filterForm);
+            List<Factura> facturas = ListarFacturas(filterForm);
 
             DataTable dt = new DataTable("Facturas");
             dt.Columns.AddRange(new DataColumn[15]
@@ -242,7 +242,7 @@ namespace GCP_CF.Controllers
                 new DataColumn("Observaciones")
             });
 
-            foreach (Facturas f in facturas)
+            foreach (Factura f in facturas)
             {
                 dt.Rows.Add(f.Anio, f.Estado.Termino, f.Numero, f.NombreMes, f.FechaPago.ToShortDateString(), 
                     f.Municipio.NombreCompleto, f.Concepto, f.Contrato.NumeroContrato, f.Objeto, 
