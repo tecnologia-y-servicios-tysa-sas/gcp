@@ -33,7 +33,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
-        public JsonResult PresupuestoPorAnio(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato)
+        public JsonResult PresupuestoPorAnio(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato, int? idTipoContrato)
         {
             int anioActual = DateTime.Now.Year;
 
@@ -61,6 +61,24 @@ namespace GCP_CF.Controllers
 
             if (idEstadoContrato.HasValue && idEstadoContrato.Value != -1)
                 contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato).ToList();
+
+            if (idTipoContrato.HasValue && idTipoContrato.Value != -1)
+            {
+                if (idTipoContrato == 3)
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                    List<Contratos> contratosTemp = new List<Contratos>();
+                    foreach (var contrato in contratos)
+                    {
+                        contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
+                    }
+                    contratos = contratosTemp;
+                }
+                else
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                }
+            }
 
             List<double> valoresContratos = new List<double>();
             List<double> valoresRecursos = new List<double>();
@@ -91,18 +109,18 @@ namespace GCP_CF.Controllers
                 var contratosAnio = contratos.Where(c => c.FechaInicio.Year >= anio && c.FechaTerminacion.Year <= anio);
 
                 double valorContratos = contratosAnio
-                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0)
+                    .Select(c => c.TipoContrato != null ? c.ValorContrato : 0)
                     .DefaultIfEmpty(0).Sum();
                 totalContratos += valorContratos;
 
                 double valorRecursos = contratosAnio
-                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorAdministrar : 0)
+                    .Select(c => c.TipoContrato != null ? c.ValorAdministrar : 0)
                     .DefaultIfEmpty(0)
                     .Sum();
                 totalRecursos += valorRecursos;
 
                 double valorHonorarios = contratosAnio
-                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? (c.Honorarios ?? 0) : 0)
+                    .Select(c => c.TipoContrato != null ? (c.Honorarios ?? 0) : 0)
                     .DefaultIfEmpty(0)
                     .Sum();
                 totalHonorarios += valorHonorarios;
@@ -187,7 +205,7 @@ namespace GCP_CF.Controllers
             return Json(JsonConvert.SerializeObject(chartData, _jsonSetting));
         }*/
 
-        public JsonResult PresupuestoPorMunicipio(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato)
+        public JsonResult PresupuestoPorMunicipio(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato, int? idTipoContrato)
         {
             int anioActual = DateTime.Now.Year;
 
@@ -212,6 +230,24 @@ namespace GCP_CF.Controllers
 
             if (idEstadoContrato.HasValue && idEstadoContrato.Value != -1)
                 contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato).ToList();
+
+            if (idTipoContrato.HasValue && idTipoContrato.Value != -1)
+            {
+                if (idTipoContrato == 3)
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                    List<Contratos> contratosTemp = new List<Contratos>();
+                    foreach (var contrato in contratos)
+                    {
+                        contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
+                    }
+                    contratos = contratosTemp;
+                }
+                else
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                }
+            }
 
             int limiteAnios = 0;
             int anioSuperior = anioActual;
@@ -260,16 +296,16 @@ namespace GCP_CF.Controllers
                 {
                     try
                     {
-                        double valorContrato = db.Contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year == anio && c.FechaTerminacion.Year == anio)
-                            .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0).DefaultIfEmpty(0).Sum();
+                        double valorContrato = contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year == anio && c.FechaTerminacion.Year == anio)
+                            .Select(c => c.TipoContrato != null ? c.ValorContrato : 0).DefaultIfEmpty(0).Sum();
                         valorContratos += valorContrato;
 
-                        double valorRecurso = db.Contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year == anio && c.FechaTerminacion.Year == anio)
-                            .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorAdministrar : 0).DefaultIfEmpty(0).Sum();
+                        double valorRecurso = contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year == anio && c.FechaTerminacion.Year == anio)
+                            .Select(c => c.TipoContrato != null ? c.ValorAdministrar : 0).DefaultIfEmpty(0).Sum();
                         valorRecursos += valorRecurso;
 
-                        double valorParticipacion = db.Contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year == anio && c.FechaTerminacion.Year == anio)
-                            .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorAdministrar : 0).DefaultIfEmpty(0).Sum();
+                        double valorParticipacion = contratos.Where(c => c.Persona_Id == municipio.Persona_Id && c.FechaInicio.Year == anio && c.FechaTerminacion.Year == anio)
+                            .Select(c => c.TipoContrato != null ? c.ValorAdministrar : 0).DefaultIfEmpty(0).Sum();
                         valorParticipaciones += valorParticipacion;
                     }
                     catch (Exception)
@@ -308,7 +344,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
-        public JsonResult ValorContratadoDirectamentePorAnio(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato)
+        public JsonResult ValorContratadoDirectamentePorAnio(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato, int? idTipoContrato)
         {
             int anioActual = DateTime.Now.Year;
 
@@ -334,6 +370,24 @@ namespace GCP_CF.Controllers
 
             if (idEstadoContrato.HasValue && idEstadoContrato.Value != -1)
                 contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato).ToList();
+
+            if (idTipoContrato.HasValue && idTipoContrato.Value != -1)
+            {
+                if (idTipoContrato == 3)
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                    List<Contratos> contratosTemp = new List<Contratos>();
+                    foreach (var contrato in contratos)
+                    {
+                        contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
+                    }
+                    contratos = contratosTemp;
+                }
+                else
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                }
+            }
 
             List<double> valoresContratos = new List<double>();
 
@@ -362,7 +416,7 @@ namespace GCP_CF.Controllers
                 var contratosAnio = contratos.Where(c => c.FechaInicio.Year >= anio && c.FechaTerminacion.Year <= anio);
 
                 double valorContratos = contratosAnio
-                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0)
+                    .Select(c => c.TipoContrato != null ? c.ValorContrato : 0)
                     .DefaultIfEmpty(0).Sum();
                 totalContratos += valorContratos;
 
@@ -377,7 +431,7 @@ namespace GCP_CF.Controllers
         }
 
         [HttpPost]
-        public JsonResult ValorCIADS(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato)
+        public JsonResult ValorCIADS(int? anioSeleccionado, int? idEntidadContratante, string numeroContrato, int? idEstadoContrato, int? idTipoContrato)
         {
             int anioActual = DateTime.Now.Year;
 
@@ -404,6 +458,25 @@ namespace GCP_CF.Controllers
 
             if (idEstadoContrato.HasValue && idEstadoContrato.Value != -1)
                 contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato).ToList();
+
+            if (idTipoContrato.HasValue && idTipoContrato.Value != -1)
+            {
+                if (idTipoContrato == 3)
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                    List<Contratos> contratosTemp = new List<Contratos>();
+                    foreach (var contrato in contratos)
+                    {
+                        contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
+                    }
+                    contratos = contratosTemp;
+                }
+                else
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                }
+            }
+                
 
             List<double> valoresContratos = new List<double>();
 
@@ -437,21 +510,21 @@ namespace GCP_CF.Controllers
                 var contratosAnio = contratos.Where(c => c.FechaInicio.Year >= anio && c.FechaTerminacion.Year <= anio);
 
                 valorContratos = contratosAnio
-                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? c.ValorContrato : 0)
+                    .Select(c => c.TipoContrato != null ? c.ValorContrato : 0)
                     .DefaultIfEmpty(0).Sum();
                 totalContratos += valorContratos;
 
                 valorCDP = contratosAnio
-                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? !c.ValorCDP.HasValue ? 0 : c.ValorCDP.Value : 0)
+                    .Select(c => c.TipoContrato != null ? !c.ValorCDP.HasValue ? 0 : c.ValorCDP.Value : 0)
                     .DefaultIfEmpty(0).Sum();
                 valorCDP += valorCDP;
 
                 valorCRP = contratosAnio
-                    .Select(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco ? !c.ValorCRP.HasValue ? 0 : c.ValorCRP.Value : 0)
+                    .Select(c => c.TipoContrato != null ? !c.ValorCRP.HasValue ? 0 : c.ValorCRP.Value : 0)
                     .DefaultIfEmpty(0).Sum();
-                valorCRP += valorCRP;
+                valorCRP += valorCRP;                
 
-                foreach (var contrato in contratosAnio.Where(c => c.TipoContrato != null && c.TipoContrato.Termino != tipoContratoMarco).ToList())
+                foreach (var contrato in contratosAnio.Where(c => c.TipoContrato != null).ToList())
                 {
                     valorPagos = pagoContratos.Where(c => c.Fecha.Year >= anio && c.Contrato_Id == contrato.Contrato_Id).Select(c => c.Valor).DefaultIfEmpty(0).Sum();
                     valorPagos += valorPagos;

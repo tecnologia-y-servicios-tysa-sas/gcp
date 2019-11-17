@@ -30,7 +30,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr>                
                 <td class="border-cell">
                     @if (@item.TipoContrato != null) {
                     <span data-toggle="tooltip" title="@item.TipoContrato.Descripcion">@Html.DisplayFor(modelItem => item.TipoContrato.Termino)</span>
@@ -68,10 +68,10 @@
     </tbody>
     <tfoot>
         @{
-            double valorTotalContratos = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.ValorContrato : 0);
-            double valorTotalAdministrar = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.ValorAdministrar : 0);
-            double valorTotalEjecutado = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.Ejecucion.GetValueOrDefault() : 0);
-            double valorTotalHonorarios = @Model.Sum(i => i.TipoContrato == null || i.TipoContrato.Termino != tipoContratoMarco ? i.Honorarios.GetValueOrDefault() : 0);
+            double valorTotalContratos = @Model.Sum(i => i.ValorContrato == null ? 0 : i.ValorContrato);
+            double valorTotalAdministrar = @Model.Sum(i => i.ValorAdministrar == null ? 0 : i.ValorAdministrar);
+            double valorTotalEjecutado = @Model.Sum(i => i.Ejecucion.GetValueOrDefault() == null ? 0 : i.Ejecucion.GetValueOrDefault());
+            double valorTotalHonorarios = @Model.Sum(i => i.Honorarios.GetValueOrDefault() == null ? 0 : i.Honorarios.GetValueOrDefault());
             double porcentajeTotalEjecutado = valorTotalAdministrar > 0 ? Math.Round(valorTotalEjecutado / valorTotalAdministrar, 2) : 0;
 
             // Valores pendientes

@@ -173,12 +173,12 @@ namespace GCP_CF.Models
 
         public virtual ICollection<HistoriaObservaciones> HistoriaObservaciones { get; set; }
 
-        public virtual double PorcentajeValorEjecutado
+        public virtual double PorcentajeValorEjecutado 
         {
             get {
-                double valorHonorarios = Honorarios ?? 0;
+                //double valorHonorarios = Honorarios ?? 0;
                 double valorEjecutado = Ejecucion ?? 0;
-                return 100 * Math.Round(valorEjecutado / (ValorContrato - valorHonorarios), 2);
+                return Math.Round(valorEjecutado / ValorAdministrar, 2);
             }
         }
 

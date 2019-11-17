@@ -18,13 +18,17 @@
                     <label for="entidades" class="control-label" style="margin-top: 5px">Entidad Contratante:</label><br />
                     @Html.DropDownList("IdEntidadContratante", null, "TODAS", htmlAttributes: new { @class = "form-control", @id = "entidades", @name = "idEntidadContratante" })
                 </div>
-                <div class="col-lg-3 col-md-3 text-center">
+                <div class="col-lg-2 col-md-2 text-center">
                     <label for="nroContrato" class="control-label" style="margin-top: 5px">No. Contrato:</label><br />
                     @Html.Editor("NumeroContrato", new { htmlAttributes = new { @class = "form-control", @id = "nroContrato", @name = "numeroContrato", @value = ViewBag.NumeroContrato } })
                 </div>
-                <div class="col-lg-3 col-md-3 text-center">
+                <div class="col-lg-2 col-md-2 text-center">
                     <label for="estados" class="control-label" style="margin-top: 5px">Estado:</label><br />
                     @Html.DropDownList("IdEstadoContrato", null, "TODOS", htmlAttributes: new { @class = "form-control", @id = "estados", @name = "idEstadoContrato" })
+                </div>
+                <div class="col-lg-2 col-md-2 text-center">
+                    <label for="tipos" class="control-label" style="margin-top: 5px">Estado:</label><br />
+                    @Html.DropDownList("IdTipoContrato", null, null, htmlAttributes: new { @class = "form-control", @id = "tipo", @name = "idTipoContrato" })
                 </div>
                 <div class="col-lg-1 col-md-1">
                     <label class="control-label" style="margin-top: 5px">&nbsp;</label><br />

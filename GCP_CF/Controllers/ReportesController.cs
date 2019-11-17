@@ -27,8 +27,13 @@ namespace GCP_CF.Controllers
             int idEntidadContratante = !string.IsNullOrEmpty(filterForm["IdEntidadContratante"]) ? int.Parse(filterForm["IdEntidadContratante"]) : 0;
             string numeroContrato = filterForm["NumeroContrato"];
             int idEstadoContrato = !string.IsNullOrEmpty(filterForm["IdEstadoContrato"]) ? int.Parse(filterForm["IdEstadoContrato"]) : 0;
+            int idTipoContrato = !string.IsNullOrEmpty(filterForm["IdTipoContrato"]) ? int.Parse(filterForm["IdTipoContrato"]) : 3;
 
             ViewBag.IdEstadoContrato = new SelectList(db.TiposEstadoContrato.OrderBy(x => x.Descripcion), "TiposEstadoContrato_Id", "Descripcion", idEstadoContrato);
+            var tipoContratos = new List<TiposContratos>();
+            tipoContratos.Add(new TiposContratos { TipoContrato_Id = 0, Descripcion = "TODOS" });
+            tipoContratos.AddRange(db.TiposContratos.OrderBy(x => x.Descripcion).ToList());
+            ViewBag.IdTipoContrato = new SelectList(tipoContratos, "TipoContrato_Id", "Descripcion", idTipoContrato);
             ViewBag.IdEntidadContratante = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto", idEntidadContratante);
             ViewBag.NumeroContrato = numeroContrato;
 
@@ -50,8 +55,9 @@ namespace GCP_CF.Controllers
             ViewBag.IdEntidadSeleccionada = idEntidadContratante;
             ViewBag.NumeroContratoEnviado = numeroContrato;
             ViewBag.IdEstadoSeleccionado = idEstadoContrato;
+            ViewBag.IdTipoSeleccionado = idTipoContrato;            
 
-            List<Contratos> list = ObtenerContratos(anio, idEntidadContratante, numeroContrato, idEstadoContrato);
+            List<Contratos> list = ObtenerContratos(anio, idEntidadContratante, numeroContrato, idEstadoContrato, idTipoContrato);
             return list != null ? list.OrderBy(x => x.Contrato_Id).ToList() : new List<Contratos>();
         }
 
@@ -88,7 +94,7 @@ namespace GCP_CF.Controllers
             return list != null ? list.OrderBy(x => x.Factura_Id).ToList() : new List<Factura>();
         }
 
-        private List<Contratos> ObtenerContratos(int anio, int idEntidadContratante, string numeroContrato, int idEstadoContrato)
+        private List<Contratos> ObtenerContratos(int anio, int idEntidadContratante, string numeroContrato, int idEstadoContrato, int idTipoContrato)
         {
             DateTime? fechaInicio = anio > 0 ? new DateTime(anio, 1, 1) : new DateTime?();
             DateTime? fechaFin = anio > 0 ? new DateTime(anio, 12, 31) : new DateTime?();
@@ -97,8 +103,9 @@ namespace GCP_CF.Controllers
             bool hayEntidadContratante = idEntidadContratante > 0;
             bool hayNumeroContrato = !string.IsNullOrEmpty(numeroContrato);
             bool hayEstadoContrato = idEstadoContrato > 0;
+            bool hayTipoContrato = idTipoContrato > 0;
 
-            var contratos = (from c in db.Contratos select c).Include(c => c.HistoriaObservaciones);
+            var contratos = (from c in db.Contratos select c).Include(c => c.HistoriaObservaciones).ToList();
 
             if (hayFechas)
             {
@@ -106,11 +113,11 @@ namespace GCP_CF.Controllers
                                                  (fechaInicio.Value <= c.FechaTerminacion && c.FechaInicio <= fechaFin.Value) ||
                                                  (fechaInicio.Value <= c.FechaActaInicio && c.FechaInicio <= fechaFin.Value) ||
                                                  (fechaInicio.Value <= c.FechaCdp && c.FechaInicio <= fechaFin.Value) ||
-                                                 (fechaInicio.Value <= c.FechaCrp && c.FechaInicio <= fechaFin.Value));
+                                                 (fechaInicio.Value <= c.FechaCrp && c.FechaInicio <= fechaFin.Value)).ToList();
             }
 
             if (hayEntidadContratante)
-                contratos = contratos.Where(c => c.EntidadContratante.Persona_Id == idEntidadContratante);
+                contratos = contratos.Where(c => c.EntidadContratante.Persona_Id == idEntidadContratante).ToList();
 
             if (hayNumeroContrato)
             {
@@ -120,11 +127,29 @@ namespace GCP_CF.Controllers
 
                 contratos = contratos.Where(c => (idContratoMarco > 0 ? c.Contrato_Id == idContratoMarco || c.ContratoMarco_Id.Value == idContratoMarco : true))
                                      .OrderByDescending(c => c.ContratoMarco_Id)
-                                     .OrderByDescending(c => c.NumeroContrato);
+                                     .OrderByDescending(c => c.NumeroContrato).ToList();
             }
 
             if (hayEstadoContrato)
-                contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato);
+                contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato).ToList();
+
+            if (hayTipoContrato)
+            {
+                if (idTipoContrato == 3)
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                    List<Contratos> contratosTemp = new List<Contratos>();
+                    foreach (var contrato in contratos)
+                    {
+                        contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
+                    }
+                    contratos = contratosTemp.ToList();
+                }
+                else
+                {
+                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
+                }
+            }                
 
             if (contratos != null)
             {
@@ -135,9 +160,10 @@ namespace GCP_CF.Controllers
                     {
                         if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
                         {
-                            item.Estado = estado.Descripcion;
+                            item.Estado = estado.Descripcion;                            
                         }
                     }
+                    //item.PorcentajeValorEjecutado = Math.Round (item.Ejecucion ?? 0 / item.ValorAdministrar, 2 );
                 }
 
                 return contratos.ToList<Contratos>();
