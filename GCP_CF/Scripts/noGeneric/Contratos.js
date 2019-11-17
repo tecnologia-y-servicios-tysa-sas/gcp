@@ -69,6 +69,12 @@ $(function () {
         }
     });
 
+    $("#valorcrp").blur(function () {
+        if ($(this).val() != "" && !isNaN($(this).val())) {
+            cambiarFormatoNumerico($("#valorcrp"));
+        }
+    });
+
     $("#fechaCrp").blur(function () {
         if ($(this).val() != "" && !isNaN($(this).val())) {
             cambiarFormatoNumerico($("#fechaCrp"));

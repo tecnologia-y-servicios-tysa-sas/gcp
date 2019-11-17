@@ -141,7 +141,19 @@ namespace GCP_CF.Controllers
                         contratos.ValorPoliza = valorPolizaAux;
                     }
 
-                    if (esModificado)
+                    if (!string.IsNullOrEmpty(contratos.ValorCdpAux))
+                    {
+                        double valorCdpAux = Convert.ToDouble(contratos.ValorCdpAux.Replace(",", "").Replace(".00", ""));
+                        contratos.ValorCDP = valorCdpAux;
+                    }
+
+                    if (!string.IsNullOrEmpty(contratos.ValorCrpAux))
+                    {
+                        double valorCrpAux = Convert.ToDouble(contratos.ValorCrpAux.Replace(",", "").Replace(".00", ""));
+                        contratos.ValorCRP = valorCrpAux;
+                    }
+
+                if (esModificado)
                     { 
                         db.Entry(contratos).State = EntityState.Modified; 
                     }
@@ -348,6 +360,9 @@ namespace GCP_CF.Controllers
             contratos.ValorAdministrarAux = contratos.ValorAdministrar.ToString("#,###.#0", formatter);
             contratos.HonorariosAux = contratos.Honorarios.HasValue ? contratos.Honorarios.Value.ToString("#,###.#0", formatter) : "";
             contratos.ValorPolizaAux = contratos.ValorPoliza.HasValue ? contratos.ValorPoliza.Value.ToString("#,###.#0", formatter) : "";
+            contratos.ValorCdpAux = contratos.ValorCDP.HasValue ? contratos.ValorCDP.Value.ToString("#,###.#0", formatter) : "";
+            contratos.ValorCrpAux = contratos.ValorCRP.HasValue ? contratos.ValorCRP.Value.ToString("#,###.#0", formatter) : "";
+
 
             List<PagoContrato> pagosContrato = db.PagoContrato.Where(p => p.Contrato_Id == id).ToList<PagoContrato>();
             contratos.PagoContrato = pagosContrato;

@@ -26,12 +26,7 @@ namespace Notifications.Controllers
         {
 
             Context context = HttpContext.RequestServices.GetService(typeof(Context)) as Context;
-
-
             return (context.GetAllNotifications());
-            //var empRecord = context.Notificacion.FromSqlRaw($"uspNotifications").AsNoTracking().ToList();
-            ////return View(empRecord);
-            //return null;
         }
     }
 }

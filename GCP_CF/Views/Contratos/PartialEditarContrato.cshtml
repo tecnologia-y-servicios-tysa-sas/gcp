@@ -295,8 +295,8 @@
                     </div>
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.ValorCDP, htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.EditorFor(model => model.ValorCDP, new { htmlAttributes = new { @class = "form-control", @id = "valorcdp" } })
-                        @Html.ValidationMessageFor(model => model.ValorCDP, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.ValorCdpAux, new { htmlAttributes = new { @class = "form-control", @id = "valorcdp" } })
+                        @Html.ValidationMessageFor(model => model.ValorCdpAux, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -318,8 +318,8 @@
                     </div>
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.ValorCRP, htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.EditorFor(model => model.ValorCRP, new { htmlAttributes = new { @class = "form-control", @id = "valorcrp" } })
-                        @Html.ValidationMessageFor(model => model.ValorCRP, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.ValorCrpAux, new { htmlAttributes = new { @class = "form-control", @id = "valorcrp" } })
+                        @Html.ValidationMessageFor(model => model.ValorCrpAux, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -520,7 +520,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         // Activar o desactivar campos de honorarios
-        enableOrDisableNonCIADFields();
+       enableOrDisableNonCIADFields();
     });
 </script>
 
