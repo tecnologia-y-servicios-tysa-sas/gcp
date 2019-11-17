@@ -126,7 +126,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">
-                            <div>@Html.LabelFor(model => model.DiasHabiles, htmlAttributes: new { @class = "control-label" })</div>
+                            <div>@Html.Label("Días", htmlAttributes: new { @class = "control-label" })</div>
                             @Html.EditorFor(model => model.DiasHabiles, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Item, "", new { @class = "text-danger" })
                         </div>

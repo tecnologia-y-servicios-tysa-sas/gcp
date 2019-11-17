@@ -250,6 +250,7 @@
     <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PermisosRoles.cs" />
     <Compile Include="Models\Personas.cs" />
+    <Compile Include="Models\PersonasNotificacion.cs" />
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\RelacionContratoFase.cs" />
     <Compile Include="Models\Rol.cs" />

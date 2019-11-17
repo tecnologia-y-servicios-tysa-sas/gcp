@@ -410,14 +410,14 @@ function enableOrDisableNonCIADFields() {
         }
     } else {
         // Se desactivan campos
-        $("#honorarios").val("");
-        $("#honorarios").css("border-color", "none");
-        $("#valorNetoHonorarios").val("");
+        //$("#honorarios").val("");
+        //$("#honorarios").css("border-color", "none");
+        //$("#valorNetoHonorarios").val("");
         panelPagos.fadeIn();
     }
 
-    $("#honorarios").prop("disabled", disableFields);
-    $("#valorNetoHonorarios").prop("disabled", disableFields);
+    //$("#honorarios").prop("disabled", disableFields);
+    //$("#valorNetoHonorarios").prop("disabled", disableFields);
     //$("#ContratoMarco_Id").prop("disabled", disableFields);
 }
 

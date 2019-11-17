@@ -110,7 +110,14 @@ namespace GCP_CF.Controllers
                 if (usuarios == null) return HttpNotFound();
 
                 string email = string.Empty;
-                email = db.Usuarios.Where(x => x.CorreoElectronico == usuarios.CorreoElectronico).FirstOrDefault().CorreoElectronico;
+                try
+                {
+                    email = db.Usuarios.Where(x => x.CorreoElectronico == usuarios.CorreoElectronico).FirstOrDefault().CorreoElectronico;
+                }
+                catch (Exception)
+                {
+                }
+                
                 if (!string.IsNullOrEmpty(email))
                 {
                     List<Contratos> contratos = db.Contratos.OrderByDescending(c => c.NumeroContrato).ToList();

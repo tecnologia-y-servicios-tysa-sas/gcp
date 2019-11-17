@@ -111,7 +111,7 @@
 
                         <div class="form-group">
                             <div class="col-md-4">
-                                <div> @Html.LabelFor(model => model.Persona_Id, htmlAttributes: new { @class = "control-label" })*</div>
+                                <div> @Html.Label("Entidad", htmlAttributes: new { @class = "control-label" })*</div>
                                 @Html.DropDownList("Persona_Id", null, "Seleccione Entidad", htmlAttributes: new { @class = "form-control", @id = "entidadContratante" })
                                 @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
                             </div>
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        @if (!ViewBag.IsInterAdmin)
+                        @if (ViewBag.IsInterAdmin)
                         {
 
                             <div>@Html.LabelFor(model => model.Plazo, htmlAttributes: new { @class = "control-label" })*</div>
@@ -223,7 +223,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-4">
-                        @if (!ViewBag.IsInterAdmin)
+                        @if (ViewBag.IsInterAdmin)
                         {
                             <div>@Html.LabelFor(model => model.Honorarios, htmlAttributes: new { @class = "control-label" })*</div>
                             @Html.EditorFor(model => model.HonorariosAux, new { htmlAttributes = new { @class = "form-control", @id = "honorarios" } })
@@ -237,7 +237,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        @if (!ViewBag.IsInterAdmin)
+                        @if (ViewBag.IsInterAdmin)
                         {
                             <div>@Html.LabelFor(model => model.ValorNetoHonorarios, htmlAttributes: new { @class = "control-label" })</div>
                             @Html.EditorFor(model => model.ValorNetoHonorarios, new { htmlAttributes = new { @class = "form-control", @id = "valorNetoHonorarios", @readonly = true } })
@@ -326,7 +326,29 @@
                 <div class="form-group">
                     <div class="col-md-6">
                         <div>@Html.Label("Seleccione Personas Para Notificar", htmlAttributes: new { @class = "control-label" })</div>
-                        @Html.ListBox("PersonaNotificar_Id", ViewBag.PersonaNotificar_Id as MultiSelectList, htmlAttributes: new { @class = "chosen-select form-control" })
+                        @Html.ListBox("PersonaNotificar_Id", ViewBag.PersonaNotificar_Id as MultiSelectList, htmlAttributes: new { @class = "chosen-select chosen-updated" })
+                       <hr />
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Personas a Notificar</div>
+                            <div class="panel-body">
+                                <ul>
+                                    @try
+                                    {
+                                        foreach (var person in ViewBag.PersonasNotificar)
+                                        {
+                                            <li>@person.NombreCompleto</li>
+                                        }
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6"></div>
                     </div>
                     <div class="col-md-6" id="editor-multiline-field">
                         <div>@Html.LabelFor(model => model.Observaciones, htmlAttributes: new { @class = "control-label" })</div>
