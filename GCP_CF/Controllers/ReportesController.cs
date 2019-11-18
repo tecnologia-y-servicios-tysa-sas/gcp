@@ -27,7 +27,16 @@ namespace GCP_CF.Controllers
             int idEntidadContratante = !string.IsNullOrEmpty(filterForm["IdEntidadContratante"]) ? int.Parse(filterForm["IdEntidadContratante"]) : 0;
             string numeroContrato = filterForm["NumeroContrato"];
             int idEstadoContrato = !string.IsNullOrEmpty(filterForm["IdEstadoContrato"]) ? int.Parse(filterForm["IdEstadoContrato"]) : 0;
-            int idTipoContrato = !string.IsNullOrEmpty(filterForm["IdTipoContrato"]) ? int.Parse(filterForm["IdTipoContrato"]) : 3;
+            //int idTipoContrato = !string.IsNullOrEmpty(filterForm["IdTipoContrato"]) ? int.Parse(filterForm["IdTipoContrato"]) : 3;
+            int idTipoContrato = 0;
+            if (!string.IsNullOrEmpty(filterForm["IdTipoContrato"]))
+            {
+                idTipoContrato = int.Parse(filterForm["IdTipoContrato"]);
+            }
+            else
+            {
+                idTipoContrato = 3;
+            }
 
             ViewBag.IdEstadoContrato = new SelectList(db.TiposEstadoContrato.OrderBy(x => x.Descripcion), "TiposEstadoContrato_Id", "Descripcion", idEstadoContrato);
             var tipoContratos = new List<TiposContratos>();
@@ -138,12 +147,11 @@ namespace GCP_CF.Controllers
                 if (idTipoContrato == 3)
                 {
                     contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
-                    List<Contratos> contratosTemp = new List<Contratos>();
-                    foreach (var contrato in contratos)
-                    {
-                        contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
-                    }
-                    contratos = contratosTemp.ToList();
+                   // //foreach (var contrato in contratos)
+                    //{
+                    //    contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
+                    //}
+                   // contratos = contratosTemp.ToList();
                 }
                 else
                 {

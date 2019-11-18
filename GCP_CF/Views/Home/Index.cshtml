@@ -2,49 +2,49 @@
     ViewBag.Title = "¡Bienvenidos!";
 }
 
-<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="row">
+            <h1 class="text-center">¡Bienvenidos!</h1>
+        </div><br />
+        @*<div class="well">
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "filtrosReporteContratosForm" }))
+                {
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 text-center">
+                            <label for="anioContrato" class="control-label" style="margin-top: 5px">Año:</label><br />
+                            @Html.DropDownList("Anio", null, "TODOS", htmlAttributes: new { @class = "form-control", @id = "anioContrato", @name = "anio" })
+                        </div>
+                        <div class="col-lg-3 col-md-3 text-center">
+                            <label for="entidades" class="control-label" style="margin-top: 5px">Entidad Contratante:</label><br />
+                            @Html.DropDownList("IdEntidadContratante", null, "TODAS", htmlAttributes: new { @class = "form-control", @id = "entidades", @name = "idEntidadContratante" })
+                        </div>
+                        <div class="col-lg-2 col-md-2 text-center">
+                            <label for="nroContrato" class="control-label" style="margin-top: 5px">No. Contrato:</label><br />
+                            @Html.Editor("NumeroContrato", new { htmlAttributes = new { @class = "form-control", @id = "nroContrato", @name = "numeroContrato", @value = ViewBag.NumeroContrato } })
+                        </div>
+                        <div class="col-lg-2 col-md-2 text-center">
+                            <label for="estados" class="control-label" style="margin-top: 5px">Estado:</label><br />
+                            @Html.DropDownList("IdEstadoContrato", null, "TODOS", htmlAttributes: new { @class = "form-control", @id = "estados", @name = "idEstadoContrato" })
+                        </div>
+                        <div class="col-lg-2 col-md-2 text-center">
+                            <label for="tipos" class="control-label" style="margin-top: 5px">Estado:</label><br />
+                            @Html.DropDownList("IdTipoContrato", null, null, htmlAttributes: new { @class = "form-control", @id = "tipo", @name = "idTipoContrato" })
+                        </div>
+                        <div class="col-lg-1 col-md-1">
+                            <label class="control-label" style="margin-top: 5px">&nbsp;</label><br />
+                            <button id="btnSearch" type="submit" class="btn btn-default btn-large" data-toggle="tooltip" title="Pulse aquí para realizar la búsqueda con los filtros seleccionados">Buscar</button>
+                        </div>
+                    </div>
+                }
+            </div><br />
+            @Html.Partial("~/Views/Graphics/TodosLosGraficos.cshtml")
+        </div>*@
+
+        <!--
     <div class="row">
-        <h1 class="text-center">¡Bienvenidos!</h1>
-    </div><br />
-    <div class="well">
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "filtrosReporteContratosForm" }))
-        {
-            <div class="row">
-                <div class="col-lg-2 col-md-2 text-center">
-                    <label for="anioContrato" class="control-label" style="margin-top: 5px">Año:</label><br />
-                    @Html.DropDownList("Anio", null, "TODOS", htmlAttributes: new { @class = "form-control", @id = "anioContrato", @name = "anio" })
-                </div>
-                <div class="col-lg-3 col-md-3 text-center">
-                    <label for="entidades" class="control-label" style="margin-top: 5px">Entidad Contratante:</label><br />
-                    @Html.DropDownList("IdEntidadContratante", null, "TODAS", htmlAttributes: new { @class = "form-control", @id = "entidades", @name = "idEntidadContratante" })
-                </div>
-                <div class="col-lg-2 col-md-2 text-center">
-                    <label for="nroContrato" class="control-label" style="margin-top: 5px">No. Contrato:</label><br />
-                    @Html.Editor("NumeroContrato", new { htmlAttributes = new { @class = "form-control", @id = "nroContrato", @name = "numeroContrato", @value = ViewBag.NumeroContrato } })
-                </div>
-                <div class="col-lg-2 col-md-2 text-center">
-                    <label for="estados" class="control-label" style="margin-top: 5px">Estado:</label><br />
-                    @Html.DropDownList("IdEstadoContrato", null, "TODOS", htmlAttributes: new { @class = "form-control", @id = "estados", @name = "idEstadoContrato" })
-                </div>
-                <div class="col-lg-2 col-md-2 text-center">
-                    <label for="tipos" class="control-label" style="margin-top: 5px">Estado:</label><br />
-                    @Html.DropDownList("IdTipoContrato", null, null, htmlAttributes: new { @class = "form-control", @id = "tipo", @name = "idTipoContrato" })
-                </div>
-                <div class="col-lg-1 col-md-1">
-                    <label class="control-label" style="margin-top: 5px">&nbsp;</label><br />
-                    <button id="btnSearch" type="submit" class="btn btn-default btn-large" data-toggle="tooltip" title="Pulse aquí para realizar la búsqueda con los filtros seleccionados">Buscar</button>
-                </div>
-            </div>
-        }
-    </div><br />
-    @Html.Partial("~/Views/Graphics/TodosLosGraficos.cshtml")
-</div>
+    <a href="#"><img src="~/Content\Images\Programa.png" width="300" height="280" alt="Nombre del Software"> </a>
+    <a href="#"><img src="~/Content\Images\banner.png" width="800" height="280" alt="Cliente"> </a>
+    </div>
+    -->
 
-    <!--
-<div class="row">
-<a href="#"><img src="~/Content\Images\Programa.png" width="300" height="280" alt="Nombre del Software"> </a>
-<a href="#"><img src="~/Content\Images\banner.png" width="800" height="280" alt="Cliente"> </a>
-</div>
--->
-
-    @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryval")
