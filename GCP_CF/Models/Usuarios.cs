@@ -103,6 +103,15 @@ namespace GCP_CF.Models
             }
         }
 
+        [NotMapped]
+        [Display(Name = "Nueva Contraseña")]
+        [DataType(DataType.Password)]
+        public string NewPassword { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Confirme Nueva Contraseña")]
+        [DataType(DataType.Password)]
+        public string NewPasswordConfirm { get; set; }
 
         [Display(Name = "Rol")]
         public int? RolId { get; set; }

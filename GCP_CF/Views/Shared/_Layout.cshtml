@@ -234,7 +234,11 @@
                                     {
                                         <li>@Html.ActionLink("Modulos", "Index", "Modulos")</li>
                                     }
-                                    </ul>
+                                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M23))
+                                    {
+                                        <li>@Html.ActionLink("Cambiar Contraseña", "ChangePassword", "Usuarios")</li>
+                                    }
+                                </ul>
                             </li>
                         
                     }

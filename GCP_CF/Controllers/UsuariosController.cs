@@ -7,6 +7,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace GCP_CF.Controllers
 {
@@ -242,6 +244,31 @@ namespace GCP_CF.Controllers
                 ViewBag.MensajeError = mensaje;
                 return View(usuario);
             }
+        }
+
+        public ActionResult ChangePassword(Usuarios usuarios)
+        {
+            TempData["ResultOk"] = "0";
+            if (usuarios.NewPassword == usuarios.NewPasswordConfirm && !string.IsNullOrEmpty(usuarios.NewPassword) && !string.IsNullOrEmpty(usuarios.NewPasswordConfirm))
+            {
+                try
+                {
+                    string email = User.Identity.GetUserId();
+                    Usuarios user = db.Usuarios.Where(x => x.CorreoElectronico == email).FirstOrDefault();
+                    UserManager um = new UserManager();
+                    user.Password = um.Base64Encode(usuarios.NewPassword);
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["ResultOk"] = "1";
+                }
+                catch (Exception)
+                {
+                    TempData["ResultOk"] = "-1";
+                    return View();
+                }
+               
+            }
+            return View();
         }
 
         protected override void Dispose(bool disposing)
