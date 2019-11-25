@@ -20,7 +20,7 @@
 
     if (ViewBag.IsEdit)
     {
-        @Html.HiddenFor(model => model.Factura_Id, htmlAttributes: new { @id = "idFactura" });
+        @Html.HiddenFor(model => model.Factura_Id, htmlAttributes: new { @id = "idFactura"});
     }
 
     <div class="form-horizontal text-left">
@@ -123,11 +123,23 @@
                 <div class="form-group">
                     <div class="col-md-4">
                         <div>@Html.LabelFor(model => model.Contrato_Id, "Contrato", htmlAttributes: new { @class = "control-label" }) *</div>
-                        @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @value = "@ViewBag.NumeroContrato" } })
-                        @*<input type="text" class="form-control" id="numeroContrato" name="numeroContrato" value="@ViewBag.NumeroContrato" />*@
-                        <a href="javascript:void(0)" onclick="ConsultarContrato()"><i class="glyphicon glyphicon-search"></i></a>
-                        @Html.HiddenFor(model => model.Contrato_Id, new { @id = "idContrato" })
-                        @Html.ValidationMessageFor(model => model.Contrato_Id, "", new { @class = "text-danger" })
+                        @if (!ViewBag.IsEdit)
+                        {
+                            @Html.EditorFor(model => model.NumeroContrato, new { htmlAttributes = new { @class = "form-control", @id = "numeroContrato", @value = "@ViewBag.NumeroContrato" } })
+                            <a href="javascript:void(0)" onclick="ConsultarContrato()"><i class="glyphicon glyphicon-search"></i></a>
+                            @Html.HiddenFor(model => model.Contrato_Id, new { @id = "idContrato" })
+                            @Html.ValidationMessageFor(model => model.Contrato_Id, "", new { @class = "text-danger" })
+                        }
+                        else
+                        {
+                            @TempData["Contrato"].ToString();
+                            //string val = @TempData["Contrato"].ToString();
+                            //int valor = Convert.ToInt32(val);
+
+                            //ViewData["Title"] = valor;
+                            @Html.HiddenFor(model => model.Contrato_Id, TempData["idContrato"]);
+                        }
+
                     </div>
                     <div class="col-md-8">
                         <!-- Mensaje-->

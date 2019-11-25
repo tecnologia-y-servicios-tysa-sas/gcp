@@ -40,9 +40,9 @@
                         @Html.ActionLink("Editar", "Edit", new { id = item.Factura_Id }) @Html.Raw(" | ")
                     }
                     @Html.ActionLink("Detalles", "Details", new { id = item.Factura_Id })
-                    @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
+                    @*@if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
                         @Html.Raw(" | ") @Html.ActionLink("Eliminar", "Delete", new { id = item.Factura_Id })
-                    }
+                    }*@
                 </td>
                 }
             </tr>
