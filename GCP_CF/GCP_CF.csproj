@@ -300,6 +300,7 @@
     <Content Include="Content\chosen.min.css" />
     <Content Include="Content\Graphics.css" />
     <Content Include="Content\Images\Alcaldia.png" />
+    <Content Include="Content\Images\arrow.png" />
     <Content Include="Content\Images\back.png" />
     <Content Include="Content\Images\banner.png" />
     <Content Include="Content\Images\delete.png" />
@@ -331,14 +332,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\gcp-eso - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso - ReadOnly - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\gcp-eso - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas .pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Chart.utils.js" />

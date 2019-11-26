@@ -45,9 +45,7 @@
             <th class="head-table">
                 Entidad&nbsp;Contratante
             </th>
-            <th class="head-table">
-                @Html.DisplayNameFor(model => model.ObjetoContractual)
-            </th>
+
             <th class="head-table">
                 @Html.DisplayNameFor(model => model.Plazo)
             </th>
@@ -87,6 +85,18 @@
             <th class="head-table">
                 Forma de Pago
             </th>
+            <th class="head-table">
+                Valor CDP
+            </th>
+            <th class="head-table">
+                Valor CRP
+            </th>
+            <th class="head-table">
+                Tipo Contrato
+            </th>
+            <th class="head-table">
+                @Html.DisplayNameFor(model => model.ObjetoContractual)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -94,10 +104,11 @@
         {
         <tr>
             <td class="border-cell" style="width:120px">
-                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA)) {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
+                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.ESCRITURA))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Contrato_Id }, new { @class = "btn-edit", @title = "Editar" })
                 }
-                @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-details", @title = "Detalles" })
+                @Html.ActionLink("Detalles", "Details", new { id = item.Contrato_Id }, new { @class = "btn-arrow", @title = "Detalles" })
                 @*@Html.ActionLink("Eliminar", "Delete", new { id = item.Contrato_Id }, new { @class = "btn-delete", @title = "Eliminar" })*@
                 @if (item.HistoriaObservaciones.Count > 0)
                 {
@@ -116,9 +127,7 @@
             <td class="border-cell">
                 @Html.DisplayFor(modelItem => item.EntidadContratante.NombreCompleto)
             </td>
-            <td class="border-cell" style="font-size:9pt;width:250px">
-                @Html.DisplayFor(modelItem => item.ObjetoContractual)
-            </td>
+
             <td class="border-cell text-center">
                 @Html.DisplayFor(modelItem => item.Plazo)
             </td>
@@ -160,6 +169,18 @@
             <td class="border-cell">
                 @Html.DisplayFor(modelItem => item.FormaPago.Descripcion)
             </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.ValorCDP)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.ValorCRP)
+            </td>
+            <td class="border-cell">
+                @Html.DisplayFor(modelItem => item.TipoContrato.Descripcion)
+            </td>
+            <td class="border-cell" style="font-size:9pt;width:250px">
+                @Html.DisplayFor(modelItem => item.ObjetoContractual)
+            </td>
         </tr>
         }
     </tbody>
@@ -183,6 +204,9 @@
             <th>
                 <strong>@String.Format("{0:N0}", @Model.Sum(i => i.TipoContrato != null && i.TipoContrato.Termino == tipoContratoMarco ? i.Honorarios : 0))</strong>
             </th>
+            <th></th>
+            <th></th>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>

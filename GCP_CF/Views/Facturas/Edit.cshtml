@@ -8,7 +8,222 @@
 @Html.ActionLink("Regresar", "Index", null, new { @class = "btn-back", @title = "Regresar al listado" })
 
 <h2>Editar Factura</h2>
-
 @{
-    Html.RenderPartial("PartialFacturas", Model);
+    var formatter = new System.Globalization.CultureInfo("es-CO", false).NumberFormat;
+    formatter.NumberGroupSeparator = ",";
+    formatter.NumberDecimalSeparator = ".";
+    formatter.NumberDecimalDigits = 2;
 }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Factura_Id)
+    <div>
+        <hr />
+        <div class="col-md-7">
+            <div class="panel">
+                <div class="panel-heading text-center">
+                    <h3>Información General</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Numero)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Numero)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Mes
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Mes)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Anio)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Anio)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Estado)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Estado.Termino) (@Html.DisplayFor(model => model.Estado.Descripcion))
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.FechaPago)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.FechaPago)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Municipio_Id)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Municipio.NombreCompleto)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Concepto)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Concepto)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Objeto)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Objeto)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Observaciones)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Observaciones)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+
+            <div class="panel">
+                <div class="panel-heading text-center">
+                    <h3>Contrato</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Contrato_Id)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Contrato.NumeroContrato)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading text-center">
+                    <h3>Valores Facturados</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TotalHonorarios)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.TotalHonorarios)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PorcentajeIva)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PorcentajeIva)%
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ValorBase)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ValorBase)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ValorIva)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ValorIva)
+                        </dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ValorCancelado)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ValorCancelado)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    if (Model != null && Model.PagoContrato != null && Model.PagoContrato.Count > 0)
+    {
+        var pagos = Model.PagoContrato;
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading text-center">
+                    <h3>Pagos Facturados</h3>
+                </div>
+                <div class="panel-body">
+                    <table id="tablaPagos" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="head-table col-md-2">No.</th>
+                                <th class="head-table col-md-4">Fecha Pago</th>
+                                <th class="head-table col-md-5">Valor Pago</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pago in pagos)
+                            {
+                                <tr class="filaPago" id="filaPago_@pago.PagosContrato_Id">
+                                    <td class="border-cell col-md-2 text-right">@pago.NumeroPago</td>
+                                    <td class="border-cell col-md-4 text-center">
+                                        @pago.Fecha.ToShortDateString()
+                                        <input type="hidden" class="valorFecha" id="valorFecha_@pago.PagosContrato_Id" value="@pago.Fecha.ToShortDateString()" />
+                                    </td>
+                                    <td class="border-cell col-md-5 text-right">
+                                        @pago.Valor.ToString("#,###.#0", formatter)
+                                        <input type="hidden" class="valorPago" id="valorPago_@pago.PagosContrato_Id" value="@pago.Valor" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="clearfix"></div>
+
+    <div class="col-md-12 text-center">
+        <div>@Html.Label("Editar Estado", "Editar Estado", htmlAttributes: new { @class = "control-label" }) *</div>
+        @Html.DropDownList("Estado_Id", null, "Seleccione...", htmlAttributes: new { @class = "form-control", @id = "idEstado" })
+        @Html.ValidationMessageFor(model => model.Estado_Id, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="col-md-12">
+        <br />
+        <div class="btn-block text-center">
+            <input type="submit" value="Editar Factura" class="btn btn-default" />
+            <a href="@Url.Action("Index", "Facturas")" class="btn btn-success">
+                <i class="glyphicon glyphicon-list"></i> Regresar al Listado
+            </a>
+        </div>
+    </div>
+}
+@*@{
+        Html.RenderPartial("PartialFacturas", Model);
+    }*@
