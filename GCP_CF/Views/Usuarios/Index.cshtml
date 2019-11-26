@@ -23,7 +23,7 @@
             <th class="head-table">@Html.DisplayNameFor(model => model.CorreoElectronico)</th>
             <th class="head-table">@Html.DisplayNameFor(model => model.IdRoles)</th>
             <th class="head-table">Activo</th>
-            <th class="head-table">Acciones</th>
+            @*<th class="head-table">Acciones</th>*@
         </tr>
     </thead>
     <tbody>
@@ -34,16 +34,16 @@
             <td class="border-cell">@Html.DisplayFor(modelItem => item.CorreoElectronico)</td>
             <td class="border-cell"><div class="text text-uppercase"> @Html.DisplayFor(modelItem => item.Roles.Descripción), &nbsp  </div>   @Html.DisplayFor(modelItem => item.Roles.Detalle)</td>
             <td class="border-cell col-md-1 text-center">@(item.EsActivo ? "SI" : "NO")</td>
-            <td class="border-cell col-md-2 text-center text-nowrap">
-                @Html.ActionLink("Editar", "Edit", new { id = item.Usuario_Id })
-                | @Html.ActionLink("Detalles", "Details", new { id = item.Usuario_Id })
-                @{
+            @*<td class="border-cell col-md-2 text-center text-nowrap">*@
+                @*@Html.ActionLink("Editar", "Edit", new { id = item.Usuario_Id })
+                | @Html.ActionLink("Detalles", "Details", new { id = item.Usuario_Id })*@
+                @*@{
                     if (!item.EsSuperUsuario)
                     {
                         @Html.Raw("| ") @Html.ActionLink("Eliminar", "Delete", new { id = item.Usuario_Id })
                     }
-                }
-            </td>
+                }*@
+            @*</td>*@
         </tr>
         }
     </tbody>

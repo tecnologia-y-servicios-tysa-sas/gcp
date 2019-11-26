@@ -307,6 +307,7 @@
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\eso.ico" />
     <Content Include="Content\Images\eye.png" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\LogoTransparente.png" />
     <Content Include="Content\Images\Programa.png" />
     <Content Include="Content\PagedList.css" />
@@ -332,9 +333,12 @@
     <None Include="Properties\PublishProfiles\gcp-eso - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy2.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Chart.utils.js" />
@@ -352,6 +356,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-confirm.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -374,11 +379,13 @@
     <Content Include="Scripts\Nueva carpeta\bootstrap.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.min.js" />
     <None Include="Scripts\Nueva carpeta\jquery-3.3.1.intellisense.js" />
+    <None Include="Scripts\Nueva carpeta\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.min.map" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\Nueva carpeta\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\Nueva carpeta\jquery.validate.js" />
     <Content Include="Scripts\Nueva carpeta\jquery.validate.min.js" />
     <Content Include="Scripts\Nueva carpeta\jquery.validate.unobtrusive.js" />
@@ -527,6 +534,7 @@
     <Content Include="Views\TipoTareas\Edit.cshtml" />
     <Content Include="Views\TipoTareas\Index.cshtml" />
     <Content Include="Views\Graphics\PartialCIADS.cshtml" />
+    <Content Include="Views\Usuarios\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -534,8 +542,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

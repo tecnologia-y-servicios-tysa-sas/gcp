@@ -206,6 +206,8 @@ namespace GCP_CF.Controllers
             ViewBag.NumeroContrato = factura.Contrato.NumeroContrato;
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;
+            TempData["Contrato"] = factura.Contrato.NumeroContrato;
+            TempData["idContrato"] = factura.Contrato_Id;
 
             var formatter = new CultureInfo("es-CO", false).NumberFormat;
             formatter.NumberGroupSeparator = ",";
@@ -275,20 +277,22 @@ namespace GCP_CF.Controllers
                     factura.PagoContrato = new List<PagoContrato>();
                     factura.PagoContrato.AddRange(pagosContrato);
 
-                    db.Entry(factura).State = EntityState.Modified;
+                db.Entry(factura).State = EntityState.Modified;
 
-                    exito = (db.SaveChanges() > 0);
-                }
-                else
-                {
-                    CargarListados(factura.Estado_Id.ToString(), factura.Municipio_Id.ToString(), factura.Mes.ToString());
-                    ViewBag.MensajeError = "No fue posible actualizar la factura";
-                }
+                exito = (db.SaveChanges() > 0);
             }
+                else
+            {
+                CargarListados(factura.Estado_Id.ToString(), factura.Municipio_Id.ToString(), factura.Mes.ToString());
+                ViewBag.MensajeError = "No fue posible actualizar la factura";
+            }
+        }
             catch (Exception e)
             {
                 CargarListados(form["Estado_Id"], form["Municipio_Id"], form["Mes"]);
                 ViewBag.MensajeError = "Ha ocurrido un error al actualizar la factura: " + e.Message;
+                //TempData["Contrato"] = factura.Contrato.NumeroContrato;
+                //TempData["idContrato"] = factura.Contrato_Id;
             }
 
             if (exito)

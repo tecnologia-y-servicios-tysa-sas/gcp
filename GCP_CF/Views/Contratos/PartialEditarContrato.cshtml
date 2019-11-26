@@ -111,7 +111,14 @@
 
                         <div class="form-group">
                             <div class="col-md-4">
-                                <div> @Html.Label("Entidad", htmlAttributes: new { @class = "control-label" })*</div>
+                                @if (ViewBag.IsInterAdmin)
+                                {
+                                    <div> @Html.Label("Entidad", htmlAttributes: new { @class = "control-label" })*</div>
+                                }
+                                else
+                                {
+                                    <div> @Html.Label("Contratista", htmlAttributes: new { @class = "control-label" })*</div>
+                                }
                                 @Html.DropDownList("Persona_Id", null, "Seleccione Entidad", htmlAttributes: new { @class = "form-control", @id = "entidadContratante" })
                                 @Html.ValidationMessageFor(model => model.Persona_Id, "", new { @class = "text-danger" })
                             </div>
@@ -230,12 +237,16 @@
                         }
                         </div>
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { @class = "control-label" })</div>
-                        <div>
-                            @Html.Raw(porcentajeIva)%
-                            @Html.HiddenFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { id = "porcentajeIvaHonorarios", Value = @porcentajeIva })
+                        @if (ViewBag.IsInterAdmin)
+                        {
+                            <div>@Html.LabelFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { @class = "control-label" })</div>
+                            <div>
+                                @Html.Raw(porcentajeIva)%
+                                @Html.HiddenFor(model => model.PorcentajeIvaHonorarios, htmlAttributes: new { id = "porcentajeIvaHonorarios", Value = @porcentajeIva })
+                            </div>
+                        }
                         </div>
-                    </div>
+                         
                     <div class="col-md-4">
                         @if (ViewBag.IsInterAdmin)
                         {
@@ -279,7 +290,7 @@
 
                 <div class="form-group">
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.Cdp, htmlAttributes: new { @class = "control-label" })</div>
+                        <div>@Html.Label("# CDP", htmlAttributes: new { @class = "control-label" })</div>
                         @Html.EditorFor(model => model.Cdp, new { htmlAttributes = new { @class = "form-control", @id = "cdp" } })
                         @Html.ValidationMessageFor(model => model.Cdp, "", new { @class = "text-danger" })
                     </div>
@@ -302,7 +313,7 @@
 
                 <div class="form-group">
                     <div class="col-md-4">
-                        <div>@Html.LabelFor(model => model.Crp, htmlAttributes: new { @class = "control-label" })</div>
+                        <div>@Html.Label("# CRP", htmlAttributes: new { @class = "control-label" })</div>
                         @Html.EditorFor(model => model.Crp, new { htmlAttributes = new { @class = "form-control", @id = "crp" } })
                         @Html.ValidationMessageFor(model => model.Crp, "", new { @class = "text-danger" })
                     </div>
@@ -438,12 +449,12 @@
                                     <td class="border-cell col-md-5">
                                         <textarea class="form-control" name="notasPago_@i" id="notasPago_@i" style="min-width: 100%">@pago.Notas</textarea>
                                     </td>
-                                    <td class="border-cell col-md-1" style="width: 75px">
+                                    @*<td class="border-cell col-md-1" style="width: 75px">
                                         @if (@i != 0)
                                         {
                                             <a class="btn btn-delete" onclick="EliminarFilaPago(@i)">Eliminar Pago</a>
                                         }
-                                    </td>
+                                    </td>*@
                                 </tr>
                                 i++;
                             }

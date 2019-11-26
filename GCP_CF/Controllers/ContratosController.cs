@@ -87,8 +87,15 @@ namespace GCP_CF.Controllers
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
-
-            ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
+            if(isInterAdmin)
+            {
+                ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
+            }
+            else
+            {
+                ViewBag.Persona_Id = new SelectList(db.Personas, "Persona_Id", "NombreCompleto");
+            }
+           
             ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSuperviosr_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
