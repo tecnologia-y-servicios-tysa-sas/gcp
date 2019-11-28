@@ -130,7 +130,7 @@ function ProcesarActividadesFase(actividades, idContrato, idFase, puedeEscribir)
         + "<th class=\"col-md-2 col-sm-2 col-xs-2\">Fecha Inicio</th>"
         + "<th class=\"col-md-2 col-sm-2 col-xs-2\">Fecha Final</th>"
         + "<th class=\"col-md-2 col-sm-2 col-xs-2\">Estado</th>"
-        + (puedeEscribir ? "<th class=\"col-md-1 col-sm-2 col-xs-1\" style=\"padding: 4px\">Acciones</th>" : "")
+        + "<th class=\"col-md-1 col-sm-2 col-xs-1\" style=\"padding: 4px\">Acciones</th>"
         + "</tr>"
         + "</thead>"
         + "<tbody>";
@@ -147,12 +147,12 @@ function ProcesarActividadesFase(actividades, idContrato, idFase, puedeEscribir)
             + "<td class=\"col-md-2 col-sm-2 col-xs-2\">" + formatFechaFinal + "</td>"
             + "<td class=\"col-md-2 col-sm-2 col-xs-2\">" + ac.DescripcionEstado + "</td>";     
 
-        if (puedeEscribir) {
+        //if (puedeEscribir) {
             tblActividades += "<td class=\"col-md-1 col-sm-1 col-xs-1\" style=\"padding: 4px\">"
                 + "<a class=\"btn-edit\" href=\"javascript:void(0)\" title=\"Editar actividad\" onclick=\"EditarActividadFase(" + ac.Id + ", " + ac.IdContrato + ", " + ac.IdFase + ")\">Editar</a>"
                 + "<a class=\"btn-delete\" href=\"javascript:void(0)\" title=\"Eliminar\" onclick=\"EliminarActividadFase(" + ac.Id + ", " + ac.IdContrato + ", " + ac.IdFase + ")\">Eliminar</a>"
                 + "</td>";
-        }
+        //}
 
         tblActividades += "</tr>";
     }
