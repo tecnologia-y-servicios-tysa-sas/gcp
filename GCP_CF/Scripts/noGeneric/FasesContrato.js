@@ -310,6 +310,27 @@ function EditarActividadFase(idActividad, idContrato, idFase) {
         }
     });
 
+    $("#ActividadesEtapasId").val(null);
+    $("#ActividadesEtapasId").empty();
+    $("#ActividadesEtapasId").append('<option value="0">Seleccione...</option>');
+    $.ajax({
+        type: "POST",
+        url: "/Seguimiento/GetActividades",
+        dataType: 'json',
+        data: { Fase: idFase },
+        success: function (data) {
+            $.each(data, function (i, data) {
+                $("#ActividadesEtapasId").append('<option value='
+                    + data.ActividadesEtapasId + '>'
+                    + data.Descripción + '</option>');
+            });
+
+        }, error: function () {
+            mensaje = "Ha ocurrido un error interno al intentar eliminar la fase seleccionada.";
+            claseMensaje = "alert-danger";
+        }
+    })
+
     if (mensaje != "") {
         MostrarMensajeAccion(mensaje, claseMensaje, 5000); // Mostrar mensaje
     }

@@ -264,6 +264,7 @@
     <Compile Include="Models\EstadosActividad.cs" />
     <Compile Include="Models\FasesContrato.cs" />
     <Compile Include="Data\GCPContext.cs" />
+    <Compile Include="Models\Lectura.cs" />
     <Compile Include="Models\Modulos.cs" />
     <Compile Include="Models\Notificaciones.cs" />
     <Compile Include="Models\PagoContrato.cs" />

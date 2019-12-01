@@ -26,17 +26,8 @@ namespace GCP_CF.Controllers
             int anio = !string.IsNullOrEmpty(filterForm["Anio"]) ? int.Parse(filterForm["Anio"]) : 0;
             int idEntidadContratante = !string.IsNullOrEmpty(filterForm["IdEntidadContratante"]) ? int.Parse(filterForm["IdEntidadContratante"]) : 0;
             string numeroContrato = filterForm["NumeroContrato"];
-            int idEstadoContrato = !string.IsNullOrEmpty(filterForm["IdEstadoContrato"]) ? int.Parse(filterForm["IdEstadoContrato"]) : 0;
-            //int idTipoContrato = !string.IsNullOrEmpty(filterForm["IdTipoContrato"]) ? int.Parse(filterForm["IdTipoContrato"]) : 3;
-            int idTipoContrato = 0;
-            if (!string.IsNullOrEmpty(filterForm["IdTipoContrato"]))
-            {
-                idTipoContrato = int.Parse(filterForm["IdTipoContrato"]);
-            }
-            else
-            {
-                idTipoContrato = 3;
-            }
+            int idEstadoContrato = !string.IsNullOrEmpty(filterForm["IdEstadoContrato"]) ? int.Parse(filterForm["IdEstadoContrato"]) : 3;
+            int idTipoContrato = !string.IsNullOrEmpty(filterForm["IdTipoContrato"]) ? int.Parse(filterForm["IdTipoContrato"]) : 3;
 
             ViewBag.IdEstadoContrato = new SelectList(db.TiposEstadoContrato.OrderBy(x => x.Descripcion), "TiposEstadoContrato_Id", "Descripcion", idEstadoContrato);
             var tipoContratos = new List<TiposContratos>();
