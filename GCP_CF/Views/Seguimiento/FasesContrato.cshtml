@@ -208,7 +208,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-6">
-                                        <div>@Html.LabelFor(af => actividadFase.DiasHabiles, htmlAttributes: new { @class = "control-label" })</div>
+                                        <div>@Html.Label("Días", htmlAttributes: new { @class = "control-label" })</div>
                                         @Html.EditorFor(af => actividadFase.DiasHabiles, new { htmlAttributes = new { @class = "form-control", @id = "diasHabiles", @readonly = "true" } })
                                         @Html.ValidationMessageFor(af => actividadFase.Item, "", new { @class = "text-danger" })
                                     </div>

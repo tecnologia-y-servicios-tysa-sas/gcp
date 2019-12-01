@@ -4,7 +4,7 @@ var idPopup = "mensajeAccion";
 $(function () {
     $.validator.methods.date = function (value, element) {
         return this.optional(element) || moment(value, true).isValid();
-    }
+    };
 
 
     $('#datetimeFechaPago').datetimepicker({
@@ -155,10 +155,10 @@ function HabilitarSiguientePago(idPago, idSiguientePago) {
     var id2 = "#idPagoContrato_" + idSiguientePago;
     console.log("HabilitarSiguientePago(" + idPago + ", " + idSiguientePago + ")");
 
-    if (!validateFechaPago()) {
-        $(".chkPagos").prop("checked", false);
-        return;
-    }
+    //if (!validateFechaPago()) {
+    //    $(".chkPagos").prop("checked", false);
+    //    return;
+    //}
 
     if (!$(id1).is(":checked")) {
         $(".chkPagos").prop("disabled", true);
@@ -223,39 +223,39 @@ function ActualizarValorHonorarios(idPago, idSiguientePago) {
 
 function ValidarMaximaFechaPagoSeleccionada() {
 
-    if (!validateFechaPago()) {
-        return false;
-    }
+    //if (!validateFechaPago()) {
+    //    return false;
+    //}
 
-    var fechaPago = $("#fechaPago");
-    var timeout = 5000;
-    var filasPago = $(".filaPago");
+    //var fechaPago = $("#fechaPago");
+    //var timeout = 5000;
+    //var filasPago = $(".filaPago");
 
-    var strFechaPago = fechaPago.val().split("/");
-    var dtFechaPago = new Date(Number(strFechaPago[2]), Number(strFechaPago[1]) - 1, Number(strFechaPago[0]), 0, 0, 0);
-    var fechaMaxima = dtFechaPago;
+    //var strFechaPago = fechaPago.val().split("/");
+    //var dtFechaPago = new Date(Number(strFechaPago[2]), Number(strFechaPago[1]) - 1, Number(strFechaPago[0]), 0, 0, 0);
+    //var fechaMaxima = dtFechaPago;
 
-    if (filasPago != null && filasPago.length > 0) {
-        for (var i = 0; i <= filasPago.length; i++) {
-            var valorFecha = $(filasPago[i]).find(".valorFecha");
-            var chkPago = $(filasPago[i]).find(".chkPagos");
-            if ($(chkPago).is(":checked")) {
-                var laFecha = valorFecha.val().split("/");
-                var fecha = new Date(Number(laFecha[2]), Number(laFecha[1]) - 1, Number(laFecha[0]), 0, 0, 0);
-                console.log("- Fecha Pago: " + fecha);
-                if (fechaMaxima.getTime() < fecha.getTime()) {
-                    fechaMaxima = fecha;
-                }
-            }
-        }
-    }
+    //if (filasPago != null && filasPago.length > 0) {
+    //    for (var i = 0; i <= filasPago.length; i++) {
+    //        var valorFecha = $(filasPago[i]).find(".valorFecha");
+    //        var chkPago = $(filasPago[i]).find(".chkPagos");
+    //        if ($(chkPago).is(":checked")) {
+    //            var laFecha = valorFecha.val().split("/");
+    //            var fecha = new Date(Number(laFecha[2]), Number(laFecha[1]) - 1, Number(laFecha[0]), 0, 0, 0);
+    //            console.log("- Fecha Pago: " + fecha);
+    //            if (fechaMaxima.getTime() < fecha.getTime()) {
+    //                fechaMaxima = fecha;
+    //            }
+    //        }
+    //    }
+    //}
 
-    console.log("Fecha Pago: " + dtFechaPago + ", Fecha Máxima: " + fechaMaxima);
+    //console.log("Fecha Pago: " + dtFechaPago + ", Fecha Máxima: " + fechaMaxima);
 
-    if (dtFechaPago.getTime() < fechaMaxima.getTime()) {
-        MostrarMensajeValidacion(idMensaje, idPopup, "La fecha del pago seleccionado es mayor a la fecha de la factura", timeout);
-        return false;
-    }
+    //if (dtFechaPago.getTime() < fechaMaxima.getTime()) {
+    //    MostrarMensajeValidacion(idMensaje, idPopup, "La fecha del pago seleccionado es mayor a la fecha de la factura", timeout);
+    //    return false;
+    //}
 
     return true;
 }

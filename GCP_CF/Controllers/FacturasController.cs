@@ -206,6 +206,8 @@ namespace GCP_CF.Controllers
             ViewBag.NumeroContrato = factura.Contrato.NumeroContrato;
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;
+            TempData["Contrato"] = factura.Contrato.NumeroContrato;
+            TempData["idContrato"] = factura.Contrato_Id;
 
             var formatter = new CultureInfo("es-CO", false).NumberFormat;
             formatter.NumberGroupSeparator = ",";
@@ -227,74 +229,92 @@ namespace GCP_CF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Factura factura, FormCollection form)
         {
-            bool exito = false;
+            //bool exito = false;
             ViewBag.Accion = EDITAR;
             ViewBag.IsEdit = true;
-
+            int estadoId = factura.Estado_Id;
+            factura = db.Factura.Where(f => f.Factura_Id == factura.Factura_Id).Include(f => f.PagoContrato).FirstOrDefault();
+            if (factura == null) return HttpNotFound();
             try
             {
-                if (factura == null) return HttpNotFound();
-
-                if (ModelState.IsValid)
-                {
-                    // Validar si se seleccionó al menos un pago
-                    string[] idsPagosContrato = form.GetValues("idPagoContrato");
-                    if (idsPagosContrato == null)
-                        throw new Exception("Debe seleccionar al menos un pago del contrato " + factura.Contrato.NumeroContrato);
-
-                    // Validar si la factura tiene pagos asociados
-                    List<PagoContrato> pagosContrato = db.PagoContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
-                    if (pagosContrato == null || pagosContrato.Count == 0)
-                        throw new Exception("El contrato " + factura.Contrato.NumeroContrato + " no tiene pagos asociados.");
-
-                    // Se filtra el arreglo de pagos para las coincidencias con los pagos seleccionados
-                    pagosContrato = pagosContrato.Where(p => idsPagosContrato.Contains(p.PagosContrato_Id.ToString())).ToList();
-
-                    // Validación adicional de seguridad
-                    if (pagosContrato == null || pagosContrato.Count == 0)
-                        throw new Exception("Los pagos seleccionados no coinciden con los pagos del contrato " + factura.Contrato.NumeroContrato + ".");
-
-                    double totalHonorariosAux = Convert.ToDouble(factura.TotalHonorariosAux.Replace(",", "").Replace(".", ","));
-                    factura.TotalHonorarios = totalHonorariosAux;
-
-                    double valorBaseAux = Convert.ToDouble(factura.ValorBaseAux.Replace(",", "").Replace(".", ","));
-                    factura.ValorBase = valorBaseAux;
-
-                    double valorIvaAux = Convert.ToDouble(factura.ValorIvaAux.Replace(",", "").Replace(".", ","));
-                    factura.ValorIva = valorIvaAux;
-
-                    if (!string.IsNullOrEmpty(factura.ValorCanceladoAux))
-                    {
-                        double valorCanceladoAux = Convert.ToDouble(factura.ValorCanceladoAux.Replace(",", "").Replace(".00", ""));
-                        factura.ValorCancelado = valorCanceladoAux;
-                    }
-                    else
-                        factura.ValorCancelado = 0;
-
-                    // Se asocian los nuevos pagos a la factura
-                    factura.PagoContrato = new List<PagoContrato>();
-                    factura.PagoContrato.AddRange(pagosContrato);
-
-                    db.Entry(factura).State = EntityState.Modified;
-
-                    exito = (db.SaveChanges() > 0);
-                }
-                else
-                {
-                    CargarListados(factura.Estado_Id.ToString(), factura.Municipio_Id.ToString(), factura.Mes.ToString());
-                    ViewBag.MensajeError = "No fue posible actualizar la factura";
-                }
-            }
-            catch (Exception e)
-            {
-                CargarListados(form["Estado_Id"], form["Municipio_Id"], form["Mes"]);
-                ViewBag.MensajeError = "Ha ocurrido un error al actualizar la factura: " + e.Message;
-            }
-
-            if (exito)
+                factura.Estado_Id = estadoId;
+                db.Entry(factura).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
-            else
-                return View(factura);
+            }
+            catch (Exception)
+            {
+            }
+            CargarListados(factura.Estado_Id.ToString(), factura.Municipio_Id.ToString(), factura.Mes.ToString());
+            return View(factura);
+            #region
+            //    try
+            //    {
+            //        if (factura == null) return HttpNotFound();
+
+            //        if (ModelState.IsValid)
+            //        {
+            //            // Validar si se seleccionó al menos un pago
+            //            string[] idsPagosContrato = form.GetValues("idPagoContrato");
+            //            if (idsPagosContrato == null)
+            //                throw new Exception("Debe seleccionar al menos un pago del contrato " + factura.Contrato.NumeroContrato);
+
+            //            // Validar si la factura tiene pagos asociados
+            //            List<PagoContrato> pagosContrato = db.PagoContrato.Where(p => p.Contrato_Id == factura.Contrato_Id && p.Factura_Id == null).ToList();
+            //            if (pagosContrato == null || pagosContrato.Count == 0)
+            //                throw new Exception("El contrato " + factura.Contrato.NumeroContrato + " no tiene pagos asociados.");
+
+            //            // Se filtra el arreglo de pagos para las coincidencias con los pagos seleccionados
+            //            pagosContrato = pagosContrato.Where(p => idsPagosContrato.Contains(p.PagosContrato_Id.ToString())).ToList();
+
+            //            // Validación adicional de seguridad
+            //            if (pagosContrato == null || pagosContrato.Count == 0)
+            //                throw new Exception("Los pagos seleccionados no coinciden con los pagos del contrato " + factura.Contrato.NumeroContrato + ".");
+
+            //            double totalHonorariosAux = Convert.ToDouble(factura.TotalHonorariosAux.Replace(",", "").Replace(".", ","));
+            //            factura.TotalHonorarios = totalHonorariosAux;
+
+            //            double valorBaseAux = Convert.ToDouble(factura.ValorBaseAux.Replace(",", "").Replace(".", ","));
+            //            factura.ValorBase = valorBaseAux;
+
+            //            double valorIvaAux = Convert.ToDouble(factura.ValorIvaAux.Replace(",", "").Replace(".", ","));
+            //            factura.ValorIva = valorIvaAux;
+
+            //            if (!string.IsNullOrEmpty(factura.ValorCanceladoAux))
+            //            {
+            //                double valorCanceladoAux = Convert.ToDouble(factura.ValorCanceladoAux.Replace(",", "").Replace(".00", ""));
+            //                factura.ValorCancelado = valorCanceladoAux;
+            //            }
+            //            else
+            //                factura.ValorCancelado = 0;
+
+            //            // Se asocian los nuevos pagos a la factura
+            //            factura.PagoContrato = new List<PagoContrato>();
+            //            factura.PagoContrato.AddRange(pagosContrato);
+
+            //        db.Entry(factura).State = EntityState.Modified;
+
+            //        exito = (db.SaveChanges() > 0);
+            //    }
+            //        else
+            //    {
+            //        CargarListados(factura.Estado_Id.ToString(), factura.Municipio_Id.ToString(), factura.Mes.ToString());
+            //        ViewBag.MensajeError = "No fue posible actualizar la factura";
+            //    }
+            //}
+            //    catch (Exception e)
+            //    {
+            //        CargarListados(form["Estado_Id"], form["Municipio_Id"], form["Mes"]);
+            //        ViewBag.MensajeError = "Ha ocurrido un error al actualizar la factura: " + e.Message;
+            //        //TempData["Contrato"] = factura.Contrato.NumeroContrato;
+            //        //TempData["idContrato"] = factura.Contrato_Id;
+            //    }
+
+            //    if (exito)
+            //        return RedirectToAction("Index");
+            //    else
+            //        return View(factura);
+            #endregion
         }
 
         // GET: Facturas/Delete/5

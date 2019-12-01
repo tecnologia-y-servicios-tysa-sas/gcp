@@ -16,6 +16,19 @@
     white-space: normal;
 }
 
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(Images/loading.gif) 50% 50% no-repeat rgba(249,249,249,0.9);
+}
+
+/*.loader {
+    background: url(Images/loading.gif) no-repeat right center;
+}*/
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -412,6 +425,14 @@ a.article:hover {
 
 .btn-details {
     background: url(Images/details.png)no-repeat;
+    display: inline-table;
+    width: 24px;
+    height: 24px;
+    text-indent: -9999px; /* hides the link text */
+}
+
+.btn-arrow {
+    background: url(Images/arrow.png)no-repeat;
     display: inline-table;
     width: 24px;
     height: 24px;

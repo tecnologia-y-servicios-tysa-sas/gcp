@@ -61,8 +61,8 @@ namespace GCP_CF.Controllers
         public ActionResult CreateEtapasActividades(int? id)
         {
 
-            ViewBag.ActividadesEtapasId = new SelectList(db.ActividadesEtapas, "ActividadesEtapasId", "Descripción");
-            ViewBag.fase_Id = new SelectList(db.FasesContrato, "fase_Id", "Descripcion", id);
+            ViewBag.ActividadesEtapasId = new SelectList(db.ActividadesEtapas.OrderBy(x=> x.Descripción), "ActividadesEtapasId", "Descripción");
+            ViewBag.fase_Id = new SelectList(db.FasesContrato.OrderBy(x=> x.Descripcion), "fase_Id", "Descripcion", id);
             return View();
         }
 

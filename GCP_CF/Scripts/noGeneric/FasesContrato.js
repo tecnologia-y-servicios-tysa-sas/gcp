@@ -130,7 +130,7 @@ function ProcesarActividadesFase(actividades, idContrato, idFase, puedeEscribir)
         + "<th class=\"col-md-2 col-sm-2 col-xs-2\">Fecha Inicio</th>"
         + "<th class=\"col-md-2 col-sm-2 col-xs-2\">Fecha Final</th>"
         + "<th class=\"col-md-2 col-sm-2 col-xs-2\">Estado</th>"
-        + (puedeEscribir ? "<th class=\"col-md-1 col-sm-2 col-xs-1\" style=\"padding: 4px\">Acciones</th>" : "")
+        + "<th class=\"col-md-1 col-sm-2 col-xs-1\" style=\"padding: 4px\">Acciones</th>"
         + "</tr>"
         + "</thead>"
         + "<tbody>";
@@ -145,14 +145,14 @@ function ProcesarActividadesFase(actividades, idContrato, idFase, puedeEscribir)
             + "<td class=\"col-md-5 col-sm-5 col-xs-5\" id=\"descripcion_act_" + ac.Id + "\">" + ac.Descripcion + "</td>"
             + "<td class=\"col-md-2 col-sm-2 col-xs-2\">" + formatFechaInicio + "</td>"
             + "<td class=\"col-md-2 col-sm-2 col-xs-2\">" + formatFechaFinal + "</td>"
-            + "<td class=\"col-md-2 col-sm-2 col-xs-2\">" + ac.DescripcionEstado + "</td>";
+            + "<td class=\"col-md-2 col-sm-2 col-xs-2\">" + ac.DescripcionEstado + "</td>";     
 
-        if (puedeEscribir) {
+        //if (puedeEscribir) {
             tblActividades += "<td class=\"col-md-1 col-sm-1 col-xs-1\" style=\"padding: 4px\">"
                 + "<a class=\"btn-edit\" href=\"javascript:void(0)\" title=\"Editar actividad\" onclick=\"EditarActividadFase(" + ac.Id + ", " + ac.IdContrato + ", " + ac.IdFase + ")\">Editar</a>"
                 + "<a class=\"btn-delete\" href=\"javascript:void(0)\" title=\"Eliminar\" onclick=\"EliminarActividadFase(" + ac.Id + ", " + ac.IdContrato + ", " + ac.IdFase + ")\">Eliminar</a>"
-                + "</td>"
-        }
+                + "</td>";
+        //}
 
         tblActividades += "</tr>";
     }
@@ -213,13 +213,13 @@ function GuardarActividadFase() {
     var idActividad = $("#addAct_IdActividad").val();
     var idContrato = $("#addAct_IdContrato").val();
     var idFase = $("#addAct_IdFase").val();
-    var ActividadesEtapasId =$("#ActividadesEtapasId").val()
+    var ActividadesEtapasId = $("#ActividadesEtapasId").val();
 
     if ($("#AgregarActividadFaseForm").valid()) {
 
         var mensajeConfirmacion = "¿Está seguro de agregar la actividad a la fase seleccionada?";
         if (idActividad != "-1") {
-            mensajeConfirmacion = "¿Está seguro de actualizar la actividad seleccionada?"
+            mensajeConfirmacion = "¿Está seguro de actualizar la actividad seleccionada?";
         }
 
         if (confirm(mensajeConfirmacion)) {
@@ -309,6 +309,27 @@ function EditarActividadFase(idActividad, idContrato, idFase) {
             claseMensaje = "alert-Error";
         }
     });
+
+    $("#ActividadesEtapasId").val(null);
+    $("#ActividadesEtapasId").empty();
+    $("#ActividadesEtapasId").append('<option value="0">Seleccione...</option>');
+    $.ajax({
+        type: "POST",
+        url: "/Seguimiento/GetActividades",
+        dataType: 'json',
+        data: { Fase: idFase },
+        success: function (data) {
+            $.each(data, function (i, data) {
+                $("#ActividadesEtapasId").append('<option value='
+                    + data.ActividadesEtapasId + '>'
+                    + data.Descripción + '</option>');
+            });
+
+        }, error: function () {
+            mensaje = "Ha ocurrido un error interno al intentar eliminar la fase seleccionada.";
+            claseMensaje = "alert-danger";
+        }
+    })
 
     if (mensaje != "") {
         MostrarMensajeAccion(mensaje, claseMensaje, 5000); // Mostrar mensaje

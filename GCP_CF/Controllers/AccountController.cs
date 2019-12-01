@@ -210,6 +210,10 @@ namespace GCP_CF.Controllers
                         {
                             claims.Add(new Claim(ClaimTypes.Role, RolHelper.M22));
                         }
+                        if (item.Permisos.PermisoId == 23 && item.Estado == true)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, RolHelper.M23));
+                        }
                         #endregion
                     }
 

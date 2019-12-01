@@ -138,12 +138,11 @@ namespace GCP_CF.Controllers
                 if (idTipoContrato == 3)
                 {
                     contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
-                    List<Contratos> contratosTemp = new List<Contratos>();
-                    foreach (var contrato in contratos)
-                    {
-                        contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
-                    }
-                    contratos = contratosTemp.ToList();
+                   // //foreach (var contrato in contratos)
+                    //{
+                    //    contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
+                    //}
+                   // contratos = contratosTemp.ToList();
                 }
                 else
                 {

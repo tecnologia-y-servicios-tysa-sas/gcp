@@ -268,8 +268,10 @@ namespace GCP_CF.Controllers
                     actividad = (from a in db.ActividadesFases
                                  where a.Actividad_Id == idActividad
                                  select a).FirstOrDefault<ActividadesFases>();
-                    if (actividad.Item != item) actividad.Item = item;
-                    if (actividad.Descripción != descripcion) actividad.Descripción = descripcion;
+                    var actividadesEtapas = db.ActividadesEtapas.Where(x => x.ActividadesEtapasId == ActividadesEtapasId).FirstOrDefault();
+                    // if (actividad.Item != item) actividad.Item = item;
+                    if (actividad.Item != ActividadesEtapasId.ToString()) actividad.Item = ActividadesEtapasId.ToString();
+                    if (actividad.Descripción != actividadesEtapas.Descripción) actividad.Descripción = actividadesEtapas.Descripción;//  descripcion;
                     if (actividad.DiasHabiles.GetValueOrDefault() != Convert.ToInt32(diasHabiles)) actividad.DiasHabiles = Convert.ToInt32(diasHabiles);
                     if (actividad.FechaInicio != Convert.ToDateTime(fechaInicio)) actividad.FechaInicio = Convert.ToDateTime(fechaInicio);
                     if (actividad.FechaFinal != Convert.ToDateTime(fechaFin)) actividad.FechaFinal = Convert.ToDateTime(fechaFin);

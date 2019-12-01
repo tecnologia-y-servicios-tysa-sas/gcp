@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.EntityFrameworkCore.Design.3.0.0\build\net461\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('..\packages\Microsoft.EntityFrameworkCore.Design.3.0.0\build\net461\Microsoft.EntityFrameworkCore.Design.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -210,6 +211,26 @@
     <Compile Include="Helpers\RolHelper.cs" />
     <Compile Include="Helpers\UserManager.cs" />
     <Compile Include="Helpers\UserState.cs" />
+    <Compile Include="Migrations\201910261422524_ModuloPermiso.cs" />
+    <Compile Include="Migrations\201910261422524_ModuloPermiso.Designer.cs">
+      <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301343192_ActividadesEtapas.cs" />
+    <Compile Include="Migrations\201910301343192_ActividadesEtapas.Designer.cs">
+      <DependentUpon>201910301343192_ActividadesEtapas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301352171_ActividadesEtapas1.cs" />
+    <Compile Include="Migrations\201910301352171_ActividadesEtapas1.Designer.cs">
+      <DependentUpon>201910301352171_ActividadesEtapas1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301412180_FasesContratosAcividades.cs" />
+    <Compile Include="Migrations\201910301412180_FasesContratosAcividades.Designer.cs">
+      <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911101609531_initial.cs" />
+    <Compile Include="Migrations\201911101609531_initial.Designer.cs">
+      <DependentUpon>201911101609531_initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911151038304_createTables.cs" />
     <Compile Include="Migrations\201911151038304_createTables.Designer.cs">
       <DependentUpon>201911151038304_createTables.cs</DependentUpon>
@@ -251,6 +272,7 @@
     <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PermisosRoles.cs" />
     <Compile Include="Models\Personas.cs" />
+    <Compile Include="Models\PersonasNotificacion.cs" />
     <Compile Include="Models\Registrofacescontratos.cs" />
     <Compile Include="Models\RelacionContratoFase.cs" />
     <Compile Include="Models\Rol.cs" />
@@ -279,6 +301,7 @@
     <Content Include="Content\chosen.min.css" />
     <Content Include="Content\Graphics.css" />
     <Content Include="Content\Images\Alcaldia.png" />
+    <Content Include="Content\Images\arrow.png" />
     <Content Include="Content\Images\back.png" />
     <Content Include="Content\Images\banner.png" />
     <Content Include="Content\Images\delete.png" />
@@ -286,6 +309,7 @@
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\eso.ico" />
     <Content Include="Content\Images\eye.png" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\LogoTransparente.png" />
     <Content Include="Content\Images\Programa.png" />
     <Content Include="Content\PagedList.css" />
@@ -307,10 +331,15 @@
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\gcp-eso - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso-pruebas .pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Chart.utils.js" />
@@ -328,6 +357,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-confirm.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -350,11 +380,13 @@
     <Content Include="Scripts\Nueva carpeta\bootstrap.js" />
     <Content Include="Scripts\Nueva carpeta\bootstrap.min.js" />
     <None Include="Scripts\Nueva carpeta\jquery-3.3.1.intellisense.js" />
+    <None Include="Scripts\Nueva carpeta\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.min.map" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\Nueva carpeta\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\Nueva carpeta\jquery.validate.js" />
     <Content Include="Scripts\Nueva carpeta\jquery.validate.min.js" />
     <Content Include="Scripts\Nueva carpeta\jquery.validate.unobtrusive.js" />
@@ -503,6 +535,7 @@
     <Content Include="Views\TipoTareas\Edit.cshtml" />
     <Content Include="Views\TipoTareas\Index.cshtml" />
     <Content Include="Views\Graphics\PartialCIADS.cshtml" />
+    <Content Include="Views\Usuarios\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -510,13 +543,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\Nueva carpeta\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201910261422524_ModuloPermiso.resx">
+      <DependentUpon>201910261422524_ModuloPermiso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301343192_ActividadesEtapas.resx">
+      <DependentUpon>201910301343192_ActividadesEtapas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301352171_ActividadesEtapas1.resx">
+      <DependentUpon>201910301352171_ActividadesEtapas1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301412180_FasesContratosAcividades.resx">
+      <DependentUpon>201910301412180_FasesContratosAcividades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101609531_initial.resx">
+      <DependentUpon>201911101609531_initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911151038304_createTables.resx">
       <DependentUpon>201911151038304_createTables.cs</DependentUpon>
     </EmbeddedResource>
@@ -558,6 +604,7 @@
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.EntityFrameworkCore.Design.3.0.0\build\net461\Microsoft.EntityFrameworkCore.Design.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.EntityFrameworkCore.Design.3.0.0\build\net461\Microsoft.EntityFrameworkCore.Design.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

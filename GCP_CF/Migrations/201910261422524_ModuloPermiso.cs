@@ -7,16 +7,16 @@ namespace GCP_CF.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.Permisos", "ModuloId", c => c.Int());
-            CreateIndex("dbo.Permisos", "ModuloId");
-            AddForeignKey("dbo.Permisos", "ModuloId", "dbo.Modulos", "ModuloId");
+            //AddColumn("dbo.Permisos", "ModuloId", c => c.Int());
+            //CreateIndex("dbo.Permisos", "ModuloId");
+            //AddForeignKey("Permisos", "ModuloId", "Modulos", "ModuloId");
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Permisos", "ModuloId", "dbo.Modulos");
-            DropIndex("dbo.Permisos", new[] { "ModuloId" });
-            DropColumn("dbo.Permisos", "ModuloId");
+            //DropForeignKey("Permisos", "ModuloId", "Modulos");
+            //DropIndex("dbo.Permisos", new[] { "ModuloId" });
+            //DropColumn("dbo.Permisos", "ModuloId");
         }
     }
 }

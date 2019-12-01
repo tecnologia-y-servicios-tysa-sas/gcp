@@ -87,8 +87,15 @@ namespace GCP_CF.Controllers
             ViewBag.Accion = CREAR;
             ViewBag.IsEdit = false;
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
-
-            ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
+            if(isInterAdmin)
+            {
+                ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
+            }
+            else
+            {
+                ViewBag.Persona_Id = new SelectList(db.Personas, "Persona_Id", "NombreCompleto");
+            }
+           
             ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSuperviosr_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 2), "Persona_Id", "NombreCompleto");
             ViewBag.PersonaSupervisorTecnico_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 4), "Persona_Id", "NombreCompleto");
@@ -121,8 +128,8 @@ namespace GCP_CF.Controllers
 
                 if (!AutorizacionContrato(contratos.Contrato_Id, true)) return RedirectToAction("AccessDenied", "Account");
 
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     double valorContratoAux = Convert.ToDouble(contratos.ValorContratoAux.Replace(",", "").Replace(".00", ""));
                     contratos.ValorContrato = valorContratoAux;
 
@@ -141,7 +148,19 @@ namespace GCP_CF.Controllers
                         contratos.ValorPoliza = valorPolizaAux;
                     }
 
-                    if (esModificado)
+                    if (!string.IsNullOrEmpty(contratos.ValorCdpAux))
+                    {
+                        double valorCdpAux = Convert.ToDouble(contratos.ValorCdpAux.Replace(",", "").Replace(".00", ""));
+                        contratos.ValorCDP = valorCdpAux;
+                    }
+
+                    if (!string.IsNullOrEmpty(contratos.ValorCrpAux))
+                    {
+                        double valorCrpAux = Convert.ToDouble(contratos.ValorCrpAux.Replace(",", "").Replace(".00", ""));
+                        contratos.ValorCRP = valorCrpAux;
+                    }
+
+                if (esModificado)
                     { 
                         db.Entry(contratos).State = EntityState.Modified; 
                     }
@@ -180,9 +199,10 @@ namespace GCP_CF.Controllers
                     }
 
                     // Revisión de pagos - No aplican para los contratos que sean CIAD
-                    int idTipoContratoCIAD = (new ContratosHelper()).ObtenerIdCIAD();
-                    if (contratos.TipoContrato_Id != idTipoContratoCIAD)
-                    {
+                    //Se desactiva el condicional para que guarde los pagos al contrato asi no sean interadministrativos
+                    //int idTipoContratoCIAD = (new ContratosHelper()).ObtenerIdCIAD();
+                    //if (contratos.TipoContrato_Id != idTipoContratoCIAD)
+                    //{
                         List<PagoContrato> pagosActuales = null;
                         List<int> pagosModificados = new List<int>();
                         if (esModificado) pagosActuales = db.PagoContrato.Where(p => p.Contrato_Id == id).ToList<PagoContrato>();
@@ -227,29 +247,29 @@ namespace GCP_CF.Controllers
                             mensaje = "No se agregaron pagos al contrato. Por favor verifique.";
                         }
 
-                        if (pagosActuales != null && pagosActuales.Count > 0 && pagosModificados != null && pagosModificados.Count > 0)
-                        {
-                            List<PagoContrato> pagosContrato = new List<PagoContrato>();
-                            foreach (var pago in pagosActuales)
-                            {
-                                if (!pagosModificados.Contains(pago.PagosContrato_Id))
-                                    db.Entry(pago).State = EntityState.Deleted;
-                                else
-                                    pagosContrato.Add(pago);
-                            }
+                //if (pagosActuales != null && pagosActuales.Count > 0 && pagosModificados != null && pagosModificados.Count > 0)
+                //{
+                //    List<PagoContrato> pagosContrato = new List<PagoContrato>();
+                //    foreach (var pago in pagosActuales)
+                //    {
+                //        if (!pagosModificados.Contains(pago.PagosContrato_Id))
+                //            db.Entry(pago).State = EntityState.Deleted;
+                //        else
+                //            pagosContrato.Add(pago);
+                //    }
 
-                            contratos.PagoContrato = pagosContrato;
+                //    contratos.PagoContrato = pagosContrato;
 
-                        }
-                    }
+                //}
+                //}
 
-                    // Solamente se deben guardar los cambios cuando NADA falle
-                    exito = (db.SaveChanges() > 0);
-                }
-                else
-                {
-                    mensaje = "No fue posible " + (ViewBag.IsEdit ? "actualizar" : "crear") + " el contrato";
-                }
+                // Solamente se deben guardar los cambios cuando NADA falle
+                exito = (db.SaveChanges() > 0);
+                //}
+                //else
+                //{
+                //    mensaje = "No fue posible " + (ViewBag.IsEdit ? "actualizar" : "crear") + " el contrato";
+                //}
 
             }
             catch (Exception e)
@@ -347,6 +367,9 @@ namespace GCP_CF.Controllers
             contratos.ValorAdministrarAux = contratos.ValorAdministrar.ToString("#,###.#0", formatter);
             contratos.HonorariosAux = contratos.Honorarios.HasValue ? contratos.Honorarios.Value.ToString("#,###.#0", formatter) : "";
             contratos.ValorPolizaAux = contratos.ValorPoliza.HasValue ? contratos.ValorPoliza.Value.ToString("#,###.#0", formatter) : "";
+            contratos.ValorCdpAux = contratos.ValorCDP.HasValue ? contratos.ValorCDP.Value.ToString("#,###.#0", formatter) : "";
+            contratos.ValorCrpAux = contratos.ValorCRP.HasValue ? contratos.ValorCRP.Value.ToString("#,###.#0", formatter) : "";
+
 
             List<PagoContrato> pagosContrato = db.PagoContrato.Where(p => p.Contrato_Id == id).ToList<PagoContrato>();
             contratos.PagoContrato = pagosContrato;
@@ -359,6 +382,18 @@ namespace GCP_CF.Controllers
             ViewBag.ContratoMarco_Id = new SelectList(db.Contratos.Where(c => c.ContratoMarco_Id == null), "Contrato_Id", "NumeroContrato",contratos.ContratoMarco_Id);
             ViewBag.TipoContrato_Id_Aux = new SelectList(db.TiposContratos, "TipoContrato_Id", "Descripcion", contratos.TipoContrato_Id);
             ViewBag.FormaPagoId = new SelectList(db.FormaPagoes, "Id", "Descripcion");
+
+
+            ViewBag.PersonasNotificar= (from p in db.Personas
+                                                join n in db.Notificaciones on p.Persona_Id equals n.PersonId
+                                                where n.ContractId == contratos.Contrato_Id
+                                                select new PersonasNotificacion
+                                                {
+                                                    Persona_Id =  p.Persona_Id,
+                                                    NombreCompleto=  p.Nombres +" "+ p.Apellidos,
+     
+                                                }).ToList();
+
             ViewBag.PersonaNotificar_Id = new SelectList(db.Personas, "Persona_Id", "NombreCompleto");
 
             return View(contratos);

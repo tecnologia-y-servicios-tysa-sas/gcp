@@ -110,6 +110,12 @@ namespace GCP_CF.Models
         [NotMapped]
         public string HonorariosAux { get; set; }
 
+        [NotMapped]
+        public string ValorCdpAux { get; set; }
+
+        [NotMapped]
+        public string ValorCrpAux { get; set; }
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N2}")]
         public Nullable<double> Ejecucion { get; set; }
 
