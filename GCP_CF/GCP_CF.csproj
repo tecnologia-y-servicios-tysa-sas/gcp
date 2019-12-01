@@ -284,6 +284,7 @@
     <Compile Include="Models\TiposPersona.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Models\UsuariosRoles.cs" />
+    <Compile Include="Models\Validate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

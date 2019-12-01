@@ -580,6 +580,23 @@ namespace GCP_CF.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult GetDateInit(int contract)
+        {
+            //Searching records from list using LINQ query  
+            List<Validate> list = (from N in db.Contratos
+                                where N.Contrato_Id == contract
+                                select new Validate
+                                { 
+                                    Fecha= N.FechaInicio
+                                }).ToList();
+
+            foreach (var item in list)
+            {
+                item.FechaAuxiliar = Convert.ToString(item.Fecha);
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
