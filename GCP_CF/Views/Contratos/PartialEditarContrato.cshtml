@@ -529,7 +529,7 @@
 <script type="text/javascript" src="~/Scripts/noGeneric/Contratos.js"></script>
 <script type="text/javascript" src="~/Scripts/noGeneric/Utilidades.js"></script>
 <script type="text/javascript">
-     @*$("#fechaFinal").blur(function ()
+     $("#fechaInicial").blur(function ()
      {
             if (@ViewBag.IsInterAdmin.ToString().ToLower() == false)
             {
@@ -537,21 +537,45 @@
                 url: "/Contratos/GetDateInit",
                 type: "POST",
                 dataType: "json",
-                data: { contract: $("#ContratoMarco_Id").val() },
-                       success: function (data) {
-                           $.each(data, function (index, item) {
-                                var start = moment(stringToDate($("#fechaInicial").val(), "dd/MM/yyyy", "/"));
-                                var end = moment(stringToDate(item.FechaAuxiliar, "dd/MM/yyyy", "/"));
-                               //if (start > end) {
-                                   alert(start, end);
-                               //}
-                                 
-                           });
-                                       
-                }
-            })
+                data: { contract: $("#ContratoMarco_Id").val(), fecha1: $("#fechaInicial").val() },
+                        success: function (response) {
+                                if (response.success) {
+                                    //alert(response.responseText);
+                                } else {
+                                     $("#fechaInicial").val("")
+                                    alert(response.responseText);
+                                }                          
+                           },
+                        error: function (response) {
+                                alert("error!");  // 
+                        }
+                   })
             };
-     });*@
+     });
+
+     $("#fechaFinal").blur(function ()
+     {
+            if (@ViewBag.IsInterAdmin.ToString().ToLower() == false)
+            {
+                   $.ajax({
+                url: "/Contratos/GetDateEnd",
+                type: "POST",
+                dataType: "json",
+                data: { contract: $("#ContratoMarco_Id").val(), fecha1: $("#fechaFinal").val() },
+                        success: function (response) {
+                                if (response.success) {
+                                    //alert(response.responseText);
+                                } else {
+                                     $("#fechaFinal").val("")
+                                    alert(response.responseText);
+                                }                          
+                           },
+                        error: function (response) {
+                                //alert("error!");  // 
+                        }
+                   })
+            };
+     });
 
     $(document).ready(function () {
         // Activar o desactivar campos de honorarios

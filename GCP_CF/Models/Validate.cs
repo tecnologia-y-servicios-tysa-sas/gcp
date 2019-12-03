@@ -9,8 +9,11 @@ namespace GCP_CF.Models
     public class Validate
     {
         [NotMapped]
-        public string FechaAuxiliar { get; set; }
 
-        public DateTime Fecha { get; set; }
+        public DateTime FechaI { get; set; }
+
+        public DateTime FechaT { get; set; }
+
+        public string NumeroContrato { get; set; }
     }
 }
