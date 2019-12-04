@@ -89,11 +89,11 @@ namespace GCP_CF.Controllers
             ViewBag.idTipoContratoCIAD = new ContratosHelper().ObtenerIdCIAD();
             if(isInterAdmin)
             {
-                ViewBag.Persona_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
+                ViewBag.Persona_Id = new SelectList(db.Personas.OrderBy(x=>x.Nombres).Where(x => x.TipoPersona_Id == 3), "Persona_Id", "NombreCompleto");
             }
             else
             {
-                ViewBag.Persona_Id = new SelectList(db.Personas, "Persona_Id", "NombreCompleto");
+                ViewBag.Persona_Id = new SelectList(db.Personas.OrderBy(x => x.Nombres), "Persona_Id", "NombreCompleto");
             }
            
             ViewBag.PersonaAbogado_Id = new SelectList(db.Personas.Where(x => x.TipoPersona_Id == 1), "Persona_Id", "NombreCompleto");
@@ -580,6 +580,73 @@ namespace GCP_CF.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult GetDateInit(int contract, DateTime fecha1)
+        {
+            //Searching records from list using LINQ query  
+            List<Validate> list= (from N in db.Contratos
+                                where N.Contrato_Id == contract
+                                select new Validate
+                                {
+                                    FechaI = N.FechaInicio,
+                                    FechaT = N.FechaTerminacion,
+                                    NumeroContrato = N.NumeroContrato,
+                                }).ToList();
+
+            DateTime fechaI = list.Select(x => x.FechaI).FirstOrDefault();
+            DateTime fechaT = list.Select(x => x.FechaT).FirstOrDefault();
+            if (fecha1 < fechaI)
+            {
+                //  Send "false"
+                return Json(new { success = false, responseText = "La fecha inicial debe ser mayor o igual a la fecha inicial del contrato interadministativo No." + list.Select(x => x.NumeroContrato).FirstOrDefault() + ". Fecha inicial= " + list.Select(x => x.FechaI).FirstOrDefault() }, JsonRequestBehavior.AllowGet);
+               
+            }
+            else if (fecha1 > fechaT)
+            {
+                //  Send "false"
+                return Json(new { success = false, responseText = "La fecha inicial debe ser menor o igual a la fecha final del contrato interadministativo No." + list.Select(x => x.NumeroContrato).FirstOrDefault() + ". Fecha final= " + list.Select(x => x.FechaT).FirstOrDefault() }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ////  Send "Success"
+                return Json(new { success = true, responseText = "ok" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult GetDateEnd(int contract, DateTime fecha1)
+        {
+            //Searching records from list using LINQ query  
+            List<Validate> list = (from N in db.Contratos
+                                   where N.Contrato_Id == contract
+                                   select new Validate
+                                   {
+                                       FechaI = N.FechaInicio,
+                                       FechaT = N.FechaTerminacion,
+                                       NumeroContrato = N.NumeroContrato,
+                                   }).ToList();
+
+            DateTime fechaI = list.Select(x => x.FechaI).FirstOrDefault();
+            DateTime fechaT = list.Select(x => x.FechaT).FirstOrDefault();
+            if (fecha1 > fechaT)
+            {
+                //  Send "false"
+                return Json(new { success = false, responseText = "La fecha final debe ser menor o igual a la fecha final del contrato interadministativo No." + list.Select(x => x.NumeroContrato).FirstOrDefault() + ". Fecha final= " + list.Select(x => x.FechaT).FirstOrDefault() }, JsonRequestBehavior.AllowGet);
+
+            }
+            else if (fecha1 < fechaI)
+            {
+                //  Send "false"
+                return Json(new { success = false, responseText = "La fecha final debe ser mayor o igual a la fecha incial del contrato interadministativo No." + list.Select(x => x.NumeroContrato).FirstOrDefault() + ". Fecha final= " + list.Select(x => x.FechaI).FirstOrDefault() }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ////  Send "Success"
+                return Json(new { success = true, responseText = "ok" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

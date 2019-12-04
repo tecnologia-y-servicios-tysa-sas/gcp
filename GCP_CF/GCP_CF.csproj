@@ -284,6 +284,7 @@
     <Compile Include="Models\TiposPersona.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Models\UsuariosRoles.cs" />
+    <Compile Include="Models\Validate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -332,7 +333,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\gcp-eso - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso - ReadOnly - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso - ReadOnly - FTP1.pubxml" />
+    <None Include="Properties\PublishProfiles\gcp-eso - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\gcp-eso-pruebas - ReadOnly - FTP.pubxml" />
