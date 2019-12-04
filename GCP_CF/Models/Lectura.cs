@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,11 +10,11 @@ namespace GCP_CF.Models
     {
         public int contrato_Id { get; set; }
 
-        public int Anio { get; set; }
+        public int Anio { get; set; }        
 
         public int Persona_Id { get; set; }
 
-        public int TipoContrato_Id { get; set; }
+        public int? TipoContrato_Id { get; set; }
 
         public int TipoEstadoContrato_Id { get; set; }
 
@@ -36,7 +37,5 @@ namespace GCP_CF.Models
         public double? Valor_Facturado { get; set; }
 
         public double? Valor_Facturas_Canceladas { get; set; }
-
-        public string Estado { get; set; }
     }
 }

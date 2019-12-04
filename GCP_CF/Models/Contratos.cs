@@ -99,6 +99,7 @@ namespace GCP_CF.Models
                 double ivaHonorarios = PorcentajeIvaHonorarios ?? 0;
                 return valorHonorarios - Math.Round(valorHonorarios * ivaHonorarios / 100, 2);
             }
+            set { }
         }
 
         [NotMapped]

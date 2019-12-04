@@ -9,6 +9,7 @@ using System.Text;
 using System.Web.Mvc;
 using ClosedXML.Excel;
 using GCP_CF.Models;
+using MySql.Data.MySqlClient;
 
 namespace GCP_CF.Controllers
 {
@@ -94,72 +95,40 @@ namespace GCP_CF.Controllers
             return list != null ? list.OrderBy(x => x.Factura_Id).ToList() : new List<Factura>();
         }
 
-        private List<Contratos> ObtenerContratos(int anio, int idEntidadContratante, string numeroContrato, int idEstadoContrato, int idTipoContrato)
+        private List<Contratos> ObtenerContratos(int? anio, int? idEntidadContratante, string numeroContrato, int idEstadoContrato, int idTipoContrato)
         {
-            DateTime? fechaInicio = anio > 0 ? new DateTime(anio, 1, 1) : new DateTime?();
-            DateTime? fechaFin = anio > 0 ? new DateTime(anio, 12, 31) : new DateTime?();
+            var Lectura = db.Database.SqlQuery<Lectura>("call getValoresContrato (@yearId, @EntidadId, @numContrato, @estadoContratoId, @tipoContratoId)",
+                   new MySqlParameter("@yearId", anio == 0 ? null : anio),
+                   new MySqlParameter("@EntidadId", idEntidadContratante == 0 ? null : idEntidadContratante),
+                   new MySqlParameter("@numContrato", numeroContrato == string.Empty ? null : numeroContrato),
+                   new MySqlParameter("@estadoContratoId", idEstadoContrato),
+                   new MySqlParameter("@tipoContratoId", 3)).ToList();
 
-            bool hayFechas = fechaInicio.HasValue && fechaFin.HasValue;
-            bool hayEntidadContratante = idEntidadContratante > 0;
-            bool hayNumeroContrato = !string.IsNullOrEmpty(numeroContrato);
-            bool hayEstadoContrato = idEstadoContrato > 0;
-            bool hayTipoContrato = idTipoContrato > 0;
+            var contratos = new List<Contratos>();
 
-            var contratos = (from c in db.Contratos select c).Include(c => c.HistoriaObservaciones).ToList();
-
-            if (hayFechas)
-            {
-                contratos = contratos.Where(c => (fechaInicio.Value <= c.FechaInicio && c.FechaInicio <= fechaFin.Value) ||
-                                                 (fechaInicio.Value <= c.FechaTerminacion && c.FechaInicio <= fechaFin.Value) ||
-                                                 (fechaInicio.Value <= c.FechaActaInicio && c.FechaInicio <= fechaFin.Value) ||
-                                                 (fechaInicio.Value <= c.FechaCdp && c.FechaInicio <= fechaFin.Value) ||
-                                                 (fechaInicio.Value <= c.FechaCrp && c.FechaInicio <= fechaFin.Value)).ToList();
-            }
-
-            if (hayEntidadContratante)
-                contratos = contratos.Where(c => c.EntidadContratante.Persona_Id == idEntidadContratante).ToList();
-
-            if (hayNumeroContrato)
-            {
-                int idContratoMarco = (from cm in db.Contratos
-                                       where cm.NumeroContrato.ToUpper().Trim() == numeroContrato.ToUpper().Trim()
-                                       select cm.Contrato_Id).FirstOrDefault();
-
-                contratos = contratos.Where(c => (idContratoMarco > 0 ? c.Contrato_Id == idContratoMarco || c.ContratoMarco_Id.Value == idContratoMarco : true))
-                                     .OrderByDescending(c => c.ContratoMarco_Id)
-                                     .OrderByDescending(c => c.NumeroContrato).ToList();
-            }
-
-            if (hayEstadoContrato)
-                contratos = contratos.Where(c => c.TipoEstadoContrato_Id == idEstadoContrato).ToList();
-
-            if (hayTipoContrato)
-            {
-                if (idTipoContrato == 3)
-                {
-                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
-                   // //foreach (var contrato in contratos)
-                    //{
-                    //    contratosTemp.AddRange(db.Contratos.Where(c => c.ContratoMarco_Id == contrato.Contrato_Id).ToList());
-                    //}
-                   // contratos = contratosTemp.ToList();
-                }
-                else
-                {
-                    contratos = contratos.Where(c => c.TipoContrato_Id == idTipoContrato).ToList();
-                }
-            }                
-
-            if (contratos != null)
+            if (Lectura != null)
             {
                 var estados = db.TiposEstadoContrato.ToList();
-                foreach (Contratos item in contratos)
+                foreach (Lectura item in Lectura)
                 {
-                    foreach (var estado in estados)
+                    var contrato = db.Contratos.Where(c => c.Contrato_Id == item.contrato_Id).FirstOrDefault();
+                    if (contrato != null)
                     {
-                        if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
+                        contrato.ValorAdministrar = item.Valor_Administrar;
+                        contrato.ValorContrato = item.Valor_Contrato;
+                        contrato.ValorCDP = item.Valor_CDP;
+                        contrato.ValorCRP = item.Valor_CRP;
+                        contrato.ValorNetoHonorarios = item.Valor_Honorarios;                        
+                        foreach (var estado in estados)
                         {
-                            item.Estado = estado.Descripcion;                            
+                            if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
+                            {
+                                contrato.Estado = estado.Descripcion;
+                            }
+                        }
+                        if (contrato != null)
+                        {
+                            contratos.Add(contrato);
                         }
                     }
                     //item.PorcentajeValorEjecutado = Math.Round (item.Ejecucion ?? 0 / item.ValorAdministrar, 2 );
