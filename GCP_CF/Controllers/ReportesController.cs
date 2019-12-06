@@ -118,7 +118,8 @@ namespace GCP_CF.Controllers
                         contrato.ValorContrato = item.Valor_Contrato;
                         contrato.ValorCDP = item.Valor_CDP;
                         contrato.ValorCRP = item.Valor_CRP;
-                        contrato.ValorNetoHonorarios = item.Valor_Honorarios;                        
+                        contrato.ValorNetoHonorarios = item.Valor_Honorarios;
+                        contrato.Ejecucion = item.Valor_Ejecutado;
                         foreach (var estado in estados)
                         {
                             if (item.TipoEstadoContrato_Id == estado.TiposEstadoContrato_Id)
