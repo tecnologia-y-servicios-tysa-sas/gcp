@@ -102,7 +102,7 @@ namespace GCP_CF.Controllers
                    new MySqlParameter("@EntidadId", idEntidadContratante == 0 ? null : idEntidadContratante),
                    new MySqlParameter("@numContrato", numeroContrato == string.Empty ? null : numeroContrato),
                    new MySqlParameter("@estadoContratoId", idEstadoContrato),
-                   new MySqlParameter("@tipoContratoId", 3)).ToList();
+                   new MySqlParameter("@tipoContratoId", idTipoContrato)).ToList();
 
             var contratos = new List<Contratos>();
 
