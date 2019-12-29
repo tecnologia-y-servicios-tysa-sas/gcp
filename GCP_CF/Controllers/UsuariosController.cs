@@ -12,7 +12,8 @@ using Microsoft.AspNet.Identity;
 
 namespace GCP_CF.Controllers
 {
-    [GCPAuthorize(Roles = RolHelper.SUPERUSUARIO)]
+    //[GCPAuthorize(Roles = RolHelper.SUPERUSUARIO)]
+    [GCPAuthorize(Roles = RolHelper.TODOS)]
     public class UsuariosController : Controller
     {
         private readonly GCPContext db = new GCPContext();

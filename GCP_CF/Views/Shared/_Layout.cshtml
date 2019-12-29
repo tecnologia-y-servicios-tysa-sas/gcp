@@ -118,34 +118,7 @@
                     @if (User.IsInRole(GCP_CF.Helpers.RolHelper.SUPERUSUARIO))
                     {
 
-                        <li>
-                            <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
-                                <i class="glyphicon glyphicon-certificate"></i>
-                                Terceros
-                            </a>
-                            <ul class="collapse list-unstyled" id="personasSubmenu">
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M8))
-                                {
-                                    <li>@Html.ActionLink("Crear Tercero", "Create", "Terceros")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M9))
-                                {
-                                    <li>@Html.ActionLink("Ver Terceros", "Index", "Terceros")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M10))
-                                {
-                                    <li>@Html.ActionLink("Tipos de Terceros", "Index", "TiposTerceros")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M11))
-                                {
-                                    <li>@Html.ActionLink("Naturaleza", "Index", "TiposNaturaleza")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M12))
-                                {
-                                    <li>@Html.ActionLink("Tipos Documentos", "Index", "TiposDocumentos")</li>
-                                }
-                            </ul>
-                        </li>
+
 
 
                         <li>
@@ -209,40 +182,68 @@
                             </ul>
 
                         </li>
-                        <li>
-                            <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
-                                <i class="glyphicon glyphicon-user"></i>
-                                Usuarios
-                            </a>
-                            <ul class="collapse list-unstyled" id="userSubmenu">
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M17))
-                                {
-                                    <li>@Html.ActionLink("Listado de Usuarios", "Index", "Usuarios")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M18))
-                                {
-                                    <li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M19))
-                                {
-                                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M20))
-                                {
-                                    <li>@Html.ActionLink("Permisos", "Index", "Permisos")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M21))
-                                {
-                                    <li>@Html.ActionLink("Modulos", "Index", "Modulos")</li>
-                                }
-                                @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M23))
-                                {
-                                    <li>@Html.ActionLink("Cambiar Contraseña", "ChangePassword", "Usuarios")</li>
-                                }
-                            </ul>
-                        </li>
 
                     }
+                    <li>
+                        <a href="#personasSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-certificate"></i>
+                            Terceros
+                        </a>
+                        <ul class="collapse list-unstyled" id="personasSubmenu">
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M8))
+                            {
+                                <li>@Html.ActionLink("Crear Tercero", "Create", "Terceros")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M9))
+                            {
+                                <li>@Html.ActionLink("Ver Terceros", "Index", "Terceros")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M10))
+                            {
+                                <li>@Html.ActionLink("Tipos de Terceros", "Index", "TiposTerceros")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M11))
+                            {
+                                <li>@Html.ActionLink("Naturaleza", "Index", "TiposNaturaleza")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M12))
+                            {
+                                <li>@Html.ActionLink("Tipos Documentos", "Index", "TiposDocumentos")</li>
+                            }
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-user"></i>
+                            Usuarios
+                        </a>
+                        <ul class="collapse list-unstyled" id="userSubmenu">
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M17))
+                            {
+                                <li>@Html.ActionLink("Listado de Usuarios", "Index", "Usuarios")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M18))
+                            {
+                                <li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M19))
+                            {
+                                <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M20))
+                            {
+                                <li>@Html.ActionLink("Permisos", "Index", "Permisos")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M21))
+                            {
+                                <li>@Html.ActionLink("Modulos", "Index", "Modulos")</li>
+                            }
+                            @if (User.IsInRole(GCP_CF.Helpers.RolHelper.M23))
+                            {
+                                <li>@Html.ActionLink("Cambiar Contraseña", "ChangePassword", "Usuarios")</li>
+                            }
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="list-unstyled btn-close">
                     <li><a href="javascript:void(0)" onclick="Logout()"><i class="glyphicon glyphicon-off"></i>Cerrar</a></li>
